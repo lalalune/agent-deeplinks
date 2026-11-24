@@ -132,7 +132,8 @@ export function getAgentLink(
     const value = fields[field as LinkField];
     if (value !== undefined && value !== "") {
       const wellFormed = value.replace(/[\ud800-\udfff]/gu, "\ufffd");
-      query.push(`${parameter}=${encodeURIComponent(wellFormed)}`);
+      const encoded = encodeURIComponent(wellFormed);
+      query.push(`${parameter}=${route.encodeQueryValuesTwice ? encodeURIComponent(encoded) : encoded}`);
     }
   }
   for (const [name, value] of Object.entries(route.query ?? {})) {

@@ -30,6 +30,7 @@ export interface AgentRoute {
   readonly launchUrl?: string;
   readonly launcher?: { readonly appUrl: string; readonly parameter: string };
   readonly modes?: readonly string[];
+  readonly encodeQueryValuesTwice?: boolean;
   readonly serverBehavior?: LinkBehavior;
   readonly promptLimit?: number;
   readonly promptLimitUnit?: "grapheme";
@@ -568,22 +569,29 @@ const catalog = {
         ...copilotDraftRoute,
         url: "https://github.com/copilot/app/launch",
         behavior: "handoff",
+        evidence: "verified",
         launchUrl: copilotHome,
         launcher: { appUrl: copilotSession, parameter: "open" },
-        note: "Opens GitHub’s app launcher with a draft to review. Leave the inputs empty to open Copilot on GitHub.com.",
+        note: "GitHub’s launcher showed Open the app and preserved the exact native draft URL in Chromium, Firefox, and WebKit. Leave the inputs empty to open Copilot on GitHub.com.",
       },
       desktop: {
         ...copilotDraftRoute,
         url: copilotSession,
-        note: "The GitHub Copilot app asks to allow the link and opens a session draft. Supply a prompt, repository, or custom agent.",
+        sources: [copilotDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45479815496/job/138749609151"],
+        note: "Supply a prompt, repository, or custom agent. Signed GitHub Copilot 1.5.0 opened at sign-in on macOS. GitHub documents an Allow step and draft review after sign-in.",
       },
       vscode: {
         url: "vscode://agents/new",
         behavior: "draft",
         evidence: "documented",
-        sources: ["https://code.visualstudio.com/docs/configure/command-line#_prepare-a-new-agent-session-draft"],
+        sources: [
+          "https://code.visualstudio.com/docs/configure/command-line#_prepare-a-new-agent-session-draft",
+          "https://github.com/microsoft/vscode/blob/8a14f0cc1b08d531eb83255ea3764ae22aa932b5/src/vs/platform/window/common/window.ts",
+        ],
         fields: { prompt: "prompt", workspace: "workspace" },
-        note: "Opens the VS Code Agents window. Pass a file or VS Code remote folder URI to select a workspace.",
+        required: ["prompt"],
+        encodeQueryValuesTwice: true,
+        note: "Opens a draft in the VS Code Agents window. The released 1.147.0 parser requires a prompt. Pass an optional file or VS Code remote folder URI to select a workspace.",
       },
     },
   },
@@ -633,10 +641,10 @@ const catalog = {
         evidence: "verified",
         sources: [
           "https://www.kimi.com/en/products/download",
-          "https://github.com/lalalune/agent-deeplinks/actions/runs/45442744851",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45479309480/job/138747843316",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45469092283/job/138711836543",
         ],
-        note: "Kimi 3.2.28 opened its native window on Windows and Apple Silicon macOS. The stock macOS link opened Work behind sign-in.",
+        note: "Stock links in signed Kimi 3.2.28 opened Work behind sign-in on Windows and Apple Silicon macOS.",
       },
       ios: {
         url: kimiMobile,
@@ -722,8 +730,12 @@ const catalog = {
         behavior: "handoff",
         serverBehavior: "draft",
         fields: { ...t3Route.fields, server: "" },
-        sources: [...t3Route.sources, "https://github.com/pingdotgg/t3code/blob/v0.1.11/docs/user/remote-access.md"],
-        note: "Leave the server blank for T3’s hosted chooser. After pairing a browser to a self-hosted T3 server, the exact link opened a fresh draft directly, including after a Chromium restart with T3 Code 0.1.11.",
+        sources: [
+          ...t3Route.sources,
+          "https://github.com/pingdotgg/t3code/blob/v0.1.11/docs/user/remote-access.md",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45480052812/job/138750432372",
+        ],
+        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project.",
       },
       desktop: {
         ...t3Route,

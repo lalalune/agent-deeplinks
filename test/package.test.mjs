@@ -294,14 +294,18 @@ test("builds GitHub Copilot draft links and validates their session context", ()
     assert.equal(getAgentLink("github-copilot", "desktop", invalid), null);
     assert.equal(getAgentLink("github-copilot", "web", invalid), null);
   }
+  const decodeVSCodeQuery = (url) => new URLSearchParams(decodeURIComponent(new URL(url).search.slice(1)));
   for (const workspace of ["file:///tmp/QA%20folder", "file://server/share/a", "vscode-remote://ssh-remote+host/work"]) {
-    const url = new URL(getAgentLink("github-copilot", "vscode", { prompt: special, workspace }));
-    assert.equal(url.searchParams.get("prompt"), special);
-    assert.equal(url.searchParams.get("workspace"), workspace);
+    const uri = getAgentLink("github-copilot", "vscode", { prompt: special, workspace });
+    assert.equal(uri, `vscode://agents/new?prompt=${encodeURIComponent(encodeURIComponent(special))}&workspace=${encodeURIComponent(encodeURIComponent(workspace))}`);
+    const decoded = decodeVSCodeQuery(uri);
+    assert.equal(decoded.get("prompt"), special);
+    assert.equal(decoded.get("workspace"), workspace);
   }
-  assert.equal(getAgentLink("github-copilot", "vscode"), "vscode://agents/new");
-  assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "https://example.com/project" }), null);
-  assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "file:///tmp/QA?query=1" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode"), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "file:///tmp/QA" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "https://example.com/project" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "file:///tmp/QA?query=1" }), null);
   assert.equal(getAgentLink("claude-code", "ios", { prompt: special, mode: "autopilot" }), null);
 });
 
