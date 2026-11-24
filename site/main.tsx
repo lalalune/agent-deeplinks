@@ -112,7 +112,7 @@ function App() {
   const [agent, setAgent] = useState<AgentId>("codex");
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [prompt, setPrompt] = useState(examplePrompt);
-  const [directory, setDirectory] = useState("");
+  const [directoryByRoute, setDirectoryByRoute] = useState<Partial<Record<string, string>>>({});
   const [serverByAgent, setServerByAgent] = useState<Partial<Record<AgentId, string>>>({});
   const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
   const [experimentalRoute, setExperimentalRoute] = useState<string>();
@@ -122,6 +122,7 @@ function App() {
 
   const route = getAgentRoute(agent, platform);
   const routeKey = `${agent}/${platform}`;
+  const directory = directoryByRoute[routeKey] ?? "";
   const visibleExtraFields = extraFields.filter((field) => Object.hasOwn(route?.fields ?? {}, field));
   const extraValues = extraByAgent[agent] ?? {};
   const options: LinkOptions = {
@@ -223,13 +224,25 @@ function App() {
               )}
               {Object.hasOwn(route?.fields ?? {}, "directory") && (
                 <label className="field">
-                  <span>{route?.required?.includes("directory") ? "Local project directory" : "Local project directory (optional)"}</span>
-                  <input value={directory} onChange={(event) => setDirectory(event.target.value)} placeholder="/absolute/path/to/project" />
+                  <span>
+                    {agent === "opencode" && platform === "web"
+                      ? "OpenCode 1.x project directory (optional)"
+                      : route?.required?.includes("directory") ? "Local project directory" : "Local project directory (optional)"}
+                  </span>
+                  <input
+                    value={directory}
+                    onChange={(event) => setDirectoryByRoute({ ...directoryByRoute, [routeKey]: event.target.value })}
+                    placeholder="/absolute/path/to/project"
+                  />
                 </label>
               )}
               {Object.hasOwn(route?.fields ?? {}, "server") && (
                 <label className="field">
-                  <span>{route?.required?.includes("server") ? "Server origin" : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}</span>
+                  <span>
+                    {route?.required?.includes("server")
+                      ? agent === "hermes" ? "Web Access address" : "Server origin"
+                      : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}
+                  </span>
                   <input
                     value={serverByAgent[agent] ?? ""}
                     onChange={(event) => setServerByAgent({ ...serverByAgent, [agent]: event.target.value })}

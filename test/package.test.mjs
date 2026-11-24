@@ -110,6 +110,14 @@ test("opens configured self-hosted Web apps from another device", () => {
   assert.equal(getAgentLink("openclaw", "web", { server: "https://gateway.example/openclaw/" }), "https://gateway.example/openclaw/");
   assert.equal(getAgentLink("openclaw", "web", { server: "https://gateway.example/?token=private" }), null);
   assert.equal(getAgentLink("hermes", "web", { server: "javascript:alert(1)" }), null);
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("hermes", platform), null);
+    assert.equal(getAgentLink("hermes", platform, { server: "https://home.example/hermes/" }), "https://home.example/hermes/");
+    assert.equal(getAgentLink("hermes", platform, { server: "https://home.example/hermes/?token=private" }), null);
+  }
+  assert.equal(getAgentLink("opencode", "ios"), null);
+  assert.equal(getAgentLink("opencode", "ios", { server: "https://open.example/" }), "https://open.example");
+  assert.equal(getAgentLink("opencode", "ios", { server: "https://open.example/", directory: "/tmp/project" }), null);
 });
 
 test("builds T3 Code hosted and previously paired self-hosted Web drafts", () => {

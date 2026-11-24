@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.9.tgz
+npm install ./agent-deeplinks-0.1.10.tgz
 ```
 
 ## Usage
@@ -40,7 +40,9 @@ For Claude and Claude Code web links, use `browserOnly: true` to keep the link i
 
 Codex desktop links can carry both an absolute `path` and an `originUrl`. The desktop app tries the local path first and then matches the remote if the path does not resolve to a directory.
 
-For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the links use each product's localhost default. OpenCode accepts its server origin and an optional project directory.
+For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the Web links use each product's localhost default. In a fresh local browser tab, Hermes shows how to sign in with the host's `hermes webapp` command. Hermes on iOS and Android requires your configured Web Access address.
+
+For OpenCode 2.x on the web or in an iPhone browser, supply the server origin in `server` and select your project after sign-in. The Web route's optional `directory` parameter builds the older OpenCode 1.x project URL. OpenCode Desktop accepts the local directory and an optional prompt.
 
 T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server and let the workspace connect first.
 

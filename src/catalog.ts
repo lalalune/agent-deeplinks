@@ -109,6 +109,16 @@ const zcodeRemoteRoute = {
   note: "Opens the ZCode 4.0.0 Remote Control sign-in page. Connect using the same account and region as an online desktop with Remote Control enabled.",
 } as const satisfies AgentRoute;
 
+const hermesMobileRoute = {
+  url: "http://127.0.0.1:9120/",
+  behavior: "launch",
+  evidence: "verified",
+  sources: ["https://hermes-agent.nousresearch.com/docs/user-guide/desktop#open-it-from-your-phone-or-another-computer"],
+  fields: { server: "" },
+  required: ["server"],
+  note: "Opens your configured Hermes Web Access address in a phone browser. Its sign-in page was verified in Android Chromium and iPhone WebKit profiles.",
+} as const satisfies AgentRoute;
+
 const t3Route = {
   behavior: "draft",
   evidence: "source",
@@ -608,10 +618,14 @@ const catalog = {
         url: "http://localhost:4096",
         behavior: "launch",
         evidence: "verified",
-        sources: ["https://opencode.ai/docs/cli/web/", `${openCodeTag}/packages/app/src/app.tsx#L636`],
+        sources: [
+          "https://opencode.ai/docs/cli/web/",
+          `${openCodeDesktopTag}/packages/app/src/shell/routes/routes.tsx`,
+          `${openCodeTag}/packages/app/src/app.tsx#L636`,
+        ],
         fields: { directory: "", server: "" },
         required: ["server"],
-        note: "Enter your OpenCode server origin and optionally a project directory. In v1.19.6, the browser opened a composer and discarded the prompt parameter.",
+        note: "For OpenCode 2.x, enter the server origin and leave the directory blank. The optional project directory uses the 1.x web route. OpenCode 2.4.1 showed Projects after local browser authentication.",
       },
       desktop: {
         url: "opencode://new-session",
@@ -626,6 +640,15 @@ const catalog = {
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
         note: "Draft and project verified on macOS 2.4.1. The Linux DEB registers the scheme. Windows handles URL arguments in source. macOS 1.19.6 left the composer empty.",
+      },
+      ios: {
+        url: "http://localhost:4096",
+        behavior: "launch",
+        evidence: "verified",
+        sources: ["https://opencode.ai/docs/cli/web/", "https://opencode.ai/mobile"],
+        fields: { server: "" },
+        required: ["server"],
+        note: "Opens your OpenCode server in a browser. The 2.4.1 Projects menu was verified in an iPhone WebKit profile after local authentication.",
       },
       android: {
         url: "opencode://",
@@ -644,10 +667,10 @@ const catalog = {
       web: {
         url: "http://127.0.0.1:9120/",
         behavior: "launch",
-        evidence: "documented",
+        evidence: "verified",
         sources: ["https://hermes-agent.nousresearch.com/docs/user-guide/desktop#use-the-desktop-workspace-from-a-browser"],
         fields: { server: "" },
-        note: "Opens your Hermes Webapp. Use the Web Access address for another device, or leave it blank for this machine.",
+        note: "On this machine, a fresh browser opens sign-in instructions. Run hermes webapp on the host for its one-use link. For another device, enter your configured Web Access address.",
       },
       desktop: {
         url: "hermes://launch",
@@ -659,6 +682,8 @@ const catalog = {
         ],
         note: "Opened the native Sessions window in the macOS 0.23.3 canary. Windows and Linux delivery are present in canary source. Linux desktop builds are local only.",
       },
+      ios: hermesMobileRoute,
+      android: hermesMobileRoute,
     },
   },
   openclaw: {
