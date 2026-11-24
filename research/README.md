@@ -25,6 +25,10 @@ Investigation started November 24, 2026. The [package catalog](../src/catalog.ts
 
 An HTTP success confirms a front door. Scheme registration confirms an installed handler. Neither confirms that a composer consumed a prompt. Use the notes for any platform, account, install, or setup requirements.
 
+## Published playground checks
+
+The v0.1.7 Cloudflare deployment generated all 59 catalog routes in Chromium 158, Firefox 159, and WebKit 27.2. Each matrix entry produced the exact URL in both shadcn/ui buttons, and all 18 SVGs decoded. The checks also confirmed that flagged links stayed disabled until opt-in and that the page fit a 375px viewport. Provider links were left unopened during these browser checks.
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)

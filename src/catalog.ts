@@ -147,7 +147,8 @@ const catalog = {
       desktop: {
         ...cursorRoute,
         url: "cursor://anysphere.cursor-deeplink/prompt",
-        note: "Handler and directed macOS delivery checked in Cursor 3.31.15. Composer check is pending.",
+        sources: [cursorDocs, "https://cursor.com/download"],
+        note: "Cursor 3.31.15 accepted the link on macOS and the Linux DEB declares a handler. Signed-in composer prefill is unverified.",
       },
       ios: {
         url: cursorCloud,
@@ -208,7 +209,11 @@ const catalog = {
         behavior: "handoff",
         note: "xAI’s public handoff page opens the installed Grok Bot app.",
       },
-      desktop: grokBotRoute,
+      desktop: {
+        ...grokBotRoute,
+        sources: [grokBotDocs, "https://docs.x.ai/grok-bot/get-started"],
+        note: "Documented for the signed-in Windows, macOS, and Linux app. Uses your primary Bot unless a Bot ID is supplied.",
+      },
       ios: grokBotRoute,
       android: grokBotRoute,
     },
@@ -537,7 +542,7 @@ const catalog = {
         sources: ["https://zcode.z.ai/en"],
         fields: { directory: "path" },
         required: ["directory"],
-        note: "Opens an existing local folder after confirmation. macOS accepted the URL for ZCode 4.0.0.",
+        note: "Opens a local folder after confirmation. macOS accepted the URI in ZCode 4.0.0. The bundle also declares Windows and Linux registration code.",
       },
     },
   },
@@ -558,7 +563,8 @@ const catalog = {
         ...t3Route,
         url: "t3code://new",
         evidence: "verified",
-        note: "Prefill verified in T3 Code 0.1.11 on macOS.",
+        sources: [t3Source, "https://github.com/pingdotgg/t3code/blob/v0.1.11/scripts/build-desktop-artifact.ts"],
+        note: "Draft verified on macOS in v0.1.11. Its Linux DEB registers the handler. Windows browser-to-app registration is unverified.",
       },
       ios: { ...t3Route, url: "t3code://new", note: "Requires a connected environment." },
       android: {
@@ -592,10 +598,11 @@ const catalog = {
         sources: [
           `${openCodeDesktopTag}/packages/app/src/shell/deep-links/deep-links.ts`,
           `${openCodeDesktopTag}/packages/app/src/shell/deep-links/machine.ts`,
+          `${openCodeDesktopTag}/packages/desktop/src/main/lifecycle/launch-links.ts`,
         ],
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
-        note: "Version 2.4.1 on macOS opened the requested Git project and prefilled the exact draft. Version 1.19.6 left the composer empty.",
+        note: "Draft and project verified on macOS 2.4.1. The Linux DEB registers the scheme. Windows handles URL arguments in source. macOS 1.19.6 left the composer empty.",
       },
       android: {
         url: "opencode://",
@@ -623,8 +630,11 @@ const catalog = {
         url: "hermes://launch",
         behavior: "launch",
         evidence: "verified",
-        sources: ["https://hermes-agent.nousresearch.com/docs/user-guide/desktop#settings--onboarding"],
-        note: "Launch-handler receipt verified in Hermes Desktop 0.23.3 canary on macOS.",
+        sources: [
+          "https://hermes-agent.nousresearch.com/docs/user-guide/desktop#settings--onboarding",
+          "https://hermes-agent.nousresearch.com/docs/getting-started/platform-support#build-targets-and-support-priority",
+        ],
+        note: "Opened the native Sessions window in the macOS 0.23.3 canary. Windows and Linux delivery are present in canary source. Linux desktop builds are local only.",
       },
     },
   },
@@ -636,10 +646,10 @@ const catalog = {
       web: {
         url: "http://127.0.0.1:18789/",
         behavior: "launch",
-        evidence: "documented",
+        evidence: "verified",
         sources: ["https://docs.openclaw.ai/web/control-ui"],
         fields: { server: "" },
-        note: "Opens your OpenClaw Control UI. Enter its configured URL or leave it blank for the local Gateway.",
+        note: "Rendered OpenClaw Control against an isolated Gateway v2026.6.11. Enter your configured URL or leave it blank for the default local Gateway.",
       },
       desktop: {
         url: "openclaw://agent",
