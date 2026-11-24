@@ -42,16 +42,18 @@ jobs:
         run: |
           version="${GITHUB_REF_NAME#v}"
           registry="https://registry.npmjs.org/agent-deeplinks"
+          tarball="$registry/-/agent-deeplinks-$version.tgz"
           archive="$RUNNER_TEMP/agent-deeplinks-$version.tgz"
           metadata="$RUNNER_TEMP/agent-deeplinks-registry.json"
           public_archive="$RUNNER_TEMP/agent-deeplinks-registry.tgz"
 
           for attempt in {1..60}; do
-            if curl --fail --silent --max-time 10 \
-                "$registry/$version?verify=$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$attempt" -o "$metadata" &&
+            probe="$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$attempt"
+            # Wait for the tarball under a unique cache key before requesting its public URL.
+            if curl --fail --silent --max-time 10 "$registry/$version?verify=$probe" -o "$metadata" &&
               jq --exit-status --arg version "$version" '.version == $version' "$metadata" >/dev/null &&
-              curl --fail --silent --show-error --max-time 15 \
-                "$registry/-/agent-deeplinks-$version.tgz" -o "$public_archive"; then
+              curl --fail --silent --max-time 15 "$tarball?verify=$probe" -o /dev/null &&
+              curl --fail --silent --show-error --max-time 15 "$tarball" -o "$public_archive"; then
               cmp "$archive" "$public_archive"
               printf 'Public npm tarball matches the build for agent-deeplinks@%s.\n' "$version"
               exit 0

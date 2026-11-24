@@ -42,6 +42,10 @@ test("encodes provider-specific field names and honors local workspace precedenc
     getAgentLink("codex", "desktop", { path: "C:\\Dev\\repo", originUrl: "https://example.com/a/b.git" }),
     "codex://new?path=C%3A%5CDev%5Crepo&originUrl=https%3A%2F%2Fexample.com%2Fa%2Fb.git",
   );
+  assert.equal(
+    getAgentLink("claude-code", "desktop", { prompt: special, folder: "/tmp/Claude Code review + & café" }),
+    `claude://code/new?q=${encodeURIComponent(special)}&folder=%2Ftmp%2FClaude%20Code%20review%20%2B%20%26%20caf%C3%A9`,
+  );
   assert.equal(getAgentLink("claude-code", "cli", { cwd: "//host/share" }), null);
   assert.equal(getAgentLink("claude-code", "cli", { cwd: "/repo/../other" }), null);
   assert.equal(getAgentLink("claude-code", "cli", { repo: "owner/extra/repo" }), null);
