@@ -34,7 +34,11 @@ test("encodes provider-specific field names and honors local workspace precedenc
 });
 
 test("returns null for undiscovered routes and handles documented size limits", () => {
-  assert.equal(getAgentLink("antigravity", "android"), null);
+  assert.equal(getAgentLink("hermes", "ios"), null);
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("antigravity", platform), "https://antigravity.google.com/");
+    assert.equal(getAgentLink("antigravity", platform, { prompt: special }), null);
+  }
   assert.equal(getAgentLink("cursor", "android"), "https://cursor.com/agents");
   assert.equal(getAgentLink("cursor", "android", { prompt: special }), null);
   assert.equal(getAgentLink("cursor", "web"), "https://cursor.com/agents");
@@ -157,8 +161,9 @@ test("requires opt-in before opening web links with submission or unknown behavi
     assert.equal(getAgentLink("codex", platform, { prompt: special }), null);
   }
   assert.equal(getAgentLink("opencode", "desktop"), "opencode://");
-  assert.equal(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special }), null);
-  assert.ok(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special, allowExperimental: true }));
+  const openCodeDraft = new URL(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special }));
+  assert.equal(openCodeDraft.searchParams.get("directory"), "/tmp/project");
+  assert.equal(openCodeDraft.searchParams.get("prompt"), special);
 });
 
 test("builds documented Claude Code mobile drafts and their HTTPS equivalents", () => {

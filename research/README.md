@@ -27,7 +27,7 @@ An HTTP success confirms a front door. Scheme registration confirms an installed
 
 ## Native device checks
 
-- T3 Code Android 2.3.0 build 816 was installed from the provider's signed beta APK. The APK SHA-256 matched the official release asset, Android 15 resolved `t3code://new` as a browsable intent to T3 Code's MainActivity, and T3 Code displayed a warning that no connected environment supported starting a thread without a project. This establishes that the app handled the link. The temporary emulator repeatedly displayed Android System UI or system process “isn't responding” dialogs during direct pairing. Connected composer prefill remains unverified. [Official beta release](https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165)
+- T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
 
 ## Gemini and Perplexity from Slop Date
 

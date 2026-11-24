@@ -71,6 +71,14 @@ const kimiMobile = "https://kimi.onelink.me/BZg1/";
 const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
 const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
 
+const antigravityMobileRoute = {
+  url: "https://antigravity.google.com/",
+  behavior: "launch",
+  evidence: "documented",
+  sources: ["https://antigravity.google/docs/remote-control/#connecting-from-a-web-browser", "https://antigravity.google.com/assets/manifest.json"],
+  note: "Opens Antigravity’s Remote Control dashboard in a mobile browser. It can be installed to the home screen as a web app.",
+} as const satisfies AgentRoute;
+
 const cursorRoute = {
   behavior: "draft",
   evidence: "documented",
@@ -473,6 +481,8 @@ const catalog = {
         sources: ["https://antigravity.google/"],
         note: "App activation verified in Antigravity 2.34.0 on macOS.",
       },
+      ios: antigravityMobileRoute,
+      android: antigravityMobileRoute,
     },
   },
   kimi: {
@@ -511,7 +521,7 @@ const catalog = {
         required: ["prompt"],
         query: { create_new: "true", auto_send: "false" },
         experimental: true,
-        note: "Kimi 3.1.5 handles the new-chat parameters. Visible prefill needs a device check. An empty link uses the app and Google Play handoff.",
+        note: "Kimi 3.1.5 opened to first-launch consent on Android 16. Visible prefill remains unverified. An empty link uses the app and Google Play handoff.",
       },
     },
   },
@@ -554,7 +564,9 @@ const catalog = {
       android: {
         ...t3Route,
         url: "t3code://new",
-        note: "Android 15 resolved and launched the signed 2.3.0 beta. A connected environment is required for a draft.",
+        evidence: "verified",
+        sources: [t3Source, "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165"],
+        note: "Draft prefill verified in the signed 2.3.0 beta on Android 16 after pairing to a connected environment.",
       },
     },
   },
@@ -576,15 +588,14 @@ const catalog = {
         url: "opencode://new-session",
         launchUrl: "opencode://",
         behavior: "draft",
-        evidence: "source",
+        evidence: "verified",
         sources: [
           `${openCodeDesktopTag}/packages/app/src/shell/deep-links/deep-links.ts`,
           `${openCodeDesktopTag}/packages/app/src/shell/deep-links/machine.ts`,
         ],
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
-        experimental: true,
-        note: "Version 2.4.1 handled the target Git project. Draft prefill remains unverified. Version 1.19.6 left the composer empty.",
+        note: "Version 2.4.1 on macOS opened the requested Git project and prefilled the exact draft. Version 1.19.6 left the composer empty.",
       },
     },
   },
