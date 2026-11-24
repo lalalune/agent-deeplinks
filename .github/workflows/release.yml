@@ -3,33 +3,66 @@ name: GitHub release
 on:
   push:
     tags: ["v*"]
+    branches: [main]
+    paths: [".github/workflows/release.yml"]
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: github-release
+  cancel-in-progress: false
 
 jobs:
   assets:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
-      - run: npm run check
-      - run: npm test
-      - run: npm run build:site
-      - run: npm run release:zip
-      - name: Attach ZIP and npm tarball
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Resolve release tag
+        id: release
         shell: bash
         run: |
           version=$(node -p 'require("./package.json").version')
-          test "$GITHUB_REF_NAME" = "v$version"
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" artifacts/agent-deeplinks.zip artifacts/agent-deeplinks.tgz
+          tag="v$version"
+          if [[ "$GITHUB_REF_TYPE" == tag && "$GITHUB_REF_NAME" != "$tag" ]]; then
+            echo "Tag $GITHUB_REF_NAME does not match package version $version."
+            exit 1
+          fi
+          if ! git show-ref --verify --quiet "refs/tags/$tag"; then
+            echo "No tag for $version. Release skipped."
+            exit 0
+          fi
+          git checkout --detach "refs/tags/$tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Build release
+        if: steps.release.outputs.tag != ''
+        run: |
+          npm ci
+          npm run check
+          npm test
+          npm run build:site
+          npm run release:zip
+      - name: Attach ZIP and npm tarball
+        if: steps.release.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ steps.release.outputs.tag }}
+        shell: bash
+        run: |
+          files=(artifacts/agent-deeplinks.zip artifacts/agent-deeplinks.tgz)
+          if assets=$(gh release view "$RELEASE_TAG" --json assets --jq '.assets[].name' 2>/dev/null); then
+            for file in "${files[@]}"; do
+              if ! grep -Fxq "${file##*/}" <<< "$assets"; then
+                gh release upload "$RELEASE_TAG" "$file"
+              fi
+            done
           else
-            gh release create "$GITHUB_REF_NAME" --verify-tag --generate-notes artifacts/agent-deeplinks.zip artifacts/agent-deeplinks.tgz
+            gh release create "$RELEASE_TAG" --verify-tag --generate-notes "${files[@]}"
           fi
