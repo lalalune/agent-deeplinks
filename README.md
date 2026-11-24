@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.29.tgz
+npm install ./agent-deeplinks-0.1.30.tgz
 ```
 
 ## Usage
@@ -37,6 +37,13 @@ console.log(url, route?.behavior, agents.cursor.name)
 ```
 
 `getAgentLink(agent, platform, options)` returns a URL or `null` if the route is unavailable, its parameters are invalid, or it needs an opt-in. Platform IDs are `web`, `desktop`, `ios`, `android`, `cli`, and `vscode`. Call `getAgentRoute` to see the accepted fields, behavior, constraints, sources, and evidence. `agents[id].home` is a product-site fallback.
+
+To open an existing desktop chat in Claude, ChatGPT, or Codex, pass its conversation or local thread UUID as `session`. For Claude use the UUID from the chat URL. In ChatGPT and Codex use the ID from **Copy chat deep link**. The destination app needs access to the chat. [Claude Desktop links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link) · [ChatGPT and Codex links](https://learn.chatgpt.com/docs/reference/commands#deep-links)
+
+```ts
+const session = "12345678-1234-4234-9234-123456789abc"
+const existingChat = getAgentLink("codex", "desktop", { session })
+```
 
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
 

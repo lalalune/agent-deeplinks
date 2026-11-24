@@ -28,6 +28,7 @@ export interface AgentRoute {
   readonly fields?: Readonly<Partial<Record<LinkField, string>>>;
   readonly required?: readonly LinkField[];
   readonly launchUrl?: string;
+  readonly sessionUrl?: string;
   readonly launcher?: { readonly appUrl: string; readonly parameter: string };
   readonly modes?: readonly string[];
   readonly encodeQueryValuesTwice?: boolean;
@@ -296,8 +297,9 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45483518818/artifacts/14964275753",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754025",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754337",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45507895510/artifacts/14974440993",
         ],
-        note: "LaunchServices started the signed Grok Bot 1.3.0 app on macOS. Stock Ubuntu and Windows apps received the exact link and opened at sign-in. Drafts require an eligible account and use the primary Bot unless you supply a Bot ID.",
+        note: "LaunchServices started the signed Grok Bot 1.3.0 app on macOS. Stock Ubuntu and Windows x64 and ARM64 apps received the exact link and opened at sign-in. Drafts require an eligible account and use the primary Bot unless you supply a Bot ID.",
       },
       ios: {
         ...grokBotRoute,
@@ -421,10 +423,11 @@ const catalog = {
     routes: {
       desktop: {
         url: "claude://claude.ai/new",
+        sessionUrl: "claude://claude.ai/chat",
         behavior: "draft",
         evidence: "verified",
         sources: claudeDesktopChecks,
-        fields: { prompt: "q" },
+        fields: { prompt: "q", session: "" },
         note: "Prefill verified in Claude 6.28899.6 on macOS. Windows and Ubuntu received the exact link and showed first-run onboarding. Signed-in composers on those platforms still need verification.",
       },
       web: {
@@ -515,14 +518,16 @@ const catalog = {
     routes: {
       desktop: {
         url: "codex://threads/new",
+        sessionUrl: "codex://threads",
         behavior: "draft",
         evidence: "source",
         sources: [
+          codexDocs,
           "https://chatgpt.com/cdn/assets/617936.82c33d1781.js",
           "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
           ...openAiDesktopChecks,
         ],
-        fields: { prompt: "prompt" },
+        fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
         note: "The stock Windows and Ubuntu clients received the Chat-mode URL. Visible composer prefill remains unverified.",
       },
@@ -565,10 +570,11 @@ const catalog = {
       },
       desktop: {
         url: "codex://new",
+        sessionUrl: "codex://threads",
         behavior: "draft",
         evidence: "documented",
         sources: [codexDocs, ...openAiDesktopChecks],
-        fields: { prompt: "prompt", path: "path", originUrl: "originUrl" },
+        fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
         note: "Native dispatch checked on macOS, Windows, and Ubuntu. Visible composer prefill remains unverified. The handler tries an existing local path before matching the Git remote.",
       },

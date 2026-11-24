@@ -14,6 +14,7 @@ export interface LinkOptions extends Partial<Record<LinkField, string>> {
 }
 
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
+const conversationId = /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/iu;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
@@ -175,6 +176,11 @@ export function getAgentLink(
   if (route.launchUrl && Object.values(fields).every((value) => !value)) return `${route.launchUrl}${fragment}`;
   if ((route.experimental && !options.allowExperimental) ||
     (route.behavior === "send" && !options.allowSend)) return null;
+  if (route.sessionUrl && fields.session) {
+    if (!conversationId.test(fields.session) ||
+      Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
+    return `${route.sessionUrl}/${fields.session}`;
+  }
   if (agent === "openclaw" && (platform === "desktop" || platform === "ios") && fields.server) {
     return fields.prompt ? null : getOpenClawGatewayLink(fields.server, platform);
   }

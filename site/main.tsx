@@ -138,11 +138,14 @@ function App() {
   const serverKey = hasGatewaySetup ? routeKey : agent;
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
-  const visibleExtraFields = extraFields.filter((field) => Object.hasOwn(route?.fields ?? {}, field));
   const extraValues = extraByAgent[agent] ?? {};
+  const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
+  const visibleExtraFields = extraFields.filter((field) =>
+    Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session"),
+  );
   const options: LinkOptions = {
     ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
-    ...(route?.fields?.prompt && !isGatewaySetup ? { prompt } : {}),
+    ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession ? { prompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "server") && server ? { server } : {}),
     ...(route?.browserOnlyFragment ? { browserOnly: true } : {}),
@@ -160,7 +163,7 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup;
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession;
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
@@ -169,7 +172,8 @@ function App() {
   const reviewLabel = isGatewaySetup ? "Reviews a Gateway address"
     : hasSshOptions ? "Reviews an SSH target"
     : options.folder ? "Reviews a workspace folder" : undefined;
-  const behaviorLabel = reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
+  const behaviorLabel = isExistingSession ? href && "Opens an existing chat"
+    : reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
   const source = sshSource || (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
@@ -247,7 +251,7 @@ function App() {
                   {platforms.map((item) => <option key={item} value={item}>{platformNames[item]}</option>)}
                 </Select>
               </div>
-              {route?.fields?.prompt && !isGatewaySetup && (
+              {route?.fields?.prompt && !isGatewaySetup && !isExistingSession && (
                 <label className="field">
                   <span>Prompt</span>
                   <textarea rows={2} value={prompt} onChange={(event) => setPrompt(event.target.value)} />
@@ -298,7 +302,7 @@ function App() {
                         </Select>
                       ) : (
                         <label className="field" key={field}>
-                          <span>{label}</span>
+                          <span>{field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
                           <input value={extraValues[field] ?? ""} placeholder={placeholder} onChange={(event) => updateExtraField(field, event.target.value)} />
                         </label>
                       );
@@ -328,6 +332,7 @@ function App() {
                 {href ? <code>{href}</code> : (
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
+                    : isExistingSession ? "Enter the ID from the app’s existing chat link."
                     : options.folder ? "Enter an absolute workspace folder path."
                     : isGatewaySetup ? (isIosGateway
                       ? "Enter a Gateway origin with HTTPS or WSS, or use HTTP or WS on a local network."
@@ -350,7 +355,9 @@ function App() {
                 )}
                 {source && <a className="source-link" href={source}>View source</a>}
               </div>
-              {route?.note && <p className="route-note">{route.note}</p>}
+              {isExistingSession ? (
+                <p className="route-note">Uses the app’s documented chat link. The app needs access to that conversation.</p>
+              ) : route?.note && <p className="route-note">{route.note}</p>}
             </div>
           </section>
         </section>
@@ -432,6 +439,7 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
+                : isExistingSession ? "Enter a valid chat ID to generate this example."
                 : options.folder ? "Enter an absolute workspace folder path to generate this example."
                 : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>

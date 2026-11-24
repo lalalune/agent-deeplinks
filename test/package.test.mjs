@@ -386,6 +386,27 @@ test("opens Claude Code in VS Code with an optional draft and session", () => {
   }
 });
 
+test("opens existing desktop chats with the provider's session UUID route", () => {
+  const session = "12345678-1234-4234-9234-123456789abc";
+  const bases = {
+    claude: "claude://claude.ai/chat",
+    chatgpt: "codex://threads",
+    codex: "codex://threads",
+  };
+  for (const [agent, base] of Object.entries(bases)) {
+    assert.equal(getAgentLink(agent, "desktop", { session }), `${base}/${session}`);
+    assert.equal(getAgentRoute(agent, "desktop").sessionUrl, base);
+    assert.equal(getAgentLink(agent, "desktop", { session, prompt: special }), null);
+    assert.equal(getAgentLink(agent, "ios", { session }), null);
+    for (const invalid of ["new", "wake", "local_chat-1", "/", "session?mode=chat", "id#fragment", "%2F", `${session}\n`, "…"]) {
+      assert.equal(getAgentLink(agent, "desktop", { session: invalid }), null);
+    }
+  }
+  assert.equal(getAgentLink("codex", "desktop", { session, path: "/tmp/project" }), null);
+  assert.equal(getAgentLink("codex", "desktop", { session, originUrl: "https://github.com/owner/repo" }), null);
+  assert.equal(getAgentLink("codex", "desktop", { prompt: "Existing new-chat behavior" }), "codex://new?prompt=Existing%20new-chat%20behavior");
+});
+
 test("builds GitHub Copilot draft links and validates their session context", () => {
   const options = { prompt: special, repo: "owner/repo", pr: "123", mode: "interactive" };
   const native = `ghapp://session/new?prompt=${encodeURIComponent(special)}&repo=owner%2Frepo&pr=123&mode=interactive`;
