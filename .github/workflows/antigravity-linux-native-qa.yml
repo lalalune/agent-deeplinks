@@ -1,0 +1,84 @@
+name: Antigravity Linux native link QA
+
+on:
+  push:
+    branches: [codex/antigravity-linux-native-qa]
+
+permissions:
+  contents: read
+
+jobs:
+  stock-tarball:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - name: Build the link generator and prepare Electron inspection
+        run: |
+          npm ci
+          npm run build:package
+          npm install --ignore-scripts --no-save --prefix "$RUNNER_TEMP/antigravity-qa-driver" playwright-core@1.58.2
+      - name: Verify and extract Google's official build
+        run: |
+          evidence="$RUNNER_TEMP/antigravity-linux/evidence"
+          scratch="$RUNNER_TEMP/antigravity-linux"
+          archive="$scratch/Antigravity.tar.gz"
+          mkdir -p "$evidence" "$scratch/app"
+          url='https://storage.googleapis.com/antigravity-public/antigravity-hub/2.35.0-6394266482769920/linux-x64/Antigravity.tar.gz?generation=1795476457641996'
+          curl --fail --location --retry 1 --max-time 95 --max-filesize 213000000 --dump-header "$evidence/download-headers.txt" --output "$archive" "$url"
+          grep -iq '^x-goog-hash:.*crc32c=33y3uA==' "$evidence/download-headers.txt"
+          python3 -m pip install --quiet --target "$scratch/checksum-tools" google-crc32c==1.8.0
+          PYTHONPATH="$scratch/checksum-tools" python3 - "$archive" "$evidence/archive-integrity.json" <<'PY'
+          import base64
+          import hashlib
+          import json
+          import sys
+          from pathlib import Path
+          import google_crc32c
+
+          archive, report = (Path(value) for value in sys.argv[1:])
+          crc = google_crc32c.Checksum()
+          digest = hashlib.sha256()
+          with archive.open("rb") as reader:
+              while block := reader.read(1024 * 1024):
+                  crc.update(block)
+                  digest.update(block)
+          actual = base64.b64encode(crc.digest()).decode("ascii")
+          assert actual == "33y3uA==", actual
+          assert archive.stat().st_size == 211999467, archive.stat().st_size
+          record = {"gcsGeneration": "1795476457641996", "bytes": archive.stat().st_size, "vendorCRC32C": actual, "computedSHA256": digest.hexdigest()}
+          report.write_text(json.dumps(record, indent=2))
+          print(record)
+          PY
+          tar -tzf "$archive" > "$scratch/archive-files.txt"
+          awk 'tolower($0) ~ /\.desktop$|mimeapps\.list$|install[^/]*\.sh$|^([^/]+\/)*antigravity$/' "$scratch/archive-files.txt" | tee "$evidence/desktop-integration-files.txt"
+          tar -xzf "$archive" --no-same-owner -C "$scratch/app"
+          find "$scratch/app" -type f -iname antigravity -executable -print > "$scratch/executables.txt"
+          test "$(wc -l < "$scratch/executables.txt")" -eq 1
+          sudo apt-get install -y --no-install-recommends xvfb xauth dbus-x11 libglib2.0-bin xdg-utils libgtk-3-0t64 libnss3 libasound2t64
+      - name: Check stock URL registration and native launch
+        run: |
+          scratch="$RUNNER_TEMP/antigravity-linux"
+          export ANTIGRAVITY_QA_EXE="$(cat "$scratch/executables.txt")"
+          export HOME="$scratch/home"
+          export XDG_CONFIG_HOME="$HOME/.config"
+          export XDG_DATA_HOME="$HOME/.local/share"
+          export XDG_CACHE_HOME="$HOME/.cache"
+          export XDG_STATE_HOME="$HOME/.local/state"
+          export XDG_CURRENT_DESKTOP=GNOME
+          mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_STATE_HOME"
+          xvfb-run -a --server-args='-screen 0 1366x900x24' dbus-run-session --             node .github/qa/antigravity-linux-native.mjs
+      - name: Save Linux native evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: antigravity-2.35.0-linux-native-evidence
+          path: ${{ runner.temp }}/antigravity-linux/evidence
+          if-no-files-found: warn
+          retention-days: 7
