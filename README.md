@@ -6,13 +6,11 @@ Open AI agents from a website, a README, or an app. The package builds provider 
 
 ## Install
 
-Once the first version is on npm, install it by name.
-
 ```sh
 npm install agent-deeplinks
 ```
 
-You can install the tarball directly from GitHub Releases today.
+You can also install the tarball directly from GitHub Releases.
 
 ```sh
 npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.tgz
@@ -21,7 +19,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.14.tgz
+npm install ./agent-deeplinks-0.1.15.tgz
 ```
 
 ## Usage
@@ -114,8 +112,4 @@ Pushing a version tag matching `package.json` builds and attaches the ZIP and np
 
 ### Publish to npm
 
-For the first npm release, sign in to npm with a publisher account that has two-factor authentication. Download `agent-deeplinks.tgz` from the GitHub release for the version you want to publish and run `npm publish ./agent-deeplinks.tgz --access public`.
-
-After the package exists on npm, register `lalalune/agent-deeplinks` and `npm-publish.yml` as its GitHub Actions trusted publisher and enable direct publishing. Set this up when the next tag is ready so its first trusted publish happens within npm's two-day activation window. [npm trusted publishing setup](https://docs.npmjs.com/trusted-publishers/)
-
-Subsequent matching version tags run the package checks and publish the tarball through GitHub Actions using OpenID Connect.
+Matching version tags run the package checks and publish the tarball through GitHub Actions using npm trusted publishing. The registry publisher is `lalalune/agent-deeplinks` and `npm-publish.yml`. [npm trusted publishing setup](https://docs.npmjs.com/trusted-publishers/)

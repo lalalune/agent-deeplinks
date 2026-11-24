@@ -54,6 +54,10 @@ const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-t
 const claudeVsCodeDocs = "https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const codexMobile = "https://chatgpt.com/app/codex";
+const openAiDesktopChecks = [
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
+] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
@@ -325,16 +329,19 @@ const catalog = {
       web: {
         url: "https://muse.ai/chat?nr=1",
         behavior: "launch",
-        evidence: "observed",
+        evidence: "verified",
         sources: ["https://www.meta.com/en-gb/help/superintelligence/1331373868832401/", "https://muse.ai/.well-known/apple-app-site-association"],
         note: "Opens Muse in the browser. A signed-out browser reaches the Muse sign-in page.",
       },
       desktop: {
         url: "https://agent.meta.ai/chat",
         behavior: "launch",
-        evidence: "source",
-        sources: ["https://agent.meta.ai/.well-known/apple-app-site-association", "https://ai.meta.com/muse/"],
-        note: "macOS only. Muse 13.1 declares this Universal Link. Native delivery still needs a live check.",
+        evidence: "verified",
+        sources: [
+          "https://agent.meta.ai/.well-known/apple-app-site-association",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45450575543/job/138646218114",
+        ],
+        note: "On macOS, this Universal Link selected Muse 13.1 after the app's first launch and domain approval. Fresh installations can open Safari while macOS verifies the domain.",
       },
       ios: {
         url: "https://applink.muse.ai/",
@@ -444,10 +451,14 @@ const catalog = {
         url: "codex://threads/new",
         behavior: "draft",
         evidence: "source",
-        sources: ["https://chatgpt.com/cdn/assets/617936.82c33d1781.js", "https://learn.chatgpt.com/docs/enterprise/windows-deployment"],
+        sources: [
+          "https://chatgpt.com/cdn/assets/617936.82c33d1781.js",
+          "https://learn.chatgpt.com/docs/enterprise/windows-deployment",
+          ...openAiDesktopChecks,
+        ],
         fields: { prompt: "prompt" },
         query: { mode: "chat" },
-        note: "Shipped macOS and Windows builds pass Chat mode and the prompt to the composer. Visible prefill remains unverified.",
+        note: "The stock Windows and Ubuntu clients received the Chat-mode URL. Visible composer prefill remains unverified.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -490,10 +501,10 @@ const catalog = {
         url: "codex://new",
         behavior: "draft",
         evidence: "documented",
-        sources: [codexDocs],
+        sources: [codexDocs, ...openAiDesktopChecks],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl" },
         launchUrl: "codex://threads/new",
-        note: "macOS dispatch checked. Windows and Linux preview packages register codex:. The handler tries an existing local path before matching the Git remote.",
+        note: "Native dispatch checked on macOS, Windows, and Ubuntu. Visible composer prefill remains unverified. The handler tries an existing local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -615,10 +626,14 @@ const catalog = {
         url: "zcode://workspace/open",
         behavior: "launch",
         evidence: "source",
-        sources: ["https://zcode.z.ai/en", "https://github.com/lalalune/agent-deeplinks/actions/runs/45443909533"],
+        sources: [
+          "https://zcode.z.ai/en",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45443909533",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45450238281",
+        ],
         fields: { directory: "path" },
         required: ["directory"],
-        note: "ZCode 4.0.0 accepted the workspace URI through macOS LaunchServices and the Windows Shell. In-app confirmation and workspace opening remain unverified. Linux registration is present in the source.",
+        note: "Native delivery checked on macOS, Windows, and Ubuntu. On Ubuntu, ZCode 4.0.0 showed the exact directory in its confirmation dialog and then displayed sign-in. The signed-in workspace view remains unverified.",
       },
     },
   },
