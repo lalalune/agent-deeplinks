@@ -155,6 +155,8 @@ test("requires opt-in before opening web links with submission or unknown behavi
   assert.equal(kimi.searchParams.get("auto_send"), "false");
   assert.equal(getAgentLink("meta-muse", "web"), "https://muse.ai/chat?nr=1");
   assert.equal(getAgentLink("meta-muse", "web", { prompt: special }), null);
+  assert.equal(getAgentLink("meta-muse", "ios"), "https://applink.muse.ai/");
+  assert.equal(getAgentLink("meta-muse", "android"), "https://play.google.com/store/apps/details?id=com.facebook.aura");
   assert.equal(getAgentLink("claude", "android"), "https://play.google.com/store/apps/details?id=com.anthropic.claude");
   for (const platform of ["ios", "android"]) {
     assert.equal(getAgentLink("codex", platform), "https://chatgpt.com/app/codex");
@@ -209,4 +211,26 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
   assert.equal(getHermesSkillLink("bare-name"), null);
   assert.equal(getHermesSkillLink("official/../skill"), null);
   assert.equal(getHermesSkillLink("file:///tmp/skill.md"), null);
+});
+
+test("opens Claude Code in VS Code with an optional draft and session", () => {
+  const base = "vscode://anthropic.claude-code/open";
+  const session = "12345678-1234-4234-9234-123456789abc";
+  assert.equal(getAgentLink("claude-code", "vscode"), base);
+  assert.equal(getAgentLink("claude-code", "vscode", { session }), `${base}?session=${session}`);
+  assert.equal(
+    getAgentLink("claude-code", "vscode", { prompt: special, session }),
+    `${base}?prompt=${encodeURIComponent(special)}&session=${session}`,
+  );
+  assert.equal(getAgentLink("claude-code", "vscode", { cwd: "/tmp/project" }), null);
+  for (const invalid of ["./a", "a\\b", "a..b", "a\u0000b"]) {
+    assert.equal(getAgentLink("claude-code", "vscode", { session: invalid }), null);
+  }
+});
+
+test("opens the versioned ZCode Remote Control viewer on browser surfaces", () => {
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("zcode", platform), "https://zcode.z.ai/remote/v4?app_version=4.0.0");
+    assert.equal(getAgentLink("zcode", platform, { prompt: special }), null);
+  }
 });

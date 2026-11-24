@@ -30,6 +30,7 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
   provider: { label: "Provider ID" },
   model: { label: "Model ID" },
   botId: { label: "Bot ID" },
+  session: { label: "Session ID" },
 };
 
 const extraFields = Object.keys(extraFieldDetails) as ExtraField[];

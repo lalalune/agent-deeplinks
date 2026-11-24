@@ -17,6 +17,7 @@ const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
+const invalidSessionId = /[\\/\u0000]|\.\./u;
 
 function parseServerUrl(value: string): URL | null {
   try {
@@ -80,6 +81,7 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && fields.mode !== "plan" && fields.mode !== "code") return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
+  if (fields.session && invalidSessionId.test(fields.session)) return null;
   const fragment = browserOnly && route.browserOnlyFragment
     ? `#${encodeURIComponent(route.browserOnlyFragment)}`
     : "";

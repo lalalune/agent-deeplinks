@@ -1,4 +1,4 @@
-export const platforms = ["web", "desktop", "ios", "android", "cli"] as const;
+export const platforms = ["web", "desktop", "ios", "android", "cli", "vscode"] as const;
 export type Platform = (typeof platforms)[number];
 
 export const platformNames: Readonly<Record<Platform, string>> = {
@@ -7,6 +7,7 @@ export const platformNames: Readonly<Record<Platform, string>> = {
   ios: "iOS",
   android: "Android",
   cli: "CLI",
+  vscode: "VS Code",
 };
 
 export type Evidence = "documented" | "source" | "observed" | "verified";
@@ -15,7 +16,8 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
-  | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch";
+  | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
+  | "session";
 
 export interface AgentRoute {
   readonly url: string;
@@ -49,6 +51,7 @@ const cursorCloud = "https://cursor.com/agents";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
+const claudeVsCodeDocs = "https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const codexMobile = "https://chatgpt.com/app/codex";
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
@@ -96,6 +99,14 @@ const claudeCodeMobileRoute = {
   sources: [claudeMobileDocs],
   fields: { prompt: "q", mode: "mode", repo: "repo", branch: "branch" },
   note: "Requires Claude Code access on your account. An empty link opens the session list.",
+} as const satisfies AgentRoute;
+
+const zcodeRemoteRoute = {
+  url: "https://zcode.z.ai/remote/v4?app_version=4.0.0",
+  behavior: "launch",
+  evidence: "source",
+  sources: ["https://zcode.z.ai/en/docs/remote-control", "https://zcode.z.ai/remote/v4/4.0.0/assets/index-FxFL5k5N.js"],
+  note: "Opens the ZCode 4.0.0 Remote Control sign-in page. Connect using the same account and region as an online desktop with Remote Control enabled.",
 } as const satisfies AgentRoute;
 
 const t3Route = {
@@ -299,7 +310,7 @@ const catalog = {
         behavior: "launch",
         evidence: "source",
         sources: ["https://agent.meta.ai/.well-known/apple-app-site-association", "https://ai.meta.com/muse/"],
-        note: "Muse 13.1 for macOS declares this Universal Link. Native delivery still needs a live check.",
+        note: "macOS only. Muse 13.1 declares this Universal Link. Native delivery still needs a live check.",
       },
       ios: {
         url: "https://applink.muse.ai/",
@@ -309,11 +320,11 @@ const catalog = {
         note: "The iOS handoff advertised by Meta for the Muse app.",
       },
       android: {
-        url: "https://applink.muse.ai/",
+        url: "https://play.google.com/store/apps/details?id=com.facebook.aura",
         behavior: "handoff",
-        evidence: "source",
-        sources: ["https://ai.meta.com/muse/", "https://applink.muse.ai/.well-known/assetlinks.json", "https://play.google.com/store/apps/details?id=com.facebook.aura"],
-        note: "Meta associates this host with Muse. Android browser requests returned HTTP 400. Native routing remains unverified.",
+        evidence: "observed",
+        sources: ["https://play.google.com/store/apps/details?id=com.facebook.aura", "https://ai.meta.com/muse/"],
+        note: "Opens Meta’s official Google Play listing. Installed-app routing remains unverified.",
       },
     },
   },
@@ -328,7 +339,7 @@ const catalog = {
         evidence: "verified",
         sources: [claudeDesktopDocs],
         fields: { prompt: "q" },
-        note: "Prefill verified in Claude 6.28899.6 on macOS.",
+        note: "Prefill verified in Claude 6.28899.6 on macOS. Anthropic also documents this route for Windows and the Linux beta.",
       },
       web: {
         url: "https://claude.ai/new",
@@ -376,7 +387,7 @@ const catalog = {
         evidence: "verified",
         sources: [claudeDesktopDocs],
         fields: { prompt: "q", folder: "folder" },
-        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS.",
+        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Anthropic also documents this route for Windows and the Linux beta.",
       },
       ios: claudeCodeMobileRoute,
       android: claudeCodeMobileRoute,
@@ -387,7 +398,16 @@ const catalog = {
         sources: [claudeCodeDocs],
         fields: { prompt: "q", cwd: "cwd", repo: "repo" },
         promptLimit: 5_000,
-        note: "macOS delivery of the exact draft to the terminal process was checked. cwd takes precedence over repo.",
+        note: "macOS terminal delivery checked. Anthropic also documents the Windows and Linux handlers. cwd takes precedence over repo.",
+      },
+      vscode: {
+        url: "vscode://anthropic.claude-code/open",
+        launchUrl: "vscode://anthropic.claude-code/open",
+        behavior: "draft",
+        evidence: "documented",
+        sources: [claudeVsCodeDocs, claudeCodeDocs],
+        fields: { prompt: "prompt", session: "session" },
+        note: "Requires the Claude Code extension for VS Code. A fresh tab can prefill a draft or resume a session. An already open session keeps its existing draft.",
       },
     },
   },
@@ -400,10 +420,10 @@ const catalog = {
         url: "codex://threads/new",
         behavior: "draft",
         evidence: "source",
-        sources: ["https://chatgpt.com/cdn/assets/617936.82c33d1781.js"],
+        sources: ["https://chatgpt.com/cdn/assets/617936.82c33d1781.js", "https://learn.chatgpt.com/docs/enterprise/windows-deployment"],
         fields: { prompt: "prompt" },
         query: { mode: "chat" },
-        note: "ChatGPT Desktop 26.1117.41037 passes Chat mode and the prompt to its composer. Visible prefill remains unverified.",
+        note: "Shipped macOS and Windows builds pass Chat mode and the prompt to the composer. Visible prefill remains unverified.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -449,7 +469,7 @@ const catalog = {
         sources: [codexDocs],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl" },
         launchUrl: "codex://threads/new",
-        note: "macOS dispatch checked. The desktop handler tries an existing local path before matching the Git remote.",
+        note: "macOS dispatch checked. Windows and Linux preview packages register codex:. The handler tries an existing local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -507,7 +527,7 @@ const catalog = {
         behavior: "launch",
         evidence: "verified",
         sources: ["https://www.kimi.com/download"],
-        note: "Launch verified on macOS. Kimi 3.2.27’s handler opens Kimi Work Home.",
+        note: "Launch verified on Apple Silicon macOS. Kimi Work is also offered for Windows 10 or newer.",
       },
       ios: {
         url: kimiMobile,
@@ -535,6 +555,9 @@ const catalog = {
     home: "https://zcode.z.ai/",
     description: "Z.ai’s coding client",
     routes: {
+      web: zcodeRemoteRoute,
+      ios: zcodeRemoteRoute,
+      android: zcodeRemoteRoute,
       desktop: {
         url: "zcode://workspace/open",
         behavior: "launch",
