@@ -39,6 +39,8 @@ The v0.1.12 release passed all 67 Playground entries in Chromium 158, Firefox 15
 
 The v0.1.13 release passed the full Playground matrix for 71 routes and 19 SVGs in all three engines. A fresh install loaded the React entry point and matched the official Kimi Code SVG hash. The ZIP's tarball and demo JavaScript matched the public release and the production assets on both domains. [Production Playground](https://deeplinks.fun/) · [Pages endpoint](https://agent-deeplinks.pages.dev/) · [v0.1.13 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.13)
 
+The v0.1.14 preview passed all 71 Playground routes and 19 SVGs in Chromium 158, Firefox 159, and WebKit 27.2, including the required opt-ins and the 375px layout. Both Cloudflare domains serve the same verified build. A fresh install from GitHub rendered both React button variants, and the ZIP contains the exact published tarball and production JavaScript. [v0.1.14 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.14) · [Release build](https://github.com/lalalune/agent-deeplinks/actions/runs/45448590930)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
