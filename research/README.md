@@ -63,12 +63,19 @@ The v0.1.24 preview passed all 74 exact links, 20 SVGs, both shadcn/ui button st
 
 The v0.1.25 preview passed all 74 exact links, 20 SVGs, both shadcn/ui buttons, and the 375px layout in Chromium 158, Firefox 159, and WebKit 27.2. The Claude Code SSH example showed its confirmation label and official source, generated the expected Unicode URL in both buttons, and withheld its code example when the host was missing. The public Playground, pinned deployment, and ZIP used the tested JavaScript. Fresh npm 12 installs from the ZIP and GitHub tarballs passed with React 18. A fresh install by name returned v0.1.25 with React 19. The canonical npm, GitHub, and ZIP tarballs matched byte for byte. npm reported no invalid or missing signatures or attestations. [Playground](https://playground.agent-deeplinks.pages.dev/) · [Pinned deployment](https://e471f165.agent-deeplinks.pages.dev/) · [v0.1.25 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.25) · [Trusted publish](https://github.com/lalalune/agent-deeplinks/actions/runs/45486275850/job/138772401693)
 
+The v0.1.26 preview passed all 74 exact links, 20 SVGs, both shadcn/ui button styles, selected-route examples, and the 375px layout in Chromium 158, Firefox 159, and WebKit 27.2. The Desktop Cursor example generated the corrected Unicode URL and showed its confirmation label. The Web example showed the vendor handoff’s plus-sign limitation. The public Playground, pinned deployment, and ZIP served the tested JavaScript. Fresh React 18 installs from the ZIP and GitHub tarballs passed. A public install by name returned v0.1.26 with React 19, and npm reported no invalid or missing signatures or attestations. The canonical npm, GitHub, and ZIP tarballs matched byte for byte. [Playground](https://playground.agent-deeplinks.pages.dev/) · [Pinned deployment](https://b98715e9.agent-deeplinks.pages.dev/) · [v0.1.26 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.26) · [Trusted publish](https://github.com/lalalune/agent-deeplinks/actions/runs/45489649192/job/138784220943)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
 - T3 Code's iOS 2.3.0 Release build displayed the exact unsent multiline Unicode draft on an iPhone 17 simulator with iOS 26.4 after pairing to a loopback environment. [Test details](coding-agents.md#t3-code)
 - OpenCode's signed development APK accepted the new pairing helper's exact link and opened a project with a blank composer on Android 16. The production Play build remains untested. [Test details](coding-agents.md#opencode)
 - Android 16 resolved the exact Kimi HTTPS link to the official installed app, which displayed its first-run consent screen. [Test details](other-agents.md#meta-muse-and-kimi)
+
+### Remaining native checks
+
+- Installed mobile dispatch remains open for production builds of ChatGPT and Codex, Claude and Claude Code, Grok and Grok Bot, and Meta Muse. Cursor’s iOS inbox and Kimi’s iOS handoff also still need an installed-app check. T3 Code and OpenClaw have native iOS simulator evidence. OpenCode Android has a signed development-build pairing result. Store builds for those three routes still need checks. [OpenAI and Anthropic](openai-anthropic.md) · [Other mobile routes](other-agents.md)
+- Signed-in review or composer prefill remains open for Cursor, Grok Bot, ChatGPT and Codex Desktop, Claude on Windows and Ubuntu, and Claude Code CLI. The Claude Code Desktop SSH fields were checked in the shipped parser and Playground. The target review requires a signed-in desktop session. [Cursor](coding-agents.md#cursor) · [Claude Code](openai-anthropic.md) · [Grok Bot](other-agents.md#grok-and-grok-bot)
 
 ## Gemini and Perplexity from Slop Date
 
