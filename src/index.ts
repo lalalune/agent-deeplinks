@@ -47,14 +47,15 @@ function isLocalPath(path: string): boolean {
     !path.split(/[\\/]/u).includes("..");
 }
 
-function isWorkspaceUri(value: string): boolean {
-  if (hiddenPathCharacters.test(value)) return false;
+function parseWorkspaceUri(value: string): URL | null {
+  if (value !== value.trim() || hiddenPathCharacters.test(value) ||
+    !/^(?:file:\/|vscode-remote:\/\/)/iu.test(value)) return null;
   try {
     const url = new URL(value);
-    if (!url.pathname.startsWith("/") || url.username || url.password || url.search || url.hash) return false;
-    return url.protocol === "file:" || (url.protocol === "vscode-remote:" && Boolean(url.hostname));
+    if (!url.pathname.startsWith("/") || url.username || url.password || url.search || url.hash) return null;
+    return url.protocol === "file:" || (url.protocol === "vscode-remote:" && url.hostname !== "") ? url : null;
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -94,7 +95,11 @@ export function getAgentLink(
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
   if (fields.session && invalidSessionId.test(fields.session)) return null;
-  if (fields.workspace && !isWorkspaceUri(fields.workspace)) return null;
+  if (fields.workspace) {
+    const workspace = parseWorkspaceUri(fields.workspace);
+    if (!workspace) return null;
+    fields.workspace = workspace.href;
+  }
   if (fields.pr && (!fields.repo || fields.branch || !/^[1-9]\d*$/u.test(fields.pr) ||
     !Number.isSafeInteger(Number(fields.pr)))) return null;
   if (fields.customAgent &&

@@ -304,8 +304,12 @@ test("builds GitHub Copilot draft links and validates their session context", ()
   }
   assert.equal(getAgentLink("github-copilot", "vscode"), null);
   assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "file:///tmp/QA" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: " file:///tmp/QA" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "file:relative" }), null);
   assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "https://example.com/project" }), null);
   assert.equal(getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "file:///tmp/QA?query=1" }), null);
+  const unescapedWorkspace = getAgentLink("github-copilot", "vscode", { prompt: special, workspace: "file:///tmp/QA folder" });
+  assert.equal(decodeVSCodeQuery(unescapedWorkspace).get("workspace"), "file:///tmp/QA%20folder");
   assert.equal(getAgentLink("claude-code", "ios", { prompt: special, mode: "autopilot" }), null);
 });
 
