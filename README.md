@@ -16,6 +16,8 @@ You can also install the tarball directly from GitHub Releases.
 npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.tgz
 ```
 
+On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 install defaults](https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/)
+
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh

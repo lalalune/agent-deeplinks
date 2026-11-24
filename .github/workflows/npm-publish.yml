@@ -37,3 +37,27 @@ jobs:
           npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP"
       - name: Publish tarball
         run: npm publish "$RUNNER_TEMP/agent-deeplinks-${GITHUB_REF_NAME#v}.tgz"
+      - name: Verify the public registry tarball
+        timeout-minutes: 25
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          registry="https://registry.npmjs.org/agent-deeplinks"
+          archive="$RUNNER_TEMP/agent-deeplinks-$version.tgz"
+          metadata="$RUNNER_TEMP/agent-deeplinks-registry.json"
+          public_archive="$RUNNER_TEMP/agent-deeplinks-registry.tgz"
+
+          for attempt in {1..60}; do
+            if curl --fail --silent --max-time 10 \
+                "$registry/$version?verify=$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$attempt" -o "$metadata" &&
+              jq --exit-status --arg version "$version" '.version == $version' "$metadata" >/dev/null &&
+              curl --fail --silent --show-error --max-time 15 \
+                "$registry/-/agent-deeplinks-$version.tgz" -o "$public_archive"; then
+              cmp "$archive" "$public_archive"
+              printf 'Public npm tarball matches the build for agent-deeplinks@%s.\n' "$version"
+              exit 0
+            fi
+            sleep 20
+          done
+
+          echo "::error::npm accepted agent-deeplinks@$version, but the exact version has yet to become publicly installable."
+          exit 1
