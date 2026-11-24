@@ -21,7 +21,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.13.tgz
+npm install ./agent-deeplinks-0.1.14.tgz
 ```
 
 ## Usage

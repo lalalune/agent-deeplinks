@@ -42,6 +42,7 @@ The v0.1.13 release passed the full Playground matrix for 71 routes and 19 SVGs 
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
+- T3 Code's iOS 2.3.0 Release build displayed the exact unsent multiline Unicode draft on an iPhone 17 simulator with iOS 26.4 after pairing to a loopback environment. [Test details](coding-agents.md#t3-code)
 
 ## Gemini and Perplexity from Slop Date
 
