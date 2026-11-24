@@ -2,7 +2,7 @@
 
 Open AI agents from a website, a README, or an app. The package builds provider URLs, includes SVG brand marks, and ships a React link that works with shadcn/ui.
 
-[Demo](https://agent-deeplinks.pages.dev/) · [Download ZIP](https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip) · [Evidence and source notes](research/README.md)
+[Playground](https://playground.agent-deeplinks.pages.dev/) · [Download ZIP](https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip) · [Evidence and source notes](research/README.md)
 
 ## Install
 
