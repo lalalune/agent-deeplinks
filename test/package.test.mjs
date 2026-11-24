@@ -326,6 +326,49 @@ test("opens the OpenClaw macOS Gateway review with an uncredentialed HTTPS addre
   }
 });
 
+test("stages OpenClaw iOS Gateway setup with a host, explicit port, and TLS setting", () => {
+  const gateway = "openclaw://gateway";
+  assert.equal(
+    getAgentLink("openclaw", "ios", { server: "https://gateway.example.invalid:18443/" }),
+    `${gateway}?host=gateway.example.invalid&port=18443&tls=1`,
+  );
+  assert.equal(
+    getAgentLink("openclaw", "ios", { server: "wss://gateway.example.invalid" }),
+    `${gateway}?host=gateway.example.invalid&port=443&tls=1`,
+  );
+  assert.equal(
+    getAgentLink("openclaw", "ios", { server: "https://[2001:db8::1]:65535" }),
+    `${gateway}?host=2001%3Adb8%3A%3A1&port=65535&tls=1`,
+  );
+  assert.equal(
+    getAgentLink("openclaw", "ios", { server: "http://localhost:80" }),
+    `${gateway}?host=localhost&port=80&tls=0`,
+  );
+  assert.equal(
+    getAgentLink("openclaw", "ios", { server: "ws://studio.local" }),
+    `${gateway}?host=studio.local&port=18789&tls=0`,
+  );
+  for (const server of [
+    "ws://10.12.0.2:18789", "http://172.31.0.1", "ws://192.168.0.10", "ws://169.254.20.1",
+    "ws://127.2.3.4", "ws://[::1]", "ws://[::ffff:127.0.0.1]", "ws://[fd00::5]", "ws://[feb0::2]",
+  ]) {
+    assert.equal(new URL(getAgentLink("openclaw", "ios", { server })).searchParams.get("tls"), "0", server);
+  }
+  for (const server of [
+    "https://gateway.example.invalid:0/", "https://gateway.example.invalid:65536/",
+    "http://gateway.example.invalid/", "ws://100.64.0.1/", "ws://172.32.0.1/",
+    "http://10.0.example/", "http://127.0.0.1.example/", "ws://[2001:db8::1]/",
+    "https://gateway.example.invalid/openclaw/", "https://gateway.example.invalid/path/..",
+    "https://person:secret@gateway.example.invalid/", "https://@gateway.example.invalid/",
+    "https://gateway.example.invalid/?", "https://gateway.example.invalid/#",
+    "https://gateway.example.invalid/?token=secret", "https://gateway.example.invalid/#secret",
+  ]) {
+    assert.equal(getAgentLink("openclaw", "ios", { server }), null, server);
+  }
+  assert.equal(getAgentLink("openclaw", "ios", { server: "https://gateway.example.invalid", prompt: special }), null);
+  assert.equal(getAgentLink("openclaw", "desktop", { server: "wss://gateway.example.invalid" }), null);
+});
+
 test("opens Claude Code in VS Code with an optional draft and session", () => {
   const base = "vscode://anthropic.claude-code/open";
   const session = "12345678-1234-4234-9234-123456789abc";

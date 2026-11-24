@@ -76,6 +76,7 @@ The v0.1.27 preview passed the 74-route matrix and decoded all 20 SVGs in Chromi
 
 ### Remaining native checks
 
+- Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)
 - Installed mobile dispatch remains open for production builds of ChatGPT and Codex, Claude and Claude Code, Grok and Grok Bot, and Meta Muse. Cursor’s iOS inbox and Kimi’s iOS handoff also still need an installed-app check. T3 Code and OpenClaw have native iOS simulator evidence. OpenCode Android has a signed development-build pairing result. Store builds for those three routes still need checks. [OpenAI and Anthropic](openai-anthropic.md) · [Other mobile routes](other-agents.md)
 - Cursor's classic editor showed the exact prompt review in the Ubuntu and Windows windows and reported it in the macOS renderer and accessibility tree. Signed-in composer checks remain for Cursor, Grok Bot, ChatGPT and Codex Desktop, Claude on Windows and Ubuntu, and Claude Code CLI. The Claude Code Desktop SSH target review requires a signed-in session. [Cursor](coding-agents.md#cursor) · [Claude Code](openai-anthropic.md) · [Grok Bot](other-agents.md#grok-and-grok-bot)
 

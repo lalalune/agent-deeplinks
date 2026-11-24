@@ -32,6 +32,7 @@ export interface AgentRoute {
   readonly modes?: readonly string[];
   readonly encodeQueryValuesTwice?: boolean;
   readonly serverBehavior?: LinkBehavior;
+  readonly serverSource?: string;
   readonly promptLimit?: number;
   readonly promptLimitUnit?: "grapheme";
   readonly urlLimit?: number;
@@ -51,6 +52,8 @@ export interface Agent {
 const cursorDocs = "https://cursor.com/docs/reference/deeplinks";
 const cursorCloudDocs = "https://cursor.com/docs/cloud-agent";
 const cursorCloud = "https://cursor.com/agents";
+const openClawMacGatewaySource = "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website";
+const openClawIosGatewaySource = "https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
 const claudeDesktopChecks = [
@@ -77,6 +80,7 @@ const slopDate = "https://slop.date/";
 const slopCash = "https://slop.cash/";
 const vibestack = "https://vibestack.fun/";
 const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-association";
+const iosAssociationCheck = "https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
 const grokAndroidAssociation = "https://grok.com/.well-known/assetlinks.json";
 const geminiIos = "https://gemini.google.com/app/download/ios";
@@ -216,17 +220,18 @@ const catalog = {
           cursorDocs,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491150004/job/138789493816",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491628951/job/138791208997",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45492105855/artifacts/14968450079",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460026095/job/138679769952",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460380555/job/138681026834",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45489023213/artifacts/14966850011",
         ],
-        note: "Cursor 3.31.15 opened Create chat with prompt in the running classic editor on macOS and Ubuntu. The exact multiline Unicode text was visible in the Ubuntu window and reported by both renderers.",
+        note: "Cursor 3.31.15 opened Create chat with prompt in the running classic editor on macOS, Ubuntu, and Windows. All three renderers showed the exact multiline Unicode prompt.",
       },
       ios: {
         url: cursorCloud,
         behavior: "launch",
         evidence: "source",
-        sources: [cursorIosAssociation, "https://cursor.com/docs/cloud-agent/mobile"],
+        sources: [cursorIosAssociation, "https://cursor.com/docs/cloud-agent/mobile", iosAssociationCheck],
         note: "Universal Link for the Cursor Cloud Agents inbox. The iPhone browser fallback reached Cursor sign-in.",
       },
       android: {
@@ -280,7 +285,7 @@ const catalog = {
         url: "https://cursor.com/grok-bot/link/v1/prompt",
         behavior: "handoff",
         evidence: "verified",
-        sources: [grokBotDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45488932416/artifacts/14966115165"],
+        sources: [grokBotDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45488932416/artifacts/14966115165", iosAssociationCheck],
         note: "The published Playground opened the native Grok Bot sign-in screen through stock Chrome on Ubuntu after the browser’s one-time approval. The mobile browser preview also produced the exact native URL.",
       },
       desktop: {
@@ -678,7 +683,7 @@ const catalog = {
         url: kimiMobile,
         behavior: "handoff",
         evidence: "source",
-        sources: ["https://kimi.onelink.me/.well-known/apple-app-site-association", kimiMobile],
+        sources: ["https://kimi.onelink.me/.well-known/apple-app-site-association", kimiMobile, iosAssociationCheck],
         note: "Associated with Kimi for iOS. The browser fallback opens the App Store.",
       },
       android: {
@@ -898,11 +903,12 @@ const catalog = {
           "https://github.com/openclaw/openclaw/blob/v2026.11.7/apps/macos/Sources/OpenClaw/DeepLinks.swift",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45473423005/job/138727187042",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45476772927/job/138738941929",
-          "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website",
+          openClawMacGatewaySource,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491339853/job/138790178318",
         ],
         fields: { prompt: "message", server: "" },
         serverBehavior: "confirm",
+        serverSource: openClawMacGatewaySource,
         required: ["prompt"],
         launchUrl: "openclaw://dashboard",
         promptLimit: 240,
@@ -918,13 +924,16 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45448771787/job/138639754996",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45454334627/job/138659607326",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45465579013/job/138699488297",
+          openClawIosGatewaySource,
         ],
-        fields: { prompt: "message" },
+        fields: { prompt: "message", server: "" },
+        serverBehavior: "confirm",
+        serverSource: openClawIosGatewaySource,
         required: ["prompt"],
         launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "The blank link opens native Overview. With a paired Gateway, the prompt link showed the exact message and Run confirmation in a source-built OpenClaw 2026.11.8 app on an iOS 27.2 simulator. App Store and physical device behavior remain unverified.",
+        note: "The blank link opens native Overview. With a paired Gateway, the prompt link showed the exact message and Run confirmation in a source-built OpenClaw 2026.11.8 app on an iOS 27.2 simulator. A Gateway address stages the host, port, and TLS for review.",
       },
       android: {
         url: "http://127.0.0.1:18789/",

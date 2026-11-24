@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.27.tgz
+npm install ./agent-deeplinks-0.1.28.tgz
 ```
 
 ## Usage
@@ -91,11 +91,15 @@ Kimi Code Desktop accepts a local `directory` and opens a fresh draft. Hosted Re
 
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. With a connected Gateway, supplying a prompt opens OpenClaw's run confirmation.
 For the macOS [Add Gateway form](https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website), supply the Gateway HTTPS base address in `server`. The address can include a port and path. The user reviews it and chooses **Connect** in OpenClaw.
+On iOS, pass a Gateway origin in `server` to stage the host, port, and TLS for review. Use HTTPS or WSS for TLS. HTTP and WS are limited to local hosts. Omitted ports use 443 for TLS and 18789 for plaintext. Enter credentials in the app if prompted. [iOS Gateway review](https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985)
 On Android, pass the configured Gateway address in `server` to open its Control UI in a browser.
 
 ```ts
 const gatewaySetup = getAgentLink("openclaw", "desktop", {
   server: "https://gateway.example.com/openclaw/",
+})
+const mobileGatewaySetup = getAgentLink("openclaw", "ios", {
+  server: "https://gateway.example.com:18443",
 })
 ```
 

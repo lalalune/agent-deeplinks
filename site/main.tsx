@@ -133,7 +133,8 @@ function App() {
   const route = getAgentRoute(agent, platform);
   const routeKey = `${agent}/${platform}`;
   const directory = directoryByRoute[routeKey] ?? "";
-  const hasGatewaySetup = agent === "openclaw" && platform === "desktop";
+  const hasGatewaySetup = agent === "openclaw" && (platform === "desktop" || platform === "ios");
+  const isIosGateway = hasGatewaySetup && platform === "ios";
   const serverKey = hasGatewaySetup ? routeKey : agent;
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
@@ -168,8 +169,7 @@ function App() {
     ? href && "Reviews a Gateway address"
     : href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
-  const gatewaySource = isGatewaySetup && route?.sources.find((url) => url.endsWith("#open-the-mac-app-from-a-website"));
-  const source = sshSource || gatewaySource || route?.sources[0];
+  const source = sshSource || (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -268,14 +268,16 @@ function App() {
               {Object.hasOwn(route?.fields ?? {}, "server") && (
                 <label className="field">
                   <span>
-                    {hasGatewaySetup ? "Gateway HTTPS address (optional)" : route?.required?.includes("server")
+                    {isIosGateway ? "Gateway address (optional)"
+                      : hasGatewaySetup ? "Gateway HTTPS address (optional)" : route?.required?.includes("server")
                       ? serverFieldLabels[agent] ?? "Server origin"
                       : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}
                   </span>
                   <input
                     value={server}
                     onChange={(event) => setServerByTarget({ ...serverByTarget, [serverKey]: event.target.value })}
-                    placeholder={hasGatewaySetup ? "https://gateway.example.com/openclaw/" : route?.url}
+                    placeholder={isIosGateway ? "https://gateway.example.com:443"
+                      : hasGatewaySetup ? "https://gateway.example.com/openclaw/" : route?.url}
                   />
                 </label>
               )}
@@ -324,7 +326,9 @@ function App() {
                 {href ? <code>{href}</code> : (
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
-                    : isGatewaySetup ? "Enter an HTTPS address without credentials, a query, or a fragment."
+                    : isGatewaySetup ? (isIosGateway
+                      ? "Enter a Gateway origin with HTTPS or WSS, or use HTTP or WS on a local network."
+                      : "Enter an HTTPS address without credentials, a query, or a fragment.")
                     : !route ? "No deeplink confirmed for this platform." : "Complete the required fields or opt in above."}</p>
                 )}
               </div>
@@ -425,7 +429,7 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
-                : isGatewaySetup ? "Enter a valid Gateway HTTPS address to generate this example."
+                : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
             )}
           </div>

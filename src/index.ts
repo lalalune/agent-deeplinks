@@ -33,6 +33,43 @@ function parseServerUrl(value: string): URL | null {
   }
 }
 
+function isOpenClawLocalHost(hostname: string): boolean {
+  // Apply OpenClaw's plaintext policy to the canonical hostname returned by URL.
+  const host = hostname.replace(/\.$/u, "");
+  if (["localhost", "0.0.0.0", "::", "::1"].includes(host) || host.endsWith(".local")) return true;
+  if (/^(?:f[cd][\da-f]{2}:|fe[89ab][\da-f]:|::ffff:7f[\da-f]{2}:)/u.test(host)) return true;
+  if (!/^(?:\d{1,3}\.){3}\d{1,3}$/u.test(host)) return false;
+  const [first, second = 0] = host.split(".").map(Number);
+  return first === 10 || first === 127 || (first === 192 && second === 168) ||
+    (first === 169 && second === 254) || (first === 172 && second >= 16 && second <= 31);
+}
+
+function getOpenClawGatewayLink(address: string, platform: "desktop" | "ios"): string | null {
+  const match = /^(?:https?|wss?):\/\/([^/\s@\\?#]+)(\/[^\\?#]*)?$/iu.exec(address);
+  if (!match || hiddenPathCharacters.test(address)) return null;
+  let gateway: URL;
+  try {
+    gateway = new URL(address);
+  } catch {
+    return null;
+  }
+  if (gateway.port === "0") return null;
+  if (platform === "desktop") {
+    return gateway.protocol === "https:"
+      ? `openclaw://gateway/add?url=${encodeURIComponent(gateway.href)}`
+      : null;
+  }
+  const [, authority = "", path] = match;
+  if (path && path !== "/") return null;
+  const tls = gateway.protocol === "https:" || gateway.protocol === "wss:";
+  const host = gateway.hostname.replace(/^\[|\]$/gu, "");
+  if (!tls && !isOpenClawLocalHost(host)) return null;
+  // The URL parser removes an explicit default scheme port, which the native setup form still needs.
+  const explicitPort = /:(\d+)$/u.exec(authority)?.[1];
+  const port = explicitPort === undefined ? (tls ? 443 : 18789) : Number(explicitPort);
+  return `openclaw://gateway?host=${encodeURIComponent(host)}&port=${port}&tls=${tls ? 1 : 0}`;
+}
+
 function getOpenCodeOrigin(url: URL): string | null {
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
@@ -138,13 +175,8 @@ export function getAgentLink(
   if (route.launchUrl && Object.values(fields).every((value) => !value)) return `${route.launchUrl}${fragment}`;
   if ((route.experimental && !options.allowExperimental) ||
     (route.behavior === "send" && !options.allowSend)) return null;
-  if (agent === "openclaw" && platform === "desktop" && fields.server) {
-    if (fields.prompt || hiddenPathCharacters.test(fields.server) ||
-      !/^https:\/\/[^/\s@\\?#]+(?:\/[^\\?#]*)?$/iu.test(fields.server)) return null;
-    const gateway = parseServerUrl(fields.server);
-    return gateway && gateway.port !== "0"
-      ? `openclaw://gateway/add?url=${encodeURIComponent(gateway.href)}`
-      : null;
+  if (agent === "openclaw" && (platform === "desktop" || platform === "ios") && fields.server) {
+    return fields.prompt ? null : getOpenClawGatewayLink(fields.server, platform);
   }
   if (route.required?.some((field) => !fields[field]?.trim())) return null;
   if (agent === "github-copilot" && platform !== "vscode" &&
