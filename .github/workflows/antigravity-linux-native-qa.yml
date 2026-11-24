@@ -51,6 +51,7 @@ jobs:
           actual = base64.b64encode(crc.digest()).decode("ascii")
           assert actual == "33y3uA==", actual
           assert archive.stat().st_size == 211999467, archive.stat().st_size
+          assert digest.hexdigest() == "b88719cbd5f408c0121ee77d2974011a2748306b2591d346eb488a20bc51ec29", digest.hexdigest()
           record = {"gcsGeneration": "1795476457641996", "bytes": archive.stat().st_size, "vendorCRC32C": actual, "computedSHA256": digest.hexdigest()}
           report.write_text(json.dumps(record, indent=2))
           print(record)
@@ -66,6 +67,11 @@ jobs:
           scratch="$RUNNER_TEMP/antigravity-linux"
           ANTIGRAVITY_QA_EXE="$(cat "$scratch/executables.txt")"
           export ANTIGRAVITY_QA_EXE
+          sandbox="$(dirname "$ANTIGRAVITY_QA_EXE")/chrome-sandbox"
+          test -f "$sandbox" && test ! -L "$sandbox"
+          sudo chown root:root "$sandbox"
+          sudo chmod 4755 "$sandbox"
+          stat -c '%U:%G %a %n' "$sandbox" > "$scratch/evidence/sandbox-mode.txt"
           export HOME="$scratch/home"
           export XDG_CONFIG_HOME="$HOME/.config"
           export XDG_DATA_HOME="$HOME/.local/share"
