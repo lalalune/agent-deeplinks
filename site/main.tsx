@@ -123,7 +123,7 @@ function App() {
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [prompt, setPrompt] = useState(examplePrompt);
   const [directoryByRoute, setDirectoryByRoute] = useState<Partial<Record<string, string>>>({});
-  const [serverByAgent, setServerByAgent] = useState<Partial<Record<AgentId, string>>>({});
+  const [serverByTarget, setServerByTarget] = useState<Partial<Record<string, string>>>({});
   const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
   const [experimentalRoute, setExperimentalRoute] = useState<string>();
   const [sendRoute, setSendRoute] = useState<string>();
@@ -133,13 +133,17 @@ function App() {
   const route = getAgentRoute(agent, platform);
   const routeKey = `${agent}/${platform}`;
   const directory = directoryByRoute[routeKey] ?? "";
+  const hasGatewaySetup = agent === "openclaw" && platform === "desktop";
+  const serverKey = hasGatewaySetup ? routeKey : agent;
+  const server = serverByTarget[serverKey] ?? "";
+  const isGatewaySetup = hasGatewaySetup && Boolean(server);
   const visibleExtraFields = extraFields.filter((field) => Object.hasOwn(route?.fields ?? {}, field));
   const extraValues = extraByAgent[agent] ?? {};
   const options: LinkOptions = {
     ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
-    ...(route?.fields?.prompt ? { prompt } : {}),
+    ...(route?.fields?.prompt && !isGatewaySetup ? { prompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
-    ...(Object.hasOwn(route?.fields ?? {}, "server") ? { server: serverByAgent[agent] } : {}),
+    ...(Object.hasOwn(route?.fields ?? {}, "server") && server ? { server } : {}),
     ...(route?.browserOnlyFragment ? { browserOnly: true } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
@@ -155,14 +159,17 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const reactExample = href || (!hasSshOptions && getAgentLink(agent, platform, exampleOptions))
+  const reactExample = href || (!hasSshOptions && !isGatewaySetup && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
-  const behaviorLabel = href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
+  const behaviorLabel = isGatewaySetup
+    ? href && "Reviews a Gateway address"
+    : href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
-  const source = sshSource || route?.sources[0];
+  const gatewaySource = isGatewaySetup && route?.sources.find((url) => url.endsWith("#open-the-mac-app-from-a-website"));
+  const source = sshSource || gatewaySource || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -238,7 +245,7 @@ function App() {
                   {platforms.map((item) => <option key={item} value={item}>{platformNames[item]}</option>)}
                 </Select>
               </div>
-              {route?.fields?.prompt && (
+              {route?.fields?.prompt && !isGatewaySetup && (
                 <label className="field">
                   <span>Prompt</span>
                   <textarea rows={2} value={prompt} onChange={(event) => setPrompt(event.target.value)} />
@@ -261,14 +268,14 @@ function App() {
               {Object.hasOwn(route?.fields ?? {}, "server") && (
                 <label className="field">
                   <span>
-                    {route?.required?.includes("server")
+                    {hasGatewaySetup ? "Gateway HTTPS address (optional)" : route?.required?.includes("server")
                       ? serverFieldLabels[agent] ?? "Server origin"
                       : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}
                   </span>
                   <input
-                    value={serverByAgent[agent] ?? ""}
-                    onChange={(event) => setServerByAgent({ ...serverByAgent, [agent]: event.target.value })}
-                    placeholder={route?.url}
+                    value={server}
+                    onChange={(event) => setServerByTarget({ ...serverByTarget, [serverKey]: event.target.value })}
+                    placeholder={hasGatewaySetup ? "https://gateway.example.com/openclaw/" : route?.url}
                   />
                 </label>
               )}
@@ -317,6 +324,7 @@ function App() {
                 {href ? <code>{href}</code> : (
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
+                    : isGatewaySetup ? "Enter an HTTPS address without credentials, a query, or a fragment."
                     : !route ? "No deeplink confirmed for this platform." : "Complete the required fields or opt in above."}</p>
                 )}
               </div>
@@ -417,6 +425,7 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
+                : isGatewaySetup ? "Enter a valid Gateway HTTPS address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
             )}
           </div>

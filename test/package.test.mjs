@@ -159,7 +159,8 @@ test("every catalog route builds a parseable URL with its required fields", () =
       const route = getAgentRoute(entry.id, platform);
       if (!route) continue;
       const options = Object.fromEntries(Object.entries(sample).filter(([field]) =>
-        field.startsWith("allow") || Object.hasOwn(route.fields ?? {}, field)));
+        field.startsWith("allow") ||
+        (Object.hasOwn(route.fields ?? {}, field) && (field !== "server" || route.url.startsWith("http")))));
       const href = getAgentLink(entry.id, platform, options);
       assert.ok(href, `${entry.id}/${platform}`);
       assert.equal(new URL(href).protocol, new URL(options.server ?? route.url).protocol);
@@ -294,6 +295,35 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
   assert.equal(getHermesSkillLink("bare-name"), null);
   assert.equal(getHermesSkillLink("official/../skill"), null);
   assert.equal(getHermesSkillLink("file:///tmp/skill.md"), null);
+});
+
+test("opens the OpenClaw macOS Gateway review with an uncredentialed HTTPS address", () => {
+  const server = "https://gateway.example:18443/a+b/%25/openclaw/";
+  const href = getAgentLink("openclaw", "desktop", { server });
+  const gateway = new URL(href);
+  assert.equal(gateway.protocol, "openclaw:");
+  assert.equal(gateway.host, "gateway");
+  assert.equal(gateway.pathname, "/add");
+  assert.deepEqual([...gateway.searchParams], [["url", server]]);
+  assert.equal(getAgentRoute("openclaw", "desktop").serverBehavior, "confirm");
+  assert.equal(getAgentLink("openclaw", "desktop", { server, prompt: special }), null);
+  for (const invalid of [
+    "http://gateway.example/",
+    "https:/gateway.example/",
+    "https:///gateway.example/",
+    "https://gateway.example:0/",
+    "https://gateway.example:65536/",
+    "https://person:token@gateway.example/",
+    "https://@gateway.example/",
+    "https://gateway.example/?",
+    "https://gateway.example/?token=secret",
+    "https://gateway.example/#",
+    "https://gateway.example/#secret",
+    "https://gate\nway.example/",
+    "https://gateway.example\\path",
+  ]) {
+    assert.equal(getAgentLink("openclaw", "desktop", { server: invalid }), null, invalid);
+  }
 });
 
 test("opens Claude Code in VS Code with an optional draft and session", () => {

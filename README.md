@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.26.tgz
+npm install ./agent-deeplinks-0.1.27.tgz
 ```
 
 ## Usage
@@ -90,7 +90,14 @@ ZCode's web, iOS, and Android links open its versioned Remote Control sign-in pa
 Kimi Code Desktop accepts a local `directory` and opens a fresh draft. Hosted Remote Control uses the same Kimi account as the running host. Supply `server` for another region or for a local address from `kimi web`, then enter the local server token in the browser.
 
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. With a connected Gateway, supplying a prompt opens OpenClaw's run confirmation.
+For the macOS [Add Gateway form](https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website), supply the Gateway HTTPS base address in `server`. The address can include a port and path. The user reviews it and chooses **Connect** in OpenClaw.
 On Android, pass the configured Gateway address in `server` to open its Control UI in a browser.
+
+```ts
+const gatewaySetup = getAgentLink("openclaw", "desktop", {
+  server: "https://gateway.example.com/openclaw/",
+})
+```
 
 Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links). The signed macOS canary displayed the requested skill and destination before installation.
 

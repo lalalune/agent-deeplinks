@@ -138,6 +138,14 @@ export function getAgentLink(
   if (route.launchUrl && Object.values(fields).every((value) => !value)) return `${route.launchUrl}${fragment}`;
   if ((route.experimental && !options.allowExperimental) ||
     (route.behavior === "send" && !options.allowSend)) return null;
+  if (agent === "openclaw" && platform === "desktop" && fields.server) {
+    if (fields.prompt || hiddenPathCharacters.test(fields.server) ||
+      !/^https:\/\/[^/\s@\\?#]+(?:\/[^\\?#]*)?$/iu.test(fields.server)) return null;
+    const gateway = parseServerUrl(fields.server);
+    return gateway && gateway.port !== "0"
+      ? `openclaw://gateway/add?url=${encodeURIComponent(gateway.href)}`
+      : null;
+  }
   if (route.required?.some((field) => !fields[field]?.trim())) return null;
   if (agent === "github-copilot" && platform !== "vscode" &&
     !fields.repo && !fields.prompt?.trim() && !fields.customAgent?.trim()) return null;
