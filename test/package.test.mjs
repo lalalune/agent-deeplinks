@@ -237,6 +237,10 @@ test("builds documented Claude Code mobile drafts and their HTTPS equivalents", 
 test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill reviews", () => {
   assert.equal(getAgentLink("openclaw", "desktop"), "openclaw://dashboard");
   assert.equal(getAgentLink("openclaw", "ios"), "openclaw://dashboard");
+  assert.equal(
+    getAgentLink("openclaw", "ios", { prompt: "iOS link verification only." }),
+    "openclaw://agent?message=iOS%20link%20verification%20only.",
+  );
   assert.equal(new URL(getAgentLink("openclaw", "desktop", { prompt: special })).searchParams.get("message"), special);
   for (const skill of ["official/security/1password", "clawhub/sample-skill", "https://example.com/skill.md"]) {
     assert.equal(new URL(getHermesSkillLink(skill)).searchParams.get("identifier"), skill);
