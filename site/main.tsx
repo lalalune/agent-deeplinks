@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import {
   agents, getAgentIcon, getAgentLink, getAgentRoute, platformNames, platforms,
 } from "../src/index.js";
-import type { AgentId, Evidence, LinkBehavior, LinkOptions, Platform } from "../src/index.js";
+import type { AgentId, Evidence, LinkBehavior, LinkField, LinkOptions, Platform } from "../src/index.js";
 import { AgentIcon, AgentLink } from "../src/react.js";
 import { Button } from "./components/ui/button.js";
 import "./styles.css";
@@ -15,6 +15,24 @@ const release = `${repository}/releases/latest/download/agent-deeplinks.zip`;
 const tarball = `${repository}/releases/latest/download/agent-deeplinks.tgz`;
 const install = `npm install ${tarball}`;
 const examplePrompt = "Read the README and suggest three improvements.";
+
+type ExtraField = Exclude<LinkField, "prompt" | "directory" | "server">;
+type ExtraValues = Partial<Record<ExtraField, string>>;
+
+const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: string }> = {
+  cwd: { label: "Working directory", placeholder: "/absolute/path/to/project" },
+  repo: { label: "GitHub repository", placeholder: "owner/repo" },
+  path: { label: "Workspace path", placeholder: "/absolute/path/to/project" },
+  originUrl: { label: "Git remote URL", placeholder: "https://github.com/owner/repo.git" },
+  folder: { label: "Workspace folder", placeholder: "/absolute/path/to/project" },
+  mode: { label: "Session mode" },
+  branch: { label: "Git branch", placeholder: "main" },
+  provider: { label: "Provider ID" },
+  model: { label: "Model ID" },
+  botId: { label: "Bot ID" },
+};
+
+const extraFields = Object.keys(extraFieldDetails) as ExtraField[];
 
 const evidenceNames: Record<Evidence, string> = {
   verified: "Verified",
@@ -95,6 +113,7 @@ function App() {
   const [prompt, setPrompt] = useState(examplePrompt);
   const [directory, setDirectory] = useState("");
   const [serverByAgent, setServerByAgent] = useState<Partial<Record<AgentId, string>>>({});
+  const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
   const [experimentalRoute, setExperimentalRoute] = useState<string>();
   const [sendRoute, setSendRoute] = useState<string>();
   const [search, setSearch] = useState("");
@@ -102,15 +121,22 @@ function App() {
 
   const route = getAgentRoute(agent, platform);
   const routeKey = `${agent}/${platform}`;
+  const visibleExtraFields = extraFields.filter((field) => Object.hasOwn(route?.fields ?? {}, field));
+  const extraValues = extraByAgent[agent] ?? {};
   const options: LinkOptions = {
+    ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
     ...(route?.fields?.prompt ? { prompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "server") ? { server: serverByAgent[agent] } : {}),
+    ...(route?.browserOnlyFragment ? { browserOnly: true } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
   const href = getAgentLink(agent, platform, options);
-  const isLaunchOption = Boolean(href && href === route?.launchUrl);
+  const reactExample = href
+    ? getReactExample(agent, platform, options)
+    : getReactExample("codex", "desktop", { prompt: examplePrompt });
+  const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const source = route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
@@ -130,6 +156,10 @@ function App() {
     setPlatform(target);
     document.getElementById("playground")?.scrollIntoView({ behavior: "smooth", block: "start" });
     document.getElementById("playground-title")?.focus({ preventScroll: true });
+  }
+
+  function updateExtraField(field: ExtraField, value: string) {
+    setExtraByAgent((previous) => ({ ...previous, [agent]: { ...previous[agent], [field]: value } }));
   }
 
   return (
@@ -206,6 +236,28 @@ function App() {
                   />
                 </label>
               )}
+              {visibleExtraFields.length > 0 && (
+                <details className="extra-fields" key={routeKey}>
+                  <summary>Additional link options</summary>
+                  <div>
+                    {visibleExtraFields.map((field) => {
+                      const { label, placeholder } = extraFieldDetails[field];
+                      return field === "mode" ? (
+                        <Select key={field} label={label} value={extraValues[field] ?? ""} onChange={(value) => updateExtraField(field, value)}>
+                          <option value="">Default</option>
+                          <option value="plan">Plan</option>
+                          <option value="code">Code</option>
+                        </Select>
+                      ) : (
+                        <label className="field" key={field}>
+                          <span>{label}</span>
+                          <input value={extraValues[field] ?? ""} placeholder={placeholder} onChange={(event) => updateExtraField(field, event.target.value)} />
+                        </label>
+                      );
+                    })}
+                  </div>
+                </details>
+              )}
               {route?.experimental && !isLaunchOption && (
                 <label className="opt-in">
                   <input type="checkbox" checked={experimentalRoute === routeKey} onChange={(event) => setExperimentalRoute(event.target.checked ? routeKey : undefined)} />
@@ -233,7 +285,7 @@ function App() {
                 {href ? (
                   <>
                     <Button asChild><AgentLink agent={agent} platform={platform} options={options} /></Button>
-                    <Button asChild variant="outline" size="icon">
+                    <Button asChild variant="outline" size="icon" className="icon-link">
                       <AgentLink agent={agent} platform={platform} options={options} iconOnly />
                     </Button>
                   </>
@@ -318,7 +370,7 @@ function App() {
             </div>
           </div>
           <div className="code-example">
-            <div><CodeXml size={17} aria-hidden="true" /> <span>OpenInCodex.tsx</span><CopyButton value={reactExample} label="Copy code example" iconOnly /></div>
+            <div><CodeXml size={17} aria-hidden="true" /> <span>OpenInAgent.tsx</span><CopyButton value={reactExample} label="Copy code example" iconOnly /></div>
             <pre><code>{reactExample}</code></pre>
           </div>
         </section>
@@ -335,16 +387,24 @@ function App() {
   );
 }
 
-const reactExample = `import { AgentLink } from "agent-deeplinks/react"
+function getReactExample(agent: AgentId, platform: Platform, options: LinkOptions): string {
+  const optionEntries = Object.entries(options).filter(([, value]) => value !== undefined && value !== "");
+  const optionLines = optionEntries.map(([field, value]) => `          ${field}: ${JSON.stringify(value)},`);
+  const optionsProp = optionLines.length ? `\n        options={{\n${optionLines.join("\n")}\n        }}` : "";
+  return `import { AgentLink } from "agent-deeplinks/react"
 import { Button } from "@/components/ui/button"
 
-<Button asChild variant="outline">
-  <AgentLink
-    agent="codex"
-    platform="desktop"
-    options={{ prompt: "Explain this project." }}
-  />
-</Button>`;
+export function OpenInAgent() {
+  return (
+    <Button asChild variant="outline">
+      <AgentLink
+        agent="${agent}"
+        platform="${platform}"${optionsProp}
+      />
+    </Button>
+  )
+}`;
+}
 
 const root = document.getElementById("root");
 if (root) createRoot(root).render(<App />);

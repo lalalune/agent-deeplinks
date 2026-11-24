@@ -135,6 +135,27 @@ test("requires opt-in before opening web links with submission or unknown behavi
   assert.equal(getAgentLink("gemini", "web"), "https://gemini.google.com/app");
   assert.equal(getAgentLink("gemini", "web", { prompt: special }), null);
   assert.equal(new URL(getAgentLink("gemini", "web", { prompt: special, allowExperimental: true })).searchParams.get("q"), special);
+  assert.equal(getAgentLink("gemini", "ios"), "https://gemini.google.com/app/download/ios");
+  assert.equal(getAgentLink("gemini", "android"), "https://gemini.google.com/gemini/download/mobile");
+  assert.equal(getAgentLink("gemini", "android", { prompt: special, allowExperimental: true }), null);
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("kimi", platform), "https://kimi.onelink.me/BZg1/");
+    assert.equal(getAgentLink("kimi", platform, { prompt: special }), null);
+  }
+  const kimi = new URL(getAgentLink("kimi", "android", { prompt: special, allowExperimental: true }));
+  assert.equal(kimi.protocol, "kimi:");
+  assert.equal(kimi.hostname, "page");
+  assert.equal(kimi.pathname, "/chat");
+  assert.equal(kimi.searchParams.get("prompt"), special);
+  assert.equal(kimi.searchParams.get("create_new"), "true");
+  assert.equal(kimi.searchParams.get("auto_send"), "false");
+  assert.equal(getAgentLink("meta-muse", "web"), "https://muse.ai/chat?nr=1");
+  assert.equal(getAgentLink("meta-muse", "web", { prompt: special }), null);
+  assert.equal(getAgentLink("claude", "android"), "https://play.google.com/store/apps/details?id=com.anthropic.claude");
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("codex", platform), "https://chatgpt.com/app/codex");
+    assert.equal(getAgentLink("codex", platform, { prompt: special }), null);
+  }
   assert.equal(getAgentLink("opencode", "desktop"), "opencode://");
   assert.equal(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special }), null);
   assert.ok(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special, allowExperimental: true }));
@@ -154,8 +175,18 @@ test("builds documented Claude Code mobile drafts and their HTTPS equivalents", 
   assert.equal(web.origin, "https://claude.ai");
   assert.equal(web.pathname, "/code/new");
   assert.equal(web.search, ios.search);
+  assert.equal(web.hash, "");
+  const browserOnly = new URL(getAgentLink("claude-code", "web", { ...options, browserOnly: true }));
+  assert.equal(browserOnly.search, ios.search);
+  assert.equal(browserOnly.hash, "#no_universal_links");
   assert.equal(getAgentLink("claude-code", "ios"), "claude://code");
   assert.equal(getAgentLink("claude-code", "web"), "https://claude.ai/code");
+  assert.equal(getAgentLink("claude-code", "web", { browserOnly: true }), "https://claude.ai/code#no_universal_links");
+  assert.equal(getAgentLink("claude", "web", { prompt: special, browserOnly: true }), null);
+  assert.equal(getAgentLink("claude", "web", { browserOnly: true }), "https://claude.ai/new#no_universal_links");
+  const chat = new URL(getAgentLink("claude", "web", { prompt: special, browserOnly: true, allowExperimental: true }));
+  assert.equal(chat.searchParams.get("q"), special);
+  assert.equal(chat.hash, "#no_universal_links");
   assert.equal(getAgentLink("claude-code", "android", { mode: "other" }), null);
   assert.equal(getAgentLink("claude-code", "android", { branch: "main" }), null);
   assert.equal(getAgentLink("claude-code", "ios", { folder: "/tmp/project" }), null);

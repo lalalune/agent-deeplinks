@@ -31,6 +31,7 @@ export interface AgentRoute {
   readonly promptLimitUnit?: "grapheme";
   readonly urlLimit?: number;
   readonly query?: Readonly<Record<string, string>>;
+  readonly browserOnlyFragment?: string;
   readonly experimental?: boolean;
 }
 
@@ -49,17 +50,24 @@ const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
+const codexMobile = "https://chatgpt.com/app/codex";
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
 const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
 const claudeIosAssociation = "https://claude.ai/.well-known/apple-app-site-association";
+const claudeCachedIosAssociation = "https://app-site-association.cdn-apple.com/a/v1/claude.ai";
 const slopDate = "https://slop.date/";
 const slopCash = "https://slop.cash/";
 const vibestack = "https://vibestack.fun/";
 const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-association";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
 const grokAndroidAssociation = "https://grok.com/.well-known/assetlinks.json";
+const geminiIos = "https://gemini.google.com/app/download/ios";
+const geminiAndroid = "https://gemini.google.com/gemini/download/mobile";
+const geminiIosAssociation = "https://gemini.google.com/.well-known/apple-app-site-association";
+const geminiAndroidAssociation = "https://gemini.google.com/.well-known/assetlinks.json";
+const kimiMobile = "https://kimi.onelink.me/BZg1/";
 const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
 const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
 
@@ -216,6 +224,20 @@ const catalog = {
         experimental: true,
         note: "Slop Date uses this older Chrome format. The signed-out browser test showed an empty composer. Signed-in submission behavior is unconfirmed.",
       },
+      ios: {
+        url: geminiIos,
+        behavior: "handoff",
+        evidence: "source",
+        sources: [geminiIosAssociation, geminiIos],
+        note: "Gemini’s iOS Universal Link. The browser fallback opens the App Store.",
+      },
+      android: {
+        url: geminiAndroid,
+        behavior: "handoff",
+        evidence: "source",
+        sources: [geminiAndroidAssociation, geminiAndroid],
+        note: "Matched the installed Gemini app on Android. A device may show a chooser or fall back to Google Play.",
+      },
     },
   },
   perplexity: {
@@ -252,6 +274,13 @@ const catalog = {
     home: "https://muse.ai/",
     description: "Meta’s personal agent",
     routes: {
+      web: {
+        url: "https://muse.ai/chat?nr=1",
+        behavior: "launch",
+        evidence: "observed",
+        sources: ["https://www.meta.com/en-gb/help/superintelligence/1331373868832401/", "https://muse.ai/.well-known/apple-app-site-association"],
+        note: "Opens Muse in the browser. A signed-out browser reaches the Muse sign-in page.",
+      },
       desktop: {
         url: "https://agent.meta.ai/chat",
         behavior: "launch",
@@ -270,8 +299,8 @@ const catalog = {
         url: "https://applink.muse.ai/",
         behavior: "handoff",
         evidence: "source",
-        sources: ["https://ai.meta.com/muse/", "https://applink.muse.ai/.well-known/assetlinks.json"],
-        note: "Meta associates this link with Muse. The browser fallback goes to Google Play.",
+        sources: ["https://ai.meta.com/muse/", "https://applink.muse.ai/.well-known/assetlinks.json", "https://play.google.com/store/apps/details?id=com.facebook.aura"],
+        note: "Meta associates this host with Muse. Android browser requests returned HTTP 400. Native routing remains unverified.",
       },
     },
   },
@@ -290,10 +319,12 @@ const catalog = {
       },
       web: {
         url: "https://claude.ai/new",
+        launchUrl: "https://claude.ai/new",
         behavior: "unknown",
         evidence: "observed",
-        sources: [slopDate],
+        sources: [slopDate, claudeCachedIosAssociation],
         fields: { prompt: "q" },
+        browserOnlyFragment: "no_universal_links",
         experimental: true,
         note: "Published by an integrating site. Prompt handling needs runtime confirmation.",
       },
@@ -303,6 +334,13 @@ const catalog = {
         evidence: "source",
         sources: [claudeIosAssociation],
         note: "Associated iOS URL for a new chat. Native prompt handling needs a device test.",
+      },
+      android: {
+        url: "https://play.google.com/store/apps/details?id=com.anthropic.claude",
+        behavior: "handoff",
+        evidence: "documented",
+        sources: ["https://support.claude.com/en/articles/9612887-install-claude-for-android"],
+        note: "Opens Claude’s official Google Play listing. Native chat routing is unverified.",
       },
     },
   },
@@ -315,8 +353,9 @@ const catalog = {
         ...claudeCodeMobileRoute,
         url: "https://claude.ai/code/new",
         launchUrl: "https://claude.ai/code",
-        sources: [claudeMobileDocs, "https://code.claude.com/docs/en/claude-code-on-the-web"],
-        note: "Opens the new-session composer. The HTTPS link may open the Claude mobile app.",
+        browserOnlyFragment: "no_universal_links",
+        sources: [claudeMobileDocs, "https://code.claude.com/docs/en/claude-code-on-the-web", claudeCachedIosAssociation],
+        note: "Opens the new-session composer. Requires Claude Code cloud-session access.",
       },
       desktop: {
         url: "claude://code/new",
@@ -399,6 +438,20 @@ const catalog = {
         launchUrl: "codex://threads/new",
         note: "macOS dispatch checked. The provider documents the draft composer and path precedence over originUrl.",
       },
+      ios: {
+        url: codexMobile,
+        behavior: "handoff",
+        evidence: "source",
+        sources: ["https://chatgpt.com/.well-known/apple-app-site-association", codexMobile],
+        note: "Matches ChatGPT’s wrapped iOS App Link. The browser falls back to the official App Store listing.",
+      },
+      android: {
+        url: codexMobile,
+        behavior: "handoff",
+        evidence: "observed",
+        sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile"],
+        note: "Android browser requests redirect to ChatGPT on Google Play. Installed-app routing is unverified.",
+      },
     },
   },
   antigravity: {
@@ -440,6 +493,25 @@ const catalog = {
         evidence: "verified",
         sources: ["https://www.kimi.com/download"],
         note: "Launch verified on macOS. Kimi 3.2.27’s handler opens Kimi Work Home.",
+      },
+      ios: {
+        url: kimiMobile,
+        behavior: "handoff",
+        evidence: "source",
+        sources: ["https://kimi.onelink.me/.well-known/apple-app-site-association", kimiMobile],
+        note: "Associated with Kimi for iOS. The browser fallback opens the App Store.",
+      },
+      android: {
+        url: "kimi://page/chat",
+        launchUrl: kimiMobile,
+        behavior: "draft",
+        evidence: "source",
+        sources: ["https://www.kimi.com/download", "https://kimi.onelink.me/.well-known/assetlinks.json", kimiMobile],
+        fields: { prompt: "prompt" },
+        required: ["prompt"],
+        query: { create_new: "true", auto_send: "false" },
+        experimental: true,
+        note: "Kimi 3.1.5 handles the new-chat parameters. Visible prefill needs a device check. An empty link uses the app and Google Play handoff.",
       },
     },
   },

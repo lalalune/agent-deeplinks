@@ -51,6 +51,8 @@ h1 em { color: var(--color-accent); font-style: normal; }
 .field > :is(input, textarea), .field select, .search { min-width: 0; width: 100%; color: var(--color-foreground); border: 1px solid var(--color-line); border-radius: 8px; background: #121512; font-size: 14px; font-weight: 400; }
 .field > :is(input, textarea), .field select { min-height: 38px; padding: 8px 11px; }
 .field textarea { resize: vertical; }
+.extra-fields summary { width: fit-content; color: var(--color-muted); cursor: pointer; font-size: 13px; }
+.extra-fields > div { display: grid; gap: 11px; margin-top: 10px; }
 .select-wrap { position: relative; min-width: 0; }
 .select-wrap select { appearance: none; padding-right: 32px; }
 .select-wrap svg { position: absolute; inset-inline-end: 10px; top: 50%; transform: translateY(-50%); color: var(--color-muted); pointer-events: none; }
@@ -64,6 +66,8 @@ h1 em { color: var(--color-accent); font-style: normal; }
 .result p, .route-note { color: var(--color-muted); font-size: 13px; }
 .panel-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .panel-actions a img { object-fit: contain; }
+.panel-actions .icon-link { background: #e7ebe4; }
+.panel-actions .icon-link:hover { background: #f4f7f1; }
 .panel-actions > .source-link { margin-inline-start: auto; }
 .source-link { color: var(--color-accent); font-size: 14px; text-underline-offset: 4px; }
 .source-link:hover { text-decoration: underline; }

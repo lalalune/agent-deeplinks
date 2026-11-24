@@ -9,6 +9,8 @@ export interface LinkOptions extends Partial<Record<LinkField, string>> {
   allowExperimental?: boolean;
   /** Permit a route that submits the supplied prompt when opened. */
   allowSend?: boolean;
+  /** Apply the provider's iOS Universal Link exclusion when available. */
+  browserOnly?: boolean;
 }
 
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
@@ -55,7 +57,7 @@ export function getAgentLink(
   const route = getAgentRoute(agent, platform);
   if (!route) return null;
 
-  const { allowExperimental: _allowExperimental, allowSend: _allowSend, ...fields } = options;
+  const { allowExperimental: _allowExperimental, allowSend: _allowSend, browserOnly, ...fields } = options;
   for (const [field, value] of Object.entries(fields)) {
     if (value !== undefined && (typeof value !== "string" || !Object.hasOwn(route.fields ?? {}, field))) {
       return null;
@@ -78,7 +80,10 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && fields.mode !== "plan" && fields.mode !== "code") return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (route.launchUrl && Object.values(fields).every((value) => !value)) return route.launchUrl;
+  const fragment = browserOnly && route.browserOnlyFragment
+    ? `#${encodeURIComponent(route.browserOnlyFragment)}`
+    : "";
+  if (route.launchUrl && Object.values(fields).every((value) => !value)) return `${route.launchUrl}${fragment}`;
   if ((route.experimental && !options.allowExperimental) ||
     (route.behavior === "send" && !options.allowSend)) return null;
   if (route.required?.some((field) => !fields[field]?.trim())) return null;
@@ -113,7 +118,8 @@ export function getAgentLink(
   for (const [name, value] of Object.entries(route.query ?? {})) {
     query.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
   }
-  const url = query.length ? `${baseUrl}?${query.join("&")}` : baseUrl;
+  const parameters = query.length ? `?${query.join("&")}` : "";
+  const url = `${baseUrl}${parameters}${fragment}`;
   return route.urlLimit && url.length > route.urlLimit ? null : url;
 }
 
