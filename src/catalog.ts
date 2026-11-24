@@ -17,7 +17,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session" | "pr" | "customAgent" | "workspace";
+  | "session" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
 
 export interface AgentRoute {
   readonly url: string;
@@ -456,9 +456,9 @@ const catalog = {
         url: "claude://code/new",
         behavior: "draft",
         evidence: "verified",
-        sources: claudeDesktopChecks,
-        fields: { prompt: "q", folder: "folder" },
-        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Windows and Ubuntu received the exact link and showed first-run onboarding. Signed-in composers on those platforms still need verification.",
+        sources: [...claudeDesktopChecks, "https://code.claude.com/docs/en/desktop#open-an-ssh-session-from-a-link"],
+        fields: { prompt: "q", folder: "folder", sshHost: "ssh_host", sshPort: "ssh_port", sshFolder: "ssh_folder" },
+        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Windows and Ubuntu received the exact link and showed first-run onboarding. SSH fields require Desktop v2.110.0 or later and confirmation before use. The SSH flow is documented and its signed-in review remains unverified.",
       },
       ios: claudeCodeMobileRoute,
       android: claudeCodeMobileRoute,

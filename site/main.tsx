@@ -25,6 +25,9 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
   path: { label: "Workspace path", placeholder: "/absolute/path/to/project" },
   originUrl: { label: "Git remote URL", placeholder: "https://github.com/owner/repo.git" },
   folder: { label: "Workspace folder", placeholder: "/absolute/path/to/project" },
+  sshHost: { label: "SSH host", placeholder: "dev@build.example.com" },
+  sshPort: { label: "SSH port", placeholder: "2222" },
+  sshFolder: { label: "SSH folder", placeholder: "~/project" },
   workspace: { label: "Workspace folder URI", placeholder: "file:///absolute/path/to/project" },
   mode: { label: "Session mode" },
   branch: { label: "Git branch", placeholder: "main" },
@@ -156,6 +159,7 @@ function App() {
     : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
+  const behaviorLabel = href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
   const source = route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
@@ -305,7 +309,7 @@ function App() {
               <div className="result" aria-live="polite">
                 <div className="result-label">
                   <span>Generated URL</span>
-                  {behavior && <span className="link-behavior">{behaviorNames[behavior]}</span>}
+                  {behaviorLabel && <span className="link-behavior">{behaviorLabel}</span>}
                   {href && <CopyButton value={href} label="Copy generated URL" iconOnly />}
                 </div>
                 {href ? <code>{href}</code> : (

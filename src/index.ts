@@ -19,6 +19,9 @@ const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
+const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
+const sshFolderCharacters = /^[\p{L}\p{N}\p{M}\p{P} +<=>^`|~$]+$/u;
+const excludedSshFolderCharacters = /[\\'\u2018-\u201b\p{Default_Ignorable_Code_Point}\u0590-\u08ff\ufb1d-\ufdff\ufe70-\ufeff\u{10800}-\u{10fff}\u{1e800}-\u{1efff}\u{13441}\u{13442}\u{16910}\u{16fe4}]/u;
 
 function parseServerUrl(value: string): URL | null {
   try {
@@ -45,6 +48,29 @@ function isLocalPath(path: string): boolean {
   return (/^\/(?!\/)|^[a-z]:[\\/]/iu.test(path)) &&
     !hiddenPathCharacters.test(path) &&
     !path.split(/[\\/]/u).includes("..");
+}
+
+function isSshFolder(folder: string): boolean {
+  const withoutMarks = folder.replace(/\p{M}+/gu, "");
+  return /^(?:\/(?!\/)|~(?:\/|$))/u.test(folder) &&
+    folder.length <= 1024 && withoutMarks === withoutMarks.trim() &&
+    !/^\/\.(?:vol|file)(?:\/|$)/iu.test(folder) &&
+    sshFolderCharacters.test(folder) && !excludedSshFolderCharacters.test(folder) &&
+    !folder.split("/").includes("..") && !/\p{M}{4,}/u.test(folder) && !/ {3}/u.test(withoutMarks) &&
+    (folder.match(/ /gu)?.length ?? 0) <= 8;
+}
+
+function isSshTarget(host: string, port?: string, folder?: string): boolean {
+  const hostname = sshHostPattern.exec(host)?.[1];
+  if (!hostname || hiddenPathCharacters.test(host)) return false;
+  // Match Claude Desktop’s check for host values that resemble JSON scalars.
+  try {
+    if (String(JSON.parse(host)) !== host) return false;
+  } catch {
+    // Ordinary hostnames are not JSON values.
+  }
+  if (port && (!/^[1-9]\d{0,4}$/u.test(port) || Number(port) > 65535 || /^[^:]+:\d+$/u.test(hostname))) return false;
+  return !folder || isSshFolder(folder);
 }
 
 function parseWorkspaceUri(value: string): URL | null {
@@ -91,6 +117,8 @@ export function getAgentLink(
   if ([fields.cwd, fields.path, fields.directory, fields.folder].some((path) => path !== undefined && !isLocalPath(path))) {
     return null;
   }
+  if ((fields.sshHost || fields.sshPort || fields.sshFolder) &&
+    (fields.folder || !isSshTarget(fields.sshHost ?? "", fields.sshPort, fields.sshFolder))) return null;
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;

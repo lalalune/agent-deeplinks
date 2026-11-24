@@ -58,6 +58,34 @@ test("encodes provider-specific field names and honors local workspace precedenc
   assert.equal(getAgentLink("hermes", "desktop", { prompt: special }), null);
 });
 
+test("opens Claude Code Desktop’s SSH session review", () => {
+  const base = "claude://code/new";
+  const sshHost = "dev@build.example.com";
+  const sshFolder = "~/QA café + & code";
+  assert.equal(getAgentLink("claude-code", "desktop", { sshHost }), `${base}?ssh_host=dev%40build.example.com`);
+  assert.equal(
+    getAgentLink("claude-code", "desktop", { prompt: special, sshHost, sshPort: "2222", sshFolder }),
+    `${base}?q=${encodeURIComponent(special)}&ssh_host=dev%40build.example.com&ssh_port=2222&ssh_folder=${encodeURIComponent(sshFolder)}`,
+  );
+  assert.equal(
+    getAgentLink("claude-code", "desktop", { sshHost: "dev@::1", sshPort: "65535", sshFolder: "~" }),
+    `${base}?ssh_host=dev%40%3A%3A1&ssh_port=65535&ssh_folder=~`,
+  );
+  for (const options of [
+    { sshPort: "2222" }, { sshFolder }, { sshHost, folder: "/tmp/work" },
+    { sshHost: "-dev@build.example.com" }, { sshHost: "dev@@build.example.com" },
+    { sshHost: "1e2" }, { sshHost: "build.example.com\n" },
+    { sshHost: "build.example.com:2222", sshPort: "22" },
+    ...["0", "022", "65536", "2e2"].map((sshPort) => ({ sshHost, sshPort })),
+    ...["project", "//srv/project", "~someone/work", "~/../private", "~/quote'", "~/line\nbreak"].map((sshFolder) => ({ sshHost, sshFolder })),
+  ]) {
+    assert.equal(getAgentLink("claude-code", "desktop", options), null, JSON.stringify(options));
+  }
+  for (const platform of ["web", "ios", "android", "cli", "vscode"]) {
+    assert.equal(getAgentLink("claude-code", platform, { sshHost }), null);
+  }
+});
+
 test("returns null for undiscovered routes and handles documented size limits", () => {
   assert.equal(getAgentLink("hermes", "ios"), null);
   for (const platform of ["ios", "android"]) {
