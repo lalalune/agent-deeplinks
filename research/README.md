@@ -77,7 +77,7 @@ The v0.1.27 preview passed the 74-route matrix and decoded all 20 SVGs in Chromi
 ### Remaining native checks
 
 - Installed mobile dispatch remains open for production builds of ChatGPT and Codex, Claude and Claude Code, Grok and Grok Bot, and Meta Muse. Cursor’s iOS inbox and Kimi’s iOS handoff also still need an installed-app check. T3 Code and OpenClaw have native iOS simulator evidence. OpenCode Android has a signed development-build pairing result. Store builds for those three routes still need checks. [OpenAI and Anthropic](openai-anthropic.md) · [Other mobile routes](other-agents.md)
-- Cursor's classic editor showed the exact prompt review in the Ubuntu window and reported it in the macOS renderer and accessibility tree. The signed-in composer and Windows review still need validation. Signed-in composer checks also remain for Grok Bot, ChatGPT and Codex Desktop, Claude on Windows and Ubuntu, and Claude Code CLI. The Claude Code Desktop SSH target review requires a signed-in session. [Cursor](coding-agents.md#cursor) · [Claude Code](openai-anthropic.md) · [Grok Bot](other-agents.md#grok-and-grok-bot)
+- Cursor's classic editor showed the exact prompt review in the Ubuntu and Windows windows and reported it in the macOS renderer and accessibility tree. Signed-in composer checks remain for Cursor, Grok Bot, ChatGPT and Codex Desktop, Claude on Windows and Ubuntu, and Claude Code CLI. The Claude Code Desktop SSH target review requires a signed-in session. [Cursor](coding-agents.md#cursor) · [Claude Code](openai-anthropic.md) · [Grok Bot](other-agents.md#grok-and-grok-bot)
 
 ## Gemini and Perplexity from Slop Date
 
