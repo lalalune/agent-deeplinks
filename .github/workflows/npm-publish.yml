@@ -1,0 +1,39 @@
+name: Publish to npm
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
+      - name: Verify release tag
+        run: |
+          version=$(node -p 'require("./package.json").version')
+          if [[ "$GITHUB_REF_NAME" != "v$version" ]]; then
+            echo "Tag $GITHUB_REF_NAME does not match package version $version."
+            exit 1
+          fi
+      - name: Build and test package
+        run: |
+          npm ci
+          npm run check
+          npm test
+          npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP"
+      - name: Publish tarball
+        run: npm publish "$RUNNER_TEMP/agent-deeplinks-${GITHUB_REF_NAME#v}.tgz"

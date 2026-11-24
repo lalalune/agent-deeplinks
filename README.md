@@ -6,6 +6,14 @@ Open AI agents from a website, a README, or an app. The package builds provider 
 
 ## Install
 
+Once the first version is on npm, install it by name.
+
+```sh
+npm install agent-deeplinks
+```
+
+You can install the tarball directly from GitHub Releases today.
+
 ```sh
 npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.tgz
 ```
@@ -102,4 +110,12 @@ npm run release:zip
 
 The npm package builds into `dist/` and the static site builds into `site/dist/`. Point a Cloudflare Pages Git project at the repository with build command `npm run build:site` and output directory `site/dist`. For a Direct Upload project, build locally and run `npx wrangler pages deploy site/dist --project-name agent-deeplinks`.
 
-Pushing a version tag matching `package.json` builds and attaches the ZIP and npm tarball to a GitHub release. npm registry publishing requires a publisher account.
+Pushing a version tag matching `package.json` builds and attaches the ZIP and npm tarball to a GitHub release.
+
+### Publish to npm
+
+For the first npm release, sign in to npm with a publisher account that has two-factor authentication. Download `agent-deeplinks.tgz` from the GitHub release for the version you want to publish and run `npm publish ./agent-deeplinks.tgz --access public`.
+
+After the package exists on npm, register `lalalune/agent-deeplinks` and `npm-publish.yml` as its GitHub Actions trusted publisher and enable direct publishing. Set this up when the next tag is ready so its first trusted publish happens within npm's two-day activation window. [npm trusted publishing setup](https://docs.npmjs.com/trusted-publishers/)
+
+Subsequent matching version tags run the package checks and publish the tarball through GitHub Actions using OpenID Connect.
