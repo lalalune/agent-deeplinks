@@ -1,0 +1,7 @@
+node_modules/
+dist/
+site/dist/
+artifacts/
+src/generated-icons.ts
+.wrangler/
+.DS_Store
