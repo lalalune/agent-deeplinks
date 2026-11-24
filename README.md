@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.6.tgz
+npm install ./agent-deeplinks-0.1.7.tgz
 ```
 
 ## Usage
@@ -35,6 +35,8 @@ Experimental routes require `allowExperimental: true`. Routes that auto-submit r
 Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
 
 For Claude and Claude Code web links, use `browserOnly: true` to keep the link in the browser on iOS. Leave it unset for the usual Universal Link handoff.
+
+Codex desktop links can carry both an absolute `path` and an `originUrl`. The desktop app tries the local path first and then matches the remote if the path does not resolve to a directory.
 
 For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the links use each product's localhost default. OpenCode accepts its server origin and an optional project directory.
 

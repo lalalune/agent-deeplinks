@@ -19,7 +19,7 @@ test("encodes provider-specific field names and honors local workspace precedenc
   );
   assert.equal(
     getAgentLink("codex", "desktop", { path: "C:\\Dev\\repo", originUrl: "https://example.com/a/b.git" }),
-    "codex://new?path=C%3A%5CDev%5Crepo",
+    "codex://new?path=C%3A%5CDev%5Crepo&originUrl=https%3A%2F%2Fexample.com%2Fa%2Fb.git",
   );
   assert.equal(getAgentLink("claude-code", "cli", { cwd: "//host/share" }), null);
   assert.equal(getAgentLink("claude-code", "cli", { cwd: "/repo/../other" }), null);
@@ -161,6 +161,8 @@ test("requires opt-in before opening web links with submission or unknown behavi
     assert.equal(getAgentLink("codex", platform, { prompt: special }), null);
   }
   assert.equal(getAgentLink("opencode", "desktop"), "opencode://");
+  assert.equal(getAgentLink("opencode", "android"), "opencode://");
+  assert.equal(getAgentLink("opencode", "android", { prompt: special }), null);
   const openCodeDraft = new URL(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special }));
   assert.equal(openCodeDraft.searchParams.get("directory"), "/tmp/project");
   assert.equal(openCodeDraft.searchParams.get("prompt"), special);

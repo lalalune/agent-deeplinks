@@ -108,7 +108,6 @@ export function getAgentLink(
   for (const [field, parameter] of Object.entries(route.fields ?? {})) {
     if (!parameter) continue;
     if (field === "repo" && fields.cwd) continue;
-    if (field === "originUrl" && fields.path) continue;
     const value = fields[field as LinkField];
     if (value !== undefined && value !== "") {
       const wellFormed = value.replace(/[\ud800-\udfff]/gu, "\ufffd");

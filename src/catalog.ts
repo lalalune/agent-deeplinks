@@ -398,7 +398,7 @@ const catalog = {
         sources: ["https://chatgpt.com/cdn/assets/617936.82c33d1781.js"],
         fields: { prompt: "prompt" },
         query: { mode: "chat" },
-        note: "The ChatGPT web client emits this handoff for Chat mode in the unified desktop app.",
+        note: "ChatGPT Desktop 26.1117.41037 passes Chat mode and the prompt to its composer. Visible prefill remains unverified.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -444,7 +444,7 @@ const catalog = {
         sources: [codexDocs],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl" },
         launchUrl: "codex://threads/new",
-        note: "macOS dispatch checked. The provider documents the draft composer and path precedence over originUrl.",
+        note: "macOS dispatch checked. The desktop handler tries an existing local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -596,6 +596,13 @@ const catalog = {
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
         note: "Version 2.4.1 on macOS opened the requested Git project and prefilled the exact draft. Version 1.19.6 left the composer empty.",
+      },
+      android: {
+        url: "opencode://",
+        behavior: "launch",
+        evidence: "source",
+        sources: ["https://github.com/anomalyco/opencode-android/blob/v0.8.7/app/src/main/AndroidManifest.xml"],
+        note: "Opens the Android client. The app handles sessions and pairing through separate routes.",
       },
     },
   },
