@@ -15,7 +15,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
-  | "provider" | "model" | "botId" | "folder" | "server";
+  | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch";
 
 export interface AgentRoute {
   readonly url: string;
@@ -26,6 +26,7 @@ export interface AgentRoute {
   readonly fields?: Readonly<Partial<Record<LinkField, string>>>;
   readonly required?: readonly LinkField[];
   readonly launchUrl?: string;
+  readonly serverBehavior?: LinkBehavior;
   readonly promptLimit?: number;
   readonly promptLimitUnit?: "grapheme";
   readonly urlLimit?: number;
@@ -44,16 +45,20 @@ export interface Agent {
 const cursorDocs = "https://cursor.com/docs/reference/deeplinks";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
+const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
+const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
 const claudeIosAssociation = "https://claude.ai/.well-known/apple-app-site-association";
 const slopDate = "https://slop.date/";
 const slopCash = "https://slop.cash/";
 const vibestack = "https://vibestack.fun/";
 const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-association";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
+const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
+const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
 
 const cursorRoute = {
   behavior: "draft",
@@ -63,6 +68,16 @@ const cursorRoute = {
   required: ["prompt"],
   urlLimit: 10_000,
 } as const satisfies Omit<AgentRoute, "url">;
+
+const claudeCodeMobileRoute = {
+  url: "claude://code/new",
+  launchUrl: "claude://code",
+  behavior: "draft",
+  evidence: "documented",
+  sources: [claudeMobileDocs],
+  fields: { prompt: "q", mode: "mode", repo: "repo", branch: "branch" },
+  note: "Requires Claude Code access on your account. An empty link opens the session list.",
+} as const satisfies AgentRoute;
 
 const t3Route = {
   behavior: "draft",
@@ -83,6 +98,17 @@ const grokBotRoute = {
   promptLimit: 1_000,
   urlLimit: 2_048,
   note: "Uses your primary Bot unless you specify a Bot ID.",
+} as const satisfies AgentRoute;
+
+const perplexitySearchRoute = {
+  url: "https://www.perplexity.ai/search",
+  behavior: "send",
+  evidence: "source",
+  sources: [perplexitySearchSpec, slopDate],
+  fields: { prompt: "q" },
+  required: ["prompt"],
+  query: { s: "o" },
+  note: "Starts a Perplexity search, which may submit immediately on open.",
 } as const satisfies AgentRoute;
 
 const catalog = {
@@ -148,6 +174,40 @@ const catalog = {
       desktop: grokBotRoute,
       ios: grokBotRoute,
       android: grokBotRoute,
+    },
+  },
+  gemini: {
+    name: "Gemini",
+    home: "https://gemini.google.com/",
+    description: "Google’s AI assistant",
+    routes: {
+      web: {
+        url: "https://gemini.google.com/app",
+        launchUrl: "https://gemini.google.com/app",
+        behavior: "unknown",
+        evidence: "observed",
+        sources: [
+          slopDate,
+          "https://chromium.googlesource.com/chromium/src/+/refs/tags/140.0.7339.81/components/search_engines/template_url_starter_pack_data.cc",
+        ],
+        fields: { prompt: "q" },
+        required: ["prompt"],
+        experimental: true,
+        note: "Slop Date uses this older Chrome format. The signed-out browser test showed an empty composer. Signed-in submission behavior is unconfirmed.",
+      },
+    },
+  },
+  perplexity: {
+    name: "Perplexity",
+    home: "https://www.perplexity.ai/",
+    description: "AI search and research",
+    routes: {
+      web: { ...perplexitySearchRoute, launchUrl: "https://www.perplexity.ai/" },
+      ios: {
+        ...perplexitySearchRoute,
+        sources: [perplexityIosAssociation, perplexitySearchSpec],
+        note: "iOS associates the search path with the app. The web fallback may submit immediately. Native query handling is unverified.",
+      },
     },
   },
   "meta-ai": {
@@ -231,11 +291,11 @@ const catalog = {
     description: "Anthropic’s coding agent",
     routes: {
       web: {
-        url: "https://claude.ai/code",
-        behavior: "launch",
-        evidence: "documented",
-        sources: ["https://code.claude.com/docs/en/claude-code-on-the-web"],
-        note: "Opens the hosted Claude Code workspace.",
+        ...claudeCodeMobileRoute,
+        url: "https://claude.ai/code/new",
+        launchUrl: "https://claude.ai/code",
+        sources: [claudeMobileDocs, "https://code.claude.com/docs/en/claude-code-on-the-web"],
+        note: "Opens the new-session composer. The HTTPS link may open the Claude mobile app.",
       },
       desktop: {
         url: "claude://code/new",
@@ -245,6 +305,8 @@ const catalog = {
         fields: { prompt: "q", folder: "folder" },
         note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS.",
       },
+      ios: claudeCodeMobileRoute,
+      android: claudeCodeMobileRoute,
       cli: {
         url: "claude-cli://open",
         behavior: "draft",
@@ -285,6 +347,13 @@ const catalog = {
         evidence: "source",
         sources: ["https://chatgpt.com/.well-known/apple-app-site-association"],
         note: "An iOS Universal Link for a blank ChatGPT conversation.",
+      },
+      android: {
+        url: "https://chatgpt.com/app",
+        behavior: "handoff",
+        evidence: "observed",
+        sources: ["https://chatgpt.com/app", "https://chatgpt.com/.well-known/assetlinks.json"],
+        note: "Android browsers reach the official Google Play listing. Installed-app routing is unverified.",
       },
     },
   },
@@ -365,7 +434,7 @@ const catalog = {
         sources: ["https://zcode.z.ai/en"],
         fields: { directory: "path" },
         required: ["directory"],
-        note: "Opens an existing local folder after confirmation. Shipped with the ZCode 4.0.0 Finder integration on macOS.",
+        note: "Opens an existing local folder after confirmation. macOS accepted the URL for ZCode 4.0.0.",
       },
     },
   },
@@ -378,7 +447,9 @@ const catalog = {
         ...t3Route,
         url: "https://app.t3.codes/new",
         behavior: "handoff",
-        note: "Choose a connected browser environment or open T3 Code.",
+        serverBehavior: "draft",
+        fields: { ...t3Route.fields, server: "" },
+        note: "Leave the server blank for T3’s hosted chooser. With a server origin, draft prefill works in a previously paired, connected browser. Tested in v0.1.11.",
       },
       desktop: {
         ...t3Route,
@@ -410,12 +481,17 @@ const catalog = {
       },
       desktop: {
         url: "opencode://new-session",
+        launchUrl: "opencode://",
         behavior: "draft",
         evidence: "source",
-        sources: [`${openCodeTag}/packages/app/src/pages/layout/deep-links.ts`, `${openCodeTag}/packages/app/src/pages/session.tsx#L370`],
+        sources: [
+          `${openCodeDesktopTag}/packages/app/src/shell/deep-links/deep-links.ts`,
+          `${openCodeDesktopTag}/packages/app/src/shell/deep-links/machine.ts`,
+        ],
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
-        note: "Requires a local project directory. Cold and warm macOS delivery was checked in OpenCode 1.19.6.",
+        experimental: true,
+        note: "Version 2.4.1 handled the target Git project. Draft prefill remains unverified. Version 1.19.6 left the composer empty.",
       },
     },
   },
@@ -435,9 +511,9 @@ const catalog = {
       desktop: {
         url: "hermes://launch",
         behavior: "launch",
-        evidence: "documented",
+        evidence: "verified",
         sources: ["https://hermes-agent.nousresearch.com/docs/user-guide/desktop#settings--onboarding"],
-        note: "Opens Hermes Desktop.",
+        note: "Launch-handler receipt verified in Hermes Desktop 0.23.3 canary on macOS.",
       },
     },
   },

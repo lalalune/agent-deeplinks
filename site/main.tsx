@@ -110,6 +110,8 @@ function App() {
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
   const href = getAgentLink(agent, platform, options);
+  const isLaunchOption = Boolean(href && href === route?.launchUrl);
+  const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const source = route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
@@ -196,7 +198,7 @@ function App() {
               )}
               {Object.hasOwn(route?.fields ?? {}, "server") && (
                 <label className="field">
-                  <span>{route?.required?.includes("server") ? "Server origin" : "Web app address (optional)"}</span>
+                  <span>{route?.required?.includes("server") ? "Server origin" : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}</span>
                   <input
                     value={serverByAgent[agent] ?? ""}
                     onChange={(event) => setServerByAgent({ ...serverByAgent, [agent]: event.target.value })}
@@ -204,13 +206,13 @@ function App() {
                   />
                 </label>
               )}
-              {route?.experimental && (
+              {route?.experimental && !isLaunchOption && (
                 <label className="opt-in">
                   <input type="checkbox" checked={experimentalRoute === routeKey} onChange={(event) => setExperimentalRoute(event.target.checked ? routeKey : undefined)} />
                   Try a link with unconfirmed behavior
                 </label>
               )}
-              {route?.behavior === "send" && (
+              {route?.behavior === "send" && !isLaunchOption && (
                 <label className="opt-in">
                   <input type="checkbox" checked={sendRoute === routeKey} onChange={(event) => setSendRoute(event.target.checked ? routeKey : undefined)} />
                   Allow the link to submit the prompt
@@ -220,7 +222,7 @@ function App() {
               <div className="result" aria-live="polite">
                 <div className="result-label">
                   <span>Generated URL</span>
-                  {route && <span className="link-behavior">{behaviorNames[href && href === route.launchUrl ? "launch" : route.behavior]}</span>}
+                  {behavior && <span className="link-behavior">{behaviorNames[behavior]}</span>}
                   {href && <CopyButton value={href} label="Copy generated URL" iconOnly />}
                 </div>
                 {href ? <code>{href}</code> : (

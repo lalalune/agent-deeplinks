@@ -98,6 +98,59 @@ test("opens configured self-hosted Web apps from another device", () => {
   assert.equal(getAgentLink("hermes", "web", { server: "javascript:alert(1)" }), null);
 });
 
+test("builds T3 Code hosted and previously paired self-hosted Web drafts", () => {
+  const hosted = new URL(getAgentLink("t3-code", "web", { prompt: special }));
+  assert.equal(hosted.origin, "https://app.t3.codes");
+  assert.equal(hosted.pathname, "/new");
+  assert.equal(hosted.searchParams.get("prompt"), special);
+  const server = "http://127.0.0.1:43943";
+  const loopback = new URL(getAgentLink("t3-code", "web", { prompt: special, server, repo: "owner/project" }));
+  assert.equal(loopback.origin, server);
+  assert.equal(loopback.pathname, "/new");
+  assert.equal(loopback.searchParams.get("prompt"), special);
+  assert.equal(loopback.searchParams.get("repo"), "owner/project");
+  assert.equal(getAgentLink("t3-code", "web", { prompt: special, server: "https://t3.example/base" }), null);
+  assert.equal(getAgentRoute("t3-code", "web").serverBehavior, "draft");
+});
+
+test("requires opt-in before opening web links with submission or unknown behavior", () => {
+  assert.equal(getAgentLink("perplexity", "web"), "https://www.perplexity.ai/");
+  for (const platform of ["web", "ios"]) {
+    assert.equal(getAgentLink("perplexity", platform, { prompt: special }), null);
+    const link = new URL(getAgentLink("perplexity", platform, { prompt: special, allowSend: true }));
+    assert.equal(link.pathname, "/search");
+    assert.equal(link.searchParams.get("s"), "o");
+    assert.equal(link.searchParams.get("q"), special);
+  }
+  assert.equal(getAgentLink("gemini", "web"), "https://gemini.google.com/app");
+  assert.equal(getAgentLink("gemini", "web", { prompt: special }), null);
+  assert.equal(new URL(getAgentLink("gemini", "web", { prompt: special, allowExperimental: true })).searchParams.get("q"), special);
+  assert.equal(getAgentLink("opencode", "desktop"), "opencode://");
+  assert.equal(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special }), null);
+  assert.ok(getAgentLink("opencode", "desktop", { directory: "/tmp/project", prompt: special, allowExperimental: true }));
+});
+
+test("builds documented Claude Code mobile drafts and their HTTPS equivalents", () => {
+  const options = { prompt: special, mode: "plan", repo: "owner/repo", branch: "feature/café" };
+  const ios = new URL(getAgentLink("claude-code", "ios", options));
+  assert.equal(ios.protocol, "claude:");
+  assert.equal(ios.hostname, "code");
+  assert.equal(ios.pathname, "/new");
+  assert.deepEqual(Object.fromEntries(ios.searchParams), {
+    q: special, mode: options.mode, repo: options.repo, branch: options.branch,
+  });
+  assert.equal(getAgentLink("claude-code", "android", options), ios.href);
+  const web = new URL(getAgentLink("claude-code", "web", options));
+  assert.equal(web.origin, "https://claude.ai");
+  assert.equal(web.pathname, "/code/new");
+  assert.equal(web.search, ios.search);
+  assert.equal(getAgentLink("claude-code", "ios"), "claude://code");
+  assert.equal(getAgentLink("claude-code", "web"), "https://claude.ai/code");
+  assert.equal(getAgentLink("claude-code", "android", { mode: "other" }), null);
+  assert.equal(getAgentLink("claude-code", "android", { branch: "main" }), null);
+  assert.equal(getAgentLink("claude-code", "ios", { folder: "/tmp/project" }), null);
+});
+
 test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill reviews", () => {
   assert.equal(getAgentLink("openclaw", "desktop"), "openclaw://dashboard");
   assert.equal(getAgentLink("openclaw", "ios"), "openclaw://dashboard");

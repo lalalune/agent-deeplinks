@@ -53,8 +53,7 @@ export function getAgentLink(
   options: LinkOptions = {},
 ): string | null {
   const route = getAgentRoute(agent, platform);
-  if (!route || (route.experimental && !options.allowExperimental) ||
-    (route.behavior === "send" && !options.allowSend)) return null;
+  if (!route) return null;
 
   const { allowExperimental: _allowExperimental, allowSend: _allowSend, ...fields } = options;
   for (const [field, value] of Object.entries(fields)) {
@@ -77,7 +76,11 @@ export function getAgentLink(
     return null;
   }
   if (fields.model && !fields.provider) return null;
+  if (fields.mode && fields.mode !== "plan" && fields.mode !== "code") return null;
+  if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
   if (route.launchUrl && Object.values(fields).every((value) => !value)) return route.launchUrl;
+  if ((route.experimental && !options.allowExperimental) ||
+    (route.behavior === "send" && !options.allowSend)) return null;
   if (route.required?.some((field) => !fields[field]?.trim())) return null;
 
   let baseUrl = route.url;
@@ -88,6 +91,9 @@ export function getAgentLink(
       const origin = getOpenCodeOrigin(server);
       if (!origin) return null;
       baseUrl = fields.directory ? `${origin}/${encodeDirectory(fields.directory)}/session` : origin;
+    } else if (agent === "t3-code") {
+      if (server.pathname !== "/") return null;
+      baseUrl = `${server.origin}/new`;
     } else {
       baseUrl = server.href;
     }

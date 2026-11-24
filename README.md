@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.2.tgz
+npm install ./agent-deeplinks-0.1.3.tgz
 ```
 
 ## Usage
@@ -32,7 +32,11 @@ console.log(url, route?.behavior, agents.cursor.name)
 
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
 
+Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
+
 For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the links use each product's localhost default. OpenCode accepts its server origin and an optional project directory.
+
+T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server and let the workspace connect first.
 
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. Supplying a prompt opens OpenClaw's run confirmation.
 
