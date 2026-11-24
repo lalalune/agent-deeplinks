@@ -45,10 +45,14 @@ The v0.1.15 preview passed the same 71-route matrix in Chromium 158, Firefox 159
 
 The v0.1.16 preview passed all 71 routes, 19 SVGs, both shadcn/ui buttons, the 375px layout, and the displayed npm command in Chromium 158, Firefox 159, and WebKit 27.2. The published Playground matches the ZIP's demo JavaScript. The npm registry, GitHub release, and ZIP carry the same tarball. A fresh signed-out `npm install agent-deeplinks` installed v0.1.16 and verified the new OpenClaw and Claude Code evidence, React variants, and SVG exports. Signature and attestation checks passed. [Playground](https://playground.agent-deeplinks.pages.dev/) · [Pinned deployment](https://7d12b478.agent-deeplinks.pages.dev/) · [v0.1.16 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.16) · [Trusted npm publish](https://github.com/lalalune/agent-deeplinks/actions/runs/45458805449)
 
+The v0.1.17 preview passed 71 exact Playground links, 19 SVGs, both shadcn/ui button variants, and the 375px layout in Chromium 158, Firefox 159, and WebKit 27.2. A signed-out `npm install agent-deeplinks` returned v0.1.17 and loaded the new pairing helper. Signature and attestation checks passed. npm, the GitHub release, and the ZIP carry byte-identical tarballs, and the ZIP demo JavaScript matches the published Playground. [Playground](https://playground.agent-deeplinks.pages.dev/) · [Pinned deployment](https://b9633d29.agent-deeplinks.pages.dev/) · [v0.1.17 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.17) · [Trusted npm publish](https://github.com/lalalune/agent-deeplinks/actions/runs/45461124215)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
 - T3 Code's iOS 2.3.0 Release build displayed the exact unsent multiline Unicode draft on an iPhone 17 simulator with iOS 26.4 after pairing to a loopback environment. [Test details](coding-agents.md#t3-code)
+- OpenCode's signed development APK accepted the new pairing helper's exact link and opened a project with a blank composer on Android 16. The production Play build remains untested. [Test details](coding-agents.md#opencode)
+- Android 16 resolved the exact Kimi HTTPS link to the official installed app, which displayed its first-run consent screen. [Test details](other-agents.md#meta-muse-and-kimi)
 
 ## Gemini and Perplexity from Slop Date
 
