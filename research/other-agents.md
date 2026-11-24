@@ -29,6 +29,8 @@ Reviewed November 24, 2026. HTTP route tests use an inert marker. They show the 
 
 ## Grok and Grok Bot
 
+Google's public Digital Asset Links check returned `linked: true` for all seven published signing pairs across `grok.com` and Grok, `x.ai` and Grok Bot, `cursor.com` and Grok Bot, and `applink.muse.ai` and Meta Muse. These are host, package, and certificate relationships. Grok's published dynamic rules exclude its `stay_in_browser=true` variant. [Google verification API](https://developers.google.com/digital-asset-links/reference/rest/v1/assetlinks/check) · [Grok](https://grok.com/.well-known/assetlinks.json) · [xAI](https://x.ai/.well-known/assetlinks.json) · [Cursor](https://cursor.com/.well-known/assetlinks.json) · [Meta Muse](https://applink.muse.ai/.well-known/assetlinks.json)
+
 Apple's matcher confirmed the exact Grok native-open `https://grok.com/` against `ai.x.GrokApp` and excluded the browser variant with `stay_in_browser=true`. Matching used the live Apple CDN rules and vendor origin. An installed iOS Grok run is still pending. [Apple CDN and matcher evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45494801961/artifacts/14967308970)
 
 Apple's `swcutil verify` matched xAI's `/bot/plugin/674` Universal Link to the production iOS Grok Bot app. Cursor's exact HTTPS prompt handoff matched the credential-sharing service only. The prompt page uses a separate `grokbot://` URL to reach the app. Apple CDN rules matched the vendor origin. The iOS app still needs an installed-client test. [Apple association check](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706) · [Grok Bot App Store listing](https://apps.apple.com/us/app/grok-bot/id6794501026)

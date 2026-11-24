@@ -160,14 +160,16 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const reactExample = href || (!hasSshOptions && !isGatewaySetup && getAgentLink(agent, platform, exampleOptions))
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup;
+  const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
-  const behaviorLabel = isGatewaySetup
-    ? href && "Reviews a Gateway address"
-    : href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
+  const reviewLabel = isGatewaySetup ? "Reviews a Gateway address"
+    : hasSshOptions ? "Reviews an SSH target"
+    : options.folder ? "Reviews a workspace folder" : undefined;
+  const behaviorLabel = reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
   const source = sshSource || (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
@@ -326,6 +328,7 @@ function App() {
                 {href ? <code>{href}</code> : (
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
+                    : options.folder ? "Enter an absolute workspace folder path."
                     : isGatewaySetup ? (isIosGateway
                       ? "Enter a Gateway origin with HTTPS or WSS, or use HTTP or WS on a local network."
                       : "Enter an HTTPS address without credentials, a query, or a fragment.")
@@ -429,6 +432,7 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
+                : options.folder ? "Enter an absolute workspace folder path to generate this example."
                 : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
             )}

@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.28.tgz
+npm install ./agent-deeplinks-0.1.29.tgz
 ```
 
 ## Usage
@@ -47,6 +47,8 @@ Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `m
 Use `getAgentLink("claude-code", "vscode", { prompt: "Review my changes." })` to prefill a draft in the Claude Code extension for VS Code. Pass `session` to resume a session from the current workspace.
 
 For Claude and Claude Code web links, use `browserOnly: true` to keep the link in the browser on iOS. Leave it unset for the usual Universal Link handoff.
+
+Claude Code Desktop accepts `folder` as an absolute local workspace path. It asks the user to confirm the folder before using it. [Claude Desktop deeplinks](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link)
 
 Claude Code Desktop also accepts `sshHost` with optional `sshPort` and `sshFolder`. Claude shows the target for review before use and keeps the prompt as an editable draft. This requires Desktop v2.110.0 or later and a signed-in account. [SSH deeplinks](https://code.claude.com/docs/en/desktop#open-an-ssh-session-from-a-link)
 
