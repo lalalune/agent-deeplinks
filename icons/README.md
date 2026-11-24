@@ -9,3 +9,4 @@ Each report records the origin of the assets it covers:
 - [Grok, Grok Bot, Meta Muse, Kimi, Hermes Agent, and OpenClaw](../research/other-agents.md)
 - Gemini uses the original vector spark from the footer of Google's [Gemini desktop page](https://gemini.google/desktop/).
 - Perplexity uses the geometric brand mark from [Simple Icons](https://github.com/simple-icons/simple-icons/blob/develop/icons/perplexity.svg).
+- Kimi Code uses Moonshot AI’s original [Kimi Code Logo](https://github.com/MoonshotAI/kimi-code/blob/kimi-code-desktop%401.4.3/KIMI%20CODE%20LOGO/Original%20Logo.svg).

@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.12.tgz
+npm install ./agent-deeplinks-0.1.13.tgz
 ```
 
 ## Usage
@@ -47,6 +47,8 @@ For OpenCode 2.x on the web or in an iPhone browser, supply the server origin in
 T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server and let the workspace connect first.
 
 ZCode's web, iOS, and Android links open its versioned Remote Control sign-in page in a browser. Connecting requires the same account and region as an online desktop with Remote Control enabled. [ZCode Remote Control instructions](https://zcode.z.ai/en/docs/remote-control)
+
+Kimi Code Desktop accepts a local `directory` and opens a fresh draft. The browser routes open the Remote Control device picker and use the same Kimi account as the running host. Supply `server` for another region or for a LAN Web address from `kimi web` without the login token.
 
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. Supplying a prompt opens OpenClaw's run confirmation.
 On Android, pass the configured Gateway address in `server` to open its Control UI in a browser.

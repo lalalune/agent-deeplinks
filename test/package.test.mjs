@@ -246,3 +246,22 @@ test("opens the versioned ZCode Remote Control viewer on browser surfaces", () =
     assert.equal(getAgentLink("zcode", platform, { prompt: special }), null);
   }
 });
+
+test("opens Kimi Code workspaces and configured browser clients", () => {
+  const directory = "/tmp/Workspace + & café #%";
+  const href = getAgentLink("kimi-code", "desktop", { directory });
+  assert.equal(href, `kimi-code://open?root=${encodeURIComponent(directory)}&new=1`);
+  const windows = "C:\\Workspace + & café";
+  assert.equal(new URL(getAgentLink("kimi-code", "desktop", { directory: windows })).searchParams.get("root"), windows);
+  assert.equal(getAgentLink("kimi-code", "desktop", { directory: "relative" }), null);
+  assert.equal(getAgentLink("kimi-code", "desktop", { directory, prompt: special }), null);
+  assert.equal(getAgentLink("kimi-code", "desktop"), null);
+  const server = "https://code-rc.kimi.ai/devices/qa-device/";
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("kimi-code", platform), "https://code-rc.kimi.ai/");
+    assert.equal(getAgentLink("kimi-code", platform, { server: "http://127.0.0.1:58627" }), "http://127.0.0.1:58627/");
+    assert.equal(getAgentLink("kimi-code", platform, { server }), server);
+    assert.equal(getAgentLink("kimi-code", platform, { server: `${server}#token=private` }), null);
+    assert.equal(getAgentLink("kimi-code", platform, { server: `${server}?token=private` }), null);
+  }
+});

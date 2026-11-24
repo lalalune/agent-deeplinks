@@ -71,6 +71,9 @@ const geminiAndroid = "https://gemini.google.com/gemini/download/mobile";
 const geminiIosAssociation = "https://gemini.google.com/.well-known/apple-app-site-association";
 const geminiAndroidAssociation = "https://gemini.google.com/.well-known/assetlinks.json";
 const kimiMobile = "https://kimi.onelink.me/BZg1/";
+const kimiCodeTag = "https://github.com/MoonshotAI/kimi-code/blob/kimi-code-desktop%401.4.3";
+const kimiCodeWebDocs = "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/web.html";
+const kimiCodeRemoteDocs = "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/remote-control.html";
 const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
 const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
 
@@ -117,6 +120,15 @@ const hermesMobileRoute = {
   fields: { server: "" },
   required: ["server"],
   note: "Opens your configured Hermes Web Access address in a phone browser. Its sign-in page was verified in Android Chromium and iPhone WebKit profiles.",
+} as const satisfies AgentRoute;
+
+const kimiCodeBrowserRoute = {
+  url: "https://code-rc.kimi.ai/",
+  behavior: "launch",
+  evidence: "verified",
+  sources: [kimiCodeRemoteDocs, kimiCodeWebDocs],
+  fields: { server: "" },
+  note: "Opens the Kimi Code Remote Control device picker. Sign in with the same Kimi account as your running host. Supply a server to use your LAN Web address or another region.",
 } as const satisfies AgentRoute;
 
 const t3Route = {
@@ -542,8 +554,8 @@ const catalog = {
         url: "kimi-work://home",
         behavior: "launch",
         evidence: "verified",
-        sources: ["https://www.kimi.com/download"],
-        note: "Launch verified on Apple Silicon macOS. Kimi Work is also offered for Windows 10 or newer.",
+        sources: ["https://www.kimi.com/en/products/download", "https://github.com/lalalune/agent-deeplinks/actions/runs/45442744851"],
+        note: "Native Kimi window opened on Apple Silicon macOS and on Windows with Kimi 3.2.28. The Windows test stopped at launch.",
       },
       ios: {
         url: kimiMobile,
@@ -564,6 +576,31 @@ const catalog = {
         experimental: true,
         note: "Kimi 3.1.5 opened to first-launch consent on Android 16. Visible prefill remains unverified. An empty link uses the app and Google Play handoff.",
       },
+    },
+  },
+  "kimi-code": {
+    name: "Kimi Code",
+    home: "https://www.kimi.com/code",
+    description: "Moonshot AI’s standalone coding agent",
+    routes: {
+      web: kimiCodeBrowserRoute,
+      desktop: {
+        url: "kimi-code://open",
+        behavior: "launch",
+        evidence: "verified",
+        sources: [
+          "https://www.kimi.com/code/docs/en/kimi-code-cli/reference/kimi-command.html#kimi-app",
+          `${kimiCodeTag}/apps/desktop/src/main/app/deep-link.ts`,
+          `${kimiCodeTag}/apps/desktop/electron-builder.config.cjs`,
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45443027619",
+        ],
+        fields: { directory: "root" },
+        required: ["directory"],
+        query: { new: "1" },
+        note: "Opens an absolute local directory in Kimi Code Desktop with a fresh draft. Verified on Ubuntu 24.04 with 1.4.3, through the workspace trust screen.",
+      },
+      ios: kimiCodeBrowserRoute,
+      android: kimiCodeBrowserRoute,
     },
   },
   zcode: {
