@@ -1,10 +1,10 @@
 {
   "name": "agent-deeplinks",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Evidence-backed deep links for AI agents with SVG icons and React helpers.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://agent-deeplinks.pages.dev/",
+  "homepage": "https://playground.agent-deeplinks.pages.dev/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lalalune/agent-deeplinks.git"

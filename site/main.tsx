@@ -13,7 +13,7 @@ import "./styles.css";
 const repository = "https://github.com/lalalune/agent-deeplinks";
 const release = `${repository}/releases/latest/download/agent-deeplinks.zip`;
 const tarball = `${repository}/releases/latest/download/agent-deeplinks.tgz`;
-const install = `npm install ${tarball}`;
+const install = "npm install agent-deeplinks";
 const examplePrompt = "Read the README and suggest three improvements.";
 
 type ExtraField = Exclude<LinkField, "prompt" | "directory" | "server">;
