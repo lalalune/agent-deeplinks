@@ -278,10 +278,11 @@ const catalog = {
         sources: [
           grokBotDocs,
           "https://docs.x.ai/grok-bot/get-started",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45483518818/artifacts/14964275753",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754025",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754337",
         ],
-        note: "Stock Ubuntu and Windows apps received the exact link and opened at sign-in. Drafts require a signed-in eligible account and use the primary Bot unless you supply a Bot ID.",
+        note: "LaunchServices started the signed Grok Bot 1.3.0 app on macOS. Stock Ubuntu and Windows apps received the exact link and opened at sign-in. Drafts require an eligible account and use the primary Bot unless you supply a Bot ID.",
       },
       ios: {
         ...grokBotRoute,
@@ -373,14 +374,14 @@ const catalog = {
       },
       desktop: {
         url: "https://agent.meta.ai/chat",
-        behavior: "launch",
+        behavior: "handoff",
         evidence: "verified",
         sources: [
           "https://agent.meta.ai/.well-known/apple-app-site-association",
-          "https://github.com/lalalune/agent-deeplinks/actions/runs/45450575543/job/138646218114",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45480862958/job/138753307658",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45483440516/artifacts/14962696263",
         ],
-        note: "On macOS, this Universal Link selected Muse 13.1 after the app's first launch and domain approval. Fresh installations can open Safari while macOS verifies the domain.",
+        note: "Ordinary macOS URL opening selected Muse 13.1 after its first launch and domain approval. A click in stock Chrome 157 reached the Muse website and its sign-in page.",
       },
       ios: {
         url: "https://applink.muse.ai/",
@@ -758,8 +759,9 @@ const catalog = {
           t3Source,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45440501819/job/138609961589",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45440877037/job/138611312447",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45483428887/artifacts/14962886811",
         ],
-        note: "Exact unsent draft verified in T3 Code 0.1.11 on macOS, Ubuntu, and Windows. The Windows app registered t3code: on first launch.",
+        note: "Exact unsent draft verified in T3 Code 0.1.11 on macOS, Ubuntu, and Windows. Both cold and warm Windows Shell opens reached the draft.",
       },
       ios: {
         ...t3Route,
