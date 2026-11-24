@@ -50,6 +50,11 @@ const cursorCloudDocs = "https://cursor.com/docs/cloud-agent";
 const cursorCloud = "https://cursor.com/agents";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
+const claudeDesktopChecks = [
+  claudeDesktopDocs,
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45460279575/job/138680666371",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45460279575/job/138680666686",
+] as const;
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
 const claudeVsCodeDocs = "https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
@@ -185,8 +190,12 @@ const catalog = {
       desktop: {
         ...cursorRoute,
         url: "cursor://anysphere.cursor-deeplink/prompt",
-        sources: [cursorDocs, "https://cursor.com/download"],
-        note: "macOS dispatch tested. The Linux DEB declares the scheme and Windows 3.31.15 includes runtime registration code. Signed-in composer prefill is unverified.",
+        sources: [
+          cursorDocs,
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45460026095/job/138679769952",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45460380555/job/138681026834",
+        ],
+        note: "macOS and Ubuntu opened Cursor Agents at sign-in. Windows received the exact link after first launch registered Cursor's handler. Signed-in composer prefill remains unverified.",
       },
       ios: {
         url: cursorCloud,
@@ -368,9 +377,9 @@ const catalog = {
         url: "claude://claude.ai/new",
         behavior: "draft",
         evidence: "verified",
-        sources: [claudeDesktopDocs],
+        sources: claudeDesktopChecks,
         fields: { prompt: "q" },
-        note: "Prefill verified in Claude 6.28899.6 on macOS. Anthropic also documents this route for Windows and the Linux beta.",
+        note: "Prefill verified in Claude 6.28899.6 on macOS. Windows and Ubuntu received the exact link and showed first-run onboarding. Signed-in composers on those platforms still need verification.",
       },
       web: {
         url: "https://claude.ai/new",
@@ -416,9 +425,9 @@ const catalog = {
         url: "claude://code/new",
         behavior: "draft",
         evidence: "verified",
-        sources: [claudeDesktopDocs],
+        sources: claudeDesktopChecks,
         fields: { prompt: "q", folder: "folder" },
-        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Anthropic also documents this route for Windows and the Linux beta.",
+        note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Windows and Ubuntu received the exact link and showed first-run onboarding. Signed-in composers on those platforms still need verification.",
       },
       ios: claudeCodeMobileRoute,
       android: claudeCodeMobileRoute,
@@ -429,7 +438,7 @@ const catalog = {
         sources: [claudeCodeDocs],
         fields: { prompt: "q", cwd: "cwd", repo: "repo" },
         promptLimit: 5_000,
-        note: "macOS terminal delivery checked. Anthropic also documents the Windows and Linux handlers. cwd takes precedence over repo.",
+        note: "macOS terminal delivery checked. The fresh local Claude Code session reached account selection. Anthropic also documents the Windows and Linux handlers. cwd takes precedence over repo.",
       },
       vscode: {
         url: "vscode://anthropic.claude-code/open",
@@ -585,7 +594,7 @@ const catalog = {
         required: ["prompt"],
         query: { create_new: "true", auto_send: "false" },
         experimental: true,
-        note: "Kimi 3.1.5 opened to first-launch consent on Android 16. Visible prefill remains unverified. An empty link uses the app and Google Play handoff.",
+        note: "The blank HTTPS link opened Kimi 3.1.5 on Android 16 through verified App Links. The experimental prompt link reached first-launch consent. Visible prefill remains unverified.",
       },
     },
   },
@@ -723,8 +732,11 @@ const catalog = {
         url: "opencode://",
         behavior: "launch",
         evidence: "source",
-        sources: ["https://github.com/anomalyco/opencode-android/blob/v0.8.7/app/src/main/AndroidManifest.xml"],
-        note: "Opens the Android client. The app handles sessions and pairing through separate routes.",
+        sources: [
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.8/app/src/main/AndroidManifest.xml",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.8/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt",
+        ],
+        note: "Opens the Android client. Use getOpenCodeAndroidPairingLink with an issued URL to open pairing review. The official development build paired with OpenCode 2.4.1 and showed a blank session in the paired project.",
       },
     },
   },

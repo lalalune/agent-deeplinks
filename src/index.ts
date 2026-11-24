@@ -18,6 +18,7 @@ const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
+const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
 
 function parseServerUrl(value: string): URL | null {
   try {
@@ -139,6 +140,16 @@ export function getHermesSkillLink(identifier: string): string | null {
     }
   }
   return `hermes://skill/install?identifier=${encodeURIComponent(skill)}`;
+}
+
+/** Convert an OpenCode CLI pairing URL to the Android app's native pairing review. */
+export function getOpenCodeAndroidPairingLink(pairingUrl: string): string | null {
+  if (typeof pairingUrl !== "string" || hiddenPathCharacters.test(pairingUrl)) return null;
+  const [, address, code] = openCodePairingUrl.exec(pairingUrl.trim()) ?? [];
+  if (!address || !code) return null;
+  const server = parseServerUrl(address);
+  if (!server || server.port === "0") return null;
+  return `opencode://pair?code=${code}&url=${encodeURIComponent(server.origin)}`;
 }
 
 /** Return a self-contained SVG URL for an agent with a bundled brand asset. */
