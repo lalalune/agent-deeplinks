@@ -31,6 +31,8 @@ The v0.1.7 and v0.1.8 Cloudflare deployments generated all 59 catalog routes in 
 
 The v0.1.9 production deployment passed the same checks for all 63 routes in Chromium 158, Firefox 159, and WebKit 27.2. An empty npm project installed the public release tarball and loaded the core API, React entry point, and 18 standalone SVG exports. The ZIP contains the same tarball and the same demo JavaScript as production. [Production playground](https://agent-deeplinks.pages.dev/) · [v0.1.9 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.9)
 
+The v0.1.10 release passed the full browser matrix for 66 routes in all three engines. Its OpenCode regression check also confirmed that a desktop directory does not carry over to the Web link. A fresh project installed the public tarball and checked all 18 SVG exports, the React entry point, and the current and legacy OpenCode URL forms. The ZIP and production demo JavaScript matched byte for byte. [Production playground](https://agent-deeplinks.pages.dev/) · [v0.1.10 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.10)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
