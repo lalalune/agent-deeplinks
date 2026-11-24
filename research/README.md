@@ -3,7 +3,7 @@
 Investigation started November 24, 2026. The [package catalog](../src/catalog.ts) records a route's accepted fields, behavior, source URLs, and evidence. Each report below records what actually reached an app and which checks remain.
 
 - [ChatGPT, Codex, Claude, and Claude Code](openai-anthropic.md)
-- [Cursor, Antigravity, T3 Code, OpenCode, and ZCode](coding-agents.md)
+- [Cursor, GitHub Copilot, Antigravity, T3 Code, OpenCode, and ZCode](coding-agents.md)
 - [Grok, Grok Bot, Meta Muse, Kimi, Hermes Agent, and OpenClaw](other-agents.md)
 - [SVG source and trademark information](../icons/README.md)
 

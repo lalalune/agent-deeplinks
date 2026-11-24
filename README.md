@@ -46,6 +46,16 @@ Use `getAgentLink("claude-code", "vscode", { prompt: "Review my changes." })` to
 
 For Claude and Claude Code web links, use `browserOnly: true` to keep the link in the browser on iOS. Leave it unset for the usual Universal Link handoff.
 
+GitHub Copilot Desktop can open a draft with a prompt, an `owner/repo` repository, or a custom agent. The Web option wraps draft links in GitHub’s hosted launcher. Choose `vscode` to open the VS Code Agents window with an optional prompt and `workspace` folder URI.
+
+```ts
+const copilot = getAgentLink("github-copilot", "web", {
+  prompt: "Explain how this project runs its tests.",
+  repo: "owner/repo",
+  mode: "interactive",
+})
+```
+
 Codex desktop links can carry both an absolute `path` and an `originUrl`. The desktop app tries the local path first and then matches the remote if the path does not resolve to a directory.
 
 For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the Web links use each product's localhost default. In a fresh local browser tab, Hermes shows how to sign in with the host's `hermes webapp` command. Hermes on iOS and Android requires your configured Web Access address.

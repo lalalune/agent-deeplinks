@@ -17,7 +17,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session";
+  | "session" | "pr" | "customAgent" | "workspace";
 
 export interface AgentRoute {
   readonly url: string;
@@ -28,6 +28,8 @@ export interface AgentRoute {
   readonly fields?: Readonly<Partial<Record<LinkField, string>>>;
   readonly required?: readonly LinkField[];
   readonly launchUrl?: string;
+  readonly launcher?: { readonly appUrl: string; readonly parameter: string };
+  readonly modes?: readonly string[];
   readonly serverBehavior?: LinkBehavior;
   readonly promptLimit?: number;
   readonly promptLimitUnit?: "grapheme";
@@ -86,6 +88,17 @@ const kimiCodeWebDocs = "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/
 const kimiCodeRemoteDocs = "https://www.kimi.com/code/docs/en/kimi-code-cli/guides/remote-control.html";
 const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
 const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
+const copilotDocs = "https://docs.github.com/en/copilot/how-tos/github-copilot-app/open-with-deep-links";
+const copilotHome = "https://github.com/copilot";
+const copilotSession = "ghapp://session/new";
+
+const copilotDraftRoute = {
+  behavior: "draft",
+  evidence: "documented",
+  sources: [copilotDocs],
+  fields: { prompt: "prompt", repo: "repo", branch: "branch", pr: "pr", mode: "mode", customAgent: "agent" },
+  modes: ["plan", "interactive", "autopilot"],
+} as const satisfies Omit<AgentRoute, "url">;
 
 const antigravityMobileRoute = {
   url: "https://antigravity.google.com/",
@@ -111,6 +124,7 @@ const claudeCodeMobileRoute = {
   evidence: "documented",
   sources: [claudeMobileDocs],
   fields: { prompt: "q", mode: "mode", repo: "repo", branch: "branch" },
+  modes: ["plan", "code"],
   note: "Requires Claude Code access on your account. An empty link opens the session list.",
 } as const satisfies AgentRoute;
 
@@ -542,6 +556,34 @@ const catalog = {
         evidence: "verified",
         sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile"],
         note: "Android Chromium rendered the ChatGPT Google Play listing and Install button. Installed-app routing is unverified.",
+      },
+    },
+  },
+  "github-copilot": {
+    name: "GitHub Copilot",
+    home: copilotHome,
+    description: "GitHub’s coding agent and desktop app",
+    routes: {
+      web: {
+        ...copilotDraftRoute,
+        url: "https://github.com/copilot/app/launch",
+        behavior: "handoff",
+        launchUrl: copilotHome,
+        launcher: { appUrl: copilotSession, parameter: "open" },
+        note: "Opens GitHub’s app launcher with a draft to review. Leave the inputs empty to open Copilot on GitHub.com.",
+      },
+      desktop: {
+        ...copilotDraftRoute,
+        url: copilotSession,
+        note: "The GitHub Copilot app asks to allow the link and opens a session draft. Supply a prompt, repository, or custom agent.",
+      },
+      vscode: {
+        url: "vscode://agents/new",
+        behavior: "draft",
+        evidence: "documented",
+        sources: ["https://code.visualstudio.com/docs/configure/command-line#_prepare-a-new-agent-session-draft"],
+        fields: { prompt: "prompt", workspace: "workspace" },
+        note: "Opens the VS Code Agents window. Pass a file or VS Code remote folder URI to select a workspace.",
       },
     },
   },

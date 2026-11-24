@@ -269,6 +269,42 @@ test("opens Claude Code in VS Code with an optional draft and session", () => {
   }
 });
 
+test("builds GitHub Copilot draft links and validates their session context", () => {
+  const options = { prompt: special, repo: "owner/repo", pr: "123", mode: "interactive" };
+  const native = `ghapp://session/new?prompt=${encodeURIComponent(special)}&repo=owner%2Frepo&pr=123&mode=interactive`;
+  assert.equal(getAgentLink("github-copilot", "desktop", options), native);
+  assert.equal(getAgentLink("github-copilot", "web", options),
+    `https://github.com/copilot/app/launch?open=${encodeURIComponent(native)}`);
+  assert.equal(getAgentLink("github-copilot", "web"), "https://github.com/copilot");
+  assert.equal(getAgentLink("github-copilot", "desktop"), null);
+  assert.equal(getAgentLink("github-copilot", "desktop", { repo: "owner/repo", branch: "topic/launch" }),
+    "ghapp://session/new?repo=owner%2Frepo&branch=topic%2Flaunch");
+  assert.equal(getAgentLink("github-copilot", "desktop", { customAgent: "Review agent" }),
+    "ghapp://session/new?agent=Review%20agent");
+  for (const invalid of [
+    { ...options, branch: "main" },
+    { prompt: special, branch: "main" },
+    { prompt: special, pr: "123" },
+    { ...options, pr: "0" },
+    { ...options, pr: "9".repeat(25) },
+    { ...options, customAgent: "Reviewer" },
+    { ...options, mode: "code" },
+    { mode: "plan", customAgent: " " },
+  ]) {
+    assert.equal(getAgentLink("github-copilot", "desktop", invalid), null);
+    assert.equal(getAgentLink("github-copilot", "web", invalid), null);
+  }
+  for (const workspace of ["file:///tmp/QA%20folder", "file://server/share/a", "vscode-remote://ssh-remote+host/work"]) {
+    const url = new URL(getAgentLink("github-copilot", "vscode", { prompt: special, workspace }));
+    assert.equal(url.searchParams.get("prompt"), special);
+    assert.equal(url.searchParams.get("workspace"), workspace);
+  }
+  assert.equal(getAgentLink("github-copilot", "vscode"), "vscode://agents/new");
+  assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "https://example.com/project" }), null);
+  assert.equal(getAgentLink("github-copilot", "vscode", { workspace: "file:///tmp/QA?query=1" }), null);
+  assert.equal(getAgentLink("claude-code", "ios", { prompt: special, mode: "autopilot" }), null);
+});
+
 test("opens the versioned ZCode Remote Control viewer on browser surfaces", () => {
   for (const platform of ["web", "ios", "android"]) {
     assert.equal(getAgentLink("zcode", platform), "https://zcode.z.ai/remote/v4?app_version=4.0.0");

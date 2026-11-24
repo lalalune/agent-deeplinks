@@ -47,6 +47,17 @@ function isLocalPath(path: string): boolean {
     !path.split(/[\\/]/u).includes("..");
 }
 
+function isWorkspaceUri(value: string): boolean {
+  if (hiddenPathCharacters.test(value)) return false;
+  try {
+    const url = new URL(value);
+    if (!url.pathname.startsWith("/") || url.username || url.password || url.search || url.hash) return false;
+    return url.protocol === "file:" || (url.protocol === "vscode-remote:" && Boolean(url.hostname));
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Build an agent URL. Returns null for an unavailable route, invalid input,
  * or a route that requires an explicit opt-in.
@@ -80,9 +91,14 @@ export function getAgentLink(
     return null;
   }
   if (fields.model && !fields.provider) return null;
-  if (fields.mode && fields.mode !== "plan" && fields.mode !== "code") return null;
+  if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
   if (fields.session && invalidSessionId.test(fields.session)) return null;
+  if (fields.workspace && !isWorkspaceUri(fields.workspace)) return null;
+  if (fields.pr && (!fields.repo || fields.branch || !/^[1-9]\d*$/u.test(fields.pr) ||
+    !Number.isSafeInteger(Number(fields.pr)))) return null;
+  if (fields.customAgent &&
+    (fields.repo || !fields.customAgent.trim() || hiddenPathCharacters.test(fields.customAgent))) return null;
   const fragment = browserOnly && route.browserOnlyFragment
     ? `#${encodeURIComponent(route.browserOnlyFragment)}`
     : "";
@@ -90,8 +106,10 @@ export function getAgentLink(
   if ((route.experimental && !options.allowExperimental) ||
     (route.behavior === "send" && !options.allowSend)) return null;
   if (route.required?.some((field) => !fields[field]?.trim())) return null;
+  if (agent === "github-copilot" && platform !== "vscode" &&
+    !fields.repo && !fields.prompt?.trim() && !fields.customAgent?.trim()) return null;
 
-  let baseUrl = route.url;
+  let baseUrl = route.launcher?.appUrl ?? route.url;
   if (fields.server) {
     const server = parseServerUrl(fields.server);
     if (!server) return null;
@@ -121,7 +139,10 @@ export function getAgentLink(
     query.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
   }
   const parameters = query.length ? `?${query.join("&")}` : "";
-  const url = `${baseUrl}${parameters}${fragment}`;
+  const target = `${baseUrl}${parameters}${fragment}`;
+  const url = route.launcher
+    ? `${route.url}?${encodeURIComponent(route.launcher.parameter)}=${encodeURIComponent(target)}`
+    : target;
   return route.urlLimit && url.length > route.urlLimit ? null : url;
 }
 

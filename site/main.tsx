@@ -25,8 +25,11 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
   path: { label: "Workspace path", placeholder: "/absolute/path/to/project" },
   originUrl: { label: "Git remote URL", placeholder: "https://github.com/owner/repo.git" },
   folder: { label: "Workspace folder", placeholder: "/absolute/path/to/project" },
+  workspace: { label: "Workspace folder URI", placeholder: "file:///absolute/path/to/project" },
   mode: { label: "Session mode" },
   branch: { label: "Git branch", placeholder: "main" },
+  pr: { label: "Pull request number", placeholder: "123" },
+  customAgent: { label: "Custom agent" },
   provider: { label: "Provider ID" },
   model: { label: "Model ID" },
   botId: { label: "Bot ID" },
@@ -272,8 +275,9 @@ function App() {
                       return field === "mode" ? (
                         <Select key={field} label={label} value={extraValues[field] ?? ""} onChange={(value) => updateExtraField(field, value)}>
                           <option value="">Default</option>
-                          <option value="plan">Plan</option>
-                          <option value="code">Code</option>
+                          {route?.modes?.map((mode) => (
+                            <option key={mode} value={mode}>{mode.charAt(0).toUpperCase() + mode.slice(1)}</option>
+                          ))}
                         </Select>
                       ) : (
                         <label className="field" key={field}>
