@@ -94,7 +94,7 @@ function App() {
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [prompt, setPrompt] = useState(examplePrompt);
   const [directory, setDirectory] = useState("");
-  const [server, setServer] = useState("");
+  const [serverByAgent, setServerByAgent] = useState<Partial<Record<AgentId, string>>>({});
   const [experimentalRoute, setExperimentalRoute] = useState<string>();
   const [sendRoute, setSendRoute] = useState<string>();
   const [search, setSearch] = useState("");
@@ -105,7 +105,7 @@ function App() {
   const options: LinkOptions = {
     ...(route?.fields?.prompt ? { prompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
-    ...(Object.hasOwn(route?.fields ?? {}, "server") ? { server } : {}),
+    ...(Object.hasOwn(route?.fields ?? {}, "server") ? { server: serverByAgent[agent] } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
@@ -196,8 +196,12 @@ function App() {
               )}
               {Object.hasOwn(route?.fields ?? {}, "server") && (
                 <label className="field">
-                  <span>Server origin</span>
-                  <input value={server} onChange={(event) => setServer(event.target.value)} placeholder="http://localhost:4096" />
+                  <span>{route?.required?.includes("server") ? "Server origin" : "Web app address (optional)"}</span>
+                  <input
+                    value={serverByAgent[agent] ?? ""}
+                    onChange={(event) => setServerByAgent({ ...serverByAgent, [agent]: event.target.value })}
+                    placeholder={route?.url}
+                  />
                 </label>
               )}
               {route?.experimental && (
@@ -216,7 +220,7 @@ function App() {
               <div className="result" aria-live="polite">
                 <div className="result-label">
                   <span>Generated URL</span>
-                  {route && <span className="link-behavior">{behaviorNames[route.behavior]}</span>}
+                  {route && <span className="link-behavior">{behaviorNames[href && href === route.launchUrl ? "launch" : route.behavior]}</span>}
                   {href && <CopyButton value={href} label="Copy generated URL" iconOnly />}
                 </div>
                 {href ? <code>{href}</code> : (

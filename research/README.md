@@ -24,3 +24,7 @@ Investigation started November 24, 2026. The [package catalog](../src/catalog.ts
 | Observed | A published integration emits the route, or a limited runtime probe found it. Prompt behavior can still require confirmation. |
 
 An HTTP success confirms a front door. Scheme registration confirms an installed handler. Neither confirms that a composer consumed a prompt. Use the notes for any platform, account, install, or setup requirements.
+
+## Native device checks
+
+- T3 Code Android 2.3.0 build 816 was installed from the provider's signed beta APK. The APK SHA-256 matched the official release asset, Android 15 resolved `t3code://new` as a browsable intent to T3 Code's MainActivity, and T3 Code displayed a warning that no connected environment supported starting a thread without a project. This establishes that the app handled the link. [Official beta release](https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165)

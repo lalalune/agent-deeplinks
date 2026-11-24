@@ -14,16 +14,21 @@ export interface LinkOptions extends Partial<Record<LinkField, string>> {
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
+const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
 
-function getServerOrigin(value: string): string | null {
+function parseServerUrl(value: string): URL | null {
   try {
     const url = new URL(value);
-    const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
-    if (url.username || url.password || url.search || url.hash || url.pathname !== "/") return null;
-    return url.protocol === "https:" || (local && url.protocol === "http:") ? url.origin : null;
+    if (url.username || url.password || url.search || url.hash) return null;
+    return url.protocol === "https:" || url.protocol === "http:" ? url : null;
   } catch {
     return null;
   }
+}
+
+function getOpenCodeOrigin(url: URL): string | null {
+  const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+  return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
 }
 
 function encodeDirectory(directory: string): string {
@@ -60,7 +65,6 @@ export function getAgentLink(
   if (agent === "grok-bot" && fields.prompt) {
     fields.prompt = fields.prompt.replace(/[\u0000-\u001f\u007f-\u009f]/gu, " ");
   }
-  if (route.required?.some((field) => !fields[field]?.trim())) return null;
   if (fields.prompt && route.promptLimit) {
     const promptLength = route.promptLimitUnit === "grapheme"
       ? Array.from(new Intl.Segmenter().segment(fields.prompt)).length
@@ -73,15 +77,20 @@ export function getAgentLink(
     return null;
   }
   if (fields.model && !fields.provider) return null;
-  if (agent === "codex" && platform === "desktop" && !fields.prompt && !fields.path && !fields.originUrl) {
-    return "codex://threads/new";
-  }
+  if (route.launchUrl && Object.values(fields).every((value) => !value)) return route.launchUrl;
+  if (route.required?.some((field) => !fields[field]?.trim())) return null;
 
   let baseUrl = route.url;
-  if (agent === "opencode" && platform === "web") {
-    const server = fields.server && getServerOrigin(fields.server);
+  if (fields.server) {
+    const server = parseServerUrl(fields.server);
     if (!server) return null;
-    baseUrl = fields.directory ? `${server}/${encodeDirectory(fields.directory)}/session` : server;
+    if (agent === "opencode") {
+      const origin = getOpenCodeOrigin(server);
+      if (!origin) return null;
+      baseUrl = fields.directory ? `${origin}/${encodeDirectory(fields.directory)}/session` : origin;
+    } else {
+      baseUrl = server.href;
+    }
   }
 
   const query: string[] = [];
@@ -100,6 +109,23 @@ export function getAgentLink(
   }
   const url = query.length ? `${baseUrl}?${query.join("&")}` : baseUrl;
   return route.urlLimit && url.length > route.urlLimit ? null : url;
+}
+
+/** Open Hermes Desktop's install review for a qualified skill or a direct skill URL. */
+export function getHermesSkillLink(identifier: string): string | null {
+  if (typeof identifier !== "string" || hiddenPathCharacters.test(identifier)) return null;
+  const skill = identifier.trim().replace(/[\ud800-\udfff]/gu, "\ufffd");
+  const reference = skill.startsWith("well-known:") ? skill.slice("well-known:".length) : skill;
+  const isQualified = qualifiedSkill.test(skill) && !skill.split("/").some((part) => part === "." || part === "..");
+  if (!isQualified) {
+    try {
+      const url = new URL(reference);
+      if (!["http:", "https:"].includes(url.protocol) || url.username || url.password) return null;
+    } catch {
+      return null;
+    }
+  }
+  return `hermes://skill/install?identifier=${encodeURIComponent(skill)}`;
 }
 
 /** Return a self-contained SVG URL for an agent with a bundled brand asset. */

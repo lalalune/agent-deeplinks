@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.1.tgz
+npm install ./agent-deeplinks-0.1.2.tgz
 ```
 
 ## Usage
@@ -31,6 +31,12 @@ console.log(url, route?.behavior, agents.cursor.name)
 `getAgentLink(agent, platform, options)` returns a URL or `null` if the route is unavailable, its parameters are invalid, or it needs an opt-in. Platform IDs are `web`, `desktop`, `ios`, `android`, and `cli`. Call `getAgentRoute` to see the accepted fields, behavior, constraints, sources, and evidence. `agents[id].home` is a product-site fallback.
 
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
+
+For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the links use each product's localhost default. OpenCode accepts its server origin and an optional project directory.
+
+Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. Supplying a prompt opens OpenClaw's run confirmation.
+
+Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links).
 
 ### shadcn/ui
 

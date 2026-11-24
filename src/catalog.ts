@@ -25,6 +25,7 @@ export interface AgentRoute {
   readonly note?: string;
   readonly fields?: Readonly<Partial<Record<LinkField, string>>>;
   readonly required?: readonly LinkField[];
+  readonly launchUrl?: string;
   readonly promptLimit?: number;
   readonly promptLimitUnit?: "grapheme";
   readonly urlLimit?: number;
@@ -122,7 +123,7 @@ const catalog = {
         sources: [slopDate],
         fields: { prompt: "q" },
         experimental: true,
-        note: "Published by an integrating site. Prompt handling needs runtime confirmation.",
+        note: "Slop Date publishes this format. The signed-out browser test showed an empty composer.",
       },
       ios: {
         url: "https://grok.com/",
@@ -170,12 +171,26 @@ const catalog = {
     home: "https://muse.ai/",
     description: "Meta’s personal agent",
     routes: {
+      desktop: {
+        url: "https://agent.meta.ai/chat",
+        behavior: "launch",
+        evidence: "source",
+        sources: ["https://agent.meta.ai/.well-known/apple-app-site-association", "https://ai.meta.com/muse/"],
+        note: "Muse 13.1 for macOS declares this Universal Link. Native delivery still needs a live check.",
+      },
       ios: {
         url: "https://applink.muse.ai/",
         behavior: "launch",
         evidence: "source",
         sources: ["https://ai.meta.com/muse/", "https://applink.muse.ai/.well-known/apple-app-site-association"],
         note: "The iOS handoff advertised by Meta for the Muse app.",
+      },
+      android: {
+        url: "https://applink.muse.ai/",
+        behavior: "handoff",
+        evidence: "source",
+        sources: ["https://ai.meta.com/muse/", "https://applink.muse.ai/.well-known/assetlinks.json"],
+        note: "Meta associates this link with Muse. The browser fallback goes to Google Play.",
       },
     },
   },
@@ -237,7 +252,7 @@ const catalog = {
         sources: [claudeCodeDocs],
         fields: { prompt: "q", cwd: "cwd", repo: "repo" },
         promptLimit: 5_000,
-        note: "Opens in a terminal after the Claude Code URL handler has registered. cwd takes precedence over repo.",
+        note: "macOS delivery of the exact draft to the terminal process was checked. cwd takes precedence over repo.",
       },
     },
   },
@@ -291,6 +306,7 @@ const catalog = {
         evidence: "documented",
         sources: [codexDocs],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl" },
+        launchUrl: "codex://threads/new",
         note: "macOS dispatch checked. The provider documents the draft composer and path precedence over originUrl.",
       },
     },
@@ -341,7 +357,17 @@ const catalog = {
     name: "ZCode",
     home: "https://zcode.z.ai/",
     description: "Z.ai’s coding client",
-    routes: {},
+    routes: {
+      desktop: {
+        url: "zcode://workspace/open",
+        behavior: "launch",
+        evidence: "source",
+        sources: ["https://zcode.z.ai/en"],
+        fields: { directory: "path" },
+        required: ["directory"],
+        note: "Opens an existing local folder after confirmation. Shipped with the ZCode 4.0.0 Finder integration on macOS.",
+      },
+    },
   },
   "t3-code": {
     name: "T3 Code",
@@ -361,7 +387,11 @@ const catalog = {
         note: "Prefill verified in T3 Code 0.1.11 on macOS.",
       },
       ios: { ...t3Route, url: "t3code://new", note: "Requires a connected environment." },
-      android: { ...t3Route, url: "t3code://new", note: "Requires a connected environment." },
+      android: {
+        ...t3Route,
+        url: "t3code://new",
+        note: "Android 15 resolved and launched the signed 2.3.0 beta. A connected environment is required for a draft.",
+      },
     },
   },
   opencode: {
@@ -385,7 +415,7 @@ const catalog = {
         sources: [`${openCodeTag}/packages/app/src/pages/layout/deep-links.ts`, `${openCodeTag}/packages/app/src/pages/session.tsx#L370`],
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
-        note: "Requires a local project directory. The URL is handled by the desktop app.",
+        note: "Requires a local project directory. Cold and warm macOS delivery was checked in OpenCode 1.19.6.",
       },
     },
   },
@@ -399,7 +429,8 @@ const catalog = {
         behavior: "launch",
         evidence: "documented",
         sources: ["https://hermes-agent.nousresearch.com/docs/user-guide/desktop#use-the-desktop-workspace-from-a-browser"],
-        note: "Opens a previously enabled Hermes Webapp on this machine.",
+        fields: { server: "" },
+        note: "Opens your Hermes Webapp. Use the Web Access address for another device, or leave it blank for this machine.",
       },
       desktop: {
         url: "hermes://launch",
@@ -419,8 +450,9 @@ const catalog = {
         url: "http://127.0.0.1:18789/",
         behavior: "launch",
         evidence: "documented",
-        sources: ["https://docs.openclaw.ai/dashboard"],
-        note: "Opens a configured local OpenClaw Gateway dashboard.",
+        sources: ["https://docs.openclaw.ai/web/control-ui"],
+        fields: { server: "" },
+        note: "Opens your OpenClaw Control UI. Enter its configured URL or leave it blank for the local Gateway.",
       },
       desktop: {
         url: "openclaw://agent",
@@ -429,9 +461,10 @@ const catalog = {
         sources: ["https://github.com/openclaw/openclaw/blob/main/apps/macos/Sources/OpenClaw/DeepLinks.swift"],
         fields: { prompt: "message" },
         required: ["prompt"],
+        launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "On macOS this asks for confirmation before running the agent. Cancel to discard the prompt.",
+        note: "A prompt opens a run confirmation. Leave it blank to open the dashboard. Both links were delivered to OpenClaw 2026.11.7 on macOS.",
       },
       ios: {
         url: "openclaw://agent",
@@ -440,9 +473,10 @@ const catalog = {
         sources: ["https://github.com/openclaw/openclaw/blob/main/apps/ios/Sources/Model/NodeAppModel.swift#L9330"],
         fields: { prompt: "message" },
         required: ["prompt"],
+        launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "Requires a connected Gateway. The iOS app asks for confirmation before starting a run.",
+        note: "Leave the prompt blank to open the dashboard. Running a prompt requires a connected Gateway and confirmation.",
       },
     },
   },
@@ -451,9 +485,11 @@ const catalog = {
 export type AgentId = keyof typeof catalog;
 
 const ids = Object.keys(catalog) as AgentId[];
+type CatalogAgent = Agent & { readonly id: AgentId };
+const agentEntries = ids.map((id): [AgentId, CatalogAgent] => [id, { id, ...catalog[id] }]);
 
-export const agents: Readonly<Record<AgentId, Agent & { readonly id: AgentId }>> =
-  Object.freeze(Object.fromEntries(ids.map((id) => [id, { id, ...catalog[id] }])) as Record<AgentId, Agent & { readonly id: AgentId }>);
+export const agents: Readonly<Record<AgentId, CatalogAgent>> =
+  Object.freeze(Object.fromEntries(agentEntries) as Record<AgentId, CatalogAgent>);
 
 export function getAgent(agent: AgentId): Agent {
   return agents[agent];
