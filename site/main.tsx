@@ -144,6 +144,7 @@ function App() {
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
+  const hasSshOptions = Boolean(options.sshHost || options.sshPort || options.sshFolder);
   const href = getAgentLink(agent, platform, options);
   const sampleOptions: LinkOptions = {
     ...(route?.fields?.prompt ? { prompt: examplePrompt } : {}),
@@ -154,13 +155,14 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const reactExample = href || getAgentLink(agent, platform, exampleOptions)
+  const reactExample = href || (!hasSshOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const behaviorLabel = href && options.sshHost ? "Reviews an SSH target" : behavior && behaviorNames[behavior];
-  const source = route?.sources[0];
+  const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
+  const source = sshSource || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -313,7 +315,9 @@ function App() {
                   {href && <CopyButton value={href} label="Copy generated URL" iconOnly />}
                 </div>
                 {href ? <code>{href}</code> : (
-                  <p>{!route ? "No deeplink confirmed for this platform." : "Complete the required fields or opt in above."}</p>
+                  <p>{hasSshOptions
+                    ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
+                    : !route ? "No deeplink confirmed for this platform." : "Complete the required fields or opt in above."}</p>
                 )}
               </div>
               <div className="panel-actions">
@@ -411,7 +415,9 @@ function App() {
               {reactExample && <CopyButton value={reactExample} label="Copy code example" iconOnly />}
             </div>
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
-              <p>{route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
+              <p>{hasSshOptions
+                ? "Enter valid SSH options to generate this example."
+                : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
             )}
           </div>
         </section>
