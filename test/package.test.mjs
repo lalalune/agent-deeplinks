@@ -257,12 +257,14 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
 test("opens Claude Code in VS Code with an optional draft and session", () => {
   const base = "vscode://anthropic.claude-code/open";
   const session = "12345678-1234-4234-9234-123456789abc";
+  const prompt = `${special} Keep %2B and 100%.`;
   assert.equal(getAgentLink("claude-code", "vscode"), base);
   assert.equal(getAgentLink("claude-code", "vscode", { session }), `${base}?session=${session}`);
-  assert.equal(
-    getAgentLink("claude-code", "vscode", { prompt: special, session }),
-    `${base}?prompt=${encodeURIComponent(special)}&session=${session}`,
-  );
+  const uri = getAgentLink("claude-code", "vscode", { prompt, session });
+  assert.equal(uri, `${base}?prompt=${encodeURIComponent(encodeURIComponent(prompt))}&session=${session}`);
+  const parameters = new URLSearchParams(decodeURIComponent(new URL(uri).search.slice(1)));
+  assert.equal(parameters.get("prompt"), prompt);
+  assert.equal(parameters.get("session"), session);
   assert.equal(getAgentLink("claude-code", "vscode", { cwd: "/tmp/project" }), null);
   for (const invalid of ["./a", "a\\b", "a..b", "a\u0000b"]) {
     assert.equal(getAgentLink("claude-code", "vscode", { session: invalid }), null);
