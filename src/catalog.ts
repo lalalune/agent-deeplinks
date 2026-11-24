@@ -64,6 +64,7 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
+const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
 const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
@@ -137,7 +138,7 @@ const kimiCodeBrowserRoute = {
   evidence: "verified",
   sources: [kimiCodeRemoteDocs, kimiCodeWebDocs],
   fields: { server: "" },
-  note: "Opens the Kimi Code Remote Control device picker. Sign in with the same Kimi account as your running host. Supply a server to use your LAN Web address or another region.",
+  note: "Hosted Remote Control opens the device picker and needs the same Kimi account as the host. With a local server address, its token unlocked the browser workbench on desktop, Android, and iPhone profiles.",
 } as const satisfies AgentRoute;
 
 const t3Route = {
@@ -259,11 +260,24 @@ const catalog = {
       },
       desktop: {
         ...grokBotRoute,
-        sources: [grokBotDocs, "https://docs.x.ai/grok-bot/get-started"],
-        note: "Documented for the signed-in Windows, macOS, and Linux app. Uses your primary Bot unless a Bot ID is supplied.",
+        sources: [
+          grokBotDocs,
+          "https://docs.x.ai/grok-bot/get-started",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754025",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754337",
+        ],
+        note: "Stock Ubuntu and Windows apps received the exact link and opened at sign-in. Drafts require a signed-in eligible account and use the primary Bot unless you supply a Bot ID.",
       },
-      ios: grokBotRoute,
-      android: grokBotRoute,
+      ios: {
+        ...grokBotRoute,
+        sources: [grokBotDocs, grokBotMobileDocs, "https://apps.apple.com/us/app/grok-bot/id6794501026"],
+        note: "Requires the installed Grok Bot app and an eligible Cursor account. Uses your primary Bot unless you supply a Bot ID. Native delivery remains unverified.",
+      },
+      android: {
+        ...grokBotRoute,
+        sources: [grokBotDocs, grokBotMobileDocs, "https://play.google.com/store/apps/details?id=ai.x.grok.bot"],
+        note: "Requires the installed Grok Bot app and an eligible Cursor account. Uses your primary Bot unless you supply a Bot ID. Native delivery remains unverified.",
+      },
     },
   },
   gemini: {
@@ -613,11 +627,13 @@ const catalog = {
           `${kimiCodeTag}/apps/desktop/src/main/app/deep-link.ts`,
           `${kimiCodeTag}/apps/desktop/electron-builder.config.cjs`,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45443027619",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45462207481/job/138687549013",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45462737149/job/138689443148",
         ],
         fields: { directory: "root" },
         required: ["directory"],
         query: { new: "1" },
-        note: "Opens an absolute local directory in Kimi Code Desktop with a fresh draft. Verified on Ubuntu 24.04 with 1.4.3, through the workspace trust screen.",
+        note: "Opens an absolute local directory with a fresh draft. Kimi Code 1.4.3 selected the requested workspace on Ubuntu and macOS. Windows Shell delivered the workspace query and opened project trust.",
       },
       ios: kimiCodeBrowserRoute,
       android: kimiCodeBrowserRoute,
@@ -714,10 +730,11 @@ const catalog = {
           `${openCodeDesktopTag}/packages/app/src/shell/deep-links/machine.ts`,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45441299990",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45441732395",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45461928704/job/138686555105",
         ],
         fields: { prompt: "prompt", directory: "directory" },
         required: ["directory"],
-        note: "OpenCode 2.4.1 showed the requested project and exact draft on macOS and Ubuntu. Windows Shell delivered the link. Visible Windows prefill remains unverified.",
+        note: "OpenCode 2.4.1 showed the requested project and exact unsent draft on macOS, Ubuntu, and in an already-running Windows app. Windows cold dispatch was verified separately.",
       },
       ios: {
         url: "http://localhost:4096",
