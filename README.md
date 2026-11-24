@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.25.tgz
+npm install ./agent-deeplinks-0.1.26.tgz
 ```
 
 ## Usage
@@ -39,6 +39,8 @@ console.log(url, route?.behavior, agents.cursor.name)
 `getAgentLink(agent, platform, options)` returns a URL or `null` if the route is unavailable, its parameters are invalid, or it needs an opt-in. Platform IDs are `web`, `desktop`, `ios`, `android`, `cli`, and `vscode`. Call `getAgentRoute` to see the accepted fields, behavior, constraints, sources, and evidence. `agents[id].home` is a product-site fallback.
 
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
+
+Cursor Desktop links encode the draft for both decoders in the app. The official Cursor web handoff can turn literal plus signs into spaces in the desktop review. Choose Desktop when the exact punctuation matters. [Cursor verification](research/coding-agents.md#cursor)
 
 Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
 

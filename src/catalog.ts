@@ -110,7 +110,7 @@ const antigravityMobileRoute = {
 } as const satisfies AgentRoute;
 
 const cursorRoute = {
-  behavior: "draft",
+  behavior: "confirm",
   evidence: "documented",
   sources: [cursorDocs],
   fields: { prompt: "text" },
@@ -200,18 +200,24 @@ const catalog = {
         launchUrl: cursorCloud,
         behavior: "handoff",
         evidence: "verified",
-        sources: [cursorDocs, cursorCloudDocs],
-        note: "The browser handoff displayed the draft and produced the exact native link. An empty link opens Cloud Agents in the browser.",
+        sources: [
+          cursorDocs,
+          cursorCloudDocs,
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45487974246/artifacts/14965396228",
+        ],
+        note: "The browser preview reached Cursor’s native review on Ubuntu. Cursor’s handoff turned a literal plus into a space in that review. An empty link opens Cloud Agents in the browser.",
       },
       desktop: {
         ...cursorRoute,
         url: "cursor://anysphere.cursor-deeplink/prompt",
+        encodeQueryValuesTwice: true,
         sources: [
           cursorDocs,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460026095/job/138679769952",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460380555/job/138681026834",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45489023213/artifacts/14966850011",
         ],
-        note: "macOS and Ubuntu opened Cursor Agents at sign-in. Windows received the exact link after first launch registered Cursor's handler. Signed-in composer prefill remains unverified.",
+        note: "Cursor asks for prompt confirmation. The corrected link preserved the full text in the shipped parser and activated Cursor 3.31.15 on Ubuntu. The corrected link’s visible review remains unverified.",
       },
       ios: {
         url: cursorCloud,
@@ -271,7 +277,8 @@ const catalog = {
         url: "https://cursor.com/grok-bot/link/v1/prompt",
         behavior: "handoff",
         evidence: "verified",
-        note: "The handoff attempts to open Grok Bot. The button and automatic dispatch used the exact native URL in desktop and mobile browser profiles.",
+        sources: [grokBotDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45488932416/artifacts/14966115165"],
+        note: "The published Playground opened the native Grok Bot sign-in screen through stock Chrome on Ubuntu after the browser’s one-time approval. The mobile browser preview also produced the exact native URL.",
       },
       desktop: {
         ...grokBotRoute,
@@ -466,10 +473,14 @@ const catalog = {
         url: "claude-cli://open",
         behavior: "draft",
         evidence: "documented",
-        sources: [claudeCodeDocs],
+        sources: [
+          claudeCodeDocs,
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45488368601/artifacts/14965540998",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45487910168/artifacts/14964986411",
+        ],
         fields: { prompt: "q", cwd: "cwd", repo: "repo" },
         promptLimit: 5_000,
-        note: "macOS terminal delivery checked. The fresh local Claude Code session reached account selection. Anthropic also documents the Windows and Linux handlers. cwd takes precedence over repo.",
+        note: "Native launch delivered the exact prompt to Claude Code on macOS, Ubuntu, and Windows. Ubuntu and Windows opened the requested working directory. Signed-in terminal prefill remains unverified. cwd takes precedence over repo.",
       },
       vscode: {
         url: "vscode://anthropic.claude-code/open",

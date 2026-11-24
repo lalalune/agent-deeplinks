@@ -58,6 +58,20 @@ test("encodes provider-specific field names and honors local workspace precedenc
   assert.equal(getAgentLink("hermes", "desktop", { prompt: special }), null);
 });
 
+test("preserves Cursor prompt text through both desktop decoders", () => {
+  const prompt = "Review C++ &case=literal and %2F with café ☃.\nSecond line.";
+  const native = "cursor://anysphere.cursor-deeplink/prompt?text=";
+  const web = "https://cursor.com/link/prompt?text=";
+  const encoded = encodeURIComponent(prompt);
+  const desktop = getAgentLink("cursor", "desktop", { prompt });
+  assert.equal(desktop, `${native}${encodeURIComponent(encoded)}`);
+  const afterDispatch = new URLSearchParams(decodeURIComponent(new URL(desktop).search.slice(1)));
+  assert.equal(afterDispatch.get("text"), prompt);
+  assert.equal(getAgentLink("cursor", "web", { prompt }), `${web}${encoded}`);
+  assert.equal(getAgentLink("cursor", "desktop", { prompt: "x".repeat(10_000 - native.length) }).length, 10_000);
+  assert.equal(getAgentLink("cursor", "desktop", { prompt: "+".repeat(2_000) }), null);
+});
+
 test("opens Claude Code Desktop’s SSH session review", () => {
   const base = "claude://code/new";
   const sshHost = "dev@build.example.com";
