@@ -33,6 +33,8 @@ The v0.1.9 production deployment passed the same checks for all 63 routes in Chr
 
 The v0.1.10 release passed the full browser matrix for 66 routes in all three engines. Its OpenCode regression check also confirmed that a desktop directory does not carry over to the Web link. A fresh project installed the public tarball and checked all 18 SVG exports, the React entry point, and the current and legacy OpenCode URL forms. The ZIP and production demo JavaScript matched byte for byte. [Production playground](https://agent-deeplinks.pages.dev/) · [v0.1.10 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.10)
 
+The v0.1.11 release passed the same cross-browser matrix for 67 routes, including the new OpenClaw Android browser launch with a caller-configured Gateway address. A clean install loaded the package, React entry point, and 18 SVG exports. The public ZIP contains the exact npm tarball and Cloudflare demo JavaScript. [Production playground](https://agent-deeplinks.pages.dev/) · [v0.1.11 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.11)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
