@@ -1,0 +1,73 @@
+name: ZCode macOS workspace confirmation QA
+
+on:
+  push:
+    branches: [codex/zcode-macos-visible-qa]
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Build the link generator
+        run: |
+          npm ci
+          npm run build:package
+      - name: Verify the official disk image and register the signed bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/zcode-mac-qa"
+          evidence="$scratch/evidence"
+          mkdir -p "$evidence" "$scratch/mount" "$scratch/apps"
+          sw_vers | tee "$evidence/system.txt"
+          uname -m | tee -a "$evidence/system.txt"
+          test "$(uname -m)" = arm64
+          base=https://cdn-zcode.z.ai/zcode/electron/releases/4.0.0/macos-arm64
+          name=ZCode-4.0.0-mac-arm64.dmg
+          checksum='O2WSxGcLfGZW1li1gIxm+zeepEB7zc2JUrgQdGSMYn3d6ZA+bUlFMZ+VvxqF2H2PEotaqf5dG6azd1/CXp2/mg=='
+          curl --fail --silent --show-error --location --proto '=https' --max-time 20 --max-filesize 30000 "$base/latest.yml" -o "$scratch/latest.yml"
+          awk -v name="$name" -v checksum="$checksum" '
+            $1 == "-" && $2 == "url:" && $3 == name { getline; found = ($1 == "sha512:" && $2 == checksum) }
+            END { exit !found }
+          ' "$scratch/latest.yml"
+          curl --fail --silent --show-error --location --proto '=https' --connect-timeout 20 --max-time 130 --max-filesize 330000000 "$base/$name" -o "$scratch/$name"
+          test "$(stat -f %z "$scratch/$name")" = 317392912
+          actual=$(openssl dgst -sha512 -binary "$scratch/$name" | openssl base64 -A)
+          test "$actual" = "$checksum"
+          printf '%s\n%s\nSHA-512 %s\n' "$base/latest.yml" "$base/$name" "$actual" | tee "$evidence/installer-sha512.txt"
+          hdiutil attach -readonly -nobrowse -noautoopen -mountpoint "$scratch/mount" "$scratch/$name"
+          trap 'hdiutil detach "$scratch/mount" >/dev/null' EXIT
+          source=$(find "$scratch/mount" -mindepth 1 -maxdepth 1 -type d -name 'ZCode.app' -print -quit)
+          test -n "$source"
+          app="$scratch/apps/ZCode.app"
+          ditto "$source" "$app"
+          info="$app/Contents/Info.plist"
+          test "$(plutil -extract CFBundleIdentifier raw "$info")" = dev.zcode.app
+          test "$(plutil -extract CFBundleShortVersionString raw "$info")" = 4.0.0
+          plutil -extract CFBundleURLTypes json -o "$evidence/schemes.json" "$info"
+          node -e 'if (!require(process.argv[1]).some(entry => entry.CFBundleURLSchemes?.includes("zcode"))) process.exit(1)' "$evidence/schemes.json"
+          codesign --verify --deep --strict "$app"
+          codesign -dv --verbose=4 "$app" 2>&1 | tee "$evidence/signature.txt"
+          spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee "$evidence/gatekeeper.txt"
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+      - name: Observe cold stock LaunchServices and the workspace review
+        run: node .github/qa/zcode-macos-visible-qa.mjs
+      - name: Upload the native screen and OS evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: zcode-4.0.0-macos-workspace-evidence
+          path: ${{ runner.temp }}/zcode-mac-qa/evidence
+          if-no-files-found: warn
+          retention-days: 14
