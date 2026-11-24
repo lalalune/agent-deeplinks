@@ -43,6 +43,8 @@ export interface Agent {
 }
 
 const cursorDocs = "https://cursor.com/docs/reference/deeplinks";
+const cursorCloudDocs = "https://cursor.com/docs/cloud-agent";
+const cursorCloud = "https://cursor.com/agents";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
 const claudeDesktopDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
@@ -57,6 +59,7 @@ const slopCash = "https://slop.cash/";
 const vibestack = "https://vibestack.fun/";
 const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-association";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
+const grokAndroidAssociation = "https://grok.com/.well-known/assetlinks.json";
 const perplexitySearchSpec = "https://www.perplexity.ai/opensearch.xml";
 const perplexityIosAssociation = "https://www.perplexity.ai/.well-known/apple-app-site-association";
 
@@ -120,8 +123,10 @@ const catalog = {
       web: {
         ...cursorRoute,
         url: "https://cursor.com/link/prompt",
+        launchUrl: cursorCloud,
         behavior: "handoff",
-        note: "Browser landing page for the desktop editor.",
+        sources: [cursorDocs, cursorCloudDocs],
+        note: "A prompt opens the landing page for the desktop editor. An empty link opens Cloud Agents in the browser.",
       },
       desktop: {
         ...cursorRoute,
@@ -129,11 +134,18 @@ const catalog = {
         note: "Handler and directed macOS delivery checked in Cursor 3.31.15. Composer check is pending.",
       },
       ios: {
-        url: "https://cursor.com/agents",
+        url: cursorCloud,
         behavior: "launch",
         evidence: "source",
         sources: [cursorIosAssociation, "https://cursor.com/docs/cloud-agent/mobile"],
         note: "Universal Link for the Cursor Cloud Agents inbox.",
+      },
+      android: {
+        url: cursorCloud,
+        behavior: "launch",
+        evidence: "documented",
+        sources: [cursorCloudDocs],
+        note: "Opens Cloud Agents in Chrome. Cursor offers it as an installable web app on Android.",
       },
     },
   },
@@ -144,10 +156,12 @@ const catalog = {
     routes: {
       web: {
         url: "https://grok.com/",
+        launchUrl: "https://grok.com/?stay_in_browser=true",
         behavior: "unknown",
         evidence: "observed",
-        sources: [slopDate],
+        sources: [slopDate, grokIosAssociation, grokAndroidAssociation],
         fields: { prompt: "q" },
+        query: { stay_in_browser: "true" },
         experimental: true,
         note: "Slop Date publishes this format. The signed-out browser test showed an empty composer.",
       },
@@ -157,6 +171,13 @@ const catalog = {
         evidence: "source",
         sources: [grokIosAssociation],
         note: "Grok iOS associates this URL. Web can open when the app is unavailable.",
+      },
+      android: {
+        url: "https://grok.com/",
+        behavior: "launch",
+        evidence: "source",
+        sources: [grokAndroidAssociation],
+        note: "Grok’s Android 15 App Link rules include the root URL. Native delivery remains unverified.",
       },
     },
   },
@@ -540,7 +561,7 @@ const catalog = {
         launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "A prompt opens a run confirmation. Leave it blank to open the dashboard. Both links were delivered to OpenClaw 2026.11.7 on macOS.",
+        note: "A prompt opens a run confirmation. On macOS 2026.11.7, the blank link reached the dashboard handler, which requires a configured Gateway.",
       },
       ios: {
         url: "openclaw://agent",

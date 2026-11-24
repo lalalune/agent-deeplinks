@@ -34,7 +34,10 @@ test("encodes provider-specific field names and honors local workspace precedenc
 });
 
 test("returns null for undiscovered routes and handles documented size limits", () => {
+  assert.equal(getAgentLink("antigravity", "android"), null);
+  assert.equal(getAgentLink("cursor", "android"), "https://cursor.com/agents");
   assert.equal(getAgentLink("cursor", "android", { prompt: special }), null);
+  assert.equal(getAgentLink("cursor", "web"), "https://cursor.com/agents");
   const cursorBase = "https://cursor.com/link/prompt?text=";
   assert.equal(getAgentLink("cursor", "web", { prompt: "x".repeat(10_000 - cursorBase.length) }).length, 10_000);
   assert.equal(getAgentLink("cursor", "web", { prompt: "é".repeat(2_000) }), null);
@@ -50,6 +53,13 @@ test("preserves draft safeguards and encodes self-hosted OpenCode workspace path
   assert.equal(chat.searchParams.get("disable_auto_send"), "1");
   assert.equal(chat.searchParams.get("no_universal_links"), "1");
   assert.equal(new URL(getAgentLink("chatgpt", "desktop")).searchParams.get("mode"), "chat");
+
+  assert.equal(getAgentLink("grok", "android"), "https://grok.com/");
+  assert.equal(getAgentLink("grok", "web"), "https://grok.com/?stay_in_browser=true");
+  assert.equal(getAgentLink("grok", "web", { prompt: special }), null);
+  const grok = new URL(getAgentLink("grok", "web", { prompt: special, allowExperimental: true }));
+  assert.equal(grok.searchParams.get("q"), special);
+  assert.equal(grok.searchParams.get("stay_in_browser"), "true");
 
   const directory = "/tmp/me & café";
   const server = "http://localhost:4096";
