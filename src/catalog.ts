@@ -354,7 +354,12 @@ const catalog = {
         behavior: "handoff",
         note: "Choose a connected browser environment or open T3 Code.",
       },
-      desktop: { ...t3Route, url: "t3code://new" },
+      desktop: {
+        ...t3Route,
+        url: "t3code://new",
+        evidence: "verified",
+        note: "Prefill verified in T3 Code 0.1.11 on macOS.",
+      },
       ios: { ...t3Route, url: "t3code://new", note: "Requires a connected environment." },
       android: { ...t3Route, url: "t3code://new", note: "Requires a connected environment." },
     },

@@ -1,6 +1,6 @@
 {
   "name": "agent-deeplinks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Evidence-backed deep links for AI agents with SVG icons and React helpers.",
   "type": "module",
   "license": "MIT",
@@ -10,8 +10,18 @@
     "url": "git+https://github.com/lalalune/agent-deeplinks.git"
   },
   "bugs": "https://github.com/lalalune/agent-deeplinks/issues",
-  "keywords": ["agents", "deeplinks", "codex", "claude", "shadcn", "react"],
-  "files": ["dist", "icons"],
+  "keywords": [
+    "agents",
+    "deeplinks",
+    "codex",
+    "claude",
+    "shadcn",
+    "react"
+  ],
+  "files": [
+    "dist",
+    "icons"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -41,7 +51,9 @@
     "react": ">=18 <21"
   },
   "peerDependenciesMeta": {
-    "react": { "optional": true }
+    "react": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@radix-ui/react-slot": "^1.2.4",
