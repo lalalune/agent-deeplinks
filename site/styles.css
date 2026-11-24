@@ -113,6 +113,7 @@ tbody tr:hover { background-color: #1b211b; }
 .code-example { min-width: 0; background: #121512; border: 1px solid var(--color-line); border-radius: 9px; }
 .code-example > div { display: flex; align-items: center; gap: 8px; padding: 4px 10px 4px 12px; border-bottom: 1px solid var(--color-line); color: var(--color-muted); font: 400 13px/1 var(--font-mono); }
 .code-example > div button { margin-inline-start: auto; }
+.code-example > p { max-width: none; margin: 0; padding: 12px; }
 .code-example pre { overflow: auto; padding: 12px; color: var(--color-accent); font: 400 13px/1.55 var(--font-mono); }
 footer { border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 14px; }
 .footer-row { min-height: 76px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 25px; }

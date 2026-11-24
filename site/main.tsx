@@ -139,9 +139,18 @@ function App() {
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
   const href = getAgentLink(agent, platform, options);
-  const reactExample = href
-    ? getReactExample(agent, platform, options)
-    : getReactExample("codex", "desktop", { prompt: examplePrompt });
+  const sampleOptions: LinkOptions = {
+    ...(route?.fields?.prompt ? { prompt: examplePrompt } : {}),
+    ...(route?.required?.includes("directory") ? { directory: "/absolute/path/to/project" } : {}),
+    ...(route?.required?.includes("server") ? { server: "https://your-agent.example.com" } : {}),
+    ...(options.browserOnly ? { browserOnly: true } : {}),
+    ...(options.allowExperimental ? { allowExperimental: true } : {}),
+    ...(options.allowSend ? { allowSend: true } : {}),
+  };
+  const exampleOptions = href ? options : sampleOptions;
+  const reactExample = href || getAgentLink(agent, platform, exampleOptions)
+    ? getReactExample(agent, platform, exampleOptions)
+    : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
   const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const source = route?.sources[0];
@@ -388,8 +397,14 @@ function App() {
             </div>
           </div>
           <div className="code-example">
-            <div><CodeXml size={17} aria-hidden="true" /> <span>OpenInAgent.tsx</span><CopyButton value={reactExample} label="Copy code example" iconOnly /></div>
-            <pre><code>{reactExample}</code></pre>
+            <div>
+              <CodeXml size={17} aria-hidden="true" />
+              <span>OpenInAgent.tsx</span>
+              {reactExample && <CopyButton value={reactExample} label="Copy code example" iconOnly />}
+            </div>
+            {reactExample ? <pre><code>{reactExample}</code></pre> : (
+              <p>{route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
+            )}
           </div>
         </section>
       </main>
