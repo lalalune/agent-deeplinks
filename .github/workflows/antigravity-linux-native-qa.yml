@@ -19,11 +19,10 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - name: Build the link generator and prepare Electron inspection
+      - name: Build the link generator
         run: |
           npm ci
           npm run build:package
-          npm install --ignore-scripts --no-save --prefix "$RUNNER_TEMP/antigravity-qa-driver" playwright-core@1.58.2
       - name: Verify and extract Google's official build
         run: |
           evidence="$RUNNER_TEMP/antigravity-linux/evidence"
@@ -61,8 +60,8 @@ jobs:
           tar -xzf "$archive" --no-same-owner -C "$scratch/app"
           find "$scratch/app" -type f -iname antigravity -executable -print > "$scratch/executables.txt"
           test "$(wc -l < "$scratch/executables.txt")" -eq 1
-          sudo apt-get install -y --no-install-recommends xvfb xauth dbus-x11 libglib2.0-bin xdg-utils libgtk-3-0t64 libnss3 libasound2t64
-      - name: Check stock URL registration and native launch
+          sudo apt-get install -y --no-install-recommends xvfb xauth dbus-x11 libglib2.0-bin xdg-utils libgtk-3-0t64 libnss3 libasound2t64 openbox wmctrl imagemagick desktop-file-utils
+      - name: Verify a per-user XDG handler with the unmodified Google application
         run: |
           scratch="$RUNNER_TEMP/antigravity-linux"
           ANTIGRAVITY_QA_EXE="$(cat "$scratch/executables.txt")"
@@ -74,12 +73,12 @@ jobs:
           export XDG_STATE_HOME="$HOME/.local/state"
           export XDG_CURRENT_DESKTOP=GNOME
           mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME" "$XDG_STATE_HOME"
-          xvfb-run -a --server-args='-screen 0 1366x900x24' dbus-run-session --             node .github/qa/antigravity-linux-native.mjs
+          xvfb-run -a --server-args='-screen 0 1366x900x24' dbus-run-session --             bash .github/qa/antigravity-linux-xdg.sh
       - name: Save Linux native evidence
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: antigravity-2.35.0-linux-native-evidence
+          name: antigravity-2.35.0-linux-xdg-evidence
           path: ${{ runner.temp }}/antigravity-linux/evidence
           if-no-files-found: warn
           retention-days: 7
