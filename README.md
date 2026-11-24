@@ -13,7 +13,7 @@ npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.10.tgz
+npm install ./agent-deeplinks-0.1.11.tgz
 ```
 
 ## Usage
@@ -49,6 +49,7 @@ T3 Code accepts an optional server origin on the web. Leave it unset for the hos
 ZCode's web, iOS, and Android links open its versioned Remote Control sign-in page in a browser. Connecting requires the same account and region as an online desktop with Remote Control enabled. [ZCode Remote Control instructions](https://zcode.z.ai/en/docs/remote-control)
 
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` to open the dashboard. Supplying a prompt opens OpenClaw's run confirmation.
+On Android, pass the configured Gateway address in `server` to open its Control UI in a browser.
 
 Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links).
 

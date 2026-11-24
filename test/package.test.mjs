@@ -109,6 +109,10 @@ test("opens configured self-hosted Web apps from another device", () => {
   assert.equal(getAgentLink("hermes", "web", { server: "http://192.168.1.20:9120" }), "http://192.168.1.20:9120/");
   assert.equal(getAgentLink("openclaw", "web", { server: "https://gateway.example/openclaw/" }), "https://gateway.example/openclaw/");
   assert.equal(getAgentLink("openclaw", "web", { server: "https://gateway.example/?token=private" }), null);
+  assert.equal(getAgentLink("openclaw", "android"), null);
+  assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/openclaw/" }), "https://gateway.example/openclaw/");
+  assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/openclaw/", prompt: special }), null);
+  assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/?token=private" }), null);
   assert.equal(getAgentLink("hermes", "web", { server: "javascript:alert(1)" }), null);
   for (const platform of ["ios", "android"]) {
     assert.equal(getAgentLink("hermes", platform), null);

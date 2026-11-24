@@ -34,6 +34,10 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
 };
 
 const extraFields = Object.keys(extraFieldDetails) as ExtraField[];
+const serverFieldLabels: Partial<Record<AgentId, string>> = {
+  hermes: "Web Access address",
+  openclaw: "Gateway address",
+};
 
 const evidenceNames: Record<Evidence, string> = {
   verified: "Verified",
@@ -240,7 +244,7 @@ function App() {
                 <label className="field">
                   <span>
                     {route?.required?.includes("server")
-                      ? agent === "hermes" ? "Web Access address" : "Server origin"
+                      ? serverFieldLabels[agent] ?? "Server origin"
                       : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}
                   </span>
                   <input
