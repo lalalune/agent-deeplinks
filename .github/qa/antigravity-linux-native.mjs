@@ -1,5 +1,5 @@
 import { execFileSync, spawnSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 import { getAgentLink } from "../../dist/index.js";
@@ -29,19 +29,47 @@ async function close(runningApp) {
 async function launch(args = []) {
   return _electron.launch({
     executablePath,
-    args: ["--no-sandbox", "--disable-gpu", ...args],
+    args: ["--no-sandbox", "--disable-gpu", "--ozone-platform=x11", ...args],
     env: process.env,
     timeout: 40_000,
   });
 }
 
-async function getWelcome(runningApp) {
-  const window = await runningApp.firstWindow({ timeout: 25_000 });
-  await window.waitForFunction(
-    () => /welcome to antigravity/i.test(document.title) || /welcome to antigravity/i.test(document.body?.innerText ?? ""),
-    undefined, { timeout: 25_000 },
-  );
-  return window;
+async function getVisibleView(runningApp, first, label) {
+  const deadline = Date.now() + 40_000;
+  let snapshot;
+  while (Date.now() < deadline) {
+    for (const candidate of runningApp.windows().reverse()) {
+      const view = await candidate.evaluate(() => ({
+        title: document.title,
+        text: document.body?.innerText?.slice(0, 1_200) ?? "",
+      })).catch(() => null);
+      if (!view || (!view.title && !view.text)) continue;
+      snapshot = view;
+      if (/welcome to antigravity/i.test(view.title + " " + view.text) ||
+          (/antigravity/i.test(view.title + " " + view.text) && /sign in|continue with google/i.test(view.text))) {
+        console.log(`${label} welcomes signed-out user:`, view);
+        return { window: candidate, view, welcome: true };
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 450));
+  }
+  console.log(`${label} observed visible view:`, snapshot);
+  return { window: first, view: snapshot ?? null, welcome: false };
+}
+
+async function findDeepLinkLog(runningApp) {
+  const logDirectory = await runningApp.evaluate(({ app }) => app.getPath("logs"));
+  try {
+    return readdirSync(logDirectory, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".log"))
+      .map((entry) => ({
+        log: entry.name,
+        exactUriObserved: /Launched with deep link:\s*antigravity:\/\//.test(readFileSync(join(logDirectory, entry.name), "utf8")),
+      }));
+  } catch {
+    return [];
+  }
 }
 
 async function stockAppState(runningApp) {
@@ -54,7 +82,7 @@ async function stockAppState(runningApp) {
     electronProtocolHandler: app.getApplicationNameForProtocol(href) || null,
     visibleWindows: BrowserWindow.getAllWindows()
       .filter((window) => window.isVisible())
-      .map((window) => window.getTitle()),
+      .map((window) => ({ title: window.getTitle(), url: window.webContents.getURL() })),
   }), url);
 }
 
@@ -63,10 +91,14 @@ let page;
 const proof = { url, beforeLaunch: getRegistration(), afterFirstLaunch: null, stockShellDispatch: null, directArgv: null, signedIn: false };
 try {
   app = await launch();
-  page = await getWelcome(app);
+  page = await app.firstWindow({ timeout: 25_000 });
   proof.firstApp = await stockAppState(app);
   if (proof.firstApp.version !== "2.35.0") throw new Error("Unexpected package version");
+  const initial = await getVisibleView(app, page, "Initial launch");
+  page = initial.window;
+  proof.initialView = { welcome: initial.welcome, content: initial.view };
   proof.afterFirstLaunch = getRegistration();
+  proof.firstApp = await stockAppState(app);
   await page.screenshot({ path: join(output, "first-launch.png"), timeout: 7_000 });
   console.log(`Stock MIME default after launch: ${proof.afterFirstLaunch.xdg ?? "(none)"}`);
 
@@ -91,12 +123,19 @@ try {
     app = undefined;
     page = undefined;
     app = await launch([url]);
-    page = await getWelcome(app);
+    page = await app.firstWindow({ timeout: 25_000 });
+    const direct = await getVisibleView(app, page, "Direct argv");
+    page = direct.window;
     proof.directArgv = await stockAppState(app);
+    proof.directView = { welcome: direct.welcome, content: direct.view };
+    proof.packagedLogs = await findDeepLinkLog(app);
     if (!proof.directArgv.argvHasExactUri || !proof.directArgv.visibleWindows.length) {
       throw new Error("Cold application argv did not retain the exact URI in a visible instance");
     }
     await page.screenshot({ path: join(output, "application-argv-launch.png"), timeout: 7_000 });
+    if (!direct.welcome && !proof.directArgv.visibleWindows.some(({ title }) => /welcome to antigravity/i.test(title))) {
+      throw new Error("Exact argv reached the native app but its welcome view was not observed");
+    }
   }
 } catch (error) {
   if (page) {

@@ -65,7 +65,8 @@ jobs:
       - name: Check stock URL registration and native launch
         run: |
           scratch="$RUNNER_TEMP/antigravity-linux"
-          export ANTIGRAVITY_QA_EXE="$(cat "$scratch/executables.txt")"
+          ANTIGRAVITY_QA_EXE="$(cat "$scratch/executables.txt")"
+          export ANTIGRAVITY_QA_EXE
           export HOME="$scratch/home"
           export XDG_CONFIG_HOME="$HOME/.config"
           export XDG_DATA_HOME="$HOME/.local/share"
