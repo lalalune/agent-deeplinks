@@ -35,6 +35,8 @@ The v0.1.10 release passed the full browser matrix for 66 routes in all three en
 
 The v0.1.11 release passed the same cross-browser matrix for 67 routes, including the new OpenClaw Android browser launch with a caller-configured Gateway address. A clean install loaded the package, React entry point, and 18 SVG exports. The public ZIP contains the exact npm tarball and Cloudflare demo JavaScript. [Production playground](https://agent-deeplinks.pages.dev/) · [v0.1.11 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.11)
 
+The v0.1.12 release passed all 67 Playground entries in Chromium 158, Firefox 159, and WebKit 27.2. The standalone install, SVG exports, and ZIP-to-production JavaScript comparison passed. The catalog incorporates the new Windows and Ubuntu desktop evidence. [v0.1.12 release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.12) · [Native results](coding-agents.md)
+
 ## Native device checks
 
 - T3 Code's signed Android 2.3.0 beta displayed the exact unsent draft on Android 16 after pairing to a connected environment. [Test details](coding-agents.md#t3-code)
