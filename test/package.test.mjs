@@ -814,6 +814,51 @@ test("builds provider-specific plugin, skill and shared-assistant destinations",
   assert.equal(getAgentLink("perplexity", "web", { action: "project", target: "https://www.perplexity.ai/search/anything" }), null);
 });
 
+test("opens Grok Bot Marketplace pages without invoking template import", () => {
+  const base = "https://x.ai/bot/marketplace";
+  const action = "bot-marketplace";
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("grok-bot", platform, { action }), base);
+    assert.equal(getAgentLink("grok-bot", platform, { action, target: `${base}/?ref=inert#drop` }), base);
+    for (const page of ["engineering", "bots/projects-manager"]) {
+      assert.equal(getAgentLink("grok-bot", platform, { action, target: page }), `${base}/${page}`);
+      const options = { action, target: `${base}/${page}/?ref=inert#drop` };
+      assert.equal(getAgentLink("grok-bot", platform, options), `${base}/${page}`);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "grok-bot", platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${base}/${page}"`));
+      }
+      assert.equal(getAgentLink("grok-bot", platform, { ...options, prompt: special }), null);
+    }
+    for (const target of ["bots", "bots/../engineering", "bots/has%2Fslash", "https://x.ai/bot/AZKaQOsjrAa51Nb4xvTur",
+      "https://unrelated@example.com/bot/marketplace/engineering", "https://x.ai.example/bot/marketplace/engineering"]) {
+      assert.equal(getAgentLink("grok-bot", platform, { action, target }), null);
+    }
+  }
+  assert.equal(getAgentRoute("grok-bot", "desktop", action), null);
+});
+
+test("opens Codex snapshots in the browser without treating them as local threads", () => {
+  const target = "cx_00000000000080008000000000000000";
+  const url = `https://chatgpt.com/s/${target}`;
+  for (const platform of ["web", "ios", "android"]) {
+    const options = { action: "shared-chat", target: `${url}/?ref=inert#drop` };
+    assert.equal(getAgentLink("codex", platform, options), url);
+    assert.equal(getAgentLink("codex", platform, { ...options, target }), url);
+    for (const iconOnly of [true, false]) {
+      const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "codex", platform, options, iconOnly }));
+      assert.ok(markup.includes(`href="${url}"`));
+    }
+    for (const invalid of ["", target.slice(0, -1), target.replace("cx_", "cd_"),
+      `https://chatgpt.com/share/${target}`, `https://chatgpt.com.example/s/${target}`,
+      `https://user@chatgpt.com/s/${target}`, `codex://shared-thread/${target}`]) {
+      assert.equal(getAgentLink("codex", platform, { ...options, target: invalid }), null);
+    }
+    assert.equal(getAgentLink("codex", platform, { ...options, prompt: special }), null);
+  }
+  assert.equal(getAgentRoute("codex", "desktop", "shared-chat"), null);
+});
+
 test("encodes Cursor MCP configurations as UTF-8 base64 in review links", () => {
   const config = { url: "https://example.com/mcp", headers: { "X-Label": "Café + 🎉" } };
   const options = { action: "mcp-install", target: "MCP café", config: JSON.stringify(config) };

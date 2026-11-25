@@ -136,6 +136,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     "shared-chat": { target: "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853" },
   },
   codex: {
+    "shared-chat": { target: "https://chatgpt.com/s/cx_00000000000080008000000000000000" },
     plugin: { target: exampleCodexPlugin },
     "plugin-install": { target: "openai-developers", marketplace: "openai-curated" },
     "plugin-chat": { target: exampleCodexPlugin, prompt: "Find the docs for app deep links." },
@@ -166,6 +167,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     "team-plugin": { target: "456" },
     "team-bot": { target: "3f937d36-4777-4c7c-9139-a8a48a38c7fe" },
     "bot-template": { target: "https://x.ai/bot/W4Z5pvEm6UgCml48Ig4dT/thoth" },
+    "bot-marketplace": { target: "https://x.ai/bot/marketplace/bots/projects-manager" },
   },
   antigravity: {
     plugin: { target: "firebase" },
@@ -198,7 +200,7 @@ function ActionPlayground() {
   const key = `${agent}/${platform}/${action.id}`;
   const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
   const href = getAgentLink(agent, platform, options);
-  const canonicalTarget = action.id === "team-bot" || action.id === "bot-template" || action.id === "remote-session" || action.id === "shared-chat";
+  const canonicalTarget = ["team-bot", "bot-template", "bot-marketplace", "remote-session", "shared-chat"].includes(action.id);
   const isPairingAction = action.id === "server-pair";
   const exampleOptions = isPairingAction ? { ...options, target: exampleOpenCodePairing }
     : canonicalTarget && href ? { ...options, target: href } : options;

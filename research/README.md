@@ -114,6 +114,7 @@ The v0.1.48 tag passed 43 package tests. Chromium 158 and WebKit 27.2 checked al
 
 ## Native device checks
 
+- Play-signed T3 Code Android 2.3.0 build 825 opened the exact saved thread twice from a cold start through verified HTTPS App Links. The first launch kept the composer empty, and the second displayed the exact editable Unicode draft. [Native screenshots and verification](https://github.com/lalalune/agent-deeplinks/actions/runs/45706063833/artifacts/15065187869)
 - Signed macOS Codex opened General, Browser, Connections, Skills, and Scheduled through LaunchServices using the exact package URLs. The Skills catalog rendered. Scheduled showed the idle list and **New task**. [Native proof](evidence/codex-native-navigation/macos-proof.json)
 - The published OpenClaw Gateway opened Dashboard, Focus, and gallery links for the exact idle session in desktop and Pixel browsers. The standard Dashboard link displayed the exact unsent draft in both. [Browser proof](other-agents.md#hermes-agent-and-openclaw)
 
@@ -133,6 +134,7 @@ The v0.1.48 tag passed 43 package tests. Chromium 158 and WebKit 27.2 checked al
 
 ### Remaining native checks
 
+- Codex’s snapshot viewer rendered the unavailable state for the synthetic ID on desktop, iPhone, and Pixel browser profiles. Content verification requires an active viewable snapshot. [Browser proof](evidence/codex-shared-snapshot/proof.json)
 - ZCode’s share viewer rendered the expired state on desktop and mobile. Verifying conversation content requires an active viewable share. [Browser proof](evidence/zcode-browser-share/proof.json)
 - Existing synced ChatGPT and Claude conversations still need signed-in native checks. [Existing chat research](openai-anthropic.md)
 - Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)

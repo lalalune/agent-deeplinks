@@ -1,0 +1,40 @@
+{
+  "build": 825,
+  "version": "2.3.0",
+  "promptSubmitted": false,
+  "coldDispatches": {
+    "https-thread": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    },
+    "existing-thread-prompt": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    }
+  },
+  "packageVersion": "0.1.36",
+  "environmentId": "d1ca8351-8395-4b8b-8494-b4aad71b4b87",
+  "existingThreadId": "thread:project:e9be0609-b4d1-495e-a36f-d6e8104bff6e:03b5c1af-53a8-4f21-b340-fe0a7511db84",
+  "initialProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "pairingFormOpenedByStockRoute": false,
+  "stockLocalPairing": true,
+  "httpsThreadAttempt": "https://app.t3.codes/threads/d1ca8351-8395-4b8b-8494-b4aad71b4b87/thread%3Aproject%3Ae9be0609-b4d1-495e-a36f-d6e8104bff6e%3A03b5c1af-53a8-4f21-b340-fe0a7511db84",
+  "httpsThread": "https://app.t3.codes/threads/d1ca8351-8395-4b8b-8494-b4aad71b4b87/thread%3Aproject%3Ae9be0609-b4d1-495e-a36f-d6e8104bff6e%3A03b5c1af-53a8-4f21-b340-fe0a7511db84",
+  "androidHttpsDirect": true,
+  "httpsPromptAttempt": "https://app.t3.codes/threads/d1ca8351-8395-4b8b-8494-b4aad71b4b87/thread%3Aproject%3Ae9be0609-b4d1-495e-a36f-d6e8104bff6e%3A03b5c1af-53a8-4f21-b340-fe0a7511db84?prompt=Existing%20T3%20thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA",
+  "promptUri": "https://app.t3.codes/threads/d1ca8351-8395-4b8b-8494-b4aad71b4b87/thread%3Aproject%3Ae9be0609-b4d1-495e-a36f-d6e8104bff6e%3A03b5c1af-53a8-4f21-b340-fe0a7511db84?prompt=Existing%20T3%20thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA",
+  "exactVisibleDraft": "Existing T3 thread draft + & café 🧪",
+  "finalProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  }
+}

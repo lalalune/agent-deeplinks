@@ -1,0 +1,77 @@
+{
+  "check": "Read-only endpoint with a synthetic Codex share ID",
+  "documentation": "https://learn.chatgpt.com/docs/use-chatgpt#share-a-read-only-snapshot-of-a-codex-thread",
+  "profiles": [
+    {
+      "profile": "desktop chromium",
+      "build": "158.0.8127.18",
+      "target": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "status": 200,
+      "final": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "title": "Shared chat",
+      "text": "ChatGPT Shared chat not found Log in",
+      "snapshotResolution": [
+        {
+          "path": "/backend-api/wham/shared_threads/cx_00000000000080008000000000000000",
+          "status": 500
+        }
+      ],
+      "viewerAssetLoaded": true
+    },
+    {
+      "profile": "iphone webkit",
+      "build": "27.2",
+      "target": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "status": 200,
+      "final": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "title": "Shared chat",
+      "text": "ChatGPT Shared chat not found Log in",
+      "snapshotResolution": [
+        {
+          "path": "/backend-api/wham/shared_threads/cx_00000000000080008000000000000000",
+          "status": 500
+        }
+      ],
+      "viewerAssetLoaded": true
+    },
+    {
+      "profile": "pixel chromium",
+      "build": "158.0.8127.18",
+      "target": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "status": 200,
+      "final": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+      "title": "Shared chat",
+      "text": "ChatGPT Shared chat not found Log in",
+      "snapshotResolution": [
+        {
+          "path": "/backend-api/wham/shared_threads/cx_00000000000080008000000000000000",
+          "status": 500
+        }
+      ],
+      "viewerAssetLoaded": true
+    }
+  ],
+  "apple": {
+    "source": "https://app-site-association.cdn-apple.com/a/v1/chatgpt.com",
+    "sharedPathRules": [
+      "/s/cd_*",
+      "/s/i_*",
+      "/s/m_*",
+      "/s/bday_*",
+      "/s/p_*",
+      "/s/s_*",
+      "/s/task_*",
+      "/s/shareauto_*",
+      "/s/t_*",
+      "/s/w_*"
+    ],
+    "cxRulePresent": false
+  },
+  "android": {
+    "source": "https://github.com/lalalune/agent-deeplinks/actions/runs/45686687701/artifacts/15056028598",
+    "version": "1.2026.321 build 2632129",
+    "snapshotPathPresent": false,
+    "dynamicAppLinkComponentsPresent": false
+  },
+  "contentVerified": false
+}

@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "remote-session" | "server-pair"
+  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
   | "settings" | "skills" | "automations" | "command" | "rule";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
@@ -286,6 +286,32 @@ const grokBotTemplate = grokBotShare({
   sources: ["https://docs.x.ai/grok-bot/bots#share-a-bot", "https://x.ai/bot/W4Z5pvEm6UgCml48Ig4dT/thoth", grokMobileAssociation],
 }, "grokbot://app/v1/bot-template", /^[a-z0-9_-]{21}(?:\/[a-z0-9_-]+)?$/iu, "confirm");
 
+const grokBotMarketplace: ActionDefinition = {
+  id: "bot-marketplace", label: "Open Bot Marketplace", url: "https://x.ai/bot/marketplace",
+  behavior: "launch", evidence: "verified",
+  sources: [
+    "https://x.ai/bot/marketplace",
+    "https://x.ai/bot/marketplace/bots/projects-manager",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-bot-marketplace/proof.json",
+  ],
+  fields: { target: "" }, required: [],
+  inputs: [input("target", "Marketplace URL or path (optional)", "bots/projects-manager")],
+  note: "Opens the public catalog, a category, or a template in the browser. Import Bot is a separate action on the template page.",
+  prepare: ({ target }, url) => {
+    if (unsafeCharacters.test(target ?? "")) return null;
+    const value = target?.trim();
+    if (!value) return url;
+    const basePath = new URL(url).pathname;
+    const link = readLink(value, url);
+    const pathname = link?.pathname.replace(/\/$/u, "");
+    if (pathname === basePath) return url;
+    if (pathname && !pathname.startsWith(`${basePath}/`)) return null;
+    const path = pathname ? pathname.slice(basePath.length + 1) : value.replace(/\/$/u, "");
+    return (path !== "bots" && slug.test(path)) || (path.startsWith("bots/") && slug.test(path.slice(5)))
+      ? `${url}/${path}` : null;
+  },
+};
+
 const cursorPlugin = pathAction({
   id: "plugin", label: "Open marketplace plugin", url: "https://cursor.com/marketplace/",
   behavior: "launch", evidence: "observed", sources: ["https://cursor.com/docs/plugins", "https://cursor.com/marketplace/cursor/google-drive"],
@@ -517,6 +543,14 @@ function sharedChat(
 }
 
 const chatgptSharedChat = "https://chatgpt.com/share/";
+const codexSharedChat = sharedChat({
+  url: "https://chatgpt.com/s/", evidence: "source",
+  sources: [
+    "https://learn.chatgpt.com/docs/use-chatgpt#share-a-read-only-snapshot-of-a-codex-thread",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/codex-shared-snapshot/proof.json",
+  ],
+  note: "Opens the read-only Codex snapshot in the browser. A working share link and its original access permissions are required to view the content.",
+}, "", { id: /^cx_[a-f0-9]{32}$/u, example: "cx_00000000000080008000000000000000" });
 const claudeSharedChat = "https://claude.ai/share/";
 const grokSharedChat = "https://grok.com/share/";
 
@@ -655,7 +689,9 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "The signed Android app accepted the share link. The offline test reached the splash screen, and in-app conversation rendering still needs a connected run.",
     })],
   },
-  codex: { desktop: codexDesktopActions },
+  codex: {
+    web: [codexSharedChat], desktop: codexDesktopActions, ios: [codexSharedChat], android: [codexSharedChat],
+  },
   grok: {
     web: [sharedChat({
       url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks],
@@ -671,10 +707,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     }, "", grokShareFormat)],
   },
   "grok-bot": {
-    web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web],
+    web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web, grokBotMarketplace],
     desktop: [grokPlugin, grokTeamPlugin, grokTeamBot.desktop, grokBotTemplate.desktop],
-    ios: grokMobileActions,
-    android: grokMobileActions,
+    ios: [...grokMobileActions, grokBotMarketplace],
+    android: [...grokMobileActions, grokBotMarketplace],
   },
   cursor: {
     web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web")],

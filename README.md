@@ -214,6 +214,8 @@ The Playground includes an editable example for each action. ChatGPT app links u
 
 Pass a ChatGPT, Claude, Grok, or Kimi share URL or its share ID as `target` with `action: "shared-chat"`. iOS links use Universal Links, and ChatGPT and Grok also support Android App Links. Android may hand some web variants to the installed app. Kimi shares open on the original regional website. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
 
+For a shared Codex snapshot, use `getAgentLink("codex", platform, { action: "shared-chat", target })` with the snapshot URL or its `cx_…` identifier. Web, iOS, and Android open the read-only browser viewer. Shared workspace snapshots keep their original access permissions. [OpenAI snapshot guide](https://learn.chatgpt.com/docs/use-chatgpt#share-a-read-only-snapshot-of-a-codex-thread)
+
 For ZCode, use `action: "shared-chat"` on `web`, `ios`, or `android` with a share code or URL. The link opens the signed-out browser viewer when sharing permissions allow it. A pasted China share keeps its `/cn/` path. [ZCode sharing guide](https://zcode.z.ai/en/docs/agents#sharing-a-conversation)
 
 For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as `target` and its text as `content`. The desktop link opens the review. The web link opens Cursor’s hosted preview. Cursor adds the file extension when the recipient confirms. [Cursor link reference](https://cursor.com/docs/reference/deeplinks)
@@ -221,6 +223,8 @@ For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as 
 In Codex and ChatGPT Desktop, use `action: "settings"`, `"skills"`, or `"automations"`. Settings accepts an optional documented section such as `connections/ssh`. Scheduled opens the task screen. Some app versions open the create form directly. [OpenAI desktop link reference](https://learn.chatgpt.com/docs/reference/commands#deep-links)
 
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
+
+Use `action: "bot-marketplace"` on `web`, `ios`, or `android` to open the Grok Bot Marketplace. Leave `target` empty for the gallery, or pass a category such as `engineering`, a path such as `bots/projects-manager`, or the complete Marketplace URL. The template page has a separate **Import Bot** button. [Grok Bot Marketplace](https://x.ai/bot/marketplace)
 
 To reopen an active Antigravity CLI conversation, pass its printed Remote Control URL with `action: "remote-session"` on `web`, `ios`, or `android`. The receiving browser needs the same Google account while the original CLI is still running. [Antigravity CLI Remote Control](https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control)
 

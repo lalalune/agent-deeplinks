@@ -96,6 +96,7 @@ const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
 const t3AndroidAppLinkProof = "https://github.com/lalalune/agent-deeplinks/blob/09dac84870eda35a0b635871b06aa6dcec8811cd/research/evidence/t3-android-verified-https/proof.json";
+const t3AndroidColdAppLinkProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45706063833/artifacts/15065187869";
 const t3ThreadSource = "https://github.com/pingdotgg/t3code/blob/4da8d19d/packages/shared/src/threadLinks.ts#L42-L66";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
 const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
@@ -827,8 +828,9 @@ const catalog = {
           "https://github.com/pingdotgg/t3code/blob/v0.1.11/docs/user/remote-access.md",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45480052812/job/138750432372",
           t3AndroidAppLinkProof,
+          t3AndroidColdAppLinkProof,
         ],
-        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project. With a thread and environment ID, the hosted chooser offers to open that thread. Verified Android App Links can open the paired native app directly.",
+        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project. With a thread and environment ID, the hosted chooser offers to open that thread. Verified Android App Links also opened the paired app directly from a cold start.",
       },
       desktop: {
         ...t3Route,
@@ -860,8 +862,9 @@ const catalog = {
           "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165",
           "https://github.com/lalalune/agent-deeplinks/blob/cff6e2e17ef0e5db857a1755813117da4d76488d/research/evidence/t3-android-existing-thread-native-arm/proof.json",
           t3AndroidAppLinkProof,
+          t3AndroidColdAppLinkProof,
         ],
-        note: "New-thread draft verified in the signed 2.3.0 beta on Android 16. Signed build 823 opened an existing thread with and without an unsent draft in a native ARM64 Android 15 container. The exact HTTPS thread links also opened that paired app after Android verified the route’s domain.",
+        note: "New-thread draft verified in the signed 2.3.0 beta on Android 16. Signed build 823 opened an existing thread with and without an unsent draft in a native ARM64 Android 15 container. After domain verification, the same HTTPS links opened the exact thread from cold starts in Play-signed internal build 825.",
       },
     },
   },

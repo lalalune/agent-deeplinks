@@ -1,0 +1,181 @@
+{
+  "revisionCompared": "224a633e80c42feae4d0f8b6d71b91b7ffd896e4",
+  "vendorDocs": "https://docs.x.ai/grok-bot/bots#add-a-bot-from-a-template",
+  "gallery": "https://x.ai/bot/marketplace",
+  "categoryPathsFromGallery": [
+    "/bot/marketplace/design",
+    "/bot/marketplace/engineering",
+    "/bot/marketplace/from-grok-bot-team",
+    "/bot/marketplace/marketing",
+    "/bot/marketplace/operations",
+    "/bot/marketplace/personal",
+    "/bot/marketplace/product",
+    "/bot/marketplace/recruiting-people",
+    "/bot/marketplace/sales"
+  ],
+  "verifiedMarketplaceDetail": "https://x.ai/bot/marketplace/bots/projects-manager",
+  "importLinkObservedWithoutActivation": {
+    "href": "/bot/AZKaQOsjrAa51Nb4xvTur",
+    "absolute": "https://x.ai/bot/AZKaQOsjrAa51Nb4xvTur"
+  },
+  "browserBoundary": "Fresh signed-out contexts. First-party HTTPS GET, HEAD and OPTIONS only. Service workers and WebSockets blocked. No control activated.",
+  "browsers": [
+    {
+      "profile": "Pixel 7 Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace",
+      "final": "https://x.ai/bot/marketplace",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 35,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace",
+      "final": "https://x.ai/bot/marketplace",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 35,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "requested": "https://x.ai/bot/marketplace",
+      "final": "https://x.ai/bot/marketplace",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 35,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace/engineering",
+      "final": "https://x.ai/bot/marketplace/engineering",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 8,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace/engineering",
+      "final": "https://x.ai/bot/marketplace/engineering",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 8,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "final": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 0,
+      "linksToExample": false,
+      "importHref": "/bot/AZKaQOsjrAa51Nb4xvTur",
+      "templateDesignVisible": true
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "requested": "https://x.ai/bot/marketplace/engineering",
+      "final": "https://x.ai/bot/marketplace/engineering",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 8,
+      "linksToExample": true,
+      "importHref": null
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "final": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 0,
+      "linksToExample": false,
+      "importHref": "/bot/AZKaQOsjrAa51Nb4xvTur",
+      "templateDesignVisible": true
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "requested": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "final": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "http": 200,
+      "headingVisible": true,
+      "detailLinkCount": 0,
+      "linksToExample": false,
+      "importHref": "/bot/AZKaQOsjrAa51Nb4xvTur",
+      "templateDesignVisible": true
+    }
+  ],
+  "associations": {
+    "apple": {
+      "publisherAasa": "https://x.ai/.well-known/apple-app-site-association",
+      "appleAasa": "https://app-site-association.cdn-apple.com/a/v1/x.ai",
+      "sameBody": true,
+      "sha256": "da15015fd93d9c175e4783dfad701e9ee612f2da9a3ab7ab13bd23680595cf43",
+      "marketplaceMatchedApps": {
+        "/bot/marketplace": [],
+        "/bot/marketplace/engineering": [],
+        "/bot/marketplace/bots/projects-manager": []
+      },
+      "importMatchedProductionGrokBot": true
+    },
+    "android": {
+      "publisherDal": "https://x.ai/.well-known/assetlinks.json",
+      "sha256": "461c1513baf90cb96c4b3097f337f9268b3772a4fc38e26b8f8427d7c54fc4e2",
+      "sourceRuntimeVersions": "Grok 1.2.60-release.00 and Grok Bot 1.27.0",
+      "signedReleaseEvidence": "https://github.com/lalalune/agent-deeplinks/actions/runs/45685353241/artifacts/15057160032",
+      "matchedMarketplacePathInSignedManifest": false,
+      "dalDynamicRulesForThesePackages": false,
+      "importMatches21CharacterTemplatePath": true
+    }
+  },
+  "canonicalization": [
+    {
+      "request": "https://x.ai/bot/marketplace",
+      "status": 200,
+      "canonicalLink": "https://x.ai/bot/marketplace"
+    },
+    {
+      "request": "https://x.ai/bot/marketplace/",
+      "status": 308,
+      "location": "https://x.ai/bot/marketplace"
+    },
+    {
+      "request": "https://x.ai/bot/marketplace/engineering",
+      "status": 200,
+      "canonicalLink": "https://x.ai/bot/marketplace/engineering"
+    },
+    {
+      "request": "https://x.ai/bot/marketplace/engineering/",
+      "status": 308,
+      "location": "https://x.ai/bot/marketplace/engineering"
+    },
+    {
+      "request": "https://x.ai/bot/marketplace/bots/projects-manager",
+      "status": 200,
+      "canonicalLink": "https://x.ai/bot/marketplace/bots/projects-manager"
+    },
+    {
+      "request": "https://x.ai/bot/marketplace/bots/projects-manager/",
+      "status": 308,
+      "location": "https://x.ai/bot/marketplace/bots/projects-manager"
+    }
+  ]
+}
