@@ -89,7 +89,7 @@ The v0.1.34 build passed all 74 Playground entries and decoded 20 SVGs in Chromi
 - OpenCode’s signed development APK and the official Android release bundle with disposable test signing both accepted the pairing link. The release configuration opened the exact idle, blank, and last sessions with the native links. The Play-signed build remains untested. [Test details](coding-agents.md#opencode)
 - Android 16 resolved the exact Kimi HTTPS link to the official installed app, which displayed its first-run consent screen. [Test details](other-agents.md#meta-muse-and-kimi)
 - The signed ChatGPT Linux preview opened the exact existing local Codex thread and displayed the exact unsent ChatGPT and Codex drafts. The Codex folder review showed the requested empty workspace. [Native evidence](openai-anthropic.md#parameters-and-prerequisites)
-- Grok Bot's signed ARM64 DEB opened the exact prompt URL to the native sign-in screen on Ubuntu. OpenClaw’s Linux 2026.11.9 AppImage opened the connected Dashboard from cold and warm GIO dispatch. The signed Windows Hub paired to the Gateway and, on a cold dispatch, reached the browser’s separate device approval. [Grok Bot](other-agents.md#grok-and-grok-bot) · [OpenClaw](other-agents.md#hermes-agent-and-openclaw)
+- Grok Bot's signed ARM64 DEB opened the exact prompt URL to the native sign-in screen on Ubuntu. OpenClaw’s Linux 2026.11.9 AppImage opened the connected Dashboard from cold and warm GIO dispatch. The signed Windows Hub paired to the Gateway, and on cold dispatch the stock browser connected to the Gateway port. [Grok Bot](other-agents.md#grok-and-grok-bot) · [OpenClaw](other-agents.md#hermes-agent-and-openclaw)
 
 ### Remaining native checks
 
