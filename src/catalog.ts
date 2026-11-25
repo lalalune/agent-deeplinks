@@ -79,6 +79,7 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
   "https://github.com/lalalune/agent-deeplinks/blob/afe1df7f5816e1cf1d8b43cead2662b102fc21a8/evidence/openai-windows-cold-links/README.md",
+  "https://github.com/lalalune/agent-deeplinks/blob/ee4f7f74b993f4436711fabe079aff63295e41b6/evidence/openai-windows-warm-links/README.md",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
@@ -554,7 +555,7 @@ const catalog = {
         ],
         fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
-        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch passed in an isolated local Work profile.",
+        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch and warm delivery both passed in an isolated local Work profile.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -602,7 +603,7 @@ const catalog = {
         sources: [codexDocs, ...openAiDesktopChecks],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
-        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote.",
+        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. Windows warm dispatch updated the same window. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
