@@ -150,6 +150,9 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     plugin: { target: "cursor/google-drive" },
     "mcp-install": { target: "Example Server", config: '{"url":"https://example.com/mcp"}' },
   },
+  grok: {
+    "shared-chat": { target: "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5" },
+  },
   "grok-bot": {
     plugin: { target: "9007199254740993" },
     "team-plugin": { target: "456" },

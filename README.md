@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.45.tgz
+npm install ./agent-deeplinks-0.1.46.tgz
 ```
 
 ## Usage
@@ -212,7 +212,7 @@ const draft = getAgentLink("codex", "desktop", {
 
 The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
 
-Pass a ChatGPT or Claude share URL or its UUID as `target` with `action: "shared-chat"`. Web links use the providers’ iOS browser exclusions. Native iOS links use the provider’s Universal Link, and ChatGPT also supports Android App Links. Android can still hand the ChatGPT web URL to its installed app. Access follows the conversation's original sharing settings. [Shared conversation examples and evidence](research/openai-anthropic.md#shared-conversations)
+Pass a ChatGPT, Claude, or Grok share URL or its share ID as `target` with `action: "shared-chat"`. iOS links use Universal Links, and ChatGPT and Grok also support Android App Links. Android may hand some web variants to the installed app. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
 
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
 

@@ -27,7 +27,14 @@ type ActionDefinition = AgentActionRoute & {
 };
 
 const simpleId = /^[a-z0-9][a-z0-9_-]*$/iu;
-const sharedChatId = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu;
+const uuidShareFormat = {
+  id: /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu,
+  example: "12345678-1234-4234-9234-123456789abc",
+};
+const grokShareFormat = {
+  id: /^[a-z0-9_-]{1,128}={0,2}_[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu,
+  example: "bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+};
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
 const qualifiedPlugin = /^[a-z0-9][a-z0-9_.-]*@[a-z0-9][a-z0-9_.-]*$/iu;
 const pluginName = /^[a-z0-9][a-z0-9_.-]*$/iu;
@@ -45,6 +52,9 @@ const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-co
 const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
 const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/shared-chat-browser/proof.json";
 const sharedChatAppleChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45687467247/artifacts/15056787932";
+const grokShareDocs = "https://x.ai/legal/faq";
+const grokShareAndroidChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45693298941/artifacts/15058854516";
+const grokShareChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-public-share/proof.json";
 const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
 const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
@@ -458,20 +468,22 @@ const perplexityProject: ActionDefinition = {
 function sharedChat(
   route: Pick<ActionDefinition, "url" | "evidence" | "sources" | "note">,
   browserSuffix = "",
+  format = uuidShareFormat,
 ): ActionDefinition {
   return {
     ...route, id: "shared-chat", label: "Open shared conversation", behavior: "launch",
     fields: { target: "" }, required: ["target"],
-    inputs: [input("target", "Conversation share link or ID", `${route.url}12345678-1234-4234-9234-123456789abc`)],
+    inputs: [input("target", "Conversation share link or ID", `${route.url}${format.example}`)],
     prepare: ({ target }, url) => {
-      const id = readId(target, sharedChatId, url);
-      return id ? `${url}${id}${browserSuffix}` : null;
+      const id = readId(target, format.id, url);
+      return id ? `${url}${encodeURIComponent(id)}${browserSuffix}` : null;
     },
   };
 }
 
 const chatgptSharedChat = "https://chatgpt.com/share/";
 const claudeSharedChat = "https://claude.ai/share/";
+const grokSharedChat = "https://grok.com/share/";
 
 function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavior" | "evidence" | "sources" | "note">): ActionDefinition {
   return {
@@ -515,6 +527,20 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     })],
   },
   codex: { desktop: codexDesktopPlugins },
+  grok: {
+    web: [sharedChat({
+      url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks],
+      note: "The public conversation rendered in signed-out desktop and iPhone browsers. The browser flag excluded iOS association and kept the exact link in the browser on the tested Android 15 build.",
+    }, "?stay_in_browser=true", grokShareFormat)],
+    ios: [sharedChat({
+      url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/apple-app-site-association", "https://github.com/lalalune/agent-deeplinks/actions/runs/45693328012/artifacts/15057684811"],
+      note: "The clean share link matches Grok’s production Universal Link. In-app conversation rendering still needs a device check.",
+    }, "", grokShareFormat)],
+    android: [sharedChat({
+      url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/assetlinks.json", grokShareAndroidChecks],
+      note: "Stock Android 15 opened the signed Grok app with the clean share link. The test reached Google Play license verification. In-app conversation rendering is still unverified.",
+    }, "", grokShareFormat)],
+  },
   "grok-bot": {
     web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web],
     desktop: [grokPlugin, grokTeamPlugin, grokTeamBot.desktop, grokBotTemplate.desktop],

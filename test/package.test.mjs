@@ -856,6 +856,27 @@ test("opens shared chat snapshots with platform-specific browser exclusions", ()
   }
 });
 
+test("opens public Grok conversations from both share ID forms", () => {
+  const legacyId = "bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5";
+  const paddedId = "c2hhcmQtMg==_6b35134f-22ba-4646-8c8a-6e4dacd7dc9e";
+  for (const [platform, suffix] of [["web", "?stay_in_browser=true"], ["ios", ""], ["android", ""]]) {
+    for (const id of [legacyId, paddedId]) {
+      const url = "https://grok.com/share/" + encodeURIComponent(id);
+      const options = { action: "shared-chat", target: url + "/?tracker=inert#discard" };
+      assert.equal(getAgentLink("grok", platform, options), url + suffix);
+      assert.equal(getAgentLink("grok", platform, { ...options, target: id }), url + suffix);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "grok", platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${url}${suffix}"`));
+      }
+    }
+    for (const target of [legacyId.slice(9), `https://grok.com.example/share/${legacyId}`, `https://grok.com/c/${legacyId}`, `https://grok.com/share/${legacyId}%2F`]) {
+      assert.equal(getAgentLink("grok", platform, { action: "shared-chat", target }), null);
+    }
+  }
+  assert.equal(getAgentLink("grok", "desktop", { action: "shared-chat", target: legacyId }), null);
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");

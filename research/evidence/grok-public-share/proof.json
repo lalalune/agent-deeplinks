@@ -1,0 +1,202 @@
+{
+  "verifiedDate": "2026-11-25",
+  "publication": "https://hkla.org/wp-content/uploads/administrator/2025-06-27-AI-Tools-for-Literature-Review.pdf#page=9",
+  "desktop": {
+    "requested": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+    "final": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+    "http": 200,
+    "publicPromptVisible": true,
+    "visibleMessageElements": 2,
+    "textLength": 5950,
+    "visibleSignedOutControls": true,
+    "relevantRequests": [
+      [
+        "GET",
+        "/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+        200
+      ],
+      [
+        "GET",
+        "/api/auth/session",
+        200
+      ],
+      [
+        "GET",
+        "/rest/app-chat/share_links/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+        200
+      ]
+    ],
+    "chromium": "158.0.8127.18",
+    "readOnlyBoundary": "Fresh Chromium context, service workers blocked, first-party GET/HEAD/OPTIONS only, WebSockets blocked"
+  },
+  "iPhoneWebKit": {
+    "profile": "iPhone 15",
+    "engine": "WebKit",
+    "engineVersion": "27.2",
+    "requested": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+    "final": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+    "documentStatus": 200,
+    "visible": {
+      "userPrompt": true,
+      "agentAnswer": true,
+      "missingShare": false,
+      "signedOut": true,
+      "visibleMessageElements": 2,
+      "renderedTextLength": 5980,
+      "viewport": [
+        393,
+        659
+      ]
+    },
+    "publicReads": [
+      {
+        "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+        "status": 200,
+        "method": "GET"
+      },
+      {
+        "url": "https://grok.com/api/auth/session",
+        "status": 200,
+        "method": "GET"
+      },
+      {
+        "url": "https://grok.com/rest/app-chat/share_links/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?useChunk=true",
+        "status": 200,
+        "method": "GET"
+      }
+    ],
+    "browserBoundary": "fresh signed-out context; service workers, WebSockets, third-party requests and writes blocked"
+  },
+  "association": {
+    "source": {
+      "appleOrigin": {
+        "url": "https://grok.com/.well-known/apple-app-site-association",
+        "sha256": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2"
+      },
+      "appleCDN": {
+        "url": "https://app-site-association.cdn-apple.com/a/v1/grok.com",
+        "sha256": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2"
+      },
+      "android": {
+        "url": "https://grok.com/.well-known/assetlinks.json",
+        "sha256": "4a05193675423fc67040e672c0b83ce0fd80dc90d3456b166769505626269aa1"
+      }
+    },
+    "method": "Read-only first-match evaluation of exact URLs against production components. No native dispatch was run.",
+    "apple": {
+      "appID": "N66CZ3Y3BX.ai.x.GrokApp",
+      "originAndCDNApplinksEqual": true,
+      "outcomes": {
+        "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5": {
+          "allowed": true,
+          "indexZeroBased": 103,
+          "matchedRule": {
+            "/": "/*"
+          }
+        },
+        "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true": {
+          "allowed": false,
+          "indexZeroBased": 44,
+          "matchedRule": {
+            "/": "/*",
+            "?": {
+              "stay_in_browser": "true"
+            },
+            "exclude": true
+          }
+        }
+      }
+    },
+    "android": {
+      "package": "ai.x.grok",
+      "verifiedPublisherCertificate": "52:1B:F5:CE:7C:98:1F:AB:A4:EB:D8:6D:23:F7:78:88:55:37:CA:D0:21:BC:10:7D:89:15:D0:05:E9:9F:4A:12",
+      "staticManifest": {
+        "version": "1.2.60-release.00",
+        "activity": "ai.x.grok.main.GrokActivity",
+        "bothUrlsWithinStaticScope": true,
+        "stayInBrowserExcludedStatically": false
+      },
+      "dynamicAppLinks": {
+        "outcomes": {
+          "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5": {
+            "allowed": true,
+            "indexZeroBased": 21,
+            "matchedRule": {
+              "/": "/*"
+            }
+          },
+          "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true": {
+            "allowed": false,
+            "indexZeroBased": 19,
+            "matchedRule": {
+              "/": "/*",
+              "?": {
+                "stay_in_browser": "true"
+              },
+              "exclude": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "desktopFlagged": {
+    "profile": "Desktop Chromium on macOS",
+    "engine": "Chromium",
+    "engineVersion": "158.0.8127.18",
+    "requested": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+    "final": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+    "documentStatus": 200,
+    "visible": {
+      "userPrompt": true,
+      "agentAnswer": true,
+      "missingShare": false,
+      "signedOut": true,
+      "visibleMessageElements": 2,
+      "renderedTextLength": 5950,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "publicReads": [
+      {
+        "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+        "status": 200,
+        "method": "GET"
+      },
+      {
+        "url": "https://grok.com/api/auth/session",
+        "status": 200,
+        "method": "GET"
+      },
+      {
+        "url": "https://grok.com/rest/app-chat/share_links/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?useChunk=true",
+        "status": 200,
+        "method": "GET"
+      }
+    ],
+    "browserBoundary": "fresh signed-out context; service workers, WebSockets, third-party requests and writes blocked"
+  },
+  "androidRuntime": {
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45693298941/artifacts/15058854516",
+    "sdk": 35,
+    "abi": "arm64-v8a",
+    "appVersion": "1.2.60-release.00",
+    "playServicesInstalled": false,
+    "playStoreInstalled": false,
+    "domainVerifiedByStockResolver": true,
+    "offlineDispatch": true,
+    "plain": {
+      "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+      "coldStart": "ai.x.grok/.main.GrokActivity",
+      "foreground": "ai.x.grok/com.pairip.licensecheck.LicenseActivity"
+    },
+    "browserFlagged": {
+      "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+      "coldStart": "org.chromium.webview_shell/.WebViewBrowserActivity",
+      "foreground": "org.chromium.webview_shell/.WebViewBrowserActivity",
+      "exactUrlVisible": true
+    }
+  }
+}
