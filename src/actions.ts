@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template" | "remote-session";
+  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template" | "remote-session" | "server-pair";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
 
@@ -40,6 +40,9 @@ const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
 const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
+const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
+const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
+const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
 
 function input(field: AgentActionField, label: string, placeholder?: string): AgentActionInput {
   return { field, label, placeholder };
@@ -423,6 +426,22 @@ const perplexityProject: ActionDefinition = {
   },
 };
 
+function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavior" | "evidence" | "sources" | "note">): ActionDefinition {
+  return {
+    ...route,
+    id: "server-pair", fields: { target: "" }, required: ["target"],
+    inputs: [input("target", "OpenCode pairing URL", "https://code.example.com/auth/connect/example_code")],
+    prepare: ({ target }, url) => {
+      if (!target || unsafeCharacters.test(target)) return null;
+      const [, address, code] = openCodePairingUrl.exec(target.trim()) ?? [];
+      const server = address && parseUrl(address);
+      if (!code || !server || !["https:", "http:"].includes(server.protocol) || server.port === "0") return null;
+      return url.startsWith("https:") ? `${server.origin}/auth/connect/${code}`
+        : `${url}?code=${code}&url=${encodeURIComponent(server.origin)}`;
+    },
+  };
+}
+
 const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokBotTemplate.mobile];
 const codexDesktopPlugins = [codexPlugin, codexInstall, codexPluginChat];
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
@@ -453,6 +472,23 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [antigravityRemoteSession],
   },
   hermes: { desktop: [hermesSkill] },
+  opencode: {
+    web: [openCodePairing({
+      url: "https://code.example.com/auth/connect/", label: "Sign in to a server", behavior: "launch", evidence: "verified",
+      sources: [openCodePairDocs, "https://opencode.ai/docs/cli/web/"],
+      note: "Opening this link signs the browser in and uses the one-time code.",
+    })],
+    ios: [openCodePairing({
+      url: "opencode-ios://pair", label: "Pair with a server", behavior: "launch", evidence: "source",
+      sources: [openCodePairSource, "https://opencode.ai/mobile", openCodePairDocs],
+      note: "Uses OpenCode’s native iPhone pairing URL. The official iPhone beta is distributed through TestFlight.",
+    })],
+    android: [openCodePairing({
+      url: "opencode://pair", label: "Pair with a server", behavior: "confirm", evidence: "verified",
+      sources: [openCodePairSource, openCodePairDocs],
+      note: "Opens native pairing review for the server. The signed development APK and test-signed 0.8.8 release configuration opened this review.",
+    })],
+  },
   claude: { web: [claudePluginDetails, claudeConnector, claudePlugin], desktop: [claudePlugin] },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },

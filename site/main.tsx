@@ -125,6 +125,7 @@ const actionAgents = Object.values(agents).filter(({ id }) => platforms.some((pl
 const examplePlugin = "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8";
 const exampleCodexPlugin = "openai-developers@openai-curated";
 const exampleMercury = "plugin_asdk_app_6a17ae803744819187a3079d37479dae";
+const exampleOpenCodePairing = "https://code.example.com/auth/connect/example_code";
 const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, LinkOptions>>>> = {
   chatgpt: {
     app: { target: examplePlugin, tool: "cad.browse", appPath: "/parts/part_joystick" },
@@ -159,6 +160,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     "remote-session": { target: "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id" },
   },
   hermes: { "skill-install": { target: "official/security/1password" } },
+  opencode: { "server-pair": { target: exampleOpenCodePairing } },
   gemini: { gem: { target: "gem-id" } },
   perplexity: { project: { target: "https://www.perplexity.ai/projects/sample-project" } },
 };
@@ -179,7 +181,10 @@ function ActionPlayground() {
   const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
   const href = getAgentLink(agent, platform, options);
   const canonicalTarget = action.id === "team-bot" || action.id === "bot-template" || action.id === "remote-session";
-  const example = href && getReactExample(agent, platform, canonicalTarget ? { ...options, target: href } : options);
+  const isPairingAction = action.id === "server-pair";
+  const exampleOptions = isPairingAction ? { ...options, target: exampleOpenCodePairing }
+    : canonicalTarget && href ? { ...options, target: href } : options;
+  const example = href && getReactExample(agent, platform, exampleOptions);
   const label = `${action.label} in ${agents[agent].name}`;
   const behavior = action.behavior === "confirm" ? "Opens a review"
     : action.behavior === "launch" ? "Opens the destination" : behaviorNames[action.behavior];
@@ -189,7 +194,7 @@ function ActionPlayground() {
       <div className="section-heading">
         <div>
           <h2 id="apps-title">Apps and plugins</h2>
-          <p>Build a link to an app page, shared conversation, plugin, or skill.</p>
+          <p>Build a link to an app page, shared conversation, plugin, skill, or server.</p>
         </div>
       </div>
       <div className="action-layout">
@@ -212,14 +217,16 @@ function ActionPlayground() {
                 <span>{label}</span>
                 {field === "prompt" || field === "config"
                   ? <textarea value={options[field] ?? ""} placeholder={placeholder} rows={3} onChange={(event) => edit(event.target.value)} />
-                  : <input value={options[field] ?? ""} placeholder={placeholder} onChange={(event) => edit(event.target.value)} />}
+                  : <input value={options[field] ?? ""} placeholder={placeholder}
+                      autoComplete={isPairingAction ? "off" : undefined} spellCheck={isPairingAction ? false : undefined}
+                      onChange={(event) => edit(event.target.value)} />}
               </label>
             );
           })}
           <div className="action-result" aria-live="polite">
             <div className="result-label">
               <span>Generated action URL</span>
-              <span className="link-behavior">{evidenceNames[action.evidence]} · {behavior}</span>
+              <span className="link-behavior">{evidenceNames[action.evidence]} · {isPairingAction && platform === "web" ? "Uses the one-time code" : behavior}</span>
               {href && <CopyButton label="Copy action URL" value={href} iconOnly />}
             </div>
             {href ? <code>{href}</code> : <p>Complete the destination fields to generate the URL.</p>}

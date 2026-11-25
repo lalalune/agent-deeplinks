@@ -1,0 +1,56 @@
+{
+  "version": "opencode v2.4.1",
+  "origin": "http://127.0.0.1:51872",
+  "loopbackOnly": true,
+  "mintedBy": "POST /api/pair",
+  "browser": [
+    {
+      "profile": "desktop Chromium",
+      "issuerStatus": 200,
+      "exactPackageOutput": true,
+      "expirySeconds": 300,
+      "version": "158.0.8127.18",
+      "navigations": [
+        {
+          "status": 302,
+          "path": "/auth/connect/[redacted]"
+        },
+        {
+          "status": 200,
+          "path": "/"
+        }
+      ],
+      "visibleProjects": true,
+      "httpOnlyCookie": true,
+      "authenticatedInfo": 200,
+      "replayStatus": 401
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "issuerStatus": 200,
+      "exactPackageOutput": true,
+      "expirySeconds": 300,
+      "version": "27.2",
+      "navigations": [
+        {
+          "status": 302,
+          "path": "/auth/connect/[redacted]"
+        },
+        {
+          "status": 200,
+          "path": "/"
+        }
+      ],
+      "visibleProjects": true,
+      "httpOnlyCookie": true,
+      "authenticatedInfo": 200,
+      "replayStatus": 401
+    }
+  ],
+  "iosNativeDispatch": false,
+  "database": {
+    "savedSessions": 0,
+    "messages": 0,
+    "providerAccounts": 0
+  }
+}

@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.42.tgz
+npm install ./agent-deeplinks-0.1.43.tgz
 ```
 
 ## Usage
@@ -99,13 +99,16 @@ getAgentLink("opencode", "web", {
 })
 ```
 
-For Android, pass a one-time `/auth/connect/<code>` URL from [`opencode pair`](https://opencode.ai/docs/cli/commands#pair) to `getOpenCodeAndroidPairingLink`. It builds a custom-scheme link to the native pairing review without fetching the one-time URL. The user confirms the connection in OpenCode. The server address in the issued URL must be reachable from the phone.
+To pair OpenCode, pass an issued `/auth/connect/<code>` URL from `opencode pair` as `target` with `action: "server-pair"`. Web opens the one-time sign-in URL. iOS opens the native TestFlight app’s pairing flow. Android opens a native pairing review, where the user confirms the connection. The address in the link must be reachable from the opening device. [OpenCode pairing command](https://opencode.ai/docs/cli/commands#pair)
 
 ```ts
-import { getOpenCodeAndroidPairingLink } from "agent-deeplinks"
-
-const href = getOpenCodeAndroidPairingLink(issuedPairingUrl)
+const href = getAgentLink("opencode", "android", {
+  action: "server-pair",
+  target: issuedPairingUrl,
+})
 ```
+
+`getOpenCodeAndroidPairingLink(issuedPairingUrl)` is also available. The package builds URLs locally. Opening the Web URL spends the code, so the Playground’s copyable React example uses a sample code. The iPhone route is sourced from OpenCode’s link serializer and awaits installed-app verification.
 
 After pairing OpenCode on Android, pass `session` to open a saved session by ID on the current server. Use `mode: "new"` for a blank session or `mode: "last"` to reopen the last session. The app uses its current paired server.
 

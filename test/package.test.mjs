@@ -10,7 +10,20 @@ const special = "Keep A&B + café/🎉?\nNew line.";
 
 test("opens an OpenCode pairing review from an issued connect link", () => {
   const source = "http://10.0.2.2:18443/auth/connect/qa_Code-123";
-  assert.equal(getOpenCodeAndroidPairingLink(source), "opencode://pair?code=qa_Code-123&url=http%3A%2F%2F10.0.2.2%3A18443");
+  const android = "opencode://pair?code=qa_Code-123&url=http%3A%2F%2F10.0.2.2%3A18443";
+  assert.equal(getOpenCodeAndroidPairingLink(source), android);
+  const options = { action: "server-pair", target: source };
+  const expected = { web: source, ios: android.replace("opencode:", "opencode-ios:"), android };
+  for (const [platform, href] of Object.entries(expected)) {
+    assert.equal(getAgentLink("opencode", platform, options), href);
+    assert.equal(getAgentLink("opencode", platform, { ...options, prompt: special }), null);
+    for (const iconOnly of [true, false]) {
+      const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "opencode", platform, options, iconOnly }));
+      assert.ok(markup.includes(`href="${href.replace(/&/gu, "&amp;")}"`));
+    }
+  }
+  assert.equal(getAgentLink("opencode", "desktop", options), null);
+  assert.equal(getAgentRoute("opencode", "ios", "server-pair").evidence, "source");
   const ipv6 = new URL(getOpenCodeAndroidPairingLink("https://[2001:db8::1]:8443/auth/connect/abc"));
   assert.equal(ipv6.searchParams.get("url"), "https://[2001:db8::1]:8443");
   assert.equal(getAgentLink("opencode", "android"), "opencode://");
@@ -26,7 +39,13 @@ test("opens an OpenCode pairing review from an issued connect link", () => {
     "https://example.com:65536/auth/connect/abc",
     "https://example.com/prefix/../auth/connect/abc",
     "opencode://auth/connect/abc",
-  ]) assert.equal(getOpenCodeAndroidPairingLink(invalid), null, invalid);
+    "https://example.com/auth/connect/abc\u200b",
+  ]) {
+    assert.equal(getOpenCodeAndroidPairingLink(invalid), null, invalid);
+    for (const platform of Object.keys(expected)) {
+      assert.equal(getAgentLink("opencode", platform, { ...options, target: invalid }), null, invalid);
+    }
+  }
 });
 
 test("encodes and round trips special characters without changing the route", () => {

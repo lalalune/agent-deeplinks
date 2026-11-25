@@ -25,7 +25,6 @@ const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
-const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
 const sshFolderCharacters = /^[\p{L}\p{N}\p{M}\p{P} +<=>^`|~$]+$/u;
 const excludedSshFolderCharacters = /[\\'\u2018-\u201b\p{Default_Ignorable_Code_Point}\u0590-\u08ff\ufb1d-\ufdff\ufe70-\ufeff\u{10800}-\u{10fff}\u{1e800}-\u{1efff}\u{13441}\u{13442}\u{16910}\u{16fe4}]/u;
@@ -329,12 +328,7 @@ export function getHermesSkillLink(identifier: string): string | null {
 
 /** Convert an OpenCode CLI pairing URL to the Android app's native pairing review. */
 export function getOpenCodeAndroidPairingLink(pairingUrl: string): string | null {
-  if (typeof pairingUrl !== "string" || hiddenPathCharacters.test(pairingUrl)) return null;
-  const [, address, code] = openCodePairingUrl.exec(pairingUrl.trim()) ?? [];
-  if (!address || !code) return null;
-  const server = parseServerUrl(address);
-  if (!server || server.port === "0") return null;
-  return `opencode://pair?code=${code}&url=${encodeURIComponent(server.origin)}`;
+  return getAgentLink("opencode", "android", { action: "server-pair", target: pairingUrl });
 }
 
 /** Return a self-contained SVG URL for an agent with a bundled brand asset. */
