@@ -5,7 +5,8 @@ Reviewed November 24, 2026. HTTP route tests use an inert marker. They show the 
 | Product | Surface | URL or capability | Evidence |
 | --- | --- | --- | --- |
 | Grok | Web | `https://grok.com/?q=<encoded text>&stay_in_browser=true` | Signed-out desktop and mobile browsers showed the exact prompt in a send review. Cancel left it editable. |
-| Grok | iOS and Android | `https://grok.com/` | iOS and Android 15 association rules cover the home path. Native dispatch and prompt behavior remain unverified. |
+| Grok | iOS | `https://grok.com/` | Apple's association matcher covers the home path. Installed-app dispatch remains open. |
+| Grok | Android | `https://grok.com/` | Stock Android 15 opened the signed Grok 1.2.60 app. Its window showed a Google Play requirement. [Native dispatch](https://github.com/lalalune/agent-deeplinks/actions/runs/45680807835/artifacts/15053174564) |
 | Grok | Native desktop | No destination confirmed | The consumer product documentation lists web, iOS and Android. |
 | Grok Bot | Desktop and mobile | `grokbot://app/v1/prompt?text=<encoded text>` with optional `id=<bot ID>` | Provider-documented draft. The Windows and Ubuntu desktop apps received the exact link and displayed sign-in. LaunchServices opened the signed macOS app. An installed app and eligible Cursor account are required. [Desktop setup](https://docs.x.ai/grok-bot/get-started) |
 | Grok Bot | HTTPS handoff | `https://cursor.com/grok-bot/link/v1/prompt?text=<encoded text>` with optional `id=<bot ID>` | Exact URL rendered “Open in Grok Bot” in desktop Chromium and WebKit, Pixel Chromium, and iPhone WebKit. The button and automatic dispatch used the same native URI and exact marker. |
