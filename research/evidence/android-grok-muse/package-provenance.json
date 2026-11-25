@@ -1,0 +1,41 @@
+{
+  "observedDate": "2026-11-25",
+  "transport": "APKPure mirror",
+  "verification": "apksigner and first-party Digital Asset Links",
+  "packages": [
+    {
+      "name": "Grok",
+      "package": "ai.x.grok",
+      "version": "1.2.60-release.00",
+      "versionCode": 11260200,
+      "artifactSha256": "8314bf54209fe632fabc04373882d578e385930ac726cbc45481d20183da4629",
+      "apkCount": 4,
+      "signerSha256": "521bf5ce7c981faba4ebd86d23f778885537cad021bc107d8915d005e99f4a12",
+      "vendorAssociation": "https://grok.com/.well-known/assetlinks.json",
+      "manifestDeclarations": ["grok.com HTTPS app links", "x.ai /bot/agent/ handler"]
+    },
+    {
+      "name": "Grok Bot",
+      "package": "ai.x.grok.bot",
+      "version": "1.27.0",
+      "versionCode": 3283,
+      "artifactSha256": "d8ad6fe5ad21b1a3aebcae311e6d1fc822e95a206a06a7fa277cb3850c4e421b",
+      "apkCount": 4,
+      "signerSha256": "f68872ec9f95894ecea37bf8d096d3609abef72765d9350cf10f1c3231863b74",
+      "vendorAssociation": "https://x.ai/.well-known/assetlinks.json",
+      "manifestDeclarations": ["grokbot scheme", "x.ai /bot/plugin/ handler", "x.ai /bot/agent/ handler"]
+    },
+    {
+      "name": "Muse from Meta",
+      "package": "com.facebook.aura",
+      "version": "17.1.0.28.160",
+      "versionCode": 1062201892,
+      "artifactSha256": "fda4a6372aae7993e2d0ed63206d8560c5f29ae7ff0802f4faaa2c1d1cf2dc03",
+      "apkCount": 1,
+      "signerSha256": "a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99",
+      "vendorAssociation": "https://applink.muse.ai/.well-known/assetlinks.json",
+      "manifestDeclarations": ["hatch scheme", "applink.muse.ai HTTPS app links", "agent.meta.ai HTTPS app links", "muse.ai HTTPS app links"]
+    }
+  ],
+  "runtimeStatus": "The fresh Android 16 ARM64 emulator reached guest init and remained ADB offline. Dispatch was not attempted."
+}

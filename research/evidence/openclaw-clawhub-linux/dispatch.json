@@ -1,0 +1,32 @@
+{
+  "version": "2026.11.10",
+  "appImageSha256": "6d02754208e8f80b731d5320143d43a206fffe54a453e8f4eaa5b3bccfceeb02",
+  "gatewayReady": {
+    "http": 200,
+    "ready": true
+  },
+  "modelRequests": 0,
+  "observed": [
+    {
+      "family": "plugins",
+      "uri": "openclaw://plugins/install?name=%40fixture%2Fagent-link-review",
+      "target": "/control-proof/plugins/ch_QGZpeHR1cmUvYWdlbnQtbGluay1yZXZpZXc",
+      "sameApp": true,
+      "visiblePairingError": true
+    },
+    {
+      "family": "skills",
+      "uri": "openclaw://skills/install?name=%40fixture%2Fagent-link-review",
+      "target": "/control-proof/skills?clawhub=%40fixture%2Fagent-link-review",
+      "sameApp": true,
+      "visiblePairingError": true
+    },
+    {
+      "family": "templates",
+      "uri": "openclaw://templates/install?name=%40fixture%2Fagent-link-review",
+      "target": "/control-proof/templates/packages/%40fixture%2Fagent-link-review",
+      "sameApp": true,
+      "visiblePairingError": true
+    }
+  ]
+}

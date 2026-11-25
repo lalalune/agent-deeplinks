@@ -1,0 +1,84 @@
+{
+  "certificate": "75f59de9bca58c7d477d843647ac3be0a11a021e1a541bdda26ce4c62b7e9b6e",
+  "client": "Anomaly 0.8.9 (1029) upstream release AAB with disposable local signing",
+  "server": "OpenCode 2.4.1",
+  "libraryHelper": "getAgentLink server-pair, equal to getOpenCodeAndroidPairingLink",
+  "issuer": "opencode pair --url http://10.0.2.2:58103",
+  "uriTemplate": "opencode://pair?code=[redacted]&url=http%3A%2F%2F10.0.2.2%3A58103",
+  "pairCodeClaimedExpiryMinutes": 5,
+  "pairConfirmationTapped": true,
+  "systemUiWaitTapped": false,
+  "observations": {
+    "before-session": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Give me a quick tour of the code",
+      "Message",
+      "New Session, OpenCode Release QA",
+      "Open sessions",
+      "OpenCode Release QA",
+      "Send message",
+      "Try Asking",
+      "What changed here recently?",
+      "What does this project do?"
+    ],
+    "opened-session": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode release QA idle proof",
+      "Send message",
+      "Start the session below"
+    ],
+    "new-session-draft": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Message",
+      "New Session, OpenCode Release QA",
+      "Open sessions",
+      "OpenCode Release QA",
+      "Send message"
+    ],
+    "last-session-destination": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode release QA idle proof",
+      "Send message",
+      "Start the session below"
+    ]
+  },
+  "routes": {
+    "session": {
+      "url": "opencode://session/ses_debef4ccdffelfVphCmS6PQY1w",
+      "stockResolver": true,
+      "accepted": true,
+      "destinationVisible": true
+    },
+    "new-session": {
+      "url": "opencode://new-session",
+      "stockResolver": true,
+      "accepted": true,
+      "destinationVisible": true
+    },
+    "last-session": {
+      "url": "opencode://last-session",
+      "stockResolver": true,
+      "accepted": true,
+      "destinationVisible": true
+    }
+  },
+  "idleSessionComposerVisible": true
+}
