@@ -133,6 +133,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     "plugin-install": { target: exampleMercury },
     "plugin-chat": { target: exampleMercury, prompt: "Summarize the information I can look up in this plugin." },
     "custom-gpt": { target: "g-1234-sample" },
+    "shared-chat": { target: "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853" },
   },
   codex: {
     plugin: { target: exampleCodexPlugin },
@@ -143,6 +144,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     plugin: { target: "268ba6b9-a27c-4bc8-9dc2-2a0b5ab79bfb@anthropic-plugin-directory" },
     connector: { target: "597f662f-36de-437e-836e-5a81013cbfbe" },
     "plugin-install": { target: "slack", marketplace: "anthropics/knowledge-work-plugins" },
+    "shared-chat": { target: "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00" },
   },
   cursor: {
     plugin: { target: "cursor/google-drive" },
@@ -185,7 +187,7 @@ function ActionPlayground() {
   const key = `${agent}/${platform}/${action.id}`;
   const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
   const href = getAgentLink(agent, platform, options);
-  const canonicalTarget = action.id === "team-bot" || action.id === "bot-template" || action.id === "remote-session";
+  const canonicalTarget = action.id === "team-bot" || action.id === "bot-template" || action.id === "remote-session" || action.id === "shared-chat";
   const isPairingAction = action.id === "server-pair";
   const exampleOptions = isPairingAction ? { ...options, target: exampleOpenCodePairing }
     : canonicalTarget && href ? { ...options, target: href } : options;

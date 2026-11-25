@@ -79,6 +79,8 @@ const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const codexMobile = "https://chatgpt.com/app/codex";
 const codexCloudTaskSource = "https://github.com/openai/codex/blob/3f65e9f13165d85d1b1fbe20ce06c55758f927b9/codex-rs/cloud-tasks/src/util.rs#L122-L135";
 const chatgptIosAssociation = "https://chatgpt.com/.well-known/apple-app-site-association";
+const chatgptAndroidAssociation = "https://chatgpt.com/.well-known/assetlinks.json";
+const chatgptAndroidChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45686687701/artifacts/15056028598";
 const codexCloudDocs = "https://help.openai.com/en/articles/20001545-using-codex-cloud";
 const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
@@ -86,6 +88,8 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
   "https://github.com/lalalune/agent-deeplinks/blob/afe1df7f5816e1cf1d8b43cead2662b102fc21a8/evidence/openai-windows-cold-links/README.md",
   "https://github.com/lalalune/agent-deeplinks/blob/ee4f7f74b993f4436711fabe079aff63295e41b6/evidence/openai-windows-warm-links/README.md",
+  "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/chatgpt-macos-warm-thread/proof.json",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45686443928/artifacts/15056138458",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
@@ -572,7 +576,7 @@ const catalog = {
         ],
         fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
-        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch and warm delivery both passed in an isolated local Work profile.",
+        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch and warm delivery both passed in an isolated local Work profile. The signed Mac app reopened the exact local thread from both a cold start and a running window.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -591,11 +595,11 @@ const catalog = {
         note: "An iOS Universal Link for a blank ChatGPT conversation. The iPhone browser fallback rendered signed-out ChatGPT.",
       },
       android: {
-        url: "https://chatgpt.com/app",
+        url: "https://chatgpt.com/open-app",
         behavior: "handoff",
         evidence: "verified",
-        sources: ["https://chatgpt.com/app", "https://chatgpt.com/.well-known/assetlinks.json"],
-        note: "Android Chromium rendered ChatGPT’s official Google Play listing and Install button. Installed-app routing is unverified.",
+        sources: [chatgptAndroidChecks, chatgptAndroidAssociation, "https://chatgpt.com/open-app"],
+        note: "The signed Android app opened from this exact App Link. A browser without the app is redirected to ChatGPT’s official Google Play listing.",
       },
     },
   },
@@ -620,7 +624,7 @@ const catalog = {
         sources: [codexDocs, ...openAiDesktopChecks],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
-        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. Windows warm dispatch updated the same window. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote.",
+        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. Windows warm dispatch updated the same window. On macOS, both cold and warm dispatch reopened the exact local thread. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -634,9 +638,9 @@ const catalog = {
         url: codexMobile,
         behavior: "handoff",
         evidence: "verified",
-        sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile", codexCloudTaskSource, "https://chatgpt.com/.well-known/assetlinks.json"],
+        sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile", codexCloudTaskSource, chatgptAndroidAssociation, chatgptAndroidChecks],
         fields: { task: "" },
-        note: "The blank link reached ChatGPT’s official Play listing. A task ID or URL opens that HTTPS task path. Installed task navigation still needs a device check.",
+        note: "The blank link opened the signed Android app and has an official Play fallback. Both tested cloud-task paths stayed in the browser on Android 15. Task content requires access.",
       },
     },
   },

@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template" | "remote-session" | "server-pair";
+  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "remote-session" | "server-pair";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
 
@@ -27,6 +27,7 @@ type ActionDefinition = AgentActionRoute & {
 };
 
 const simpleId = /^[a-z0-9][a-z0-9_-]*$/iu;
+const sharedChatId = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu;
 const slug = /^[a-z0-9]+(?:-[a-z0-9]+)*$/u;
 const qualifiedPlugin = /^[a-z0-9][a-z0-9_.-]*@[a-z0-9][a-z0-9_.-]*$/iu;
 const pluginName = /^[a-z0-9][a-z0-9_.-]*$/iu;
@@ -40,6 +41,10 @@ const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
 const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
+const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt";
+const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
+const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/shared-chat-browser/proof.json";
+const sharedChatAppleChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45687467247/artifacts/15056787932";
 const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
 const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
@@ -48,6 +53,7 @@ const openClawCatalogSources = [
   "https://github.com/openclaw/openclaw/blob/v2026.11.10/apps/linux/src-tauri/src/deep_links.rs",
   "https://github.com/openclaw/openclaw/blob/v2026.11.10/apps/macos/Sources/OpenClaw/CatalogInstallDeepLink.swift",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45679828095/artifacts/15053761927",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45687863971/artifacts/15057671869",
 ];
 
 function input(field: AgentActionField, label: string, placeholder?: string): AgentActionInput {
@@ -371,13 +377,19 @@ const hermesSkill: ActionDefinition = {
   },
 };
 
+const openClawCatalogNotes = {
+  plugin: "The signed Linux AppImage opened the exact Discord plugin review in a connected Gateway using public ClawHub metadata. Installation is a separate action.",
+  skill: "The signed Linux AppImage opened the connected Gateway’s Skills page. Selection of the named skill remains unverified.",
+  template: "The connected Gateway must enable experimental workspace templates. The signed Linux AppImage requested the exact package and release. The review also needs the published template artifact.",
+} as const;
+
 function openClawCatalogInstall(kind: "plugin" | "skill" | "template"): ActionDefinition {
   return {
     id: `${kind}-install`, label: `Review ClawHub ${kind}`, url: `openclaw://${kind}s/install`,
-    behavior: "confirm", evidence: "source", sources: openClawCatalogSources,
+    behavior: "confirm", evidence: kind === "plugin" ? "verified" : "source", sources: openClawCatalogSources,
     fields: { target: "name" }, required: ["target"],
     inputs: [input("target", "ClawHub package name", "@scope/package")],
-    note: "OpenClaw 2026.11.10 for macOS and Linux routes to the item in the connected Gateway. Installation is a separate action.",
+    note: openClawCatalogNotes[kind],
     prepare: ({ target }, url) => target && target.length <= 214 && clawHubPackageName.test(target) ? url : null,
   };
 }
@@ -443,6 +455,24 @@ const perplexityProject: ActionDefinition = {
   },
 };
 
+function sharedChat(
+  route: Pick<ActionDefinition, "url" | "evidence" | "sources" | "note">,
+  browserSuffix = "",
+): ActionDefinition {
+  return {
+    ...route, id: "shared-chat", label: "Open shared conversation", behavior: "launch",
+    fields: { target: "" }, required: ["target"],
+    inputs: [input("target", "Conversation share link or ID", `${route.url}12345678-1234-4234-9234-123456789abc`)],
+    prepare: ({ target }, url) => {
+      const id = readId(target, sharedChatId, url);
+      return id ? `${url}${id}${browserSuffix}` : null;
+    },
+  };
+}
+
+const chatgptSharedChat = "https://chatgpt.com/share/";
+const claudeSharedChat = "https://claude.ai/share/";
+
 function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavior" | "evidence" | "sources" | "note">): ActionDefinition {
   return {
     ...route,
@@ -463,13 +493,26 @@ const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokB
 const codexDesktopPlugins = [codexPlugin, codexInstall, codexPluginChat];
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
   chatgpt: {
-    web: [chatgptApp(chatgptPlugins, false), chatgptPlugin, chatgptPluginInstall, chatgptPluginChat, customGpt],
+    web: [chatgptApp(chatgptPlugins, false), chatgptPlugin, chatgptPluginInstall, chatgptPluginChat, customGpt,
+      sharedChat({
+        url: chatgptSharedChat, evidence: "verified", sources: [chatgptShareDocs, sharedChatBrowserChecks],
+        note: "The public conversation rendered in desktop Chromium and iPhone WebKit. The web query excludes iOS handoff. Android may still open ChatGPT.",
+      }, "?no_universal_links=1")],
     desktop: [chatgptDesktopApp, ...codexDesktopPlugins],
     ios: [{
       ...chatgptApp("chatgpt://plugins/", true),
       sources: [appSpec, "https://github.com/openai/mcp-extensions/issues/56"],
       note: "Opens the global app entrypoint in ChatGPT for iOS 1.2026.307 or newer. Leave marketplace blank for plugins published to ChatGPT.",
-    }],
+    }, sharedChat({
+      url: chatgptSharedChat, evidence: "source",
+      sources: ["https://chatgpt.com/.well-known/apple-app-site-association", sharedChatAppleChecks],
+      note: "Apple’s production association matches the clean share URL. Opening a shared conversation in the installed iPhone app still needs a device check.",
+    })],
+    android: [sharedChat({
+      url: chatgptSharedChat, evidence: "source",
+      sources: ["https://github.com/lalalune/agent-deeplinks/actions/runs/45686687701/artifacts/15056028598", chatgptShareDocs],
+      note: "The signed Android app accepted the share link. The offline test reached the splash screen, and in-app conversation rendering still needs a connected run.",
+    })],
   },
   codex: { desktop: codexDesktopPlugins },
   "grok-bot": {
@@ -507,7 +550,19 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "Opens native pairing review for the server. The signed development APK and test-signed 0.8.9 release configuration opened this review.",
     })],
   },
-  claude: { web: [claudePluginDetails, claudeConnector, claudePlugin], desktop: [claudePlugin] },
+  claude: {
+    web: [claudePluginDetails, claudeConnector, claudePlugin,
+      sharedChat({
+        url: claudeSharedChat, evidence: "verified", sources: [claudeShareDocs, sharedChatBrowserChecks],
+        note: "The public snapshot rendered in iPhone WebKit. Desktop Chromium reached a security verification page. The web fragment excludes iOS handoff.",
+      }, "#no_universal_links")],
+    desktop: [claudePlugin],
+    ios: [sharedChat({
+      url: claudeSharedChat, evidence: "source",
+      sources: ["https://claude.ai/.well-known/apple-app-site-association", sharedChatAppleChecks],
+      note: "Apple’s production association matches the clean share URL. Opening a shared snapshot in the installed iPhone app still needs a device check.",
+    })],
+  },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },
 };

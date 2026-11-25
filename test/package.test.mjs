@@ -417,7 +417,7 @@ test("builds OpenClaw desktop ClawHub review links for valid package names", () 
   for (const [action, family] of actions) {
     const route = getAgentRoute("openclaw", "desktop", action);
     assert.equal(route.behavior, "confirm");
-    assert.equal(route.evidence, "source");
+    assert.equal(route.evidence, action === "plugin-install" ? "verified" : "source");
     assert.deepEqual(route.fields, { target: "name" });
     const base = `openclaw://${family}/install?name=`;
     for (const [target, encoded] of [
@@ -828,8 +828,38 @@ test("opens Grok Bot Team Bots and templates with the vendor's share and native 
   assert.equal(getAgentLink("grok-bot", "web", { action: "bot-template", target: `https://x.ai/bot/${template}/one/two` }), null);
 });
 
+test("opens shared chat snapshots with platform-specific browser exclusions", () => {
+  const id = "68ec50da-cf00-8005-b5f6-b683506e5853";
+  for (const [agent, host, exclusion] of [
+    ["chatgpt", "chatgpt.com", "?no_universal_links=1"],
+    ["claude", "claude.ai", "#no_universal_links"],
+  ]) {
+    const url = `https://${host}/share/${id}`;
+    const variants = [["web", url + exclusion], ["ios", url]];
+    if (agent === "chatgpt") variants.push(["android", url]);
+    for (const [platform, href] of variants) {
+      const options = { action: "shared-chat", target: `${url}/?ref=tracking#discard` };
+      assert.equal(getAgentLink(agent, platform, options), href);
+      assert.equal(getAgentLink(agent, platform, { ...options, target: id }), href);
+      assert.equal(getAgentLink(agent, platform, { ...options, prompt: special }), null);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent, platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${href}"`));
+      }
+      for (const target of [
+        `https://${host}.example/share/${id}`, `https://example.com@${host}/share/${id}`,
+        `http://${host}/share/${id}`, `https://${host}/c/${id}`, `${url}/extra`, `${url}%2F`,
+        `https://${host}/share/success`, `${url}\t`,
+      ]) assert.equal(getAgentLink(agent, platform, { ...options, target }), null, target);
+    }
+    assert.equal(getAgentLink(agent, "desktop", { action: "shared-chat", target: url }), null);
+  }
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
-  assert.deepEqual(getAgentActions("chatgpt", "android"), []);
+  assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
+  assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");
+  assert.equal(getAgentRoute("claude", "android", "shared-chat"), null);
   assert.deepEqual(getAgentActions("does-not-exist", "web"), []);
   assert.equal(getAgentRoute("chatgpt", "android", "app"), null);
   assert.equal(getAgentRoute("chatgpt", "web").url, "https://chatgpt.com/");
