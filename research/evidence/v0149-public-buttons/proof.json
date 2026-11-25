@@ -1,0 +1,52 @@
+[
+  {
+    "profile": "Desktop Chromium",
+    "engine": "158.0.8127.18",
+    "agent": "grok-bot",
+    "action": "bot-marketplace",
+    "button": "Open Bot Marketplace in Grok Bot",
+    "expected": "https://x.ai/bot/marketplace/bots/projects-manager",
+    "final": "https://x.ai/bot/marketplace/bots/projects-manager",
+    "title": "Projects Manager · Grok Bot Marketplace",
+    "statuses": [
+      200
+    ]
+  },
+  {
+    "profile": "Desktop Chromium",
+    "engine": "158.0.8127.18",
+    "agent": "codex",
+    "action": "shared-chat",
+    "button": "Open shared conversation in Codex",
+    "expected": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+    "final": "https://chatgpt.com/s/cx_00000000000080008000000000000000",
+    "title": "Shared chat",
+    "statuses": [
+      200
+    ]
+  },
+  {
+    "profile": "Desktop Chromium",
+    "engine": "158.0.8127.18",
+    "agent": "cursor",
+    "action": "pull-request",
+    "button": "Open Origin pull request in Cursor",
+    "expected": "https://cursor.com/codebase/acme/rocket/pull/1",
+    "final": "https://authenticator.cursor.sh/",
+    "title": "Just a moment...",
+    "statuses": [
+      307,
+      307,
+      302,
+      302,
+      307,
+      307,
+      307,
+      307,
+      302,
+      302,
+      307,
+      403
+    ]
+  }
+]

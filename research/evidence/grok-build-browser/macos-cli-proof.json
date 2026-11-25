@@ -1,0 +1,22 @@
+{
+  "artifact": "https://x.ai/cli/grok-1.0.92-macos-aarch64",
+  "installerReference": "https://x.ai/cli/install.sh",
+  "os": "macOS",
+  "osVersion": "26.2",
+  "architecture": "arm64",
+  "sha256": "8b5f67b24f2cc9a4341d8e2eb7f67e3228d7d647ed04752a4f932f7133e5ab08",
+  "codeSignature": {
+    "identifier": "xai-grok-pager",
+    "team": "5Y6N3AJ54S",
+    "authority": "Developer ID Application: X.AI Corporation",
+    "strictVerification": "passed"
+  },
+  "versionOutput": "grok 1.0.92 (b06756fd6256)",
+  "helpOption": "-r, --resume [<SESSION_ID_OR_TITLE>]",
+  "execution": {
+    "network": "denied",
+    "filesystemWrites": "denied",
+    "accountUsed": false,
+    "sessionOpened": false
+  }
+}
