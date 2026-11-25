@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project";
+  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
 
@@ -36,6 +36,7 @@ const chatgptPlugins = "https://chatgpt.com/plugins/";
 const appSpec = "https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#deep-links";
 const desktopPlugins = "https://learn.chatgpt.com/docs/reference/commands";
 const grokPlugins = "https://docs.x.ai/grok-bot/deep-links#add-a-plugin";
+const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x.ai";
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
 
@@ -189,7 +190,7 @@ const codexPluginChat: ActionDefinition = {
 
 const grokPlugin = pathAction({
   id: "plugin", label: "Open marketplace plugin", url: "https://x.ai/bot/plugin/",
-  behavior: "handoff", evidence: "documented", sources: [grokPlugins, "https://app-site-association.cdn-apple.com/a/v1/x.ai"],
+  behavior: "handoff", evidence: "documented", sources: [grokPlugins, grokMobileAssociation],
   inputs: [input("target", "Plugin ID or marketplace link")],
   note: "Opens the plugin with an Add or Authorize step. A browser listing is available as a fallback.",
 }, numericId);
@@ -209,6 +210,52 @@ const grokTeamPlugin: ActionDefinition = {
   },
 };
 
+function grokBotShare(
+  route: Pick<ActionDefinition, "id" | "label" | "url" | "note" | "sources" | "inputs">,
+  appUrl: string,
+  idPattern: RegExp,
+  desktopBehavior: "launch" | "confirm",
+) {
+  const appPath = new URL(appUrl).pathname;
+  function variant(platform: "web" | "desktop" | "mobile"): ActionDefinition {
+    const desktop = platform === "desktop";
+    return {
+      ...route,
+      url: desktop ? appUrl : route.url,
+      behavior: desktop ? desktopBehavior : "handoff",
+      evidence: platform === "web" ? "verified" : "source",
+      fields: { target: desktop ? "id" : "" },
+      required: ["target"],
+      prepare: (fields, url) => {
+        if (!fields.target || unsafeCharacters.test(fields.target)) return null;
+        const appLink = readLink(fields.target.trim(), appUrl);
+        const appIds = appLink?.searchParams.getAll("id") ?? [];
+        const inputValue = appLink?.pathname === appPath && appIds.length === 1 ? appIds[0] : fields.target;
+        const path = readId(inputValue, idPattern, route.url);
+        if (!path) return null;
+        if (!desktop) return url + path;
+        fields.target = path.split("/")[0];
+        return url;
+      },
+    };
+  }
+  return { web: variant("web"), desktop: variant("desktop"), mobile: variant("mobile") };
+}
+
+const grokTeamBot = grokBotShare({
+  id: "team-bot", label: "Open Team Bot", url: "https://x.ai/bot/agent/",
+  inputs: [input("target", "Team Bot ID or share link", "3f937d36-4777-4c7c-9139-a8a48a38c7fe")],
+  note: "The browser offers to open the same Bot in the app. The destination requires access to the shared Bot.",
+  sources: ["https://docs.x.ai/grok-bot/create-a-team-bot#share-it", grokMobileAssociation],
+}, "grokbot://app/v1/agent", /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/iu, "launch");
+
+const grokBotTemplate = grokBotShare({
+  id: "bot-template", label: "Review Bot template", url: "https://x.ai/bot/",
+  inputs: [input("target", "Template ID or share link", "https://x.ai/bot/W4Z5pvEm6UgCml48Ig4dT/thoth")],
+  note: "Opens a template preview. The recipient can review the template and choose whether to add their own copy.",
+  sources: ["https://docs.x.ai/grok-bot/bots#share-a-bot", "https://x.ai/bot/W4Z5pvEm6UgCml48Ig4dT/thoth", grokMobileAssociation],
+}, "grokbot://app/v1/bot-template", /^[a-z0-9_-]{21}(?:\/[a-z0-9_-]+)?$/iu, "confirm");
+
 const cursorPlugin = pathAction({
   id: "plugin", label: "Open marketplace plugin", url: "https://cursor.com/marketplace/",
   behavior: "launch", evidence: "observed", sources: ["https://cursor.com/docs/plugins", "https://cursor.com/marketplace/cursor/google-drive"],
@@ -219,14 +266,18 @@ const cursorPlugin = pathAction({
 function cursorMcp(url: string, behavior: "confirm" | "handoff"): ActionDefinition {
   return {
     id: "mcp-install", label: "Open MCP install", url, behavior,
-    evidence: behavior === "confirm" ? "documented" : "source",
-    sources: behavior === "confirm" ? [cursorMcpDocs] : [cursorMcpDocs, "https://cursor.com/_next/static/immutable/chunks/1ut_-yqa47rub.js"],
+    evidence: behavior === "confirm" ? "verified" : "source",
+    sources: behavior === "confirm"
+      ? [cursorMcpDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45567533202/artifacts/15000164240"]
+      : [cursorMcpDocs, "https://cursor.com/_next/static/immutable/chunks/1ut_-yqa47rub.js"],
     fields: { target: "name", config: "config" }, required: ["target", "config"],
     inputs: [
       input("target", "MCP server name", "my-server"),
       input("config", "MCP server configuration (JSON)", '{"url":"https://example.com/mcp"}'),
     ],
-    note: "Opens Cursor’s install prompt for one MCP server. Configuration is visible to anyone with the link.",
+    note: behavior === "confirm"
+      ? "Cursor 3.32.4 on Ubuntu displayed the exact server name and URL in its install review. Configuration is visible to anyone with the link."
+      : "Opens Cursor’s install prompt for one MCP server. Configuration is visible to anyone with the link.",
     prepare: (fields) => {
       if (unsafeCharacters.test(fields.target ?? "")) return null;
       try {
@@ -355,7 +406,7 @@ const perplexityProject: ActionDefinition = {
   },
 };
 
-const grokNativePlugins = [grokPlugin, grokTeamPlugin];
+const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokBotTemplate.mobile];
 const codexDesktopPlugins = [codexPlugin, codexInstall, codexPluginChat];
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
   chatgpt: {
@@ -368,7 +419,12 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     }],
   },
   codex: { desktop: codexDesktopPlugins },
-  "grok-bot": { web: [grokPlugin], desktop: grokNativePlugins, ios: grokNativePlugins, android: grokNativePlugins },
+  "grok-bot": {
+    web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web],
+    desktop: [grokPlugin, grokTeamPlugin, grokTeamBot.desktop, grokBotTemplate.desktop],
+    ios: grokMobileActions,
+    android: grokMobileActions,
+  },
   cursor: {
     web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff")],
     desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm")],

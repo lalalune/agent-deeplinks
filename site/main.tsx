@@ -150,6 +150,8 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
   "grok-bot": {
     plugin: { target: "9007199254740993" },
     "team-plugin": { target: "456" },
+    "team-bot": { target: "3f937d36-4777-4c7c-9139-a8a48a38c7fe" },
+    "bot-template": { target: "https://x.ai/bot/W4Z5pvEm6UgCml48Ig4dT/thoth" },
   },
   antigravity: {
     plugin: { target: "firebase" },
@@ -175,7 +177,8 @@ function ActionPlayground() {
   const key = `${agent}/${platform}/${action.id}`;
   const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
   const href = getAgentLink(agent, platform, options);
-  const example = href && getReactExample(agent, platform, options);
+  const isGrokShare = action.id === "team-bot" || action.id === "bot-template";
+  const example = href && getReactExample(agent, platform, isGrokShare ? { ...options, target: href } : options);
   const label = `${action.label} in ${agents[agent].name}`;
   const behavior = action.behavior === "confirm" ? "Opens a review"
     : action.behavior === "launch" ? "Opens the destination" : behaviorNames[action.behavior];

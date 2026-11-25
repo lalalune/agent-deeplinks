@@ -710,6 +710,34 @@ test("encodes Cursor MCP configurations as UTF-8 base64 in review links", () => 
   }
 });
 
+test("opens Grok Bot Team Bots and templates with the vendor's share and native URLs", () => {
+  const team = "3f937d36-4777-4c7c-9139-a8a48a38c7fe";
+  const template = "W4Z5pvEm6UgCml48Ig4dT";
+  const cases = [
+    ["team-bot", team, "https://x.ai/bot/agent/" + team, "grokbot://app/v1/agent?id=" + team],
+    ["bot-template", template, "https://x.ai/bot/" + template, "grokbot://app/v1/bot-template?id=" + template],
+  ];
+  for (const [action, id, web, desktop] of cases) {
+    const shared = action === "bot-template" ? web + "/thoth" : web;
+    for (const platform of ["web", "desktop", "ios", "android"]) {
+      const href = platform === "desktop" ? desktop : shared;
+      assert.equal(getAgentLink("grok-bot", platform, { action, target: shared + "/?ref=inert#drop" }), href);
+      for (const target of [id, desktop]) {
+        assert.equal(getAgentLink("grok-bot", platform, { action, target }), platform === "desktop" ? desktop : web);
+      }
+      assert.equal(getAgentLink("grok-bot", platform, { action, target: shared, prompt: special }), null);
+      assert.equal(getAgentLink("grok-bot", platform, { action, target: "https://x.ai.example/bot/" + id }), null);
+      assert.equal(getAgentLink("grok-bot", platform, { action, target: desktop + "&id=" + id }), null);
+    }
+    assert.equal(getAgentLink("grok-bot", "cli", { action, target: id }), null);
+  }
+  assert.equal(getAgentRoute("grok-bot", "desktop", "bot-template").behavior, "confirm");
+  assert.equal(getAgentLink("grok-bot", "desktop", { action: "team-bot", target: "qa_bot_123" }), null);
+  assert.equal(getAgentLink("grok-bot", "ios", { action: "team-bot", target: `https://x.ai/bot/agent/${team}/invite#inert` }), null);
+  assert.equal(getAgentLink("grok-bot", "web", { action: "bot-template", target: template.slice(1) }), null);
+  assert.equal(getAgentLink("grok-bot", "web", { action: "bot-template", target: `https://x.ai/bot/${template}/one/two` }), null);
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android"), []);
   assert.deepEqual(getAgentActions("does-not-exist", "web"), []);
