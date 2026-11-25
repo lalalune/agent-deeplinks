@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.47.tgz
+npm install ./agent-deeplinks-0.1.48.tgz
 ```
 
 ## Usage
@@ -137,7 +137,7 @@ Kimi Code Desktop accepts a local `directory` and opens a fresh draft. Hosted Re
 Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` for the dashboard URL. On macOS and iOS, supplying a prompt opens run confirmation when a Gateway is connected. The Linux 2026.11.9 AppImage opened the connected Dashboard on cold and warm launch after its first launch registered the handler. The DEB from that release opened the app and dropped the URL. Windows Hub opens its setup screen in a fresh profile. [Linux and Windows verification](research/other-agents.md#hermes-agent-and-openclaw)
 For the macOS [Add Gateway form](https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website), supply the Gateway HTTPS base address in `server`. The address can include a port and path. The user reviews it and chooses **Connect** in OpenClaw.
 On iOS, pass a Gateway origin in `server` to stage the host, port, and TLS for review. Use HTTPS or WSS for TLS. HTTP and WS are limited to local hosts. Omitted ports use 443 for TLS and 18789 for plaintext. Enter credentials in the app if prompted. [iOS Gateway review](https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985)
-For the OpenClaw Control UI, use `web` or `android` and sign in to the Gateway in the same browser tab first. Supply its base URL in `server` on Android or for a custom web address. With a `prompt`, the link opens an unsent draft in the last selected chat. Pass a copied chat URL in `session` to choose a specific chat on that same Gateway.
+For the OpenClaw Control UI, use `web` or `android` and sign in to the Gateway in the same browser tab first. Supply its base URL in `server` on Android or for a custom web address. With a `prompt`, the link opens an unsent draft in the last selected chat. Pass a copied chat or dashboard URL in `session` to choose a specific session on that same Gateway. Normal dashboards accept an optional draft. Focused dashboards open the presentation view without a draft. Gallery links preserve `dashboard=expanded` for plain launches. Adding a draft uses the same session’s standard Dashboard, which showed the composer in both tested browsers. [OpenClaw browser link formats](https://docs.openclaw.ai/web/urls#session-and-dashboard-urls)
 
 ```ts
 const gatewaySetup = getAgentLink("openclaw", "desktop", {
@@ -213,6 +213,8 @@ const draft = getAgentLink("codex", "desktop", {
 The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
 
 Pass a ChatGPT, Claude, Grok, or Kimi share URL or its share ID as `target` with `action: "shared-chat"`. iOS links use Universal Links, and ChatGPT and Grok also support Android App Links. Android may hand some web variants to the installed app. Kimi shares open on the original regional website. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
+
+For ZCode, use `action: "shared-chat"` on `web`, `ios`, or `android` with a share code or URL. The link opens the signed-out browser viewer when sharing permissions allow it. A pasted China share keeps its `/cn/` path. [ZCode sharing guide](https://zcode.z.ai/en/docs/agents#sharing-a-conversation)
 
 For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as `target` and its text as `content`. The desktop link opens the review. The web link opens Cursor’s hosted preview. Cursor adds the file extension when the recipient confirms. [Cursor link reference](https://cursor.com/docs/reference/deeplinks)
 

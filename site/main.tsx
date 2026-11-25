@@ -152,6 +152,9 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     command: { target: "review-changes", content: "Summarize the changed files and flag any missing tests." },
     rule: { target: "review-guide", content: "Explain user-visible changes and cite the affected files." },
   },
+  zcode: {
+    "shared-chat": { target: "https://zcode.z.ai/share/example-share-code" },
+  },
   kimi: {
     "shared-chat": { target: "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0" },
   },
@@ -552,7 +555,10 @@ function App() {
                     : isT3Thread ? "Enter both a valid environment ID and thread ID."
                     : isCodexTask ? "Enter a task_ ID or a Codex task URL on chatgpt.com."
                     : isCursorCloudAgent ? "Enter a bc- ID or a Cloud Agent URL on cursor.com."
-                    : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
+                    : isOpenClawBrowser && options.session
+                      ? options.prompt && getAgentLink(agent, platform, { ...options, prompt: undefined })
+                        ? "Clear the draft to open the focused dashboard."
+                        : "Enter a chat or dashboard session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
                     : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin."
                     : options.folder ? "Enter an absolute workspace folder path."

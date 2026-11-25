@@ -520,6 +520,28 @@ const chatgptSharedChat = "https://chatgpt.com/share/";
 const claudeSharedChat = "https://claude.ai/share/";
 const grokSharedChat = "https://grok.com/share/";
 
+const zcodeShareCode = /^(?!(?:\.{1,2}|manage|callback)$)[A-Za-z0-9._~-]{1,512}$/u;
+const zcodeShare = "https://zcode.z.ai/share/";
+const zcodeChineseShare = "https://zcode.z.ai/cn/share/";
+const zcodeSharedChat: ActionDefinition = {
+  id: "shared-chat", label: "Open shared conversation", url: zcodeShare,
+  behavior: "launch", evidence: "source",
+  sources: [
+    "https://zcode.z.ai/en/docs/agents#sharing-a-conversation",
+    "https://github.com/zai-org/ZCode/blob/a4b4445141eb7d3b3e99eada9292775383bfc44e/packages/web/src/share/conversationShareRoute.ts",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/zcode-browser-share/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Conversation share link or code", `${zcodeShare}example-share-code`)],
+  note: "Opens the shared snapshot in the browser. Use an active share you can access.",
+  prepare: ({ target }, url) => {
+    const link = target && parseUrl(target.trim());
+    const base = link && link.pathname.startsWith("/cn/share/") ? zcodeChineseShare : url;
+    const code = readId(target, zcodeShareCode, base);
+    return code ? base + code : null;
+  },
+};
+
 const kimiShareId = /^(?:[a-z0-9]{20}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/iu;
 const kimiShareLocales: Readonly<Record<string, readonly string[]>> = {
   "https://www.kimi.ai": ["ar", "zh-hans", "zh-hant", "en", "fr", "de", "id", "it", "ja", "ko", "pt-br", "ru", "es-419", "th", "tr", "vi"],
@@ -579,12 +601,15 @@ const codexSettingsSections = [
   { value: "connections/ssh", label: "SSH connections" },
 ];
 
-const codexNavigationChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45698311458/artifacts/15061049251";
+const codexNavigationChecks = [
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45702734490/artifacts/15062798293",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45698311458/artifacts/15061049251",
+];
 
 const codexSettings: ActionDefinition = {
   id: "settings", label: "Open Settings", url: "codex://settings",
-  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#settings`, codexNavigationChecks],
-  note: "The signed Linux app opened General Settings. Availability of specific sections depends on the desktop build.",
+  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#settings`, ...codexNavigationChecks],
+  note: "The signed Mac app opened General, Browser, and Connections. The Linux preview opened General Settings.",
   fields: { target: "" }, required: [],
   inputs: [{ field: "target", label: "Settings section", choices: codexSettingsSections }],
   prepare: ({ target }, url) => !target ? url : codexSettingsSections.some(({ value }) => value === target) ? `${url}/${target}` : null,
@@ -592,17 +617,17 @@ const codexSettings: ActionDefinition = {
 
 const codexSkills: ActionDefinition = {
   id: "skills", label: "Open Skills", url: "codex://skills",
-  behavior: "launch", evidence: "documented", sources: [`${desktopPlugins}#skills`, codexNavigationChecks],
-  note: "The signed Linux app opened the Plugins hub with a Skills tab. In that build the Plugins tab stayed selected.",
+  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#skills`, ...codexNavigationChecks],
+  note: "The signed Mac app selected Skills and displayed its catalog. In the Linux preview, the Plugins tab stayed selected.",
   fields: {}, required: [], inputs: [],
   prepare: (_fields, url) => url,
 };
 
 const codexAutomations: ActionDefinition = {
   id: "automations", label: "Open Scheduled", url: "codex://automations",
-  behavior: "confirm", evidence: "documented", sources: [`${desktopPlugins}#scheduled`, codexNavigationChecks],
+  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#scheduled`, ...codexNavigationChecks],
   fields: {}, required: [], inputs: [],
-  note: "Opens Scheduled. OpenAI documents a create form, and the tested Linux build showed the New task button.",
+  note: "The signed Mac and Linux apps opened the Scheduled list and showed the New task button. OpenAI documents a create form.",
   prepare: (_fields, url) => url,
 };
 
@@ -693,6 +718,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "Apple’s production association matches the clean share URL. Opening a shared snapshot in the installed iPhone app still needs a device check.",
     })],
   },
+  zcode: { web: [zcodeSharedChat], ios: [zcodeSharedChat], android: [zcodeSharedChat] },
   kimi: { web: [kimiSharedChat] },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },

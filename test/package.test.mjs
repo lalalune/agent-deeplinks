@@ -473,6 +473,37 @@ test("opens an authenticated OpenClaw browser draft in the last or specified cha
   ]) assert.equal(getAgentLink("openclaw", "web", { server, session: invalid, prompt }), null, invalid);
 });
 
+test("preserves OpenClaw dashboard, focus, and gallery links on the configured Gateway", () => {
+  const server = "https://gateway.example:18443/team/openclaw/";
+  const sessionId = "link-fixture/draft/proof";
+  const dashboard = server + "dashboard/" + sessionId;
+  const focus = server + "focus/dashboard/" + sessionId;
+  const gallery = server + "chat/" + sessionId + "?dashboard=expanded";
+  for (const platform of ["web", "android"]) {
+    for (const session of [dashboard, focus, gallery, server + "dashboard/link-fixture"]) {
+      const options = { server, session };
+      assert.equal(getAgentLink("openclaw", platform, options), session);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "openclaw", platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${session}"`));
+      }
+    }
+    assert.equal(getAgentLink("openclaw", platform, { server, session: ` ${gallery} ` }), gallery);
+    const draft = encodeURIComponent(special);
+    assert.equal(getAgentLink("openclaw", platform, { server, session: dashboard, prompt: special }), dashboard + "?draft=" + draft);
+    assert.equal(getAgentLink("openclaw", platform, { server, session: gallery, prompt: special }), dashboard + "?draft=" + draft);
+    assert.equal(getAgentLink("openclaw", platform, { server, session: focus, prompt: special }), null);
+    for (const session of [
+      dashboard.replace("/team/openclaw/", "/team/openclaw-other/"),
+      focus.replace("gateway.example", "untrusted.example"),
+      server + "focus/dashboard", server + "focus/chat/" + sessionId, server + "dashboards/" + sessionId,
+      dashboard + "?dashboard=expanded", gallery + "&token=private", gallery + "#credential",
+      gallery.replace("dashboard=expanded", "dashboard=collapsed"),
+      gallery.replace("dashboard=expanded", "token=private&dashboard=expanded"),
+    ]) assert.equal(getAgentLink("openclaw", platform, { server, session }), null, session);
+  }
+});
+
 test("opens the OpenClaw macOS Gateway review with an uncredentialed HTTPS address", () => {
   const server = "https://gateway.example:18443/a+b/%25/openclaw/";
   const href = getAgentLink("openclaw", "desktop", { server });
@@ -877,6 +908,31 @@ test("opens public Grok conversations from both share ID forms", () => {
   assert.equal(getAgentLink("grok", "desktop", { action: "shared-chat", target: legacyId }), null);
 });
 
+test("builds ZCode share viewers on web and mobile", () => {
+  const action = "shared-chat";
+  const code = "Demo_42~hello.test";
+  const base = "https://zcode.z.ai/";
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("zcode", platform, { action, target: code }), base + "share/" + code);
+    for (const region of ["", "cn/"]) {
+      const url = base + region + "share/" + code;
+      const options = { action, target: url + "/?source=discard#drop" };
+      assert.equal(getAgentLink("zcode", platform, options), url);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "zcode", platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${url}"`));
+      }
+    }
+    for (const target of [
+      ".", "..", "manage", "callback", "x".repeat(513), code + "%2F",
+      base + "share/manage", base + "cn/share/callback", base + "en/share/" + code, base + "share/" + code + "/subpage",
+      "https://zcode.z.ai.example/share/" + code, "https://other.example@zcode.z.ai/share/" + code,
+      "zcode://share/import?code=" + code,
+    ]) assert.equal(getAgentLink("zcode", platform, { action, target }), null, target);
+  }
+  assert.equal(getAgentLink("zcode", "desktop", { action, target: code }), null);
+});
+
 test("opens Kimi shares in both official regional browsers", () => {
   const action = "shared-chat";
   const ids = ["d1qvs6d96bk3t9j9ble0", "1a1c897b-3812-8e72-8000-0000e51328e4"];
@@ -924,7 +980,7 @@ test("opens Codex and ChatGPT desktop pages without changing their settings", ()
     for (const target of ["unknown", "../skills", "connections/ssh/add?name=test", "codex://settings/connections"]) {
       assert.equal(getAgentLink(agent, "desktop", { action: "settings", target }), null);
     }
-    assert.equal(getAgentRoute(agent, "desktop", "automations").behavior, "confirm");
+    assert.equal(getAgentRoute(agent, "desktop", "automations").behavior, "launch");
   }
 });
 

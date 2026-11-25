@@ -1,0 +1,64 @@
+{
+  "appVersion": "26.1120.50957",
+  "packageVersion": "0.1.47",
+  "result": "dispatch and observation completed",
+  "accountUsed": false,
+  "stockAppLaunch": true,
+  "taskCreateClicked": false,
+  "taskSaved": false,
+  "modelRequests": 0,
+  "turns": 0,
+  "source": "https://github.com/lalalune/agent-deeplinks/actions/runs/45702734490/artifacts/15062798293",
+  "destinations": [
+    {
+      "uri": "codex://settings",
+      "owner": {
+        "pid": 2276,
+        "windowId": 29,
+        "title": "Settings"
+      },
+      "exactStockDispatch": true,
+      "visibleRouteAnchor": true
+    },
+    {
+      "uri": "codex://settings/browser-use",
+      "owner": {
+        "pid": 2276,
+        "windowId": 29,
+        "title": "Settings"
+      },
+      "exactStockDispatch": true,
+      "visibleRouteAnchor": true
+    },
+    {
+      "uri": "codex://settings/connections",
+      "owner": {
+        "pid": 2276,
+        "windowId": 29,
+        "title": "Settings"
+      },
+      "exactStockDispatch": true,
+      "visibleRouteAnchor": true
+    },
+    {
+      "uri": "codex://skills",
+      "owner": {
+        "pid": 2276,
+        "windowId": 29,
+        "title": "Skills"
+      },
+      "exactStockDispatch": true,
+      "visibleRouteAnchor": true
+    },
+    {
+      "uri": "codex://automations",
+      "owner": {
+        "pid": 2276,
+        "windowId": 29,
+        "title": "ChatGPT"
+      },
+      "exactStockDispatch": true,
+      "visibleRouteAnchor": true
+    }
+  ]
+}

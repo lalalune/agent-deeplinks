@@ -63,6 +63,7 @@ const cursorCloudApi = "https://cursor.com/docs/cloud-agent/api/endpoints";
 const cursorCloudDesktop = "https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7";
 const openClawBrowserDocs = "https://docs.openclaw.ai/web/urls";
 const openClawBrowserProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45521782875/artifacts/14980377652";
+const openClawDashboardProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45703008909/artifacts/15063712402";
 const openClawMacGatewaySource = "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website";
 const openClawIosGatewaySource = "https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
@@ -964,9 +965,9 @@ const catalog = {
         url: "http://127.0.0.1:18789/",
         behavior: "draft",
         evidence: "verified",
-        sources: [openClawBrowserDocs, openClawBrowserProof],
+        sources: [openClawBrowserDocs, openClawBrowserProof, openClawDashboardProof],
         fields: { prompt: "draft", server: "", session: "" },
-        note: "Sign in to your Gateway in the same tab before opening the draft. OpenClaw 2026.11.8 showed the exact unsent draft in the main and saved-session composers. A blank link opens the Gateway.",
+        note: "Sign in to your Gateway in the same tab before opening the draft. The published Gateway opened saved chat and dashboard sessions. Desktop Chromium displayed the exact unsent dashboard draft. A blank link opens the Gateway.",
       },
       desktop: {
         url: "openclaw://agent",
@@ -1019,13 +1020,14 @@ const catalog = {
         sources: [
           openClawBrowserDocs,
           openClawBrowserProof,
+          openClawDashboardProof,
           "https://docs.openclaw.ai/platforms/android",
           "https://github.com/openclaw/openclaw/actions/runs/45245551289/artifacts/14856936529",
           "https://github.com/openclaw/openclaw/releases/tag/v2026.8.2",
         ],
         fields: { prompt: "draft", server: "", session: "" },
         required: ["server"],
-        note: "Sign in to the Gateway in the same browser tab. An authenticated Pixel Chromium profile showed the exact saved-session draft. The Play 2026.11.70 bundle has no native browser handler. Android 16 also found none in the standalone 2026.8.2 APK.",
+        note: "Sign in to the Gateway in the same browser tab. An authenticated Pixel Chromium profile showed the exact unsent chat and dashboard drafts. The Play 2026.11.70 bundle has no native browser handler. Android 16 also found none in the standalone 2026.8.2 APK.",
       },
     },
   },

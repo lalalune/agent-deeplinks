@@ -1,0 +1,145 @@
+{
+  "verifiedDate": "2026-11-25",
+  "repositoryReleaseCompared": "v0.1.47",
+  "source": {
+    "publisherDocs": "https://zcode.z.ai/en/docs/agents#sharing-a-conversation",
+    "upstreamCommit": "a4b4445141eb7d3b3e99eada9292775383bfc44e",
+    "productionViewer": {
+      "url": "https://zcode.z.ai/cn/share/assets/index-COmlG0go.js",
+      "sha256": "cfc792cf7554d74fa195812e74b09463ca593101087532bf842636ad6d0d72e7"
+    },
+    "deliberatelyPublicExpiredExample": "https://github.com/2dust/v2rayN/issues/10458",
+    "noUnexpiredExampleVerified": true
+  },
+  "web": {
+    "canonicalPaths": {
+      "en-US": "/share/<code>",
+      "zh-CN": "/cn/share/<code>"
+    },
+    "enPrefixedPathSupported": false,
+    "codePattern": "^[A-Za-z0-9._~-]{1,512}$",
+    "reservedPathSegments": [
+      "callback",
+      "manage"
+    ],
+    "boundary": "Fresh signed-out browser contexts. HTTPS GET/HEAD/OPTIONS only to zcode.z.ai or cdn-zcode.z.ai. WebSockets blocked.",
+    "checks": [
+      {
+        "profile": "Desktop Chromium",
+        "engineVersion": "158.0.8127.18",
+        "requested": "https://zcode.z.ai/cn/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "final": "https://zcode.z.ai/cn/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "documentStatus": 200,
+        "synthetic": false,
+        "renderedState": "expired",
+        "contentRendered": false,
+        "previewReads": [
+          {
+            "url": "https://zcode.z.ai/api/v1/shares/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H/preview",
+            "status": 410,
+            "method": "GET",
+            "vendorCode": 3212
+          }
+        ]
+      },
+      {
+        "profile": "Desktop Chromium",
+        "engineVersion": "158.0.8127.18",
+        "requested": "https://zcode.z.ai/en/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "final": "https://zcode.z.ai/en/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "documentStatus": 404,
+        "synthetic": false,
+        "renderedState": "page-not-found",
+        "contentRendered": false,
+        "previewReads": []
+      },
+      {
+        "profile": "Desktop Chromium",
+        "engineVersion": "158.0.8127.18",
+        "requested": "https://zcode.z.ai/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "final": "https://zcode.z.ai/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "documentStatus": 200,
+        "synthetic": false,
+        "renderedState": "expired",
+        "contentRendered": false,
+        "previewReads": [
+          {
+            "url": "https://zcode.z.ai/api/v1/shares/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H/preview",
+            "status": 410,
+            "method": "GET",
+            "vendorCode": 3212
+          }
+        ]
+      },
+      {
+        "profile": "Desktop Chromium",
+        "engineVersion": "158.0.8127.18",
+        "requested": "https://zcode.z.ai/share/deeplink-audit-fixture-missing-528b9233e30a4055",
+        "final": "https://zcode.z.ai/share/deeplink-audit-fixture-missing-528b9233e30a4055",
+        "documentStatus": 200,
+        "synthetic": true,
+        "renderedState": "access-gate",
+        "contentRendered": false,
+        "previewReads": [
+          {
+            "url": "https://zcode.z.ai/api/v1/shares/deeplink-audit-fixture-missing-528b9233e30a4055/preview",
+            "status": 404,
+            "method": "GET",
+            "vendorCode": 3211
+          }
+        ]
+      },
+      {
+        "profile": "Pixel 7 Chromium",
+        "engineVersion": "158.0.8127.18",
+        "requested": "https://zcode.z.ai/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "final": "https://zcode.z.ai/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "documentStatus": 200,
+        "synthetic": false,
+        "renderedState": "expired",
+        "contentRendered": false,
+        "previewReads": [
+          {
+            "url": "https://zcode.z.ai/api/v1/shares/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H/preview",
+            "status": 410,
+            "method": "GET",
+            "vendorCode": 3212
+          }
+        ]
+      },
+      {
+        "profile": "iPhone 15 WebKit",
+        "engineVersion": "27.2",
+        "requested": "https://zcode.z.ai/cn/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "final": "https://zcode.z.ai/cn/share/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H",
+        "documentStatus": 200,
+        "synthetic": false,
+        "renderedState": "expired",
+        "contentRendered": false,
+        "previewReads": [
+          {
+            "url": "https://zcode.z.ai/api/v1/shares/-QYqmXkrfGbuIiGPRC8C81g9Y2hBAq2H/preview",
+            "status": 410,
+            "method": "GET",
+            "vendorCode": 3212
+          }
+        ]
+      }
+    ]
+  },
+  "native": {
+    "desktop": {
+      "scheme": "zcode://share/import?code=<code>",
+      "shippedVersion": "4.0.0",
+      "importInvokedAutomaticallyAfterDeepLink": true,
+      "mayCreateLocalSessionAndWriteArtifacts": true,
+      "rejectedFromReadOnlyRuntimeScope": true
+    },
+    "appAssociations": {
+      "androidDalHttp": 404,
+      "androidSourceManifestClaimsShare": false,
+      "appleOriginHttp": 404,
+      "appleCDNHttp": 404
+    }
+  }
+}

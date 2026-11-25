@@ -81,14 +81,22 @@ function getOpenClawBrowserTarget(address: string, sessionAddress: string | unde
   if (!gateway) return null;
   if (!sessionAddress && !hasDraft) return gateway.href;
 
-  const chatPath = `${gateway.pathname.replace(/\/+$/u, "")}/chat`;
-  if (!sessionAddress) return `${gateway.origin}${chatPath}`;
+  const basePath = gateway.pathname.replace(/\/+$/u, "");
+  if (!sessionAddress) return `${gateway.origin}${basePath}/chat`;
 
-  const session = parseServerUrl(sessionAddress);
-  const prefix = `${chatPath}/`;
-  if (!session || session.origin !== gateway.origin ||
-    !session.pathname.startsWith(prefix) || !session.pathname.slice(prefix.length).split("/")[0]) return null;
-  return `${session.origin}${session.pathname}`;
+  const target = sessionAddress.trim();
+  const galleryQuery = "?dashboard=expanded";
+  const fromGallery = target.endsWith(galleryQuery);
+  const session = parseServerUrl(fromGallery ? target.slice(0, -galleryQuery.length) : target);
+  if (!session || session.origin !== gateway.origin || !session.pathname.startsWith(`${basePath}/`)) return null;
+
+  const sessionPath = session.pathname.slice(basePath.length);
+  const route = /^\/(chat|dashboard|focus\/dashboard)\/[^/]/u.exec(sessionPath)?.[1];
+  if (!route || (fromGallery && route !== "chat") || (hasDraft && route === "focus/dashboard")) return null;
+  if (fromGallery && hasDraft) {
+    return `${session.origin}${basePath}/dashboard${sessionPath.slice("/chat".length)}`;
+  }
+  return `${session.origin}${session.pathname}${fromGallery ? galleryQuery : ""}`;
 }
 
 function encodeT3ThreadSegment(value: string | undefined): string | null {
