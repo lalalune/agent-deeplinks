@@ -149,6 +149,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
   },
   cursor: {
     plugin: { target: "cursor/google-drive" },
+    "pull-request": { target: "https://cursor.com/codebase/acme/rocket/pull/1" },
     "mcp-install": { target: "Example Server", config: '{"url":"https://example.com/mcp"}' },
     command: { target: "review-changes", content: "Summarize the changed files and flag any missing tests." },
     rule: { target: "review-guide", content: "Explain user-visible changes and cite the affected files." },

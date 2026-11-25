@@ -4,7 +4,7 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
-  | "settings" | "skills" | "automations" | "command" | "rule";
+  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
@@ -52,6 +52,9 @@ const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#
 const cursorCustomizationName = /^(?!(?:con|prn|aux|nul|com[1-9]|lpt[1-9])$)(?!.*\.\.)[a-z0-9_.-]{1,100}$/iu;
 const cursorDeeplinkDocs = "https://cursor.com/docs/reference/deeplinks";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
+const cursorOriginDocs = "https://cursor.com/docs/origin/pull-requests";
+const cursorOriginPullRequestPath = /^[A-Za-z0-9][A-Za-z0-9_-]*\/(?!\.{1,2}\/)[A-Za-z0-9_.-]+\/pull\/[1-9][0-9]*$/u;
+const cursorOriginPullRequestChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/cursor-origin-pull-request/proof.json";
 const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt";
 const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
 const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/shared-chat-browser/proof.json";
@@ -318,6 +321,31 @@ const cursorPlugin = pathAction({
   inputs: [input("target", "Plugin slug or marketplace link", "cursor/google-drive")],
   note: "Opens the marketplace listing and its Add to Cursor flow.",
 }, /^[a-z0-9][a-z0-9_-]*(?:\/[a-z0-9][a-z0-9_-]*)?$/iu);
+
+function cursorPullRequest(platform: "web" | "ios" | "android"): ActionDefinition {
+  const isIos = platform === "ios";
+  return {
+    id: "pull-request", label: "Open Origin pull request", url: "https://cursor.com/codebase/",
+    behavior: isIos ? "handoff" : "launch",
+    evidence: isIos ? "source" : "observed",
+    sources: [
+      cursorOriginDocs,
+      cursorOriginPullRequestChecks,
+      ...(isIos ? ["https://app-site-association.cdn-apple.com/a/v1/cursor.com"] : []),
+      ...(platform === "android" ? ["https://cursor.com/.well-known/assetlinks.json"] : []),
+    ],
+    fields: { target: "" }, required: ["target"],
+    inputs: [input("target", "Origin pull request URL", "https://cursor.com/codebase/acme/rocket/pull/1")],
+    note: isIos
+      ? "The production iOS association claims the Origin pull request path. Review in the app requires access to the repository and still needs a signed-in device check."
+      : "Opens the Origin pull request URL in a browser. Cursor keeps the exact destination when asking the recipient to sign in. Review requires access to the repository.",
+    prepare: ({ target }, url) => {
+      if (!target || unsafeCharacters.test(target)) return null;
+      const link = target.trim().replace(/\/$/u, "");
+      return link.startsWith(url) && cursorOriginPullRequestPath.test(link.slice(url.length)) ? link : null;
+    },
+  };
+}
 
 function cursorCustomization(kind: "command" | "rule", platform: "web" | "desktop"): ActionDefinition {
   const base = platform === "web" ? "https://cursor.com/link/" : "cursor://anysphere.cursor-deeplink/";
@@ -713,8 +741,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [...grokMobileActions, grokBotMarketplace],
   },
   cursor: {
-    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web")],
+    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web")],
     desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm"), cursorCustomization("command", "desktop"), cursorCustomization("rule", "desktop")],
+    ios: [cursorPullRequest("ios")],
+    android: [cursorPullRequest("android")],
   },
   antigravity: {
     web: [antigravityWebPlugin, antigravityRemoteSession],

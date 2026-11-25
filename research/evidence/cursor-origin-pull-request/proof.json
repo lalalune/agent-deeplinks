@@ -1,0 +1,93 @@
+{
+  "checked": "2026-11-25",
+  "target": "https://cursor.com/codebase/acme/rocket/pull/1",
+  "targetProvenance": "Synthetic pull request using the acme/rocket repository example in Cursor Origin API docs.",
+  "originReviewDocs": "https://cursor.com/docs/origin/pull-requests",
+  "originApiDocs": "https://cursor.com/docs/api/origin",
+  "browserMethod": "Fresh signed-out Playwright contexts. HTTPS GET, HEAD, and OPTIONS only on the Cursor and WorkOS authentication chain. No interactions with login, terms, or repository controls. Browser emulation does not test installed apps.",
+  "browserProfiles": [
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "originStatus": 307,
+      "exactLoginReturnUrl": "https://cursor.com/codebase/acme/rocket/pull/1",
+      "authenticator": "https://authenticator.cursor.sh/",
+      "authenticatorStatus": 403,
+      "signInVisible": false,
+      "browserChallengeVisible": true
+    },
+    {
+      "profile": "Desktop WebKit",
+      "engineVersion": "27.2",
+      "originStatus": 307,
+      "exactLoginReturnUrl": "https://cursor.com/codebase/acme/rocket/pull/1",
+      "authenticator": "https://authenticator.cursor.sh/",
+      "authenticatorStatus": 200,
+      "signInVisible": true,
+      "browserChallengeVisible": false
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "engineVersion": "158.0.8127.18",
+      "originStatus": 307,
+      "exactLoginReturnUrl": "https://cursor.com/codebase/acme/rocket/pull/1",
+      "authenticator": "https://authenticator.cursor.sh/",
+      "authenticatorStatus": 200,
+      "signInVisible": true,
+      "browserChallengeVisible": false
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "originStatus": 307,
+      "exactLoginReturnUrl": "https://cursor.com/codebase/acme/rocket/pull/1",
+      "authenticator": "https://authenticator.cursor.sh/",
+      "authenticatorStatus": 200,
+      "signInVisible": true,
+      "browserChallengeVisible": false
+    }
+  ],
+  "appleAssociation": {
+    "origin": "https://cursor.com/.well-known/apple-app-site-association",
+    "appleCdn": "https://app-site-association.cdn-apple.com/a/v1/cursor.com",
+    "matchingResponseSha256": "9a346045e8cd7dc0666db068a4e187f2cdf05efc107280b93b969576fe1f1d6e",
+    "productionAppIds": [
+      "DCNK4UB866.co.anysphere.cursor",
+      "N66CZ3Y3BX.co.anysphere.cursor"
+    ],
+    "firstPathRuleMatches": [
+      {
+        "path": "/codebase/acme/rocket/pull/1",
+        "firstMatchingPathRule": "/codebase/*/*/pull/*",
+        "excluded": false
+      },
+      {
+        "path": "/codebase/acme/rocket/github/pull/1",
+        "firstMatchingPathRule": "/codebase/*/github/pull/*",
+        "excluded": true
+      },
+      {
+        "path": "/codebase/anysphere/everysphere/github/pull/1",
+        "firstMatchingPathRule": "/codebase/anysphere/everysphere/github/pull/*",
+        "excluded": false
+      }
+    ],
+    "scope": "Local exact-path comparison against the ordered production rules. No installed iOS app was opened."
+  },
+  "androidAssociation": {
+    "url": "https://cursor.com/.well-known/assetlinks.json",
+    "responseSha256": "43ce803f0f271d5f4f4f0c65378bf8485814c0bee8a54cf1274f2700cb217746",
+    "appLinkPackages": [
+      "ai.x.grok.bot",
+      "ai.x.grok.bot.internal",
+      "ai.x.grok.build",
+      "ai.x.grok.build.internal"
+    ],
+    "scope": "Live origin record has no Cursor Android App Link association. The Android browser profile reached sign-in."
+  },
+  "trailingSlashRedirect": {
+    "url": "https://cursor.com/codebase/acme/rocket/pull/1/",
+    "status": 308,
+    "location": "https://cursor.com/codebase/acme/rocket/pull/1"
+  }
+}

@@ -1055,6 +1055,38 @@ test("builds Cursor command and rule reviews with the hosted length limit", () =
   }
 });
 
+test("opens a Cursor Origin pull request on web, iOS, and Android", () => {
+  const target = "https://cursor.com/codebase/acme/rocket/pull/1";
+  const options = { action: "pull-request", target };
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("cursor", platform, options), target);
+    assert.equal(getAgentLink("cursor", platform, { ...options, target: target + "/" }), target);
+    const largeNumber = "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993";
+    assert.equal(getAgentLink("cursor", platform, { ...options, target: largeNumber }), largeNumber);
+    assert.equal(getAgentRoute("cursor", platform, options.action).evidence, platform === "ios" ? "source" : "observed");
+    assert.equal(getAgentRoute("cursor", platform, options.action).behavior, platform === "ios" ? "handoff" : "launch");
+    assert.equal(getAgentLink("cursor", platform, { ...options, prompt: special }), null);
+    const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "cursor", platform, options }));
+    assert.ok(markup.includes(`href="${target}"`));
+  }
+  for (const invalidTarget of [
+    "acme/rocket/pull/1", "https://github.com/acme/rocket/pull/1",
+    target.replace("https:", "http:"), target.replace("cursor.com", "cursor.com.invalid"),
+    target.replace("cursor.com", "user@cursor.com"), target.replace("/pull/", "/Pull/"),
+    target.replace("/pull/", "/pulls/"), target.replace("/pull/", "/github/pull/"),
+    target.replace("/rocket/", "/../rocket/"), target.replace("/rocket/", "/%2e%2e/"),
+    target.replace("acme/rocket", "acme%2Frocket"), target.replace("/1", "/0"),
+    target.replace("/1", "/-1"), target.replace("/1", "/01"),
+    target + "//", target + "/files", target + "?tab=files", target + "#review", target + "\n",
+  ]) {
+    assert.equal(getAgentLink("cursor", "web", { ...options, target: invalidTarget }), null, invalidTarget);
+  }
+  assert.equal(getAgentLink("cursor", "desktop", options), null);
+  assert.equal(getAgentLink("cursor", "web"), "https://cursor.com/agents");
+  assert.equal(getAgentLink("cursor", "ios"), "https://cursor.com/agents");
+  assert.equal(getAgentLink("cursor", "android"), "https://cursor.com/agents");
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");

@@ -222,6 +222,8 @@ For ZCode, use `action: "shared-chat"` on `web`, `ios`, or `android` with a shar
 
 For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as `target` and its text as `content`. The desktop link opens the review. The web link opens Cursor’s hosted preview. Cursor adds the file extension when the recipient confirms. [Cursor link reference](https://cursor.com/docs/reference/deeplinks)
 
+To open an existing Cursor Origin pull request, use `action: "pull-request"` with its full URL as `target`, such as `https://cursor.com/codebase/acme/rocket/pull/1`. Web and Android use the browser. iOS uses the same HTTPS Universal Link. The recipient needs access to the repository. [Cursor Origin pull requests](https://cursor.com/docs/origin/pull-requests)
+
 In Codex and ChatGPT Desktop, use `action: "settings"`, `"skills"`, or `"automations"`. Settings accepts an optional documented section such as `connections/ssh`. Scheduled opens the task screen. Some app versions open the create form directly. [OpenAI desktop link reference](https://learn.chatgpt.com/docs/reference/commands#deep-links)
 
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
