@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.36.tgz
+npm install ./agent-deeplinks-0.1.37.tgz
 ```
 
 ## Usage
@@ -44,6 +44,8 @@ To open an existing desktop chat in Claude, ChatGPT, or Codex, pass its conversa
 const session = "12345678-1234-4234-9234-123456789abc"
 const existingChat = getAgentLink("codex", "desktop", { session })
 ```
+
+Use `task` to open an existing Codex Cloud task on `web`, `ios`, or `android`. Pass the `task_…` ID emitted by the Codex CLI or paste the HTTPS task link from ChatGPT. The app needs access to that task. A pasted link keeps its task path and discards query and fragment text. On `web`, set `browserOnly: true` to apply the iOS browser-only exclusion. [Codex Cloud access](https://help.openai.com/en/articles/20001545-using-codex-cloud) · [Codex CLI URL format](https://github.com/openai/codex/blob/3f65e9f13165d85d1b1fbe20ce06c55758f927b9/codex-rs/cloud-tasks/src/util.rs#L122-L135)
 
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
 

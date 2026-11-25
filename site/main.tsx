@@ -38,6 +38,7 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
   botId: { label: "Bot ID" },
   session: { label: "Session ID" },
   environment: { label: "Environment ID" },
+  task: { label: "Cloud task ID or URL", placeholder: "task_… or https://chatgpt.com/codex/tasks/…" },
 };
 
 const extraFields = Object.keys(extraFieldDetails) as ExtraField[];
@@ -149,6 +150,7 @@ function App() {
   const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
+  const isCodexTask = agent === "codex" && Boolean(route?.fields?.task !== undefined && extraValues.task);
   const visibleExtraFields = extraFields.filter((field) =>
     Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session") &&
     (!isT3Thread || field === "session" || field === "environment"),
@@ -158,7 +160,7 @@ function App() {
     ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession ? { prompt: currentPrompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "server") && server && !isT3Thread ? { server } : {}),
-    ...(route?.browserOnlyFragment ? { browserOnly: true } : {}),
+    ...(route?.browserOnlyFragment || (isCodexTask && platform === "web") ? { browserOnly: true } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
   };
@@ -173,7 +175,7 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread &&
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread && !isCodexTask &&
     (!(isOpenClawBrowser || isOpenCodeAndroid) || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
@@ -187,13 +189,15 @@ function App() {
     : agent === "grok" && platform === "web" && options.prompt ? "Reviews before sending" : undefined;
   const behaviorLabel = isExistingSession ? href && (hasClaudeCodeCloudSession ? "Opens an existing cloud session" : "Opens an existing chat")
     : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
+    : isCodexTask ? href && "Opens an existing cloud task"
     : isOpenCodeAndroid && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
     : isOpenCodeAndroid && options.mode === "last" ? "Opens the last session"
     : reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
   const threadSource = isT3Thread && route?.sources.find((url) => url.includes("/threadLinks.ts"));
-  const source = sshSource || threadSource || (options.server && route?.serverSource) || route?.sources[0];
+  const taskSource = isCodexTask && route?.sources.find((url) => url.includes("/cloud-tasks/src/util.rs"));
+  const source = sshSource || threadSource || taskSource || (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -367,6 +371,7 @@ function App() {
                       ? "Enter a cloud session ID beginning with session_ or cse_."
                       : "Enter the ID from the app’s existing chat link.")
                     : isT3Thread ? "Enter both a valid environment ID and thread ID."
+                    : isCodexTask ? "Enter a task_ ID or a Codex task URL on chatgpt.com."
                     : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
                     : options.folder ? "Enter an absolute workspace folder path."
@@ -477,6 +482,7 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
+                : isCodexTask ? "Enter a valid Codex cloud task to generate this example."
                 : isExistingSession ? (hasClaudeCodeCloudSession
                   ? "Enter a valid cloud session ID to generate this example."
                   : "Enter a valid chat ID to generate this example.")

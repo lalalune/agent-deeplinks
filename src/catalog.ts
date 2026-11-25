@@ -17,7 +17,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session" | "environment" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
+  | "session" | "environment" | "task" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
 
 export interface AgentRoute {
   readonly url: string;
@@ -69,6 +69,9 @@ const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-t
 const claudeVsCodeDocs = "https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const codexMobile = "https://chatgpt.com/app/codex";
+const codexCloudTaskSource = "https://github.com/openai/codex/blob/3f65e9f13165d85d1b1fbe20ce06c55758f927b9/codex-rs/cloud-tasks/src/util.rs#L122-L135";
+const chatgptIosAssociation = "https://chatgpt.com/.well-known/apple-app-site-association";
+const codexCloudDocs = "https://help.openai.com/en/articles/20001545-using-codex-cloud";
 const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
@@ -579,8 +582,9 @@ const catalog = {
         url: "https://chatgpt.com/codex",
         behavior: "launch",
         evidence: "documented",
-        sources: ["https://developers.openai.com/codex/cloud"],
-        note: "Opens the Codex cloud workspace.",
+        sources: [codexCloudTaskSource, codexCloudDocs, chatgptIosAssociation],
+        fields: { task: "" },
+        note: "Opens the Codex cloud workspace or an existing task you can access. Use a task ID from the CLI or paste the task URL from ChatGPT.",
       },
       desktop: {
         url: "codex://new",
@@ -596,15 +600,17 @@ const catalog = {
         url: codexMobile,
         behavior: "handoff",
         evidence: "source",
-        sources: ["https://chatgpt.com/.well-known/apple-app-site-association", codexMobile],
-        note: "Matches ChatGPT’s wrapped iOS App Link. The browser falls back to the official App Store listing.",
+        sources: [chatgptIosAssociation, codexMobile, codexCloudTaskSource],
+        fields: { task: "" },
+        note: "Blank links open ChatGPT’s wrapped Codex handoff with an App Store fallback. A task ID or URL opens the associated task path. Installed task navigation still needs a device check.",
       },
       android: {
         url: codexMobile,
         behavior: "handoff",
         evidence: "verified",
-        sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile"],
-        note: "Android Chromium rendered the ChatGPT Google Play listing and Install button. Installed-app routing is unverified.",
+        sources: [codexMobile, "https://learn.chatgpt.com/docs/mobile", codexCloudTaskSource, "https://chatgpt.com/.well-known/assetlinks.json"],
+        fields: { task: "" },
+        note: "The blank link reached ChatGPT’s official Play listing. A task ID or URL opens that HTTPS task path. Installed task navigation still needs a device check.",
       },
     },
   },
@@ -942,6 +948,7 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45539495631/artifacts/14988856688",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45539535621/artifacts/14988891540",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45517891382/artifacts/14978123936",
+          "https://github.com/lalalune/agent-deeplinks/blob/01bdcfe4d4e317d6fad5d61bef7ea6171c00a78e/evidence/openclaw-windows-edge-dashboard.md",
         ],
         fields: { prompt: "message", server: "" },
         serverBehavior: "confirm",
@@ -950,7 +957,7 @@ const catalog = {
         launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "On macOS, Run confirmation showed the exact message with a connected Gateway, and HTTPS addresses opened Add Gateway. The Linux 2026.11.9 AppImage opened the connected Dashboard on cold and warm launch after first-run registration. The DEB drops the link. On Windows, the signed Hub reached a paired Control UI browser. Visible Dashboard rendering is still open.",
+        note: "On macOS, Run confirmation showed the exact message with a connected Gateway, and HTTPS addresses opened Add Gateway. The Linux 2026.11.9 AppImage opened the connected Dashboard on cold and warm launch after first-run registration. The DEB drops the link. On Windows, the cold link opened the connected Dashboard in signed Edge after pairing the Hub.",
       },
       ios: {
         url: "openclaw://agent",

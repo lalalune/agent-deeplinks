@@ -489,6 +489,32 @@ test("opens existing desktop chats with the provider's session UUID route", () =
   assert.equal(getAgentLink("codex", "desktop", { prompt: "Existing new-chat behavior" }), "codex://new?prompt=Existing%20new-chat%20behavior");
 });
 
+test("opens Codex cloud tasks from CLI IDs and first-party URLs", () => {
+  const id = "task_i_05c25d340000445599000123abc9d001";
+  const legacy = `https://chatgpt.com/codex/tasks/${id}`;
+  const current = "https://chatgpt.com/codex/cloud/tasks/34b77f4f-f3a9-4866-bf9b-31fcd282d693";
+  for (const platform of ["web", "ios", "android"]) {
+    for (const [task, expected] of [
+      [id, legacy], [legacy, legacy], [current + "?ref=source#context", current],
+      ["https://chatgpt.com/app/codex/tasks/" + id, legacy],
+    ]) {
+      assert.equal(getAgentLink("codex", platform, { task }), expected);
+      assert.equal(getAgentLink("codex", platform, { task, browserOnly: true }),
+        expected + (platform === "web" ? "#no_universal_links" : ""));
+      assert.equal(getAgentLink("codex", platform, { task, prompt: special }), null);
+    }
+    for (const task of ["task_", "new", "task_bad/path", "task_x%2Fy", "task_x\n", "https://chatgpt.com.evil.test/codex/tasks/" + id,
+      "https://chatgpt.com@evil.test/codex/tasks/" + id, "https://chatgpt.com/codex/tasks/../" + id,
+      "https://chatgpt.com/codex/tasks/" + id + "/extra"]) {
+      assert.equal(getAgentLink("codex", platform, { task }), null, task);
+    }
+  }
+  assert.equal(getAgentLink("codex", "desktop", { task: id }), null);
+  assert.equal(getAgentLink("codex", "web"), "https://chatgpt.com/codex");
+  assert.equal(getAgentLink("codex", "ios"), "https://chatgpt.com/app/codex");
+  assert.equal(getAgentLink("codex", "android"), "https://chatgpt.com/app/codex");
+});
+
 test("builds GitHub Copilot draft links and validates their session context", () => {
   const options = { prompt: special, repo: "owner/repo", pr: "123", mode: "interactive" };
   const native = `ghapp://session/new?prompt=${encodeURIComponent(special)}&repo=owner%2Frepo&pr=123&mode=interactive`;

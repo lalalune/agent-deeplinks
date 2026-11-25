@@ -15,6 +15,8 @@ export interface LinkOptions extends Partial<Record<LinkField, string>> {
 
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
 const conversationId = /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/iu;
+const codexCloudTaskId = /^task_[A-Za-z0-9_-]+$/u;
+const codexCloudTaskPath = /^https:\/\/chatgpt\.com(?:\/app)?(\/codex\/(?:cloud\/)?tasks\/[A-Za-z0-9_-]+)\/?(?:[?#][^\s]*)?$/u;
 const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
@@ -213,6 +215,13 @@ export function getAgentLink(
     if (!sessionId.test(fields.session) ||
       Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
     return `${route.sessionUrl}/${fields.session}${fragment}`;
+  }
+  if (agent === "codex" && fields.task) {
+    const taskPath = codexCloudTaskId.test(fields.task)
+      ? `/codex/tasks/${fields.task}`
+      : codexCloudTaskPath.exec(fields.task)?.[1];
+    if (!taskPath) return null;
+    return `https://chatgpt.com${taskPath}${platform === "web" && browserOnly ? "#no_universal_links" : ""}`;
   }
   if (agent === "t3-code" && (fields.environment || fields.session)) {
     const environment = encodeT3ThreadSegment(fields.environment);
