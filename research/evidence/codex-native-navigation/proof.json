@@ -1,0 +1,92 @@
+{
+  "appVersion": "26.1120.50957",
+  "selectedStockCodex": true,
+  "accountUsed": false,
+  "taskCreateClicked": false,
+  "taskSaved": false,
+  "gatewayRequests": [],
+  "source": "https://github.com/lalalune/agent-deeplinks/actions/runs/45699865163/artifacts/15062198138",
+  "results": {
+    "skills": {
+      "dispatch": {
+        "uri": "codex://skills",
+        "code": 0,
+        "signal": null
+      },
+      "exactGioDelivery": true,
+      "observations": [
+        {
+          "headings": [
+            "Plugins"
+          ],
+          "tabs": [
+            {
+              "name": "Plugins",
+              "role": "BUTTON",
+              "selected": null,
+              "pressed": null,
+              "state": null,
+              "current": "page",
+              "className": "focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[-2px] text-emphasis group-data-[appearance=grouped]/nav-list:rounded-none group-data-[appearance=grouped]/nav-list:after:pointer-events-none group-data-[appearance=grouped]/nav-list:after:absolute group-data-[appearance=grouped]/nav-list:after:inset-x-0 group-data-[appearance=grouped]/nav-list:after:bottom-0 group-data-[appearance=grouped]/nav-list:after:ms-[calc(var(--padding-row-cell-x,var(--padding-row-x))+var(--icon-leading-size)+var(--spacing-nav-row-content))] group-data-[appearance=grouped]/nav-list:after:border-b-hairline group-data-[appearance=grouped]/nav-list:after:border-default group-data-[appearance=grouped]/nav-list:last:after:hidden sidebar-item relative shrink-0 items-center overflow-hidden text-start text-sm disabled:cursor-default disabled:opacity-50 aria-disabled:cursor-default aria-disabled:opacity-50 cursor-interaction h-[var(--nav-item-height,var(--height-token-row))] flex w-full gap-2 px-[var(--padding-row-cell-x,var(--padding-row-x))] py-row-y bg-secondary-ghost-hover",
+              "background": "rgba(26, 28, 31, 0.055)"
+            },
+            {
+              "name": "Plugins",
+              "role": "tab",
+              "selected": "true",
+              "pressed": null,
+              "state": null,
+              "current": null,
+              "className": "cursor-interaction items-center select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 text-sm flex h-9 min-w-0 rounded-full border border-transparent px-4 py-0 font-medium ring-inset ring-inset bg-secondary-ghost-hover text-default",
+              "background": "rgba(26, 28, 31, 0.055)"
+            },
+            {
+              "name": "Skills",
+              "role": "tab",
+              "selected": "false",
+              "pressed": null,
+              "state": null,
+              "current": null,
+              "className": "cursor-interaction items-center select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-0 text-sm flex h-9 min-w-0 rounded-full border border-transparent px-4 py-0 font-medium ring-inset ring-inset text-secondary hover:bg-background-secondary-ghost-hover/50 hover:text-default",
+              "background": "rgba(0, 0, 0, 0)"
+            }
+          ],
+          "skillsSelected": false,
+          "scheduledLanding": false,
+          "automationForm": false
+        }
+      ]
+    },
+    "automations": {
+      "dispatch": {
+        "uri": "codex://automations",
+        "code": 0,
+        "signal": null
+      },
+      "exactGioDelivery": true,
+      "observations": [
+        {
+          "headings": [
+            "Scheduled",
+            "Schedule a task"
+          ],
+          "tabs": [
+            {
+              "name": "Plugins",
+              "role": "BUTTON",
+              "selected": null,
+              "pressed": null,
+              "state": null,
+              "current": null,
+              "className": "focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-[-2px] text-default group-data-[appearance=grouped]/nav-list:rounded-none group-data-[appearance=grouped]/nav-list:after:pointer-events-none group-data-[appearance=grouped]/nav-list:after:absolute group-data-[appearance=grouped]/nav-list:after:inset-x-0 group-data-[appearance=grouped]/nav-list:after:bottom-0 group-data-[appearance=grouped]/nav-list:after:ms-[calc(var(--padding-row-cell-x,var(--padding-row-x))+var(--icon-leading-size)+var(--spacing-nav-row-content))] group-data-[appearance=grouped]/nav-list:after:border-b-hairline group-data-[appearance=grouped]/nav-list:after:border-default group-data-[appearance=grouped]/nav-list:last:after:hidden sidebar-item relative shrink-0 items-center overflow-hidden text-start text-sm disabled:cursor-default disabled:opacity-50 aria-disabled:cursor-default aria-disabled:opacity-50 cursor-interaction h-[var(--nav-item-height,var(--height-token-row))] flex w-full gap-2 px-[var(--padding-row-cell-x,var(--padding-row-x))] py-row-y hover:bg-secondary-ghost-hover data-[state=open]:bg-secondary-ghost-hover",
+              "background": "rgba(26, 28, 31, 0.055)"
+            }
+          ],
+          "skillsSelected": false,
+          "scheduledLanding": true,
+          "automationForm": false
+        }
+      ]
+    }
+  }
+}

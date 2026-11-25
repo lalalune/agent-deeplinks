@@ -30,7 +30,7 @@ Cursor documents `/command` and `/rule` with `name` and `text`. The installed ex
 
 Fresh Chromium rendered the exact multiline Unicode preview for both hosted URLs. Cursor's desktop handler decodes the query twice. Direct native links encode the text twice to preserve literal plus signs and percent escapes. Cursor's hosted previews encode their native handoff once. A literal plus can become a space and a percent escape can be decoded again by Cursor. [Cursor deeplink reference](https://cursor.com/docs/reference/deeplinks)
 
-Cursor 3.31.15 on Ubuntu accepted the exact direct links through stock XDG. The native command and rule dialogs displayed their names, literal plus, percent escape, and multiline Unicode text. Both showed **Decline** and **Add to Home**. The test left the controls untouched and verified that neither file existed. [Signed native review evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45698623799/artifacts/15061468954)
+Cursor 3.31.15 on Ubuntu accepted the exact direct links through stock XDG. The native command and rule dialogs displayed their names, literal plus, percent escape, and multiline Unicode text. Both showed **Decline** and **Add to Home**. The test left the controls untouched and verified that neither file existed. [Signed native review evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45698623799/artifacts/15061468954) · [Dispatch and review records](evidence/cursor-native-customizations/proof.json)
 
 ## Google Antigravity
 

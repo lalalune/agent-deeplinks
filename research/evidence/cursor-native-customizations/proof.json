@@ -1,0 +1,36 @@
+{
+  "app": "Cursor",
+  "appVersion": "3.31.15",
+  "platform": "Ubuntu",
+  "source": "https://github.com/lalalune/agent-deeplinks/actions/runs/45698623799/artifacts/15061468954",
+  "reviews": [
+    {
+      "action": "command",
+      "name": "qa-cursor-command",
+      "uri": "cursor://anysphere.cursor-deeplink/command?name=qa-cursor-command&text=Cursor%2520QA%2520exact%2520%252B%2520%2526fixture%253Dproof%2520%25252F%250Acaf%25C3%25A9%2520%25E2%2598%2583",
+      "result": "exact visible unsigned-in review and stock handoff",
+      "reviewTitle": "Create Custom Command",
+      "markerInReview": true,
+      "gioRecordedExact": true,
+      "fixtureFileCreated": false,
+      "signedIn": false,
+      "reviewApproved": false,
+      "promptSubmitted": false,
+      "commandExecuted": false
+    },
+    {
+      "action": "rule",
+      "name": "qa-cursor-rule",
+      "uri": "cursor://anysphere.cursor-deeplink/rule?name=qa-cursor-rule&text=Cursor%2520QA%2520exact%2520%252B%2520%2526fixture%253Dproof%2520%25252F%250Acaf%25C3%25A9%2520%25E2%2598%2583",
+      "result": "exact visible unsigned-in review and stock handoff",
+      "reviewTitle": "Create Custom Rule",
+      "markerInReview": true,
+      "gioRecordedExact": true,
+      "fixtureFileCreated": false,
+      "signedIn": false,
+      "reviewApproved": false,
+      "promptSubmitted": false,
+      "commandExecuted": false
+    }
+  ]
+}
