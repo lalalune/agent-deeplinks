@@ -174,7 +174,9 @@ function App() {
     ...(options.allowExperimental ? { allowExperimental: true } : {}),
     ...(options.allowSend ? { allowSend: true } : {}),
   };
-  const exampleOptions = href ? options : sampleOptions;
+  const exampleOptions = isCodexTask && href
+    ? { ...options, task: href.replace(/#no_universal_links$/u, "") }
+    : href ? options : sampleOptions;
   const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread && !isCodexTask &&
     (!(isOpenClawBrowser || isOpenCodeAndroid) || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
