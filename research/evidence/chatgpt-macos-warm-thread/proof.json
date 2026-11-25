@@ -1,0 +1,21 @@
+{
+  "appVersion": "26.1120.50957",
+  "macOS": "15.8.2",
+  "dmgSha256": "00db5b0c41e91d6d8c257a7ddfff15bfe2b1e56f1119b54079821b144e86a5a3",
+  "result": "passed",
+  "title": "Agent Deeplinks QA Local Thread 9F17",
+  "exactURI": "codex://threads/01a2141c-0f39-7292-8fdf-b3a8372b1972",
+  "accountUsed": false,
+  "launchServices": true,
+  "appWindowBefore": {
+    "pid": 2483,
+    "windowId": 29
+  },
+  "appWindowAfter": {
+    "pid": 2483,
+    "windowId": 29
+  },
+  "activeThreadVisible": true,
+  "turns": 0,
+  "providerRequests": 0
+}
