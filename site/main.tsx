@@ -256,6 +256,7 @@ function App() {
   const [prompt, setPrompt] = useState(examplePrompt);
   const [t3ThreadPrompt, setT3ThreadPrompt] = useState("");
   const [claudeCodeCloudSession, setClaudeCodeCloudSession] = useState("");
+  const [openCodeBrowserSession, setOpenCodeBrowserSession] = useState("");
   const [directoryByRoute, setDirectoryByRoute] = useState<Partial<Record<string, string>>>({});
   const [serverByTarget, setServerByTarget] = useState<Partial<Record<string, string>>>({});
   const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
@@ -271,12 +272,15 @@ function App() {
   const isIosGateway = hasGatewaySetup && platform === "ios";
   const isOpenClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
   const isOpenCodeAndroid = agent === "opencode" && platform === "android";
+  const isOpenCodeBrowser = agent === "opencode" && (platform === "web" || platform === "ios");
+  const isOpenCodeBrowserSession = isOpenCodeBrowser && Boolean(openCodeBrowserSession);
   const serverKey = hasGatewaySetup ? routeKey : agent;
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
   const hasClaudeCodeCloudSession = agent === "claude-code" && Boolean(route?.sessionUrl);
   const savedOptions = extraByAgent[agent] ?? {};
-  const extraValues = hasClaudeCodeCloudSession ? { ...savedOptions, session: claudeCodeCloudSession } : savedOptions;
+  const extraValues = hasClaudeCodeCloudSession ? { ...savedOptions, session: claudeCodeCloudSession }
+    : isOpenCodeBrowser ? { ...savedOptions, session: openCodeBrowserSession } : savedOptions;
   const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
@@ -289,7 +293,7 @@ function App() {
   const options: LinkOptions = {
     ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
     ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession && !isCursorCloudAgent ? { prompt: currentPrompt } : {}),
-    ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
+    ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory && !isOpenCodeBrowserSession ? { directory } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "server") && server && !isT3Thread ? { server } : {}),
     ...(route?.browserOnlyFragment || (isCodexTask && platform === "web") ? { browserOnly: true } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
@@ -311,7 +315,7 @@ function App() {
     ...(isCursorCloudAgent ? { cloudAgent: platform === "desktop" ? new URL(href).searchParams.get("bcId") ?? undefined : href } : {}),
   } : sampleOptions;
   const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread && !isCodexTask && !isCursorCloudAgent &&
-    (!(isOpenClawBrowser || isOpenCodeAndroid) || !options.session);
+    (!(isOpenClawBrowser || isOpenCodeAndroid || isOpenCodeBrowser) || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
@@ -326,7 +330,7 @@ function App() {
     : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
     : isCodexTask ? href && "Opens an existing cloud task"
     : isCursorCloudAgent ? href && "Opens an existing Cloud Agent"
-    : isOpenCodeAndroid && options.session ? href && "Opens a saved session"
+    : (isOpenCodeAndroid || isOpenCodeBrowser) && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
     : isOpenCodeAndroid && options.mode === "last" ? "Opens the last session"
     : reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
@@ -335,7 +339,9 @@ function App() {
   const taskSource = isCodexTask && route?.sources.find((url) => url.includes("/cloud-tasks/src/util.rs"));
   const cloudAgentSource = isCursorCloudAgent && route?.sources.find((url) => platform === "desktop"
     ? url.includes("open-by-id-url-for-the-cloud-agent") : url.endsWith("/cloud-agent/api/endpoints"));
-  const source = sshSource || threadSource || taskSource || cloudAgentSource || (options.server && route?.serverSource) || route?.sources[0];
+  const openCodeSessionSource = isOpenCodeBrowserSession && route?.sources.find((url) => url.endsWith("/routes/session.ts"));
+  const source = sshSource || threadSource || taskSource || cloudAgentSource || openCodeSessionSource ||
+    (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -358,6 +364,10 @@ function App() {
   function updateExtraField(field: ExtraField, value: string) {
     if (field === "session" && hasClaudeCodeCloudSession) {
       setClaudeCodeCloudSession(value);
+      return;
+    }
+    if (field === "session" && isOpenCodeBrowser) {
+      setOpenCodeBrowserSession(value);
       return;
     }
     setExtraByAgent((previous) => ({ ...previous, [agent]: { ...previous[agent], [field]: value } }));
@@ -423,7 +433,7 @@ function App() {
                     (isT3Thread ? setT3ThreadPrompt : setPrompt)(event.target.value)} />
                 </label>
               )}
-              {Object.hasOwn(route?.fields ?? {}, "directory") && (
+              {Object.hasOwn(route?.fields ?? {}, "directory") && !isOpenCodeBrowserSession && (
                 <label className="field">
                   <span>
                     {agent === "opencode" && platform === "web"
@@ -473,9 +483,10 @@ function App() {
                           <span>{field === "session" && isOpenClawBrowser ? "Session URL (optional)"
                             : field === "session" && agent === "t3-code" ? "Thread ID"
                             : field === "session" && hasClaudeCodeCloudSession ? "Cloud session ID"
+                            : field === "session" && isOpenCodeBrowser ? "OpenCode session ID (optional)"
                             : field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
                           <input value={extraValues[field] ?? ""} placeholder={field === "session" && isOpenClawBrowser
-                            ? "https://gateway.example.com/chat/main" : field === "session" && isOpenCodeAndroid
+                            ? "https://gateway.example.com/chat/main" : field === "session" && (isOpenCodeAndroid || isOpenCodeBrowser)
                               ? "ses_example" : field === "session" && hasClaudeCodeCloudSession ? "session_… or cse_…" : placeholder}
                             onChange={(event) => updateExtraField(field, event.target.value)} />
                         </label>
@@ -514,6 +525,7 @@ function App() {
                     : isCursorCloudAgent ? "Enter a bc- ID or a Cloud Agent URL on cursor.com."
                     : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
+                    : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin."
                     : options.folder ? "Enter an absolute workspace folder path."
                     : isGatewaySetup ? (isIosGateway
                       ? "Enter a Gateway origin with HTTPS or WSS, or use HTTP or WS on a local network."
@@ -630,6 +642,7 @@ function App() {
                   ? "Enter a valid cloud session ID to generate this example."
                   : "Enter a valid chat ID to generate this example.")
                 : isT3Thread ? "Enter both a valid environment ID and thread ID."
+                : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin to generate this example."
                 : options.folder ? "Enter an absolute workspace folder path to generate this example."
                 : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>

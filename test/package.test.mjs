@@ -151,6 +151,29 @@ test("preserves draft safeguards and encodes self-hosted OpenCode workspace path
   assert.equal(getAgentLink("opencode", "web", { server: "https://user:password@example.com", directory }), null);
 });
 
+test("opens an exact OpenCode 2.x session in desktop and iPhone browsers", () => {
+  const server = "https://code.example.test:8443";
+  const session = "ses_fixture-42";
+  const expected = `${server}/server/aHR0cHM6Ly9jb2RlLmV4YW1wbGUudGVzdDo4NDQz/session/${session}`;
+  for (const platform of ["web", "ios"]) {
+    assert.equal(getAgentLink("opencode", platform, { server: `${server}/`, session }), expected);
+    assert.equal(getAgentLink("opencode", platform, { server }), server);
+    assert.equal(getAgentLink("opencode", platform, { server: "http://localhost:4096", session }),
+      `http://localhost:4096/server/aHR0cDovL2xvY2FsaG9zdDo0MDk2/session/${session}`);
+    assert.equal(getAgentLink("opencode", platform, { session }), null);
+    for (const invalidServer of ["https://user:password@code.example.test", "https://code.example.test/project", "http://code.example.test"]) {
+      assert.equal(getAgentLink("opencode", platform, { server: invalidServer, session }), null);
+    }
+    for (const invalidSession of ["ses_bad/path", "ses_bad?query", " ses_fixture-42", "chat_example"]) {
+      assert.equal(getAgentLink("opencode", platform, { server, session: invalidSession }), null);
+    }
+    assert.equal(getAgentLink("opencode", platform, { server, session, prompt: special }), null);
+  }
+  assert.equal(getAgentLink("opencode", "web", { server, session, directory: "/scratch/project" }), null);
+  assert.equal(getAgentLink("opencode", "desktop", { session }), null);
+  assert.equal(getAgentLink("opencode", "android", { session }), `opencode://session/${session}`);
+});
+
 test("every catalog route builds a parseable URL with its required fields", () => {
   const sample = {
     prompt: special,

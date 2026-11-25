@@ -867,11 +867,12 @@ const catalog = {
         sources: [
           "https://opencode.ai/docs/cli/web/",
           `${openCodeDesktopTag}/packages/app/src/shell/routes/routes.tsx`,
+          `${openCodeDesktopTag}/packages/app/src/shell/routes/session.ts`,
           `${openCodeTag}/packages/app/src/app.tsx#L636`,
         ],
-        fields: { directory: "", server: "" },
+        fields: { directory: "", server: "", session: "" },
         required: ["server"],
-        note: "For OpenCode 2.x, enter the server origin and leave the directory blank. The optional project directory uses the 1.x web route. OpenCode 2.4.1 showed Projects after local browser authentication.",
+        note: "Enter the OpenCode server origin. A session ID opens a saved OpenCode 2.x session in a browser connected to that server. The optional 1.x project directory applies when the session ID is blank.",
       },
       desktop: {
         url: "opencode://new-session",
@@ -894,10 +895,10 @@ const catalog = {
         url: "http://localhost:4096",
         behavior: "launch",
         evidence: "verified",
-        sources: ["https://opencode.ai/docs/cli/web/", "https://opencode.ai/mobile"],
-        fields: { server: "" },
+        sources: ["https://opencode.ai/docs/cli/web/", "https://opencode.ai/mobile", `${openCodeDesktopTag}/packages/app/src/shell/routes/session.ts`],
+        fields: { server: "", session: "" },
         required: ["server"],
-        note: "Opens your OpenCode server in a browser. The 2.4.1 Projects menu was verified in an iPhone WebKit profile after local authentication.",
+        note: "Opens OpenCode in a browser. Add a session ID to open a saved OpenCode 2.x session after authenticating with the server.",
       },
       android: {
         url: "opencode://",

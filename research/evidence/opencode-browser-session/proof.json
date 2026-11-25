@@ -1,0 +1,98 @@
+{
+  "version": "opencode v2.4.1",
+  "origin": "http://127.0.0.1:53440",
+  "auth": "Stock OpenCode Use password browser form",
+  "providerOrExternalAccount": false,
+  "browser": [
+    {
+      "name": "desktop-chromium",
+      "version": "158.0.8127.18",
+      "html": [
+        [
+          200,
+          "/"
+        ],
+        [
+          200,
+          "/server/aHR0cDovLzEyNy4wLjAuMTo1MzQ0MA/session/ses_dec064075fferWI3mPJkgVcVb7"
+        ]
+      ],
+      "denied": [
+        [
+          "POST",
+          "/api/rpc/opencode.goal/get"
+        ]
+      ],
+      "authenticatedApi": [
+        "/api/info",
+        "/api/event",
+        "/api/info",
+        "/api/event",
+        "/api/session/ses_dec064075fferWI3mPJkgVcVb7",
+        "/api/project",
+        "/api/session/active"
+      ],
+      "visibleTitle": true,
+      "signedInThroughApp": true,
+      "navigationStatus": 200,
+      "finalUrl": "http://127.0.0.1:53440/server/aHR0cDovLzEyNy4wLjAuMTo1MzQ0MA/session/ses_dec064075fferWI3mPJkgVcVb7",
+      "emptyComposer": true
+    },
+    {
+      "name": "iphone-15-webkit",
+      "version": "27.2",
+      "html": [
+        [
+          200,
+          "/"
+        ],
+        [
+          200,
+          "/server/aHR0cDovLzEyNy4wLjAuMTo1MzQ0MA/session/ses_dec064075fferWI3mPJkgVcVb7"
+        ]
+      ],
+      "denied": [
+        [
+          "POST",
+          "/api/rpc/opencode.goal/get"
+        ]
+      ],
+      "authenticatedApi": [
+        "/api/info",
+        "/api/event",
+        "/api/info",
+        "/api/event",
+        "/api/session/ses_dec064075fferWI3mPJkgVcVb7",
+        "/api/location",
+        "/api/project",
+        "/api/session/active",
+        "/api/location",
+        "/api/vcs",
+        "/api/project",
+        "/api/session/ses_dec064075fferWI3mPJkgVcVb7/message",
+        "/api/session/ses_dec064075fferWI3mPJkgVcVb7/inbox",
+        "/api/session/ses_dec064075fferWI3mPJkgVcVb7",
+        "/api/session",
+        "/api/info",
+        "/api/provider",
+        "/api/location"
+      ],
+      "visibleTitle": true,
+      "signedInThroughApp": true,
+      "navigationStatus": 200,
+      "finalUrl": "http://127.0.0.1:53440/server/aHR0cDovLzEyNy4wLjAuMTo1MzQ0MA/session/ses_dec064075fferWI3mPJkgVcVb7",
+      "emptyComposer": true
+    }
+  ],
+  "fixture": {
+    "id": "ses_dec064075fferWI3mPJkgVcVb7",
+    "label": "OpenCode existing web session QA 8EC",
+    "route": "http://127.0.0.1:53440/server/aHR0cDovLzEyNy4wLjAuMTo1MzQ0MA/session/ses_dec064075fferWI3mPJkgVcVb7"
+  },
+  "exactLibraryOutput": true,
+  "database": {
+    "sessions": 1,
+    "messages": 0,
+    "providerAccounts": 0
+  }
+}

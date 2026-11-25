@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.41.tgz
+npm install ./agent-deeplinks-0.1.42.tgz
 ```
 
 ## Usage
@@ -90,7 +90,14 @@ Codex desktop links can carry both an absolute `path` and an `originUrl`. The de
 
 For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the Web links use each product's localhost default. In a fresh local browser tab, Hermes shows how to sign in with the host's `hermes webapp` command. Hermes on iOS and Android requires your configured Web Access address.
 
-For OpenCode 2.x on the web or in an iPhone browser, supply the server origin in `server` and select your project after sign-in. The Web route's optional `directory` parameter builds the older OpenCode 1.x project URL. OpenCode Desktop accepts the local directory and an optional prompt.
+For OpenCode 2.x on the web or in an iPhone browser, supply the server origin in `server`. Add `session` to open a saved session by ID in a browser already connected to that server. On Web, `directory` alone builds the older OpenCode 1.x project URL. OpenCode Desktop accepts the local directory and an optional prompt.
+
+```ts
+getAgentLink("opencode", "web", {
+  server: "https://code.example.com",
+  session: "ses_example",
+})
+```
 
 For Android, pass a one-time `/auth/connect/<code>` URL from [`opencode pair`](https://opencode.ai/docs/cli/commands#pair) to `getOpenCodeAndroidPairingLink`. It builds a custom-scheme link to the native pairing review without fetching the one-time URL. The user confirms the connection in OpenCode. The server address in the issued URL must be reachable from the phone.
 

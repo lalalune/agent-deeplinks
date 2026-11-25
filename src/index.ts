@@ -132,10 +132,14 @@ function getOpenCodeOrigin(url: URL): string | null {
   return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
 }
 
-function encodeDirectory(directory: string): string {
-  const bytes = new TextEncoder().encode(directory);
+function encodeBase64Url(value: string): string {
+  const bytes = new TextEncoder().encode(value);
   const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
   return btoa(binary).replace(/\+/gu, "-").replace(/\//gu, "_").replace(/=+$/u, "");
+}
+
+function isOpenCodeSessionId(session: string): boolean {
+  return session.startsWith("ses") && !/[^A-Za-z0-9_-]/u.test(session);
 }
 
 function isLocalPath(path: string): boolean {
@@ -275,7 +279,7 @@ export function getAgentLink(
   }
   if (agent === "opencode" && platform === "android") {
     if (fields.session) {
-      return !fields.mode && fields.session.startsWith("ses") && !/[^A-Za-z0-9_-]/u.test(fields.session)
+      return !fields.mode && isOpenCodeSessionId(fields.session)
         ? `opencode://session/${fields.session}` : null;
     }
     return fields.mode ? `opencode://${fields.mode}-session` : route.url;
@@ -298,7 +302,11 @@ export function getAgentLink(
     if (agent === "opencode") {
       const origin = getOpenCodeOrigin(server);
       if (!origin) return null;
-      baseUrl = fields.directory ? `${origin}/${encodeDirectory(fields.directory)}/session` : origin;
+      if (fields.session) {
+        if (fields.directory || !isOpenCodeSessionId(fields.session)) return null;
+        return `${origin}/server/${encodeBase64Url(origin)}/session/${fields.session}`;
+      }
+      baseUrl = fields.directory ? `${origin}/${encodeBase64Url(fields.directory)}/session` : origin;
     } else if (agent === "t3-code") {
       if (server.pathname !== "/") return null;
       baseUrl = `${server.origin}/new`;
