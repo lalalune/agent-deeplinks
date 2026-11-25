@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.34.tgz
+npm install ./agent-deeplinks-0.1.35.tgz
 ```
 
 ## Usage
@@ -54,6 +54,8 @@ Grok’s Web link opens a send review. Choosing **Cancel** leaves the prompt edi
 Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
 
 Use `getAgentLink("claude-code", "vscode", { prompt: "Review my changes." })` to prefill a draft in the Claude Code extension for VS Code. Pass `session` to resume a session from the current workspace.
+
+For an existing Claude Code cloud session, pass its `session_…` or `cse_…` ID as `session` on `web`, `ios`, or `android`. The link opens the existing session. Fields for a new draft cannot be combined with `session`. [Anthropic’s cloud and mobile links](https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link)
 
 For Claude and Claude Code web links, use `browserOnly: true` to keep the link in the browser on iOS. Leave it unset for the usual Universal Link handoff.
 

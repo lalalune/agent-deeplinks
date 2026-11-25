@@ -145,6 +145,7 @@ function App() {
   const extraValues = extraByAgent[agent] ?? {};
   const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
+  const hasClaudeCodeCloudSession = agent === "claude-code" && Boolean(route?.sessionUrl);
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
   const visibleExtraFields = extraFields.filter((field) =>
     Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session") &&
@@ -182,7 +183,7 @@ function App() {
     : hasSshOptions ? "Reviews an SSH target"
     : options.folder ? "Reviews a workspace folder"
     : agent === "grok" && platform === "web" && options.prompt ? "Reviews before sending" : undefined;
-  const behaviorLabel = isExistingSession ? href && "Opens an existing chat"
+  const behaviorLabel = isExistingSession ? href && (hasClaudeCodeCloudSession ? "Opens an existing cloud session" : "Opens an existing chat")
     : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
     : isOpenCodeAndroid && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
@@ -322,10 +323,12 @@ function App() {
                         <label className="field" key={field}>
                           <span>{field === "session" && isOpenClawBrowser ? "Session URL (optional)"
                             : field === "session" && agent === "t3-code" ? "Thread ID"
+                            : field === "session" && hasClaudeCodeCloudSession ? "Cloud session ID"
                             : field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
                           <input value={extraValues[field] ?? ""} placeholder={field === "session" && isOpenClawBrowser
                             ? "https://gateway.example.com/chat/main" : field === "session" && isOpenCodeAndroid
-                              ? "ses_example" : placeholder} onChange={(event) => updateExtraField(field, event.target.value)} />
+                              ? "ses_example" : field === "session" && hasClaudeCodeCloudSession ? "session_… or cse_…" : placeholder}
+                            onChange={(event) => updateExtraField(field, event.target.value)} />
                         </label>
                       );
                     })}

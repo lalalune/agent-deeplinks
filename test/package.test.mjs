@@ -324,6 +324,24 @@ test("builds documented Claude Code mobile drafts and their HTTPS equivalents", 
   assert.equal(getAgentLink("claude-code", "ios", { folder: "/tmp/project" }), null);
 });
 
+test("opens documented Claude Code cloud session IDs on web and mobile", () => {
+  const bases = { web: "https://claude.ai/code", ios: "claude://code", android: "claude://code" };
+  for (const [platform, base] of Object.entries(bases)) {
+    for (const session of ["session_01HJKLMNOPQRSTUVWXYZ", "cse_test-0123_"]) {
+      assert.equal(getAgentLink("claude-code", platform, { session }), `${base}/${session}`);
+      assert.equal(getAgentLink("claude-code", platform, { session, browserOnly: true }),
+        `${base}/${session}${platform === "web" ? "#no_universal_links" : ""}`);
+      for (const draft of [{ prompt: special }, { mode: "plan" }, { repo: "owner/repo", branch: "main" }]) {
+        assert.equal(getAgentLink("claude-code", platform, { session, ...draft }), null);
+      }
+    }
+    for (const invalid of ["new", "sessions", "session_", "cse_", "session_./path", "session_x%2Fy", "cse_x?mode=code", "session_x#hash", "session_x\n", "cse_…"]) {
+      assert.equal(getAgentLink("claude-code", platform, { session: invalid }), null, invalid);
+    }
+  }
+  assert.equal(getAgentLink("claude-code", "desktop", { session: "session_01HJKLMNOPQRSTUVWXYZ" }), null);
+});
+
 test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill reviews", () => {
   assert.equal(getAgentLink("openclaw", "desktop"), "openclaw://dashboard");
   assert.equal(getAgentLink("openclaw", "ios"), "openclaw://dashboard");

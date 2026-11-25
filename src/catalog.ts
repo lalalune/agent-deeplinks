@@ -131,12 +131,13 @@ const cursorRoute = {
 const claudeCodeMobileRoute = {
   url: "claude://code/new",
   launchUrl: "claude://code",
+  sessionUrl: "claude://code",
   behavior: "draft",
   evidence: "documented",
   sources: [claudeMobileDocs],
-  fields: { prompt: "q", mode: "mode", repo: "repo", branch: "branch" },
+  fields: { prompt: "q", mode: "mode", repo: "repo", branch: "branch", session: "" },
   modes: ["plan", "code"],
-  note: "Requires Claude Code access on your account. An empty link opens the session list.",
+  note: "Requires Claude Code access. An empty link opens the session list, and a session ID opens that cloud session.",
 } as const satisfies AgentRoute;
 
 const zcodeRemoteRoute = {
@@ -477,9 +478,10 @@ const catalog = {
         ...claudeCodeMobileRoute,
         url: "https://claude.ai/code/new",
         launchUrl: "https://claude.ai/code",
+        sessionUrl: "https://claude.ai/code",
         browserOnlyFragment: "no_universal_links",
         sources: [claudeMobileDocs, "https://code.claude.com/docs/en/claude-code-on-the-web", claudeCachedIosAssociation],
-        note: "Opens the new-session composer. Requires Claude Code cloud-session access.",
+        note: "Opens the new-session composer or an existing cloud session. Requires Claude Code cloud-session access.",
       },
       desktop: {
         url: "claude://code/new",
