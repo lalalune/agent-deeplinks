@@ -1112,19 +1112,24 @@ test("copies Antigravity Remote Control conversations across browser surfaces", 
   assert.equal(getAgentLink("antigravity", "desktop"), "antigravity://");
 });
 
-test("opens Grok Build on the web and scopes iOS handoff to Cursor Cloud Agent links", () => {
+test("opens Grok Build and scopes mobile handoffs to Cloud Agent links", () => {
   const home = "https://grok.com/build";
   const id = "bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05";
   const personal = `${home}/${id}`;
   const team = `${home}/t/deeplinks-qa-example/${id}`;
   assert.equal(getAgentLink("grok-build", "web"), home);
-  assert.equal(getAgentLink("grok-build", "web", { cloudAgent: id }), null);
+  assert.equal(getAgentLink("grok-build", "web", { cloudAgent: id }), personal);
+  assert.equal(getAgentLink("grok-build", "web", { cloudAgent: team }), team);
   assert.equal(getAgentLink("grok-build", "web", { session: id.slice(3) }), null);
   assert.equal(getAgentLink("grok-build", "ios"), `${home}/agents`);
   assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: id }), personal);
   assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: personal }), personal);
   assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: `${team}/?ref=fixture#ignored` }), team);
   assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: id, prompt: special }), null);
+  assert.equal(getAgentLink("grok-build", "android"), `${home}/agents`);
+  assert.equal(getAgentLink("grok-build", "android", { cloudAgent: id }), personal);
+  assert.equal(getAgentLink("grok-build", "android", { cloudAgent: team }), team);
+  assert.equal(getAgentRoute("grok-build", "android").behavior, "handoff");
   for (const cloudAgent of [
     id.slice(3),
     "bc-invalid",
@@ -1139,7 +1144,7 @@ test("opens Grok Build on the web and scopes iOS handoff to Cursor Cloud Agent l
   ]) {
     assert.equal(getAgentLink("grok-build", "ios", { cloudAgent }), null, cloudAgent);
   }
-  for (const platform of ["desktop", "android", "cli", "vscode"]) {
+  for (const platform of ["desktop", "cli", "vscode"]) {
     assert.equal(getAgentLink("grok-build", platform), null);
   }
   assert.equal(getAgentRoute("grok-build", "ios").behavior, "handoff");

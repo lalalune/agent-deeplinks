@@ -363,7 +363,7 @@ function App() {
   const behaviorLabel = isExistingSession ? href && (hasClaudeCodeCloudSession ? "Opens an existing cloud session" : "Opens an existing chat")
     : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
     : isCodexTask ? href && "Opens an existing cloud task"
-    : isCloudAgent ? href && (agent === "grok-build" ? "Opens a Cloud Agent in Cursor" : "Opens an existing Cloud Agent")
+    : isCloudAgent ? href && (agent === "grok-build" && platform === "ios" ? "Opens a Cloud Agent in Cursor" : "Opens an existing Cloud Agent")
     : (isOpenCodeAndroid || isOpenCodeBrowser) && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
     : isOpenCodeAndroid && options.mode === "last" ? "Opens the last session"

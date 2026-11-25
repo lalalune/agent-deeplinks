@@ -1,0 +1,111 @@
+{
+  "date": "2026-11-25",
+  "scope": "Pixel 7 browser emulation in fresh headless Chromium. No native package was installed and no account or device was used. Non-GET/HEAD requests and WebSockets were blocked.",
+  "associationUrl": "https://grok.com/.well-known/assetlinks.json",
+  "liveAssociationSha256": "4a05193675423fc67040e672c0b83ce0fd80dc90d3456b166769505626269aa1",
+  "ordinaryGrokAndroid15Exclusions": [
+    {
+      "/": "/build",
+      "exclude": true
+    },
+    {
+      "/": "/build/*",
+      "exclude": true
+    }
+  ],
+  "buildAndroidPackage": {
+    "id": "ai.x.grok.build",
+    "fingerprint": "CD:CB:47:A6:48:C4:CD:50:AD:A6:12:B4:AD:84:9C:B8:5F:EE:B4:E6:60:B0:2D:E9:5D:06:E4:1D:88:F2:58:29",
+    "rules": [
+      {
+        "/": "/build/agents"
+      },
+      {
+        "/": "/build/agents/*"
+      },
+      {
+        "/": "/build/bc-????????-????-????-????-????????????"
+      },
+      {
+        "/": "/build/t/*/agents"
+      },
+      {
+        "/": "/build/t/*/agents/*"
+      },
+      {
+        "/": "/build/t/*/bc-????????-????-????-????-????????????"
+      },
+      {
+        "/": "/build/codebase/*/github/pull/*",
+        "exclude": true
+      },
+      {
+        "/": "/build/codebase/*/*/pull/*"
+      },
+      {
+        "/": "/build/origin/*/*/pull/*"
+      },
+      {
+        "/": "/origin/*/*/pull/*"
+      }
+    ],
+    "browserFlagExclusions": []
+  },
+  "googleAssetLinksCheck": {
+    "api": "https://digitalassetlinks.googleapis.com/v1/assetlinks:check",
+    "source": "https://grok.com",
+    "relation": "delegate_permission/common.handle_all_urls",
+    "linked": true
+  },
+  "androidStore": {
+    "url": "https://play.google.com/store/apps/details?id=ai.x.grok.build",
+    "statusByCountry": {
+      "US": 404,
+      "GB": 404
+    }
+  },
+  "observations": [
+    {
+      "input": "https://grok.com/build/agents",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/sign-in",
+      "visibleHeading": "Log into your account",
+      "blockedNonReadRequests": 4
+    },
+    {
+      "input": "https://grok.com/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "loginReturnPath": "/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/sign-in",
+      "visibleHeading": "Log into your account",
+      "blockedNonReadRequests": 3
+    },
+    {
+      "input": "https://grok.com/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "loginReturnPath": "/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/sign-in",
+      "visibleHeading": "Log into your account",
+      "blockedNonReadRequests": 3
+    }
+  ]
+}
