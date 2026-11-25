@@ -311,7 +311,10 @@ test("requires opt-in before opening web links with submission or unknown behavi
   assert.equal(getAgentLink("meta-muse", "web"), "https://muse.ai/chat?nr=1");
   assert.equal(getAgentLink("meta-muse", "web", { prompt: special }), null);
   assert.equal(getAgentLink("meta-muse", "ios"), "https://applink.muse.ai/");
-  assert.equal(getAgentLink("meta-muse", "android"), "https://play.google.com/store/apps/details?id=com.facebook.aura");
+  assert.equal(getAgentLink("meta-muse", "android"), "https://agent.meta.ai/chat");
+  assert.equal(getAgentRoute("meta-muse", "android").behavior, "launch");
+  assert.equal(getAgentRoute("meta-muse", "android").evidence, "verified");
+  assert.equal(getAgentLink("meta-muse", "android", { prompt: special, allowExperimental: true }), null);
   assert.equal(getAgentLink("claude", "android"), "https://play.google.com/store/apps/details?id=com.anthropic.claude");
   for (const platform of ["ios", "android"]) {
     assert.equal(getAgentLink("codex", platform), "https://chatgpt.com/app/codex");
