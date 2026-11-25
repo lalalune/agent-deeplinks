@@ -319,14 +319,14 @@ function App() {
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
   const isCodexTask = agent === "codex" && Boolean(route?.fields?.task !== undefined && extraValues.task);
-  const isCursorCloudAgent = agent === "cursor" && Boolean(extraValues.cloudAgent);
+  const isCloudAgent = route?.fields?.cloudAgent !== undefined && Boolean(extraValues.cloudAgent);
   const visibleExtraFields = extraFields.filter((field) =>
     Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session") &&
     (!isT3Thread || field === "session" || field === "environment"),
   );
   const options: LinkOptions = {
     ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
-    ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession && !isCursorCloudAgent ? { prompt: currentPrompt } : {}),
+    ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession && !isCloudAgent ? { prompt: currentPrompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory && !isOpenCodeBrowserSession ? { directory } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "server") && server && !isT3Thread ? { server } : {}),
     ...(route?.browserOnlyFragment || (isCodexTask && platform === "web") ? { browserOnly: true } : {}),
@@ -346,9 +346,9 @@ function App() {
   const exampleOptions = href ? {
     ...options,
     ...(isCodexTask ? { task: href.replace(/#no_universal_links$/u, "") } : {}),
-    ...(isCursorCloudAgent ? { cloudAgent: platform === "desktop" ? new URL(href).searchParams.get("bcId") ?? undefined : href } : {}),
+    ...(isCloudAgent ? { cloudAgent: platform === "desktop" ? new URL(href).searchParams.get("bcId") ?? undefined : href } : {}),
   } : sampleOptions;
-  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread && !isCodexTask && !isCursorCloudAgent &&
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread && !isCodexTask && !isCloudAgent &&
     (!(isOpenClawBrowser || isOpenCodeAndroid || isOpenCodeBrowser) || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
@@ -363,7 +363,7 @@ function App() {
   const behaviorLabel = isExistingSession ? href && (hasClaudeCodeCloudSession ? "Opens an existing cloud session" : "Opens an existing chat")
     : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
     : isCodexTask ? href && "Opens an existing cloud task"
-    : isCursorCloudAgent ? href && "Opens an existing Cloud Agent"
+    : isCloudAgent ? href && (agent === "grok-build" ? "Opens a Cloud Agent in Cursor" : "Opens an existing Cloud Agent")
     : (isOpenCodeAndroid || isOpenCodeBrowser) && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
     : isOpenCodeAndroid && options.mode === "last" ? "Opens the last session"
@@ -371,7 +371,7 @@ function App() {
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
   const threadSource = isT3Thread && route?.sources.find((url) => url.includes("/threadLinks.ts"));
   const taskSource = isCodexTask && route?.sources.find((url) => url.includes("/cloud-tasks/src/util.rs"));
-  const cloudAgentSource = isCursorCloudAgent && route?.sources.find((url) => platform === "desktop"
+  const cloudAgentSource = agent === "cursor" && isCloudAgent && route?.sources.find((url) => platform === "desktop"
     ? url.includes("open-by-id-url-for-the-cloud-agent") : url.endsWith("/cloud-agent/api/endpoints"));
   const openCodeSessionSource = isOpenCodeBrowserSession && route?.sources.find((url) => url.endsWith("/routes/session.ts"));
   const source = sshSource || threadSource || taskSource || cloudAgentSource || openCodeSessionSource ||
@@ -460,7 +460,7 @@ function App() {
                   {platforms.map((item) => <option key={item} value={item}>{platformNames[item]}</option>)}
                 </Select>
               </div>
-              {route?.fields?.prompt && !isGatewaySetup && !isExistingSession && !isCursorCloudAgent && (
+              {route?.fields?.prompt && !isGatewaySetup && !isExistingSession && !isCloudAgent && (
                 <label className="field">
                   <span>{isT3Thread ? "Draft (optional)" : "Prompt"}</span>
                   <textarea rows={2} value={currentPrompt} onChange={(event) =>
@@ -504,7 +504,10 @@ function App() {
                   <summary>Additional link options</summary>
                   <div>
                     {visibleExtraFields.map((field) => {
-                      const { label, placeholder } = extraFieldDetails[field];
+                      const { label, placeholder: defaultPlaceholder } = extraFieldDetails[field];
+                      const placeholder = field === "cloudAgent" && agent === "grok-build"
+                        ? "bc-… or https://grok.com/build/bc-…"
+                        : defaultPlaceholder;
                       return field === "mode" ? (
                         <Select key={field} label={label} value={extraValues[field] ?? ""} onChange={(value) => updateExtraField(field, value)}>
                           <option value="">Default</option>
@@ -556,7 +559,7 @@ function App() {
                       : "Enter the ID from the app’s existing chat link.")
                     : isT3Thread ? "Enter both a valid environment ID and thread ID."
                     : isCodexTask ? "Enter a task_ ID or a Codex task URL on chatgpt.com."
-                    : isCursorCloudAgent ? "Enter a bc- ID or a Cloud Agent URL on cursor.com."
+                    : isCloudAgent ? `Enter a bc- ID or a Cloud Agent URL on ${agent === "grok-build" ? "grok.com" : "cursor.com"}.`
                     : isOpenClawBrowser && options.session
                       ? options.prompt && getAgentLink(agent, platform, { ...options, prompt: undefined })
                         ? "Clear the draft to open the focused dashboard."
@@ -674,7 +677,7 @@ function App() {
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
                 : isCodexTask ? "Enter a valid Codex cloud task to generate this example."
-                : isCursorCloudAgent ? "Enter a valid Cloud Agent to generate this example."
+                : isCloudAgent ? "Enter a valid Cloud Agent to generate this example."
                 : isExistingSession ? (hasClaudeCodeCloudSession
                   ? "Enter a valid cloud session ID to generate this example."
                   : "Enter a valid chat ID to generate this example.")

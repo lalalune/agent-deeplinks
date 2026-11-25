@@ -1,0 +1,184 @@
+{
+  "date": "2026-11-25",
+  "scope": "Signed-out browser results for synthetic identifiers. No account or installed iOS app was used. Non-GET/HEAD requests and WebSockets were blocked.",
+  "appleAssociation": {
+    "publisher": "https://grok.com/.well-known/apple-app-site-association",
+    "appleCdn": "https://app-site-association.cdn-apple.com/a/v1/grok.com",
+    "matchingSha256": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2",
+    "appIds": [
+      "DCNK4UB866.co.anysphere.cursor",
+      "N66CZ3Y3BX.co.anysphere.cursor"
+    ]
+  },
+  "observations": [
+    {
+      "profile": "desktop-chromium",
+      "route": "agent",
+      "input": "https://grok.com/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        403
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/check-login",
+      "heading": "Sorry, you have been blocked",
+      "blockedNonReadRequests": 1
+    },
+    {
+      "profile": "iphone-webkit",
+      "route": "agent",
+      "input": "https://grok.com/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/sign-in",
+      "heading": "Log into your account",
+      "blockedNonReadRequests": 4
+    },
+    {
+      "profile": "desktop-chromium",
+      "route": "cli-session",
+      "input": "https://grok.com/build/d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        307,
+        302,
+        303,
+        403
+      ],
+      "agentInboxRedirect": true,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/check-login",
+      "heading": "Sorry, you have been blocked",
+      "blockedNonReadRequests": 1
+    },
+    {
+      "profile": "iphone-webkit",
+      "route": "cli-session",
+      "input": "https://grok.com/build/d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "agentInboxRedirect": true,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/sign-in",
+      "heading": "Log into your account",
+      "blockedNonReadRequests": 4
+    },
+    {
+      "profile": "desktop-chromium",
+      "route": "inbox",
+      "input": "https://grok.com/build/agents",
+      "statuses": [
+        307,
+        302,
+        303,
+        403
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/check-login",
+      "heading": "Sorry, you have been blocked",
+      "blockedNonReadRequests": 1
+    },
+    {
+      "profile": "iphone-webkit",
+      "route": "inbox",
+      "input": "https://grok.com/build/agents",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/sign-in",
+      "heading": "Log into your account",
+      "blockedNonReadRequests": 4
+    },
+    {
+      "profile": "desktop-chromium",
+      "route": "root",
+      "input": "https://grok.com/build",
+      "statuses": [
+        307,
+        307,
+        302,
+        303,
+        403
+      ],
+      "agentInboxRedirect": true,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/check-login",
+      "heading": "Sorry, you have been blocked",
+      "blockedNonReadRequests": 1
+    },
+    {
+      "profile": "iphone-webkit",
+      "route": "root",
+      "input": "https://grok.com/build",
+      "statuses": [
+        307,
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "agentInboxRedirect": true,
+      "loginReturnPath": "/build/agents",
+      "final": "https://accounts.x.ai/sign-in",
+      "heading": "Log into your account",
+      "blockedNonReadRequests": 4
+    },
+    {
+      "profile": "desktop-chromium",
+      "route": "team-agent",
+      "input": "https://grok.com/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        403
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/check-login",
+      "heading": "Sorry, you have been blocked",
+      "blockedNonReadRequests": 1
+    },
+    {
+      "profile": "iphone-webkit",
+      "route": "team-agent",
+      "input": "https://grok.com/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "statuses": [
+        307,
+        302,
+        303,
+        307,
+        200
+      ],
+      "agentInboxRedirect": false,
+      "loginReturnPath": "/build/t/deeplinks-qa-example/bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05",
+      "final": "https://accounts.x.ai/sign-in",
+      "heading": "Log into your account",
+      "blockedNonReadRequests": 4
+    }
+  ]
+}

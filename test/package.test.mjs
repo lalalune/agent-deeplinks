@@ -1111,3 +1111,42 @@ test("copies Antigravity Remote Control conversations across browser surfaces", 
   assert.equal(getAgentLink("antigravity", "desktop", options), null);
   assert.equal(getAgentLink("antigravity", "desktop"), "antigravity://");
 });
+
+test("opens Grok Build on the web and scopes iOS handoff to Cursor Cloud Agent links", () => {
+  const home = "https://grok.com/build";
+  const id = "bc-d5c6aa40-acce-44e4-b67c-ceadf3a53d05";
+  const personal = `${home}/${id}`;
+  const team = `${home}/t/deeplinks-qa-example/${id}`;
+  assert.equal(getAgentLink("grok-build", "web"), home);
+  assert.equal(getAgentLink("grok-build", "web", { cloudAgent: id }), null);
+  assert.equal(getAgentLink("grok-build", "web", { session: id.slice(3) }), null);
+  assert.equal(getAgentLink("grok-build", "ios"), `${home}/agents`);
+  assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: id }), personal);
+  assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: personal }), personal);
+  assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: `${team}/?ref=fixture#ignored` }), team);
+  assert.equal(getAgentLink("grok-build", "ios", { cloudAgent: id, prompt: special }), null);
+  for (const cloudAgent of [
+    id.slice(3),
+    "bc-invalid",
+    `${home}/share/${id}`,
+    `${home}/t/team/extra/${id}`,
+    `${home}/t/%2e%2e/${id}`,
+    `https://grok.com.example/build/${id}`,
+    `https://grok.com@other.example/build/${id}`,
+    `https://grok.com:443/build/${id}`,
+    `https://grok.com/BUILD/${id}`,
+    `${personal}\n`,
+  ]) {
+    assert.equal(getAgentLink("grok-build", "ios", { cloudAgent }), null, cloudAgent);
+  }
+  for (const platform of ["desktop", "android", "cli", "vscode"]) {
+    assert.equal(getAgentLink("grok-build", platform), null);
+  }
+  assert.equal(getAgentRoute("grok-build", "ios").behavior, "handoff");
+  assert.equal(getAgentIcon("grok-build"), getAgentIcon("grok"));
+  const markup = renderToStaticMarkup(createElement(AgentLink, {
+    agent: "grok-build", platform: "ios", options: { cloudAgent: team }, iconOnly: true,
+  }));
+  assert.ok(markup.includes(`href="${team}"`));
+  assert.ok(markup.includes('aria-label="Open Grok Build on iOS"'));
+});

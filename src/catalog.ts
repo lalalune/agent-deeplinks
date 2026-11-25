@@ -108,6 +108,10 @@ const vibestack = "https://vibestack.fun/";
 const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-association";
 const iosAssociationCheck = "https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
+const grokBuildHome = "https://grok.com/build";
+const grokBuildDocs = "https://docs.x.ai/build/overview";
+const grokBuildHomeSource = "https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/crates/codegen/xai-grok-shell/src/agent/app.rs#L407-L420";
+const grokBuildAppleAssociation = "https://app-site-association.cdn-apple.com/a/v1/grok.com";
 const grokAndroidAssociation = "https://grok.com/.well-known/assetlinks.json";
 const grokAndroidRuntime = "https://github.com/lalalune/agent-deeplinks/actions/runs/45680807835/artifacts/15053174564";
 const geminiIos = "https://gemini.google.com/app/download/ios";
@@ -315,6 +319,28 @@ const catalog = {
         evidence: "verified",
         sources: [grokAndroidAssociation, grokAndroidRuntime],
         note: "Stock Android 15 opened the signed Grok 1.2.60 app, which showed a Google Play requirement in the test environment.",
+      },
+    },
+  },
+  "grok-build": {
+    name: "Grok Build",
+    home: "https://x.ai/build",
+    description: "xAI’s coding agent and Cloud Agents workspace",
+    routes: {
+      web: {
+        url: grokBuildHome,
+        behavior: "launch",
+        evidence: "observed",
+        sources: [grokBuildDocs, grokBuildHomeSource, grokBuildAppleAssociation],
+        note: "Opens the Grok Build agents inbox. The signed-out iPhone browser reached Grok account sign-in.",
+      },
+      ios: {
+        url: `${grokBuildHome}/agents`,
+        behavior: "handoff",
+        evidence: "source",
+        sources: [grokIosAssociation, grokBuildAppleAssociation, "https://apps.apple.com/us/app/cursor/id6767085653"],
+        fields: { cloudAgent: "" },
+        note: "Apple associates the inbox and personal or team Cloud Agent URLs with the Cursor app. The browser fallback reaches Grok sign-in. Installed-app navigation still needs a device check.",
       },
     },
   },
