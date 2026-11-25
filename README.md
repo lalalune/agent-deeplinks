@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.31.tgz
+npm install ./agent-deeplinks-0.1.32.tgz
 ```
 
 ## Usage
@@ -90,6 +90,14 @@ For Android, pass a one-time `/auth/connect/<code>` URL from [`opencode pair`](h
 import { getOpenCodeAndroidPairingLink } from "agent-deeplinks"
 
 const href = getOpenCodeAndroidPairingLink(issuedPairingUrl)
+```
+
+After pairing OpenCode on Android, pass `session` to open a saved session by ID on the current server. Use `mode: "new"` for a blank session or `mode: "last"` to reopen the last session. The app uses its current paired server.
+
+```ts
+getAgentLink("opencode", "android", { session: "ses_example" })
+getAgentLink("opencode", "android", { mode: "new" })
+getAgentLink("opencode", "android", { mode: "last" })
 ```
 
 T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server first. The link can then open a draft directly in the paired browser.

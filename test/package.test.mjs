@@ -253,6 +253,20 @@ test("requires opt-in before opening web links with submission or unknown behavi
   assert.equal(openCodeDraft.searchParams.get("prompt"), special);
 });
 
+test("opens an exact, new, or last OpenCode session on the current paired Android server", () => {
+  const session = "ses_def5b4057ffeE4y13yx0KVfUlG";
+  assert.equal(getAgentLink("opencode", "android"), "opencode://");
+  assert.equal(getAgentLink("opencode", "android", { session }), `opencode://session/${session}`);
+  assert.equal(getAgentLink("opencode", "android", { mode: "new" }), "opencode://new-session");
+  assert.equal(getAgentLink("opencode", "android", { mode: "last" }), "opencode://last-session");
+  assert.equal(getAgentLink("opencode", "android", { session, mode: "new" }), null);
+  assert.equal(getAgentLink("opencode", "android", { mode: "something-else" }), null);
+  assert.equal(getAgentLink("opencode", "android", { session, server: "https://agent.example/" }), null);
+  for (const badSession of ["not_a_session", "../last", "ses_x?server=wrong", "ses_x%2Ftail", "x y", "ses_x\n", "\n", "ses_K"]) {
+    assert.equal(getAgentLink("opencode", "android", { session: badSession }), null, badSession);
+  }
+});
+
 test("builds documented Claude Code mobile drafts and their HTTPS equivalents", () => {
   const options = { prompt: special, mode: "plan", repo: "owner/repo", branch: "feature/café" };
   const ios = new URL(getAgentLink("claude-code", "ios", options));

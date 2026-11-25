@@ -197,6 +197,13 @@ export function getAgentLink(
       Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
     return `${route.sessionUrl}/${fields.session}`;
   }
+  if (agent === "opencode" && platform === "android") {
+    if (fields.session) {
+      return !fields.mode && fields.session.startsWith("ses") && !/[^A-Za-z0-9_-]/u.test(fields.session)
+        ? `opencode://session/${fields.session}` : null;
+    }
+    return fields.mode ? `opencode://${fields.mode}-session` : route.url;
+  }
   if (agent === "openclaw" && (platform === "desktop" || platform === "ios") && fields.server) {
     return fields.prompt ? null : getOpenClawGatewayLink(fields.server, platform);
   }
