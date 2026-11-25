@@ -442,6 +442,19 @@ const antigravityRemoteSession: ActionDefinition = {
   },
 };
 
+const hermesCatalogPlugin: ActionDefinition = {
+  id: "plugin-install", label: "Review Marketplace plugin", url: "hermes://plugin/install",
+  behavior: "confirm", evidence: "source",
+  sources: [
+    "https://hermes-agent.nousresearch.com/marketplace/hermes-workbench",
+    "https://github.com/NousResearch/hermes-agent/blob/v0.23.4/apps/desktop/src/store/plugin-catalog-install.ts",
+  ],
+  fields: { target: "catalog" }, required: ["target"],
+  inputs: [input("target", "Marketplace plugin name", "hermes-workbench")],
+  note: "Hermes Desktop resolves the name in its curated Marketplace and opens a review for the active profile.",
+  prepare: ({ target }, url) => target && /^[a-z0-9][a-z0-9_-]*$/u.test(target) ? url : null,
+};
+
 const hermesSkill: ActionDefinition = {
   id: "skill-install", label: "Open skill install", url: "hermes://skill/install",
   behavior: "confirm", evidence: "verified", sources: [
@@ -752,7 +765,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     ios: [antigravityRemoteSession],
     android: [antigravityRemoteSession],
   },
-  hermes: { desktop: [hermesSkill] },
+  hermes: { desktop: [hermesSkill, hermesCatalogPlugin] },
   openclaw: { desktop: [openClawCatalogInstall("plugin"), openClawCatalogInstall("skill"), openClawCatalogInstall("template")] },
   opencode: {
     web: [openCodePairing({

@@ -92,6 +92,10 @@ function getOpenClawBrowserTarget(address: string, sessionAddress: string | unde
   if (!session || session.origin !== gateway.origin || !session.pathname.startsWith(`${basePath}/`)) return null;
 
   const sessionPath = session.pathname.slice(basePath.length);
+  if (sessionPath.startsWith("/beam/")) {
+    const beam = /^\/beam\/(?:([a-z0-9]+(?:-[a-z0-9]+)*)-)?[a-f0-9]{12,32}$/u.exec(sessionPath);
+    return beam && (beam[1]?.length ?? 0) <= 48 && !fromGallery && !hasDraft ? session.href : null;
+  }
   const route = /^\/(chat|dashboard|focus\/dashboard)\/[^/]/u.exec(sessionPath)?.[1];
   if (!route || (fromGallery && route !== "chat") || (hasDraft && route === "focus/dashboard")) return null;
   if (fromGallery && hasDraft) {

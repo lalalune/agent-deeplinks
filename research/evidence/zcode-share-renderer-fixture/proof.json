@@ -1,0 +1,522 @@
+{
+  "packageVersion": "0.1.49",
+  "upstreamCommit": "a4b4445141eb7d3b3e99eada9292775383bfc44e",
+  "scope": "Production viewer HTML and static JavaScript with an intercepted first-party exporter test fixture. No production API request, authentication, user conversation, or import.",
+  "fixtureSources": [
+    {
+      "path": "packages/web/test/e2e/sharing/content/manual-review/pending/share-content.mjs",
+      "sha256": "b49e1b634b4e9caffbdd5703dce2ca69f4dd1628e2e3f0b39ac55a85c84d4c5b"
+    },
+    {
+      "path": "packages/services/test/fixtures/share-content-blocks.json",
+      "sha256": "e6404d2e7c4c17bfc78af91a3afa5ec240b33e9f6760525235068cc9d533c103"
+    }
+  ],
+  "html": [
+    {
+      "path": "/share/",
+      "sha256": "f1edd0bae1496b6f9509f9e7411877c2d1c19920c3348713e3effed10f71e987"
+    },
+    {
+      "path": "/cn/share/",
+      "sha256": "f1edd0bae1496b6f9509f9e7411877c2d1c19920c3348713e3effed10f71e987"
+    }
+  ],
+  "staticAssets": [
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/index-COmlG0go.js",
+      "sha256": "cfc792cf7554d74fa195812e74b09463ca593101087532bf842636ad6d0d72e7"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-CFjPhJqf.js",
+      "sha256": "57e78af8bc0e1675c7148a1eec16237769dca26663a2e1a2924fa087f123349f"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/preload-helper-Dm3TXsTj.js",
+      "sha256": "881272f4db4778f6e407d9c79e31e57950ef3df7d1253055b8c6b231f7bbc61e"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/string-BiNw80F3.js",
+      "sha256": "fff36d1c5520cf6be8d0161f29ba5e8136fb208b000438d42f937336b586bcf9"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/src-BCv_CTf_.js",
+      "sha256": "1a2a53e0ca810d8698823c4c5f2acc1cb173b13f43e91a652acb8611d3058102"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/dist-BNMOaA3s.js",
+      "sha256": "d4fae5e9ec4b6d785e56d6cab70abc5daab0602469a4f935cdced44b50e7c457"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/step-yNwSHlER.js",
+      "sha256": "36035d4725ca9094cdafc508e4262f74dede45a3bcde167852cbbec9a4b1b5b8"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/math-4cBtkbfL.js",
+      "sha256": "201dc059f2430a5917a90e07b6ccfbf8b94d44c59c69808e8c210541162dc595"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-ICPOFSXX-DifY3mEl.js",
+      "sha256": "b853b896e1c6accd70723bdd528e620959f81b8a0afc8dd52e9b0e73d86495d9"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/identity-Lrhe8HsF.js",
+      "sha256": "b759ba10b2751c73d67f99423b6c753ec7fda35637b650cd60ac0a423806759d"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-5PVQY5BW-hJ_wtHai.js",
+      "sha256": "f809c597bd30006cb16af432b212fddf98c886356e25b1c83fbad56f669cd362"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-U2HBQHQK-DIpvlQJf.js",
+      "sha256": "ad8388e9ec6c2047d1bf2acaac6a93b3977731f122e85f1285e18926aba0f55e"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/bundle-mjs-3YWqzX-k.js",
+      "sha256": "fe995fea55f58852d33a5bb8b6248a900e79e529442f6f3e97a1e3eb61a258c2"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-BO2N2NFS-Bo9zmWG3.js",
+      "sha256": "ada57548954eba5a9ced2df160d918af1ba0da78a967b0615f176676db1254ec"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/katex-C_nnU9Du.js",
+      "sha256": "5febe7b7031155d02fa5e85e7935042cc767e143831cee160d516aa0c01e3d13"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/isEmpty-BuQz2yeM.js",
+      "sha256": "6b3e318a802b4e3301f30749719165b4df1fce2e1767350471ee35d68f5182e6"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-X2U36JSP-Bt87p935.js",
+      "sha256": "a55f7b7fd7a0cc29650662c489d1694df105165619ec573e5355e77a2512fdf0"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-ZZ45TVLE-BhyrBAbS.js",
+      "sha256": "952e3ad67cb991eddeaa6f0daf000d94135e285ea35cb8460072272ea17ad199"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/rough.esm-BRXZcD91.js",
+      "sha256": "447fb203355631984196c1886d546c179beeb235230efefbe667080aab58d5e2"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-5FUZZQ4R-C-zjtELM.js",
+      "sha256": "487cf52a8ceddd33315b2fde857ddb2a2bb876b5754485aca930182548ce3d18"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/path-BN-NoVqN.js",
+      "sha256": "e3b0ca84b7bceaa14bd9d1e7edade835ead13c7e6fa81710e709d299c0784e86"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/array-Bda68fSV.js",
+      "sha256": "63126646dbf611a0cf9e2293a9f636ac3c93c815a8f7d1e97d783151ab8529b9"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/line-Bk3Ehobg.js",
+      "sha256": "d933d11859d35bd73e272383d57cec589717580c2ec1f4831629f032e3051c3e"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-BSJP7CBP-YVJR-GE4.js",
+      "sha256": "262e0dc5a99276d9fdef7ca503256b1ac4b79a0279e640a3dfc782a6a0bd4da4"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-ENJZ2VHE-BLUXD-Vq.js",
+      "sha256": "7c7d2ff5d7db3767d39fa7c8c854ab8676461544cd3487f45419cae8cf50455e"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-336JU56O-BLjgUXTt.js",
+      "sha256": "106d4463c8a0116843fac1556401f75b9629e187445809695c995acbcf9f6654"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-426QAEUC-BI9hdtnJ.js",
+      "sha256": "963696d84bafff204f9d1406a55c83d04a9b4e08504f8ef6ded3ef451f7a55c4"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/chunk-XPW4576I-B42_CINr.js",
+      "sha256": "c3ef06029e8652fb4b55e9cef6f3f56f5b162540433b64dcc207f559c307a525"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/parts-CD0g63X6.js",
+      "sha256": "fa07c85cd3615710e2f5980190ef2c009ebff019bfd611d9e450ea9a70872947"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/index-BrbaISiS.css",
+      "sha256": "8dfd0456a2c0f462ac50d5b093fd774ad9a33fcdc0b7b3a6a467908dfb0dcdbd"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/ArtifactChartView-BZHuEcy2.js",
+      "sha256": "ea649e7efcf7c99427def502f87b6dd66b3229096e837ec055c73c64cbac302d"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/linear-BEkKGBiz.js",
+      "sha256": "9ca7572e7f5889b5033094627e74c22b6045b038412804a1d4094079e50b2181"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/defaultLocale-Dq0zNv4f.js",
+      "sha256": "ad2f8eaadf848ecc3f28751230c7ddb7729314f606773de661e44e757aef37c9"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/init-CHFpvdBd.js",
+      "sha256": "65e4ef22cdc07167cf577694547c0f6ad1e0da9ac72f2b89747c918d94baecd5"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/time-DvYNhZ1p.js",
+      "sha256": "6a3cee1ecd624129f42caa583be6ff2a83e9be87f45a12f0e0dc5fb550285041"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/band-DbSURNgq.js",
+      "sha256": "ca3df66f5447273cb33a20916b3c4957a88716467655cafc9cadba584e1f4277"
+    },
+    {
+      "url": "https://zcode.z.ai/cn/share/assets/ordinal-CDLn0vMg.js",
+      "sha256": "81f41b9376dcfd61f339a15db3e84ce43a5673c2828e9ea048758a952438e4a8"
+    }
+  ],
+  "checks": [
+    {
+      "profile": "Desktop Chromium",
+      "platform": "web",
+      "engine": "158.0.8127.18",
+      "checks": [
+        {
+          "locale": "English",
+          "target": "https://zcode.z.ai/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode Conversation Share",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        },
+        {
+          "locale": "Chinese",
+          "target": "https://zcode.z.ai/cn/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode 会话分享",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        }
+      ]
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "platform": "android",
+      "engine": "158.0.8127.18",
+      "checks": [
+        {
+          "locale": "English",
+          "target": "https://zcode.z.ai/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode Conversation Share",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        },
+        {
+          "locale": "Chinese",
+          "target": "https://zcode.z.ai/cn/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode 会话分享",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        }
+      ]
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "platform": "ios",
+      "engine": "27.2",
+      "checks": [
+        {
+          "locale": "English",
+          "target": "https://zcode.z.ai/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode Conversation Share",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        },
+        {
+          "locale": "Chinese",
+          "target": "https://zcode.z.ai/cn/share/content-e2e",
+          "documentTitle": "SHARE-WF02 · ZCode 会话分享",
+          "richContentBlocks": 1,
+          "assistantTextVisible": true,
+          "renderedArtifacts": [
+            {
+              "title": "军棋项目进度看板",
+              "marker": "模块 14",
+              "opened": true
+            },
+            {
+              "title": "结果表格",
+              "marker": "42",
+              "opened": true
+            },
+            {
+              "title": "性能图表",
+              "marker": "2",
+              "opened": true
+            },
+            {
+              "title": "验收指标",
+              "marker": "43",
+              "opened": true
+            },
+            {
+              "title": "军棋项目交付报告",
+              "marker": "VERIFIED_DOCUMENT_1",
+              "opened": true
+            },
+            {
+              "title": "军棋游戏启动说明",
+              "marker": "VERIFIED_DOCUMENT_2",
+              "opened": true
+            }
+          ],
+          "unsupportedBlockFallbackVisible": true,
+          "noHorizontalOverflow": true,
+          "previewRequests": [
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 2
+            },
+            {
+              "path": "/api/v1/shares/content-e2e/preview",
+              "method": "GET",
+              "fixtureVersion": 99
+            }
+          ],
+          "blockedBackgroundRequests": 2
+        }
+      ]
+    }
+  ]
+}

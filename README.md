@@ -155,7 +155,11 @@ const browserDraft = getAgentLink("openclaw", "web", {
 })
 ```
 
+To open a read-only OpenClaw Beam transcript, pass the copied `/beam/…` share URL as `session` on `web` or `android`. Use the same Gateway base in `server` and leave `prompt` empty. The link keeps the Gateway’s original access requirements. [OpenClaw Beam](https://docs.openclaw.ai/plugins/beam)
+
 Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links). The signed macOS canary displayed the requested skill and destination before installation. The official Linux diagnostic AppImage accepts `hermes://launch` as a command-line argument. Its first launch left the system URL handler unset.
+
+For Hermes Desktop, pass a curated Marketplace name as `target` with `action: "plugin-install"`. For example, `hermes-workbench` opens the catalog-backed install review for the active profile. [Hermes Marketplace](https://hermes-agent.nousresearch.com/marketplace/hermes-workbench)
 
 ### shadcn/ui
 

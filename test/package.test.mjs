@@ -407,6 +407,24 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
   assert.equal(getHermesSkillLink("file:///tmp/skill.md"), null);
 });
 
+test("opens the Hermes Desktop review for a curated Marketplace plugin", () => {
+  const action = "plugin-install";
+  const target = "hermes-workbench";
+  const url = "hermes://plugin/install?catalog=hermes-workbench";
+  assert.equal(getAgentLink("hermes", "desktop", { action, target }), url);
+  assert.equal(getAgentRoute("hermes", "desktop", action).behavior, "confirm");
+  assert.equal(getAgentLink("hermes", "desktop", { action, target: "github_app" }), "hermes://plugin/install?catalog=github_app");
+  for (const invalid of ["", "open claw", "owner/repo", "https://example.com/repo", "hermes-workbench&force=true", "-hermes"]) {
+    assert.equal(getAgentLink("hermes", "desktop", { action, target: invalid }), null);
+  }
+  assert.equal(getAgentLink("hermes", "desktop", { action, target, prompt: special }), null);
+  assert.equal(getAgentLink("hermes", "web", { action, target }), null);
+  for (const iconOnly of [true, false]) {
+    const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "hermes", platform: "desktop", options: { action, target }, iconOnly }));
+    assert.ok(markup.includes(`href="${url}"`));
+  }
+});
+
 test("builds OpenClaw desktop ClawHub review links for valid package names", () => {
   const actions = [
     ["plugin-install", "plugins"],
@@ -501,6 +519,27 @@ test("preserves OpenClaw dashboard, focus, and gallery links on the configured G
       gallery.replace("dashboard=expanded", "dashboard=collapsed"),
       gallery.replace("dashboard=expanded", "token=private&dashboard=expanded"),
     ]) assert.equal(getAgentLink("openclaw", platform, { server, session }), null, session);
+  }
+});
+
+test("opens read-only OpenClaw Beam transcripts on the configured Gateway", () => {
+  const server = "https://gateway.example.com/openclaw/";
+  const beamId = "0123456789abcdef02468ace13579bdf";
+  for (const platform of ["web", "android"]) {
+    for (const target of [beamId, `fixture-title-${beamId.slice(0, 12)}`, `old-title-${beamId.slice(0, 16)}`]) {
+      const session = `${server}beam/${target}`;
+      assert.equal(getAgentLink("openclaw", platform, { server, session }), session);
+      assert.equal(getAgentLink("openclaw", platform, { server, session, prompt: "" }), session);
+      assert.equal(getAgentLink("openclaw", platform, { server, session, prompt: special }), null);
+    }
+    for (const invalid of [
+      `${server}beam/${beamId.slice(0, 11)}`, `${server}beam/${beamId.toUpperCase()}`, `${server}beam/${beamId}a`,
+      `${server}beam/${beamId}/extra`, `${server}beam/${beamId}?dashboard=expanded`, `${server}beam/${beamId}?token=secret`,
+      `${server}beam/${beamId}#extra`, `${server}beam/${"z".repeat(49)}-${beamId}`,
+      `https://gateway.example.com/beam/${beamId}`, `https://another.example/openclaw/beam/${beamId}`,
+    ]) {
+      assert.equal(getAgentLink("openclaw", platform, { server, session: invalid }), null);
+    }
   }
 });
 

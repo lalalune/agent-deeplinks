@@ -62,6 +62,7 @@ const cursorCloud = "https://cursor.com/agents";
 const cursorCloudApi = "https://cursor.com/docs/cloud-agent/api/endpoints";
 const cursorCloudDesktop = "https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7";
 const openClawBrowserDocs = "https://docs.openclaw.ai/web/urls";
+const openClawBeamDocs = "https://docs.openclaw.ai/plugins/beam";
 const openClawBrowserProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45521782875/artifacts/14980377652";
 const openClawDashboardProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45703008909/artifacts/15063712402";
 const openClawMacGatewaySource = "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website";
@@ -1003,7 +1004,7 @@ const catalog = {
         url: "http://127.0.0.1:18789/",
         behavior: "draft",
         evidence: "verified",
-        sources: [openClawBrowserDocs, openClawBrowserProof, openClawDashboardProof],
+        sources: [openClawBrowserDocs, openClawBrowserProof, openClawDashboardProof, openClawBeamDocs],
         fields: { prompt: "draft", server: "", session: "" },
         note: "Sign in to your Gateway in the same tab before opening the draft. The published Gateway opened saved chat and dashboard sessions. Desktop Chromium displayed the exact unsent dashboard draft. A blank link opens the Gateway.",
       },
@@ -1057,6 +1058,7 @@ const catalog = {
         evidence: "verified",
         sources: [
           openClawBrowserDocs,
+          openClawBeamDocs,
           openClawBrowserProof,
           openClawDashboardProof,
           "https://docs.openclaw.ai/platforms/android",

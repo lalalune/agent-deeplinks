@@ -175,7 +175,10 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     skill: { target: "sample", marketplace: "antigravity-plugins-partners" },
     "remote-session": { target: "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id" },
   },
-  hermes: { "skill-install": { target: "official/security/1password" } },
+  hermes: {
+    "skill-install": { target: "official/security/1password" },
+    "plugin-install": { target: "hermes-workbench" },
+  },
   openclaw: {
     "plugin-install": { target: "@openclaw/discord" },
     "skill-install": { target: "@steipete/weather" },
@@ -563,7 +566,7 @@ function App() {
                     : isCloudAgent ? `Enter a bc- ID or a Cloud Agent URL on ${agent === "grok-build" ? "grok.com" : "cursor.com"}.`
                     : isOpenClawBrowser && options.session
                       ? options.prompt && getAgentLink(agent, platform, { ...options, prompt: undefined })
-                        ? "Clear the draft to open the focused dashboard."
+                        ? "Clear the draft to open this destination."
                         : "Enter a chat or dashboard session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
                     : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin."
