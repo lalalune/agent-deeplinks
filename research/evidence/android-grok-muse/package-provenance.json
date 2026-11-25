@@ -37,5 +37,14 @@
       "manifestDeclarations": ["hatch scheme", "applink.muse.ai HTTPS app links", "agent.meta.ai HTTPS app links", "muse.ai HTTPS app links"]
     }
   ],
-  "runtimeStatus": "The fresh Android 16 ARM64 emulator reached guest init and remained ADB offline. Dispatch was not attempted."
+  "localEmulator": "The fresh Android 16 ARM64 emulator reached guest init and remained ADB offline.",
+  "hostedRuntime": {
+    "platform": "Android 15 ARM64 ReDroid",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45680807835/artifacts/15053174564",
+    "dispatch": {
+      "Grok": "Stock browsable intent opened GrokActivity and the app showed a Google Play requirement.",
+      "Grok Bot": "Stock browsable intent opened MainActivity and the app showed a Google Play requirement.",
+      "Muse from Meta": "Both tested HTTPS links opened the signed app and displayed its native sign-in form."
+    }
+  }
 }
