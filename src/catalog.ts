@@ -17,7 +17,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
+  | "session" | "environment" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
 
 export interface AgentRoute {
   readonly url: string;
@@ -77,6 +77,7 @@ const openAiDesktopChecks = [
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
+const t3ThreadSource = "https://github.com/pingdotgg/t3code/blob/4da8d19d/packages/shared/src/threadLinks.ts#L42-L66";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
 const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
 const claudeIosAssociation = "https://claude.ai/.well-known/apple-app-site-association";
@@ -168,8 +169,8 @@ const kimiCodeBrowserRoute = {
 const t3Route = {
   behavior: "draft",
   evidence: "source",
-  sources: [t3Source],
-  fields: { prompt: "prompt", repo: "repo", provider: "provider", model: "model" },
+  sources: [t3Source, t3ThreadSource],
+  fields: { prompt: "prompt", repo: "repo", provider: "provider", model: "model", environment: "", session: "" },
   required: ["prompt"],
   promptLimit: 8_000,
 } as const satisfies Omit<AgentRoute, "url">;
@@ -256,13 +257,18 @@ const catalog = {
       web: {
         url: "https://grok.com/",
         launchUrl: "https://grok.com/?stay_in_browser=true",
-        behavior: "unknown",
-        evidence: "observed",
-        sources: [slopDate, grokIosAssociation, grokAndroidAssociation],
+        behavior: "confirm",
+        evidence: "verified",
+        sources: [
+          "https://cdn.grok.com/_next/static/chunks/0x_5zluss7pi6.js",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45542750129/artifacts/14989473705",
+          slopDate,
+          grokIosAssociation,
+          grokAndroidAssociation,
+        ],
         fields: { prompt: "q" },
         query: { stay_in_browser: "true" },
-        experimental: true,
-        note: "Slop Date publishes this format. The signed-out browser test showed an empty composer.",
+        note: "Grok shows the exact prompt in Send this message? before any submission. Cancel keeps it editable in the composer. Verified signed out in desktop, iPhone, and Android browsers.",
       },
       ios: {
         url: "https://grok.com/",
@@ -758,10 +764,11 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45443909533",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45450238281",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45466986353/job/138704399939",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45542872067/artifacts/14989484168",
         ],
         fields: { directory: "path" },
         required: ["directory"],
-        note: "ZCode 4.0.0 showed the exact requested folder in native review on macOS and Ubuntu. Windows Shell delivery also passed. The signed-in workspace view remains unverified.",
+        note: "ZCode 4.0.0 showed the exact requested folder in native review on macOS, Ubuntu, and Windows x64 and ARM64. The signed-in workspace view remains unverified.",
       },
     },
   },
@@ -781,32 +788,32 @@ const catalog = {
           "https://github.com/pingdotgg/t3code/blob/v0.1.11/docs/user/remote-access.md",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45480052812/job/138750432372",
         ],
-        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project.",
+        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project. With a thread and environment ID, the hosted chooser offers to open that thread.",
       },
       desktop: {
         ...t3Route,
         url: "t3code://new",
         evidence: "verified",
         sources: [
-          t3Source,
+          ...t3Route.sources,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45440501819/job/138609961589",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45440877037/job/138611312447",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45483428887/artifacts/14962886811",
         ],
-        note: "Exact unsent draft verified in T3 Code 0.1.11 on macOS, Ubuntu, and Windows. Both cold and warm Windows Shell opens reached the draft.",
+        note: "Exact unsent draft verified in T3 Code 0.1.11 on macOS, Ubuntu, and Windows. Both cold and warm Windows Shell opens reached the draft. T3’s hosted chooser also emits native links to existing threads.",
       },
       ios: {
         ...t3Route,
         url: "t3code://new",
         evidence: "verified",
-        sources: [t3Source, "https://github.com/pingdotgg/t3code/tree/67c442a17e6e5d6c9f768714820cecb5f15d4f9b/apps/mobile"],
+        sources: [...t3Route.sources, "https://github.com/pingdotgg/t3code/tree/67c442a17e6e5d6c9f768714820cecb5f15d4f9b/apps/mobile"],
         note: "Exact unsent draft verified in a 2.3.0 Release build on the iOS 26.4 simulator after pairing to a connected environment.",
       },
       android: {
         ...t3Route,
         url: "t3code://new",
         evidence: "verified",
-        sources: [t3Source, "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165"],
+        sources: [...t3Route.sources, "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165"],
         note: "Draft prefill verified in the signed 2.3.0 beta on Android 16 after pairing to a connected environment.",
       },
     },

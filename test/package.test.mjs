@@ -127,10 +127,13 @@ test("preserves draft safeguards and encodes self-hosted OpenCode workspace path
 
   assert.equal(getAgentLink("grok", "android"), "https://grok.com/");
   assert.equal(getAgentLink("grok", "web"), "https://grok.com/?stay_in_browser=true");
-  assert.equal(getAgentLink("grok", "web", { prompt: special }), null);
-  const grok = new URL(getAgentLink("grok", "web", { prompt: special, allowExperimental: true }));
-  assert.equal(grok.searchParams.get("q"), special);
-  assert.equal(grok.searchParams.get("stay_in_browser"), "true");
+  const grok = getAgentLink("grok", "web", { prompt: special });
+  assert.equal(grok, `https://grok.com/?q=${encodeURIComponent(special)}&stay_in_browser=true`);
+  assert.equal(getAgentRoute("grok", "web").behavior, "confirm");
+  assert.equal(getAgentLink("grok", "web", { prompt: special, allowExperimental: true }), grok);
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("grok", platform, { prompt: special }), null);
+  }
 
   const directory = "/tmp/me & café";
   const server = "http://localhost:4096";
@@ -208,6 +211,29 @@ test("builds T3 Code hosted and previously paired self-hosted Web drafts", () =>
   assert.equal(loopback.searchParams.get("repo"), "owner/project");
   assert.equal(getAgentLink("t3-code", "web", { prompt: special, server: "https://t3.example/base" }), null);
   assert.equal(getAgentRoute("t3-code", "web").serverBehavior, "draft");
+});
+
+test("builds T3 Code links to a thread with exact scoped ID encoding", () => {
+  const environment = "env.1";
+  const session = "thread:delegated/mcp%3A1.";
+  const path = "env%2E1/thread%3Adelegated%2Fmcp%253A1%2E";
+  const prompt = "Review + & café ✓";
+  for (const platform of ["web", "desktop", "ios", "android"]) {
+    const base = platform === "web" ? "https://app.t3.codes/threads" : "t3code://threads";
+    assert.equal(getAgentLink("t3-code", platform, { environment, session }), `${base}/${path}`);
+    assert.equal(getAgentLink("t3-code", platform, { environment, session, prompt: "  " }), `${base}/${path}`);
+    assert.equal(getAgentLink("t3-code", platform, { environment, session, prompt }),
+      `${base}/${path}?prompt=${encodeURIComponent(prompt)}`);
+  }
+  assert.equal(getAgentLink("t3-code", "web", { environment, prompt }), null);
+  assert.equal(getAgentLink("t3-code", "android", { session, prompt }), null);
+  assert.equal(getAgentLink("t3-code", "web", { environment, session, server: "https://t3.example/" }), null);
+  assert.equal(getAgentLink("t3-code", "desktop", { environment, session, repo: "example/workspace" }), null);
+  assert.equal(getAgentLink("t3-code", "android", { environment, session, prompt: "a".repeat(8001) }), null);
+  for (const invalid of [".", "..", " \n", "env\u0000id", "\ud800"]) {
+    assert.equal(getAgentLink("t3-code", "web", { environment: invalid, session }), null, invalid);
+    assert.equal(getAgentLink("t3-code", "ios", { environment, session: invalid }), null, invalid);
+  }
 });
 
 test("requires opt-in before opening web links with submission or unknown behavior", () => {

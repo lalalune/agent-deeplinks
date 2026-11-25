@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.33.tgz
+npm install ./agent-deeplinks-0.1.34.tgz
 ```
 
 ## Usage
@@ -48,6 +48,8 @@ const existingChat = getAgentLink("codex", "desktop", { session })
 Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
 
 Cursor Desktop links encode the draft for both decoders in the app. The official Cursor web handoff can turn literal plus signs into spaces in the desktop review. Choose Desktop when the exact punctuation matters. [Cursor verification](research/coding-agents.md#cursor)
+
+Grok’s Web link opens a send review. Choosing **Cancel** leaves the prompt editable. Use the Web target for this behavior on a phone. The native iOS and Android targets are app handoffs.
 
 Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
 
@@ -101,6 +103,16 @@ getAgentLink("opencode", "android", { mode: "last" })
 ```
 
 T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server first. The link can then open a draft directly in the paired browser.
+
+Pass both `environment` and `session` to open an existing T3 Code thread. The Web link opens T3’s hosted chooser. Desktop, iOS, and Android use the app’s custom scheme. An optional `prompt` stages a draft. On mobile, T3 asks before replacing a different saved draft.
+
+```ts
+getAgentLink("t3-code", "web", {
+  environment: "your-environment-id",
+  session: "your-thread-id",
+  prompt: "Review the next step.",
+})
+```
 
 ZCode's web, iOS, and Android links open its versioned Remote Control sign-in page in a browser. Connecting requires the same account and region as an online desktop with Remote Control enabled. [ZCode Remote Control instructions](https://zcode.z.ai/en/docs/remote-control)
 

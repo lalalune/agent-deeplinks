@@ -86,6 +86,21 @@ function getOpenClawBrowserTarget(address: string, sessionAddress: string | unde
   return `${session.origin}${session.pathname}`;
 }
 
+function encodeT3ThreadSegment(value: string | undefined): string | null {
+  const id = value?.trim();
+  if (!id || id === "." || id === ".." || hiddenPathCharacters.test(id)) return null;
+  try {
+    return encodeURIComponent(id).replace(/[.!~*'()]/gu,
+      (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`);
+  } catch {
+    return null;
+  }
+}
+
+function encodeLinkValue(value: string): string {
+  return encodeURIComponent(value.replace(/[\ud800-\udfff]/gu, "\ufffd"));
+}
+
 function getOpenCodeOrigin(url: URL): string | null {
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
@@ -176,7 +191,7 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (!openClawBrowser && fields.session && invalidSessionId.test(fields.session)) return null;
+  if (!openClawBrowser && agent !== "t3-code" && fields.session && invalidSessionId.test(fields.session)) return null;
   if (fields.workspace) {
     const workspace = parseWorkspaceUri(fields.workspace);
     if (!workspace) return null;
@@ -196,6 +211,14 @@ export function getAgentLink(
     if (!conversationId.test(fields.session) ||
       Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
     return `${route.sessionUrl}/${fields.session}`;
+  }
+  if (agent === "t3-code" && (fields.environment || fields.session)) {
+    const environment = encodeT3ThreadSegment(fields.environment);
+    const thread = encodeT3ThreadSegment(fields.session);
+    if (!environment || !thread || fields.server || fields.repo || fields.provider || fields.model) return null;
+    const base = platform === "web" ? "https://app.t3.codes/threads" : "t3code://threads";
+    const draft = fields.prompt?.trim() ? `?prompt=${encodeLinkValue(fields.prompt)}` : "";
+    return `${base}/${environment}/${thread}${draft}`;
   }
   if (agent === "opencode" && platform === "android") {
     if (fields.session) {
@@ -237,8 +260,7 @@ export function getAgentLink(
     if (field === "repo" && fields.cwd) continue;
     const value = fields[field as LinkField];
     if (value !== undefined && value !== "") {
-      const wellFormed = value.replace(/[\ud800-\udfff]/gu, "\ufffd");
-      const encoded = encodeURIComponent(wellFormed);
+      const encoded = encodeLinkValue(value);
       query.push(`${parameter}=${route.encodeQueryValuesTwice ? encodeURIComponent(encoded) : encoded}`);
     }
   }

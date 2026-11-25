@@ -37,6 +37,7 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
   model: { label: "Model ID" },
   botId: { label: "Bot ID" },
   session: { label: "Session ID" },
+  environment: { label: "Environment ID" },
 };
 
 const extraFields = Object.keys(extraFieldDetails) as ExtraField[];
@@ -122,6 +123,7 @@ function App() {
   const [agent, setAgent] = useState<AgentId>("codex");
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [prompt, setPrompt] = useState(examplePrompt);
+  const [t3ThreadPrompt, setT3ThreadPrompt] = useState("");
   const [directoryByRoute, setDirectoryByRoute] = useState<Partial<Record<string, string>>>({});
   const [serverByTarget, setServerByTarget] = useState<Partial<Record<string, string>>>({});
   const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
@@ -141,15 +143,18 @@ function App() {
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
   const extraValues = extraByAgent[agent] ?? {};
+  const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
+  const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
   const visibleExtraFields = extraFields.filter((field) =>
-    Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session"),
+    Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session") &&
+    (!isT3Thread || field === "session" || field === "environment"),
   );
   const options: LinkOptions = {
     ...Object.fromEntries(visibleExtraFields.map((field) => [field, extraValues[field] || undefined])),
-    ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession ? { prompt } : {}),
+    ...(route?.fields?.prompt && !isGatewaySetup && !isExistingSession ? { prompt: currentPrompt } : {}),
     ...(Object.hasOwn(route?.fields ?? {}, "directory") && directory ? { directory } : {}),
-    ...(Object.hasOwn(route?.fields ?? {}, "server") && server ? { server } : {}),
+    ...(Object.hasOwn(route?.fields ?? {}, "server") && server && !isT3Thread ? { server } : {}),
     ...(route?.browserOnlyFragment ? { browserOnly: true } : {}),
     ...(route?.experimental && experimentalRoute === routeKey ? { allowExperimental: true } : {}),
     ...(route?.behavior === "send" && sendRoute === routeKey ? { allowSend: true } : {}),
@@ -165,7 +170,7 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession &&
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession && !isT3Thread &&
     (!(isOpenClawBrowser || isOpenCodeAndroid) || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
@@ -175,14 +180,17 @@ function App() {
     ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const reviewLabel = isGatewaySetup ? "Reviews a Gateway address"
     : hasSshOptions ? "Reviews an SSH target"
-    : options.folder ? "Reviews a workspace folder" : undefined;
+    : options.folder ? "Reviews a workspace folder"
+    : agent === "grok" && platform === "web" && options.prompt ? "Reviews before sending" : undefined;
   const behaviorLabel = isExistingSession ? href && "Opens an existing chat"
+    : isT3Thread ? href && (options.prompt?.trim() ? "Opens a thread with a draft" : "Opens an existing thread")
     : isOpenCodeAndroid && options.session ? href && "Opens a saved session"
     : isOpenCodeAndroid && options.mode === "new" ? "Opens a blank session"
     : isOpenCodeAndroid && options.mode === "last" ? "Opens the last session"
     : reviewLabel ? href && reviewLabel : behavior && behaviorNames[behavior];
   const sshSource = hasSshOptions && route?.sources.find((url) => url.endsWith("#open-an-ssh-session-from-a-link"));
-  const source = sshSource || (options.server && route?.serverSource) || route?.sources[0];
+  const threadSource = isT3Thread && route?.sources.find((url) => url.includes("/threadLinks.ts"));
+  const source = sshSource || threadSource || (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
     (filter === "all" || getAgentRoute(entry.id, filter)),
@@ -260,8 +268,9 @@ function App() {
               </div>
               {route?.fields?.prompt && !isGatewaySetup && !isExistingSession && (
                 <label className="field">
-                  <span>Prompt</span>
-                  <textarea rows={2} value={prompt} onChange={(event) => setPrompt(event.target.value)} />
+                  <span>{isT3Thread ? "Draft (optional)" : "Prompt"}</span>
+                  <textarea rows={2} value={currentPrompt} onChange={(event) =>
+                    (isT3Thread ? setT3ThreadPrompt : setPrompt)(event.target.value)} />
                 </label>
               )}
               {Object.hasOwn(route?.fields ?? {}, "directory") && (
@@ -278,7 +287,7 @@ function App() {
                   />
                 </label>
               )}
-              {Object.hasOwn(route?.fields ?? {}, "server") && (
+              {Object.hasOwn(route?.fields ?? {}, "server") && !isT3Thread && (
                 <label className="field">
                   <span>
                     {isIosGateway ? "Gateway address (optional)"
@@ -312,6 +321,7 @@ function App() {
                       ) : (
                         <label className="field" key={field}>
                           <span>{field === "session" && isOpenClawBrowser ? "Session URL (optional)"
+                            : field === "session" && agent === "t3-code" ? "Thread ID"
                             : field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
                           <input value={extraValues[field] ?? ""} placeholder={field === "session" && isOpenClawBrowser
                             ? "https://gateway.example.com/chat/main" : field === "session" && isOpenCodeAndroid
@@ -345,6 +355,7 @@ function App() {
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
                     : isExistingSession ? "Enter the ID from the app’s existing chat link."
+                    : isT3Thread ? "Enter both a valid environment ID and thread ID."
                     : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
                     : options.folder ? "Enter an absolute workspace folder path."
@@ -454,6 +465,7 @@ function App() {
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
                 : isExistingSession ? "Enter a valid chat ID to generate this example."
+                : isT3Thread ? "Enter both a valid environment ID and thread ID."
                 : options.folder ? "Enter an absolute workspace folder path to generate this example."
                 : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
                 : route ? "Opt in to this link to generate its code example." : "Choose a supported platform to see its code example."}</p>
