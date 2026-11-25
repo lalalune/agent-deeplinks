@@ -76,7 +76,7 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
-  "https://github.com/lalalune/agent-deeplinks/actions/runs/45556735459/artifacts/14996252489",
+  "https://github.com/lalalune/agent-deeplinks/blob/afe1df7f5816e1cf1d8b43cead2662b102fc21a8/evidence/openai-windows-cold-links/README.md",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
