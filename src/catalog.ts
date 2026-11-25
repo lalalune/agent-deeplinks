@@ -103,6 +103,7 @@ const cursorIosAssociation = "https://cursor.com/.well-known/apple-app-site-asso
 const iosAssociationCheck = "https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706";
 const grokIosAssociation = "https://grok.com/.well-known/apple-app-site-association";
 const grokAndroidAssociation = "https://grok.com/.well-known/assetlinks.json";
+const grokAndroidRuntime = "https://github.com/lalalune/agent-deeplinks/actions/runs/45680807835/artifacts/15053174564";
 const geminiIos = "https://gemini.google.com/app/download/ios";
 const geminiAndroid = "https://gemini.google.com/gemini/download/mobile";
 const geminiIosAssociation = "https://gemini.google.com/.well-known/apple-app-site-association";
@@ -305,9 +306,9 @@ const catalog = {
       android: {
         url: "https://grok.com/",
         behavior: "launch",
-        evidence: "source",
-        sources: [grokAndroidAssociation],
-        note: "Grok’s Android 15 App Link rules include the root URL. Native delivery remains unverified.",
+        evidence: "verified",
+        sources: [grokAndroidAssociation, grokAndroidRuntime],
+        note: "Stock Android 15 opened the signed Grok 1.2.60 app, which showed a Google Play requirement in the test environment.",
       },
     },
   },
@@ -344,8 +345,8 @@ const catalog = {
       },
       android: {
         ...grokBotRoute,
-        sources: [grokBotDocs, grokBotMobileDocs, "https://play.google.com/store/apps/details?id=ai.x.grok.bot"],
-        note: "Requires the installed Grok Bot app and an eligible Cursor account. Uses your primary Bot unless you supply a Bot ID. Native delivery remains unverified.",
+        sources: [grokBotDocs, grokBotMobileDocs, "https://play.google.com/store/apps/details?id=ai.x.grok.bot", grokAndroidRuntime],
+        note: "Stock Android 15 opened the signed Grok Bot 1.27.0 app, which showed a Google Play requirement. Drafts need an eligible account and use your primary Bot unless you supply a Bot ID.",
       },
     },
   },
@@ -905,14 +906,14 @@ const catalog = {
         behavior: "launch",
         evidence: "verified",
         sources: [
-          "https://github.com/anomalyco/opencode-android/blob/v0.8.8/feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt#L43-L75",
-          "https://github.com/anomalyco/opencode-android/blob/v0.8.8/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.9/feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt#L43-L75",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt",
           `${openCodeDesktopTag}/packages/schema/src/session-id.ts`,
-          "https://github.com/lalalune/agent-deeplinks/actions/runs/45536659179/artifacts/14987625757",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187",
         ],
         fields: { session: "", mode: "" },
         modes: ["new", "last"],
-        note: "Pair the Android app first. OpenCode 0.8.8 paired with OpenCode 2.4.1 and opened the requested session, a blank draft, and the last session. The release bundle used a disposable test signature.",
+        note: "Pair the Android app first. OpenCode 0.8.9 paired with OpenCode 2.4.1 and opened the requested session, a blank draft, and the last session. The release bundle used a disposable test signature.",
       },
     },
   },

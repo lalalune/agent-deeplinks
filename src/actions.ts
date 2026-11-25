@@ -485,8 +485,8 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     })],
     android: [openCodePairing({
       url: "opencode://pair", label: "Pair with a server", behavior: "confirm", evidence: "verified",
-      sources: [openCodePairSource, openCodePairDocs],
-      note: "Opens native pairing review for the server. The signed development APK and test-signed 0.8.8 release configuration opened this review.",
+      sources: [openCodePairSource, openCodePairDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187"],
+      note: "Opens native pairing review for the server. The signed development APK and test-signed 0.8.9 release configuration opened this review.",
     })],
   },
   claude: { web: [claudePluginDetails, claudeConnector, claudePlugin], desktop: [claudePlugin] },
