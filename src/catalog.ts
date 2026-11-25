@@ -17,7 +17,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session" | "environment" | "task" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
+  | "session" | "environment" | "task" | "cloudAgent" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
 
 export interface AgentRoute {
   readonly url: string;
@@ -53,6 +53,8 @@ export interface Agent {
 const cursorDocs = "https://cursor.com/docs/reference/deeplinks";
 const cursorCloudDocs = "https://cursor.com/docs/cloud-agent";
 const cursorCloud = "https://cursor.com/agents";
+const cursorCloudApi = "https://cursor.com/docs/cloud-agent/api/endpoints";
+const cursorCloudDesktop = "https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7";
 const openClawBrowserDocs = "https://docs.openclaw.ai/web/urls";
 const openClawBrowserProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45521782875/artifacts/14980377652";
 const openClawMacGatewaySource = "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website";
@@ -128,7 +130,7 @@ const cursorRoute = {
   behavior: "confirm",
   evidence: "documented",
   sources: [cursorDocs],
-  fields: { prompt: "text" },
+  fields: { prompt: "text", cloudAgent: "" },
   required: ["prompt"],
   urlLimit: 10_000,
 } as const satisfies Omit<AgentRoute, "url">;
@@ -219,9 +221,10 @@ const catalog = {
         sources: [
           cursorDocs,
           cursorCloudDocs,
+          cursorCloudApi,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45487974246/artifacts/14965396228",
         ],
-        note: "The browser preview reached Cursor’s native review on Ubuntu. Cursor’s handoff turned a literal plus into a space in that review. An empty link opens Cloud Agents in the browser.",
+        note: "The browser preview reached Cursor’s native review on Ubuntu. Cursor’s handoff turned a literal plus into a space in that review. An empty link opens the Cloud Agents inbox. A Cloud Agent ID or URL opens that agent.",
       },
       desktop: {
         ...cursorRoute,
@@ -230,6 +233,7 @@ const catalog = {
         encodeQueryValuesTwice: true,
         sources: [
           cursorDocs,
+          cursorCloudDesktop,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491150004/job/138789493816",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491628951/job/138791208997",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45492105855/artifacts/14968450079",
@@ -237,21 +241,23 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460380555/job/138681026834",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45489023213/artifacts/14966850011",
         ],
-        note: "Cursor 3.31.15 opened Create chat with prompt in the running classic editor on macOS, Ubuntu, and Windows. All three renderers showed the exact multiline Unicode prompt.",
+        note: "Cursor 3.31.15 opened Create chat with prompt in the running classic editor on macOS, Ubuntu, and Windows. All three renderers showed the exact multiline Unicode prompt. A Cloud Agent ID or URL opens that agent through Cursor’s desktop handler.",
       },
       ios: {
         url: cursorCloud,
         behavior: "launch",
         evidence: "source",
-        sources: [cursorIosAssociation, "https://cursor.com/docs/cloud-agent/mobile", iosAssociationCheck],
-        note: "Universal Link for the Cursor Cloud Agents inbox. The iPhone browser fallback reached Cursor sign-in.",
+        sources: [cursorIosAssociation, "https://cursor.com/docs/cloud-agent/mobile", iosAssociationCheck, cursorCloudApi],
+        fields: { cloudAgent: "" },
+        note: "Universal Links cover the Cloud Agents inbox and individual agents, including team-scoped URLs. The iPhone browser fallback reached Cursor sign-in.",
       },
       android: {
         url: cursorCloud,
         behavior: "launch",
         evidence: "verified",
-        sources: [cursorCloudDocs],
-        note: "The Cloud Agents link reached Cursor sign-in in Android Chromium. Cursor offers Cloud Agents as an installable web app on Android.",
+        sources: [cursorCloudDocs, cursorCloudApi],
+        fields: { cloudAgent: "" },
+        note: "Opens the inbox or a specific agent in Cursor’s installable Android web app. The inbox link reached Cursor sign-in in Android Chromium.",
       },
     },
   },

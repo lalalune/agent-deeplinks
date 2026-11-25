@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.37.tgz
+npm install ./agent-deeplinks-0.1.38.tgz
 ```
 
 ## Usage
@@ -44,6 +44,8 @@ To open an existing desktop chat in Claude, ChatGPT, or Codex, pass its conversa
 const session = "12345678-1234-4234-9234-123456789abc"
 const existingChat = getAgentLink("codex", "desktop", { session })
 ```
+
+Use `cloudAgent` on any Cursor target to open an existing Cloud Agent. Pass its `bc-…` ID or its Cursor URL, including team URLs. Desktop opens the agent by ID. Web and mobile keep the original team path when provided. This link is separate from a new prompt. [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints) · [Cursor desktop link](https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7)
 
 Use `task` to open an existing Codex Cloud task on `web`, `ios`, or `android`. Pass the `task_…` ID emitted by the Codex CLI or paste the HTTPS task link from ChatGPT. The app needs access to that task. A pasted link keeps its task path and discards query and fragment text. On `web`, set `browserOnly: true` to apply the iOS browser-only exclusion. [Codex Cloud access](https://help.openai.com/en/articles/20001545-using-codex-cloud) · [Codex CLI URL format](https://github.com/openai/codex/blob/3f65e9f13165d85d1b1fbe20ce06c55758f927b9/codex-rs/cloud-tasks/src/util.rs#L122-L135)
 

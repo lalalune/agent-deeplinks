@@ -489,6 +489,27 @@ test("opens existing desktop chats with the provider's session UUID route", () =
   assert.equal(getAgentLink("codex", "desktop", { prompt: "Existing new-chat behavior" }), "codex://new?prompt=Existing%20new-chat%20behavior");
 });
 
+test("opens an existing Cursor Cloud Agent and preserves team URLs", () => {
+  const cloudAgent = "bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0";
+  const agentUrl = `https://cursor.com/agents/${cloudAgent}`;
+  const teamUrl = `https://cursor.com/t/team-qa/agents/${cloudAgent}`;
+  const native = `cursor://anysphere.cursor-deeplink/background-agent?bcId=${cloudAgent}`;
+  for (const platform of ["web", "desktop", "ios", "android"]) {
+    for (const [input, output] of [[cloudAgent, agentUrl], [agentUrl, agentUrl], [teamUrl + "/?s=test#tracking", teamUrl]]) {
+      assert.equal(getAgentLink("cursor", platform, { cloudAgent: input }), platform === "desktop" ? native : output);
+      assert.equal(getAgentLink("cursor", platform, { cloudAgent: input, prompt: special }), null);
+    }
+    for (const input of ["bc-", "bc-1234", `${cloudAgent}\n`, `https://cursor.com.evil.test/agents/${cloudAgent}`,
+      `https://cursor.com@evil.test/agents/${cloudAgent}`, `https://cursor.com/t/../agents/${cloudAgent}`, `${agentUrl}/extra`]) {
+      assert.equal(getAgentLink("cursor", platform, { cloudAgent: input }), null, input);
+    }
+  }
+  assert.equal(getAgentLink("cursor", "desktop"), null);
+  assert.equal(getAgentLink("cursor", "web"), "https://cursor.com/agents");
+  assert.equal(getAgentLink("cursor", "ios"), "https://cursor.com/agents");
+  assert.equal(getAgentLink("cursor", "android"), "https://cursor.com/agents");
+});
+
 test("opens Codex cloud tasks from CLI IDs and first-party URLs", () => {
   const id = "task_i_05c25d340000445599000123abc9d001";
   const legacy = `https://chatgpt.com/codex/tasks/${id}`;

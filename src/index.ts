@@ -15,6 +15,7 @@ export interface LinkOptions extends Partial<Record<LinkField, string>> {
 
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
 const conversationId = /^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/iu;
+const cursorCloudAgentUrl = /^https:\/\/cursor\.com(\/(?:t\/[a-z0-9_-]+\/)?agents\/(bc-[\da-f-]+))\/?(?:[?#][^\s]*)?$/iu;
 const codexCloudTaskId = /^task_[A-Za-z0-9_-]+$/u;
 const codexCloudTaskPath = /^https:\/\/chatgpt\.com(?:\/app)?(\/codex\/(?:cloud\/)?tasks\/[A-Za-z0-9_-]+)\/?(?:[?#][^\s]*)?$/u;
 const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
@@ -215,6 +216,15 @@ export function getAgentLink(
     if (!sessionId.test(fields.session) ||
       Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
     return `${route.sessionUrl}/${fields.session}${fragment}`;
+  }
+  if (agent === "cursor" && fields.cloudAgent) {
+    if (fields.prompt) return null;
+    const url = cursorCloudAgentUrl.exec(fields.cloudAgent);
+    const id = url?.[2] ?? fields.cloudAgent;
+    if (!id.startsWith("bc-") || !conversationId.test(id.slice(3))) return null;
+    return platform === "desktop"
+      ? `cursor://anysphere.cursor-deeplink/background-agent?bcId=${id}`
+      : `https://cursor.com${url?.[1] ?? `/agents/${id}`}`;
   }
   if (agent === "codex" && fields.task) {
     const taskPath = codexCloudTaskId.test(fields.task)
