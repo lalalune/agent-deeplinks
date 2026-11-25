@@ -1,6 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { agents, getAgentIcon, getAgentLink, getAgentRoute, getHermesSkillLink, getOpenCodeAndroidPairingLink, platforms } from "../dist/index.js";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { agents, getAgentActions, getAgentIcon, getAgentLink, getAgentRoute, getHermesSkillLink, getOpenCodeAndroidPairingLink, platforms } from "../dist/index.js";
+
+import { AgentLink } from "../dist/react.js";
 
 const special = "Keep A&B + café/🎉?\nNew line.";
 
@@ -604,4 +608,132 @@ test("opens Kimi Code workspaces and configured browser clients", () => {
     assert.equal(getAgentLink("kimi-code", platform, { server: `${server}#token=private` }), null);
     assert.equal(getAgentLink("kimi-code", platform, { server: `${server}?token=private` }), null);
   }
+});
+
+test("builds ChatGPT sidebar app links for the documented surfaces", () => {
+  const id = "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8";
+  const target = `https://chatgpt.com/plugins/${id}?open_in_app`;
+  const appPath = "/parts/part_joystick?label=café + A&B";
+  const options = { action: "app", target, tool: "cad.browse", appPath };
+  for (const [platform, base] of [
+    ["web", "https://chatgpt.com/plugins/"],
+    ["desktop", "codex://plugins/"],
+    ["ios", "chatgpt://plugins/"],
+  ]) {
+    const href = getAgentLink("chatgpt", platform, options);
+    assert.equal(href, `${base}${id}/app/cad.browse?path=${encodeURIComponent(appPath)}`);
+    assert.equal(new URL(href).searchParams.get("path"), appPath);
+    assert.equal(getAgentRoute("chatgpt", platform, "app").behavior, "launch");
+  }
+  assert.equal(getAgentLink("chatgpt", "desktop", { action: "app", target: "my-plugin", tool: "parts/library", marketplace: "my-market" }),
+    "codex://plugins/my-plugin@my-market/app/parts%2Flibrary");
+  assert.equal(getAgentLink("chatgpt", "web", { ...options, marketplace: "my-market" }), null);
+  assert.equal(getAgentLink("chatgpt", "android", options), null);
+  assert.equal(getAgentLink("chatgpt", "web", { action: "app", target }), null);
+  assert.equal(getAgentLink("chatgpt", "web", { ...options, prompt: special }), null);
+  assert.equal(getAgentLink("chatgpt", "web", { ...options, target: "https://chatgpt.com.example/plugins/example" }), null);
+  assert.equal(getAgentLink("chatgpt", "web", { ...options, target: "plugin%2Fid" }), null);
+  assert.equal(getAgentLink("chatgpt", "web", { ...options, tool: ".." }), null);
+  for (const invalid of ["https://example.com", "//example.com", "/\\example.com", "/path#fragment", "/\npath"]) {
+    assert.equal(getAgentLink("chatgpt", "web", { ...options, appPath: invalid }), null);
+  }
+  assert.equal(getAgentLink("chatgpt", "web", { action: "plugin", target }), `https://chatgpt.com/plugins/${id}`);
+});
+
+test("prefills a Codex plugin mention in an unsent message and opens explicit install routes", () => {
+  const target = "openai-developers@openai-curated";
+  const detail = `codex://plugins/${target}`;
+  for (const agent of ["codex", "chatgpt"]) {
+    const href = getAgentLink(agent, "desktop", { action: "plugin-chat", target: `${detail}?source=manage`, prompt: special });
+    assert.equal(new URL(href).searchParams.get("prompt"), `[@openai-developers](plugin://${target}) ${special}`);
+    assert.match(href, /^codex:\/\/new\?prompt=/u);
+    assert.equal(getAgentLink(agent, "desktop", { action: "plugin-chat", target }), null);
+    assert.equal(getAgentLink(agent, "desktop", { action: "plugin", target }), detail);
+    assert.equal(getAgentLink(agent, "desktop", { action: "plugin-install", target: "openai-developers", marketplace: "openai-curated" }),
+      "codex://plugins/install/openai-developers?marketplace=openai-curated");
+  }
+  assert.equal(getAgentLink("codex", "web", { action: "plugin-chat", target, prompt: special }), null);
+  assert.equal(getAgentLink("codex", "desktop", { action: "plugin-chat", target: "bad](https://example.com)", prompt: special }), null);
+});
+
+test("builds a ChatGPT Work plugin draft and a separate install review", () => {
+  const id = "Plugin_60db802073a48191b7256d1c268d7a47";
+  const target = `https://chatgpt.com/plugins/${id}`;
+  const options = { action: "plugin-chat", target, prompt: special };
+  const href = getAgentLink("chatgpt", "web", options);
+  assert.equal(href, `${target}?install&prompt=${encodeURIComponent(special)}&surface=work`);
+  assert.equal(getAgentRoute("chatgpt", "web", "plugin-chat").behavior, "draft");
+  assert.equal(getAgentLink("chatgpt", "web", { action: "plugin-chat", target }), null);
+  assert.equal(getAgentLink("chatgpt", "web", { action: "plugin-install", target }), `${target}?install`);
+  assert.equal(getAgentLink("chatgpt", "web", { action: "plugin-install", target, prompt: special }), null);
+});
+
+test("builds provider-specific plugin, skill and shared-assistant destinations", () => {
+  const cases = [
+    ["grok-bot", "web", { action: "plugin", target: "9007199254740993" }, "https://x.ai/bot/plugin/9007199254740993"],
+    ["grok-bot", "ios", { action: "team-plugin", target: "grokbot://app/v1/plugin/add?id=456" }, "grokbot://app/v1/plugin/add?id=456"],
+    ["antigravity", "web", { action: "plugin", target: "firebase" }, "https://antigravity.google/docs/marketplace/?plugin=firebase#browse-marketplace-plugins"],
+    ["antigravity", "desktop", { action: "plugin", target: "stripe", marketplace: "antigravity-plugins-partners" }, "antigravity://plugin/stripe?marketplace=antigravity-plugins-partners"],
+    ["antigravity", "desktop", { action: "skill", target: "sample", marketplace: "antigravity-plugins-partners" }, "antigravity://customizations/marketplaces/antigravity-plugins-partners/skills/sample"],
+    ["claude", "desktop", { action: "plugin-install", target: "slack", marketplace: "anthropics/knowledge-work-plugins" }, "https://claude.ai/desktop/customize/plugins/new?marketplace=anthropics%2Fknowledge-work-plugins&plugin=slack"],
+    ["claude", "web", { action: "plugin", target: "268ba6b9-a27c-4bc8-9dc2-2a0b5ab79bfb@anthropic-plugin-directory" }, "https://claude.ai/customize/plugins/id/268ba6b9-a27c-4bc8-9dc2-2a0b5ab79bfb%40anthropic-plugin-directory"],
+    ["claude", "web", { action: "connector", target: "https://claude.ai/directory/ringcentral-chat" }, "https://claude.ai/directory/ringcentral-chat"],
+    ["cursor", "web", { action: "plugin", target: "cursor/google-drive" }, "https://cursor.com/marketplace/cursor/google-drive"],
+    ["hermes", "desktop", { action: "skill-install", target: "official/security/1password" }, getHermesSkillLink("official/security/1password")],
+    ["chatgpt", "web", { action: "custom-gpt", target: "https://chatgpt.com/g/g-1234-sample" }, "https://chatgpt.com/g/g-1234-sample"],
+    ["gemini", "web", { action: "gem", target: "gem-id" }, "https://gemini.google.com/gem/gem-id"],
+    ["perplexity", "ios", { action: "project", target: "https://www.perplexity.ai/collections/sample-Project.Id" }, "https://www.perplexity.ai/collections/sample-Project.Id"],
+  ];
+  for (const [agent, platform, options, url] of cases) {
+    assert.equal(getAgentLink(agent, platform, options), url, `${agent}/${platform}/${options.action}`);
+  }
+  assert.equal(getAgentLink("grok-bot", "desktop", { action: "team-plugin", target: "grokbot://other/v1/plugin/add?id=456" }), null);
+  assert.equal(getAgentLink("cursor", "web", { action: "plugin", target: "cursor/../x" }), null);
+  assert.equal(getAgentLink("gemini", "web", { action: "gem", target: "https://elsewhere.example/gem/id" }), null);
+  assert.equal(getAgentLink("perplexity", "web", { action: "project", target: "https://www.perplexity.ai/search/anything" }), null);
+});
+
+test("encodes Cursor MCP configurations as UTF-8 base64 in review links", () => {
+  const config = { url: "https://example.com/mcp", headers: { "X-Label": "Café + 🎉" } };
+  const options = { action: "mcp-install", target: "MCP café", config: JSON.stringify(config) };
+  for (const [platform, base] of [
+    ["desktop", "cursor://anysphere.cursor-deeplink/mcp/install"],
+    ["web", "https://cursor.com/install-mcp"],
+  ]) {
+    const href = getAgentLink("cursor", platform, options);
+    assert.equal(href.split("?")[0], base);
+    const params = new URL(href).searchParams;
+    assert.equal(params.get("name"), options.target);
+    assert.deepEqual(JSON.parse(Buffer.from(params.get("config"), "base64").toString("utf8")), config);
+    assert.equal(getAgentLink("cursor", platform, { ...options, config: "{}" }), null);
+    assert.equal(getAgentLink("cursor", platform, { ...options, config: "{" }), null);
+  }
+});
+
+test("discovers supported actions without replacing default routes and uses them through React", () => {
+  assert.deepEqual(getAgentActions("chatgpt", "android"), []);
+  assert.deepEqual(getAgentActions("does-not-exist", "web"), []);
+  assert.equal(getAgentRoute("chatgpt", "android", "app"), null);
+  assert.equal(getAgentRoute("chatgpt", "web").url, "https://chatgpt.com/");
+  for (const { id } of Object.values(agents)) {
+    for (const platform of platforms) {
+      const actions = getAgentActions(id, platform);
+      assert.equal(new Set(actions.map((action) => action.id)).size, actions.length);
+      for (const action of actions) {
+        assert.equal(getAgentRoute(id, platform, action.id), action);
+        for (const { field } of action.inputs) assert.ok(Object.hasOwn(action.fields, field));
+        for (const field of action.required) assert.ok(action.inputs.some((input) => input.field === field));
+        for (const source of action.sources) assert.equal(new URL(source).protocol, "https:");
+        assert.equal(getAgentLink(id, platform, { action: action.id }), null);
+      }
+    }
+  }
+
+  const markup = renderToStaticMarkup(createElement(AgentLink, {
+    agent: "chatgpt",
+    platform: "web",
+    options: { action: "app", target: "sample-plugin", tool: "cad.browse" },
+    children: "Open CAD",
+  }));
+  assert.match(markup, /href="https:\/\/chatgpt\.com\/plugins\/sample-plugin\/app\/cad\.browse"/u);
 });

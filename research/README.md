@@ -5,6 +5,7 @@ Investigation started November 24, 2026. The [package catalog](../src/catalog.ts
 - [ChatGPT, Codex, Claude, and Claude Code](openai-anthropic.md)
 - [Cursor, GitHub Copilot, Antigravity, T3 Code, OpenCode, and ZCode](coding-agents.md)
 - [Grok, Grok Bot, Meta Muse, Kimi, Hermes Agent, and OpenClaw](other-agents.md)
+- [Plugin, app, connector, and skill destinations](plugin-links.md)
 - [SVG source and trademark information](../icons/README.md)
 
 ## Reference integrations

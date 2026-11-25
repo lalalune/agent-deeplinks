@@ -1,3 +1,9 @@
+import { getActionDefinition } from "./actions.js";
+import type { AgentActionId, AgentActionRoute } from "./actions.js";
+
+export { getAgentActions } from "./actions.js";
+export type { AgentActionField, AgentActionId, AgentActionInput, AgentActionRoute } from "./actions.js";
+
 export const platforms = ["web", "desktop", "ios", "android", "cli", "vscode"] as const;
 export type Platform = (typeof platforms)[number];
 
@@ -1028,7 +1034,11 @@ export function getAgent(agent: AgentId): Agent {
   return agents[agent];
 }
 
-export function getAgentRoute(agent: AgentId, platform: Platform): AgentRoute | null {
+export function getAgentRoute(agent: AgentId, platform: Platform): AgentRoute | null;
+export function getAgentRoute(agent: AgentId, platform: Platform, action: AgentActionId): AgentActionRoute | null;
+export function getAgentRoute(agent: AgentId, platform: Platform, action?: AgentActionId): AgentRoute | AgentActionRoute | null;
+export function getAgentRoute(agent: AgentId, platform: Platform, action?: AgentActionId): AgentRoute | AgentActionRoute | null {
+  if (action !== undefined) return getActionDefinition(agent, platform, action) ?? null;
   if (!Object.hasOwn(agents, agent)) return null;
   const routes = agents[agent].routes;
   return Object.hasOwn(routes, platform) ? routes[platform] ?? null : null;

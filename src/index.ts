@@ -1,10 +1,13 @@
 import { getAgentRoute } from "./catalog.js";
-import type { AgentId, LinkField, Platform } from "./catalog.js";
+import type { AgentActionField, AgentActionId, AgentId, AgentRoute, LinkField, Platform } from "./catalog.js";
+import { getActionDefinition } from "./actions.js";
 import { iconSources } from "./generated-icons.js";
 
 export * from "./catalog.js";
 
-export interface LinkOptions extends Partial<Record<LinkField, string>> {
+export interface LinkOptions extends Partial<Record<LinkField | AgentActionField, string>> {
+  /** Open an app, plugin, skill, or other provider-specific destination. */
+  action?: AgentActionId;
   /** Permit routes whose client behavior still needs confirmation. */
   allowExperimental?: boolean;
   /** Permit a route that submits the supplied prompt when opened. */
@@ -21,7 +24,6 @@ const codexCloudTaskPath = /^https:\/\/chatgpt\.com(?:\/app)?(\/codex\/(?:cloud\
 const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
-const qualifiedSkill = /^[\w.@-]+(?:\/[\w.@-]+)+$/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
@@ -105,6 +107,26 @@ function encodeLinkValue(value: string): string {
   return encodeURIComponent(value.replace(/[\ud800-\udfff]/gu, "\ufffd"));
 }
 
+function getLinkParameters(
+  route: Pick<AgentRoute, "encodeQueryValuesTwice" | "query"> & { fields?: Readonly<Record<string, string | undefined>> },
+  fields: Readonly<Record<string, string | undefined>>,
+  baseUrl: string,
+): string {
+  const query: string[] = [];
+  for (const [field, parameter] of Object.entries(route.fields ?? {})) {
+    if (!parameter || (field === "repo" && fields.cwd)) continue;
+    const value = fields[field];
+    if (value !== undefined && value !== "") {
+      const encoded = encodeLinkValue(value);
+      query.push(`${parameter}=${route.encodeQueryValuesTwice ? encodeURIComponent(encoded) : encoded}`);
+    }
+  }
+  for (const [name, value] of Object.entries(route.query ?? {})) {
+    query.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
+  }
+  return query.length ? `${baseUrl.includes("?") ? "&" : "?"}${query.join("&")}` : "";
+}
+
 function getOpenCodeOrigin(url: URL): string | null {
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
@@ -166,16 +188,26 @@ export function getAgentLink(
   platform: Platform,
   options: LinkOptions = {},
 ): string | null {
-  const route = getAgentRoute(agent, platform);
+  const { action, allowExperimental, allowSend, browserOnly, ...fields } = options;
+  const actionRoute = action === undefined ? undefined : getActionDefinition(agent, platform, action);
+  const route = action === undefined ? getAgentRoute(agent, platform) : actionRoute;
   if (!route) return null;
 
-  const openClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
-  const { allowExperimental: _allowExperimental, allowSend: _allowSend, browserOnly, ...fields } = options;
   for (const [field, value] of Object.entries(fields)) {
     if (value !== undefined && (typeof value !== "string" || !Object.hasOwn(route.fields ?? {}, field))) {
       return null;
     }
   }
+  if (actionRoute) {
+    if ((actionRoute.experimental && !allowExperimental) ||
+      (actionRoute.behavior === "send" && !allowSend) ||
+      actionRoute.required.some((field) => !fields[field]?.trim())) return null;
+    const baseUrl = actionRoute.prepare(fields, actionRoute.url);
+    if (!baseUrl) return null;
+    const url = baseUrl + getLinkParameters(actionRoute, fields, baseUrl);
+    return actionRoute.urlLimit && url.length > actionRoute.urlLimit ? null : url;
+  }
+  const openClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
   if (agent === "grok-bot" && fields.prompt) {
     fields.prompt = fields.prompt.replace(/[\u0000-\u001f\u007f-\u009f]/gu, " ");
   }
@@ -209,8 +241,8 @@ export function getAgentLink(
     ? `#${encodeURIComponent(route.browserOnlyFragment)}`
     : "";
   if (route.launchUrl && Object.values(fields).every((value) => !value)) return `${route.launchUrl}${fragment}`;
-  if ((route.experimental && !options.allowExperimental) ||
-    (route.behavior === "send" && !options.allowSend)) return null;
+  if ((route.experimental && !allowExperimental) ||
+    (route.behavior === "send" && !allowSend)) return null;
   if (route.sessionUrl && fields.session) {
     const sessionId = agent === "claude-code" ? claudeCodeCloudSessionId : conversationId;
     if (!sessionId.test(fields.session) ||
@@ -275,21 +307,7 @@ export function getAgentLink(
     }
   }
 
-  const query: string[] = [];
-  for (const [field, parameter] of Object.entries(route.fields ?? {})) {
-    if (!parameter) continue;
-    if (field === "repo" && fields.cwd) continue;
-    const value = fields[field as LinkField];
-    if (value !== undefined && value !== "") {
-      const encoded = encodeLinkValue(value);
-      query.push(`${parameter}=${route.encodeQueryValuesTwice ? encodeURIComponent(encoded) : encoded}`);
-    }
-  }
-  for (const [name, value] of Object.entries(route.query ?? {})) {
-    query.push(`${encodeURIComponent(name)}=${encodeURIComponent(value)}`);
-  }
-  const parameters = query.length ? `?${query.join("&")}` : "";
-  const target = `${baseUrl}${parameters}${fragment}`;
+  const target = `${baseUrl}${getLinkParameters(route, fields, baseUrl)}${fragment}`;
   const url = route.launcher
     ? `${route.url}?${encodeURIComponent(route.launcher.parameter)}=${encodeURIComponent(target)}`
     : target;
@@ -298,19 +316,7 @@ export function getAgentLink(
 
 /** Open Hermes Desktop's install review for a qualified skill or a direct skill URL. */
 export function getHermesSkillLink(identifier: string): string | null {
-  if (typeof identifier !== "string" || hiddenPathCharacters.test(identifier)) return null;
-  const skill = identifier.trim().replace(/[\ud800-\udfff]/gu, "\ufffd");
-  const reference = skill.startsWith("well-known:") ? skill.slice("well-known:".length) : skill;
-  const isQualified = qualifiedSkill.test(skill) && !skill.split("/").some((part) => part === "." || part === "..");
-  if (!isQualified) {
-    try {
-      const url = new URL(reference);
-      if (!["http:", "https:"].includes(url.protocol) || url.username || url.password) return null;
-    } catch {
-      return null;
-    }
-  }
-  return `hermes://skill/install?identifier=${encodeURIComponent(skill)}`;
+  return getAgentLink("hermes", "desktop", { action: "skill-install", target: identifier });
 }
 
 /** Convert an OpenCode CLI pairing URL to the Android app's native pairing review. */

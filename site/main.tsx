@@ -3,9 +3,9 @@ import { Check, ChevronDown, Clipboard, CodeXml, Download, FlaskConical, Github,
 import { useState } from "react";
 import type { ReactNode } from "react";
 import {
-  agents, getAgentIcon, getAgentLink, getAgentRoute, platformNames, platforms,
+  agents, getAgentActions, getAgentIcon, getAgentLink, getAgentRoute, platformNames, platforms,
 } from "../src/index.js";
-import type { AgentId, Evidence, LinkBehavior, LinkField, LinkOptions, Platform } from "../src/index.js";
+import type { AgentActionField, AgentActionId, AgentId, Evidence, LinkBehavior, LinkField, LinkOptions, Platform } from "../src/index.js";
 import { AgentIcon, AgentLink } from "../src/react.js";
 import { Button } from "./components/ui/button.js";
 import "./styles.css";
@@ -118,6 +118,131 @@ function Select({ label, value, onChange, children }: {
         <ChevronDown size={15} aria-hidden="true" />
       </span>
     </label>
+  );
+}
+
+const actionAgents = Object.values(agents).filter(({ id }) => platforms.some((platform) => getAgentActions(id, platform).length));
+const examplePlugin = "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8";
+const exampleCodexPlugin = "openai-developers@openai-curated";
+const exampleMercury = "plugin_asdk_app_6a17ae803744819187a3079d37479dae";
+const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, LinkOptions>>>> = {
+  chatgpt: {
+    app: { target: examplePlugin, tool: "cad.browse", appPath: "/parts/part_joystick" },
+    plugin: { target: examplePlugin },
+    "plugin-install": { target: exampleMercury },
+    "plugin-chat": { target: exampleMercury, prompt: "Summarize the information I can look up in this plugin." },
+    "custom-gpt": { target: "g-1234-sample" },
+  },
+  codex: {
+    plugin: { target: exampleCodexPlugin },
+    "plugin-install": { target: "openai-developers", marketplace: "openai-curated" },
+    "plugin-chat": { target: exampleCodexPlugin, prompt: "Find the docs for app deep links." },
+  },
+  claude: {
+    plugin: { target: "268ba6b9-a27c-4bc8-9dc2-2a0b5ab79bfb@anthropic-plugin-directory" },
+    connector: { target: "597f662f-36de-437e-836e-5a81013cbfbe" },
+    "plugin-install": { target: "slack", marketplace: "anthropics/knowledge-work-plugins" },
+  },
+  cursor: {
+    plugin: { target: "cursor/google-drive" },
+    "mcp-install": { target: "Example Server", config: '{"url":"https://example.com/mcp"}' },
+  },
+  "grok-bot": {
+    plugin: { target: "9007199254740993" },
+    "team-plugin": { target: "456" },
+  },
+  antigravity: {
+    plugin: { target: "firebase" },
+    skill: { target: "sample", marketplace: "antigravity-plugins-partners" },
+  },
+  hermes: { "skill-install": { target: "official/security/1password" } },
+  gemini: { gem: { target: "gem-id" } },
+  perplexity: { project: { target: "https://www.perplexity.ai/projects/sample-project" } },
+};
+
+function ActionPlayground() {
+  const [agent, setAgent] = useState<AgentId>("chatgpt");
+  const [preferredPlatform, setPlatform] = useState<Platform>("web");
+  const [selectedAction, setAction] = useState<AgentActionId>("app");
+  const [edits, setEdits] = useState<Partial<Record<string, Partial<Record<AgentActionField, string>>>>>({});
+  const supportedPlatforms = platforms.filter((platform) => getAgentActions(agent, platform).length);
+  const platform = supportedPlatforms.includes(preferredPlatform) ? preferredPlatform : supportedPlatforms[0] ?? "web";
+  const actions = getAgentActions(agent, platform);
+  const action = actions.find(({ id }) => id === selectedAction) ?? actions[0];
+  if (!action) return null;
+
+  const exampleAgent = agent === "chatgpt" && platform === "desktop" && action.id !== "app" ? "codex" : agent;
+  const key = `${agent}/${platform}/${action.id}`;
+  const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
+  const href = getAgentLink(agent, platform, options);
+  const example = href && getReactExample(agent, platform, options);
+  const label = `${action.label} in ${agents[agent].name}`;
+  const behavior = action.behavior === "confirm" ? "Opens a review"
+    : action.behavior === "launch" ? "Opens the destination" : behaviorNames[action.behavior];
+
+  return (
+    <section className="matrix action-playground" id="apps" aria-labelledby="apps-title">
+      <div className="section-heading">
+        <div>
+          <h2 id="apps-title">Apps and plugins</h2>
+          <p>Build a link to an app page, plugin, skill, or install review.</p>
+        </div>
+      </div>
+      <div className="action-layout">
+        <div className="action-controls">
+          <div className="selector-grid">
+            <Select label="Action agent" value={agent} onChange={(value) => setAgent(value as AgentId)}>
+              {actionAgents.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
+            </Select>
+            <Select label="Action platform" value={platform} onChange={(value) => setPlatform(value as Platform)}>
+              {supportedPlatforms.map((item) => <option key={item} value={item}>{platformNames[item]}</option>)}
+            </Select>
+          </div>
+          <Select label="Destination" value={action.id} onChange={(value) => setAction(value as AgentActionId)}>
+            {actions.map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
+          </Select>
+          {action.inputs.map(({ field, label, placeholder }) => {
+            const edit = (value: string) => setEdits((saved) => ({ ...saved, [key]: { ...saved[key], [field]: value } }));
+            return (
+              <label className="field" key={field}>
+                <span>{label}</span>
+                {field === "prompt" || field === "config"
+                  ? <textarea value={options[field] ?? ""} placeholder={placeholder} rows={3} onChange={(event) => edit(event.target.value)} />
+                  : <input value={options[field] ?? ""} placeholder={placeholder} onChange={(event) => edit(event.target.value)} />}
+              </label>
+            );
+          })}
+          <div className="action-result" aria-live="polite">
+            <div className="result-label">
+              <span>Generated action URL</span>
+              <span className="link-behavior">{evidenceNames[action.evidence]} · {behavior}</span>
+              {href && <CopyButton label="Copy action URL" value={href} iconOnly />}
+            </div>
+            {href ? <code>{href}</code> : <p>Complete the destination fields to generate the URL.</p>}
+          </div>
+          <div className="action-buttons">
+            {href && (
+              <>
+                <Button asChild><AgentLink agent={agent} platform={platform} options={options} aria-label={label} /></Button>
+                <Button asChild variant="outline" size="icon" className="icon-link">
+                  <AgentLink agent={agent} platform={platform} options={options} aria-label={`${label} on ${platformNames[platform]}`} iconOnly />
+                </Button>
+              </>
+            )}
+            <a className="source-link" href={action.sources[0]}>View action source</a>
+          </div>
+          {action.note && <p className="action-note">{action.note}</p>}
+        </div>
+        <div className="action-code">
+          <div>
+            <CodeXml size={17} aria-hidden="true" />
+            <span>OpenAgentDestination.tsx</span>
+            {example && <CopyButton label="Copy action code example" value={example} iconOnly />}
+          </div>
+          {example ? <pre><code>{example}</code></pre> : <p>Enter valid destination fields to generate the React example.</p>}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -245,6 +370,7 @@ function App() {
           <nav aria-label="Main navigation">
             <a href="#playground">Playground</a>
             <a href="#support">Support matrix</a>
+            <a href="#apps">Apps and plugins</a>
             <a href="#usage">Usage</a>
           </nav>
           <Button asChild variant="outline" size="sm">
@@ -473,6 +599,8 @@ function App() {
             <span><strong>Observed</strong> seen in a published integration</span>
           </div>
         </section>
+
+        <ActionPlayground />
 
         <section className="usage" id="usage" aria-labelledby="usage-title">
           <div>

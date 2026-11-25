@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.38.tgz
+npm install ./agent-deeplinks-0.1.39.tgz
 ```
 
 ## Usage
@@ -178,6 +178,29 @@ import cursorIcon from "agent-deeplinks/icons/cursor.svg"
 ```
 
 See [SVG sources and trademark notes](icons/README.md).
+
+## Apps and plugins
+
+Use `getAgentActions(agent, platform)` to discover plugin, app, and skill destinations. Pass the action ID in `getAgentLink` or in the options for either `AgentLink` button variant. `getAgentRoute(agent, platform, action)` describes its accepted fields, behavior, and evidence.
+
+```ts
+import { getAgentActions, getAgentLink } from "agent-deeplinks"
+
+const available = getAgentActions("chatgpt", "web")
+const app = getAgentLink("chatgpt", "web", {
+  action: "app",
+  target: "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8",
+  tool: "cad.browse",
+  appPath: "/parts/part_joystick",
+})
+const draft = getAgentLink("codex", "desktop", {
+  action: "plugin-chat",
+  target: "openai-developers@openai-curated",
+  prompt: "Find the docs for app deep links.",
+})
+```
+
+The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
 
 ## Develop and deploy
 
