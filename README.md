@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.32.tgz
+npm install ./agent-deeplinks-0.1.33.tgz
 ```
 
 ## Usage
@@ -106,7 +106,7 @@ ZCode's web, iOS, and Android links open its versioned Remote Control sign-in pa
 
 Kimi Code Desktop accepts a local `directory` and opens a fresh draft. Hosted Remote Control uses the same Kimi account as the running host. Supply `server` for another region or for a local address from `kimi web`, then enter the local server token in the browser.
 
-Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` for the dashboard URL. On macOS and iOS, supplying a prompt opens run confirmation when a Gateway is connected. Linux supports the dashboard URL. The official AppImage passed the URL after its first launch registered the handler. The 2026.11.8 DEB opened the app without passing the URL. Windows Hub opens its setup screen in a fresh profile. [Linux and Windows verification](research/other-agents.md#hermes-agent-and-openclaw)
+Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` for the dashboard URL. On macOS and iOS, supplying a prompt opens run confirmation when a Gateway is connected. The Linux 2026.11.9 AppImage opened the connected Dashboard on cold and warm launch after its first launch registered the handler. The DEB from that release opened the app and dropped the URL. Windows Hub opens its setup screen in a fresh profile. [Linux and Windows verification](research/other-agents.md#hermes-agent-and-openclaw)
 For the macOS [Add Gateway form](https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website), supply the Gateway HTTPS base address in `server`. The address can include a port and path. The user reviews it and chooses **Connect** in OpenClaw.
 On iOS, pass a Gateway origin in `server` to stage the host, port, and TLS for review. Use HTTPS or WSS for TLS. HTTP and WS are limited to local hosts. Omitted ports use 443 for TLS and 18789 for plaintext. Enter credentials in the app if prompted. [iOS Gateway review](https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985)
 For the OpenClaw Control UI, use `web` or `android` and sign in to the Gateway in the same browser tab first. Supply its base URL in `server` on Android or for a custom web address. With a `prompt`, the link opens an unsent draft in the last selected chat. Pass a copied chat URL in `session` to choose a specific chat on that same Gateway.
@@ -125,7 +125,7 @@ const browserDraft = getAgentLink("openclaw", "web", {
 })
 ```
 
-Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links). The signed macOS canary displayed the requested skill and destination before installation.
+Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links). The signed macOS canary displayed the requested skill and destination before installation. The official Linux diagnostic AppImage accepts `hermes://launch` as a command-line argument. Its first launch left the system URL handler unset.
 
 ### shadcn/ui
 
