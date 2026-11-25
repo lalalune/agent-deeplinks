@@ -92,10 +92,11 @@ The v0.1.36 build passed 24 package tests and all 74 Playground entries in Chrom
 - T3 Code's iOS 2.3.0 Release build displayed the exact unsent multiline Unicode draft on an iPhone 17 simulator with iOS 26.4 after pairing to a loopback environment. The same source-built client opened an existing thread with an empty composer, then showed the exact optional draft from the v0.1.34 link. [Test details](coding-agents.md#t3-code)
 - OpenCode’s signed development APK and the official Android release bundle with disposable test signing both accepted the pairing link. The release configuration opened the exact idle, blank, and last sessions with the native links. The Play-signed build remains untested. [Test details](coding-agents.md#opencode)
 - Android 16 resolved the exact Kimi HTTPS link to the official installed app, which displayed its first-run consent screen. [Test details](other-agents.md#meta-muse-and-kimi)
+- The signed Windows app cold-opened the local thread and both exact draft links in its isolated Work profile. [Windows native evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45556735459/artifacts/14996252489)
 - The signed ChatGPT Linux preview opened the exact existing local Codex thread and displayed the exact unsent ChatGPT and Codex drafts. The Codex folder review showed the requested empty workspace. [Native evidence](openai-anthropic.md#parameters-and-prerequisites)
 - Grok Bot's signed ARM64 DEB opened the exact prompt URL to the native sign-in screen on Ubuntu. OpenClaw’s Linux 2026.11.9 AppImage opened the connected Dashboard from cold and warm GIO dispatch. The signed Windows Hub paired to the Gateway. A cold link opened the connected Dashboard in signed Edge, with an editable composer and zero model requests. [Grok Bot](other-agents.md#grok-and-grok-bot) · [OpenClaw](other-agents.md#hermes-agent-and-openclaw)
 
-- T3 Code’s signed Android build 823 opened the same existing scratch thread with an empty composer and an exact unsent draft on native ARM64 Android 15 using ReDroid. [Native thread evidence](coding-agents.md#t3-code)
+- T3 Code’s signed Android build 823 opened the same existing scratch thread with an empty composer and an exact unsent draft on native ARM64 Android 15 using ReDroid. Both the custom scheme and Android-verified HTTPS routes passed. [Native thread evidence](coding-agents.md#t3-code)
 
 ### Remaining native checks
 

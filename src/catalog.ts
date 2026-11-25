@@ -76,10 +76,12 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45556735459/artifacts/14996252489",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
+const t3AndroidAppLinkProof = "https://github.com/lalalune/agent-deeplinks/blob/09dac84870eda35a0b635871b06aa6dcec8811cd/research/evidence/t3-android-verified-https/proof.json";
 const t3ThreadSource = "https://github.com/pingdotgg/t3code/blob/4da8d19d/packages/shared/src/threadLinks.ts#L42-L66";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
 const openCodeDesktopTag = "https://github.com/anomalyco/opencode/blob/v2.4.1";
@@ -546,7 +548,7 @@ const catalog = {
         ],
         fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
-        note: "Stock Windows and Ubuntu handlers received the Chat-mode link. The signed Ubuntu preview displayed the exact unsent draft and opened an existing local thread by ID. The Windows test stopped at sign-in.",
+        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch passed in an isolated local Work profile.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -594,7 +596,7 @@ const catalog = {
         sources: [codexDocs, ...openAiDesktopChecks],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
-        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Ubuntu preview showed the exact unsent draft after folder review and reopened a local thread by ID. The handler tries a local path before matching the Git remote.",
+        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -795,8 +797,9 @@ const catalog = {
           ...t3Route.sources,
           "https://github.com/pingdotgg/t3code/blob/v0.1.11/docs/user/remote-access.md",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45480052812/job/138750432372",
+          t3AndroidAppLinkProof,
         ],
-        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project. With a thread and environment ID, the hosted chooser offers to open that thread.",
+        note: "Leave the server blank for T3’s hosted chooser. After pairing to a self-hosted server, drafts opened directly after a Chromium restart with T3 Code 0.1.11. A repository link selected an existing matching project. With a thread and environment ID, the hosted chooser offers to open that thread. Verified Android App Links can open the paired native app directly.",
       },
       desktop: {
         ...t3Route,
@@ -827,8 +830,9 @@ const catalog = {
           ...t3Route.sources,
           "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165",
           "https://github.com/lalalune/agent-deeplinks/blob/cff6e2e17ef0e5db857a1755813117da4d76488d/research/evidence/t3-android-existing-thread-native-arm/proof.json",
+          t3AndroidAppLinkProof,
         ],
-        note: "New-thread draft verified in the signed 2.3.0 beta on Android 16. Signed build 823 opened an existing thread with and without an unsent draft in a native ARM64 Android 15 container. Both tests used a paired environment.",
+        note: "New-thread draft verified in the signed 2.3.0 beta on Android 16. Signed build 823 opened an existing thread with and without an unsent draft in a native ARM64 Android 15 container. The exact HTTPS thread links also opened that paired app after Android verified the route’s domain.",
       },
     },
   },
