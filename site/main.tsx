@@ -124,6 +124,7 @@ function App() {
   const [platform, setPlatform] = useState<Platform>("desktop");
   const [prompt, setPrompt] = useState(examplePrompt);
   const [t3ThreadPrompt, setT3ThreadPrompt] = useState("");
+  const [claudeCodeCloudSession, setClaudeCodeCloudSession] = useState("");
   const [directoryByRoute, setDirectoryByRoute] = useState<Partial<Record<string, string>>>({});
   const [serverByTarget, setServerByTarget] = useState<Partial<Record<string, string>>>({});
   const [extraByAgent, setExtraByAgent] = useState<Partial<Record<AgentId, ExtraValues>>>({});
@@ -142,10 +143,11 @@ function App() {
   const serverKey = hasGatewaySetup ? routeKey : agent;
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
-  const extraValues = extraByAgent[agent] ?? {};
+  const hasClaudeCodeCloudSession = agent === "claude-code" && Boolean(route?.sessionUrl);
+  const savedOptions = extraByAgent[agent] ?? {};
+  const extraValues = hasClaudeCodeCloudSession ? { ...savedOptions, session: claudeCodeCloudSession } : savedOptions;
   const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
-  const hasClaudeCodeCloudSession = agent === "claude-code" && Boolean(route?.sessionUrl);
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
   const visibleExtraFields = extraFields.filter((field) =>
     Object.hasOwn(route?.fields ?? {}, field) && (!isExistingSession || field === "session") &&
@@ -212,6 +214,10 @@ function App() {
   }
 
   function updateExtraField(field: ExtraField, value: string) {
+    if (field === "session" && hasClaudeCodeCloudSession) {
+      setClaudeCodeCloudSession(value);
+      return;
+    }
     setExtraByAgent((previous) => ({ ...previous, [agent]: { ...previous[agent], [field]: value } }));
   }
 
@@ -357,7 +363,9 @@ function App() {
                 {href ? <code>{href}</code> : (
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
-                    : isExistingSession ? "Enter the ID from the app’s existing chat link."
+                    : isExistingSession ? (hasClaudeCodeCloudSession
+                      ? "Enter a cloud session ID beginning with session_ or cse_."
+                      : "Enter the ID from the app’s existing chat link.")
                     : isT3Thread ? "Enter both a valid environment ID and thread ID."
                     : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
@@ -384,7 +392,9 @@ function App() {
                 {source && <a className="source-link" href={source}>View source</a>}
               </div>
               {isExistingSession ? (
-                <p className="route-note">Uses the app’s documented chat link. The app needs access to that conversation.</p>
+                <p className="route-note">{hasClaudeCodeCloudSession
+                  ? "Opens the session for an account with access to it."
+                  : "Uses the app’s documented chat link. The app needs access to that conversation."}</p>
               ) : route?.note && <p className="route-note">{route.note}</p>}
             </div>
           </section>
@@ -467,7 +477,9 @@ function App() {
             {reactExample ? <pre><code>{reactExample}</code></pre> : (
               <p>{hasSshOptions
                 ? "Enter valid SSH options to generate this example."
-                : isExistingSession ? "Enter a valid chat ID to generate this example."
+                : isExistingSession ? (hasClaudeCodeCloudSession
+                  ? "Enter a valid cloud session ID to generate this example."
+                  : "Enter a valid chat ID to generate this example.")
                 : isT3Thread ? "Enter both a valid environment ID and thread ID."
                 : options.folder ? "Enter an absolute workspace folder path to generate this example."
                 : isGatewaySetup ? "Enter a valid Gateway address to generate this example."
