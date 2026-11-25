@@ -653,6 +653,49 @@ test("opens existing desktop chats with the provider's session UUID route", () =
   assert.equal(getAgentLink("codex", "desktop", { prompt: "Existing new-chat behavior" }), "codex://new?prompt=Existing%20new-chat%20behavior");
 });
 
+test("preserves copied remote Codex thread links on ChatGPT and Codex Desktop", () => {
+  const session = "12345678-1234-4234-9234-123456789abc";
+  const local = `codex://threads/${session}`;
+  const hostId = "remote-ssh-discovered:fixture-host";
+  const remote = `${local}?${new URLSearchParams({ hostId })}`;
+  const opaque = `${local}?${new URLSearchParams({ hostId: "remote-ssh-codex-managed:a~b%3Aname*" })}`;
+  const rejected = [
+    local,
+    `${local}?hostId=local`,
+    `${local}?hostId=`,
+    `${local}?hostId=first&hostId=second`,
+    `${remote}&threadAccess=shared`,
+    `${remote}&prompt=ignored`,
+    `${remote}#fragment`,
+    `${remote}/extra`,
+    `${local}?hostId=one%2Ftwo`,
+    `${local}?hostId=one+two`,
+    `${local}?hostId=one%ZZ`,
+    `${local}?hostId=remote-ssh-discovered:fixture-host`,
+    `${local}?hostId=%09`,
+    `${local}?hostId=someone%40another-host`,
+    `${remote}\n`,
+    remote.replace("/threads/", "/threads/extra/"),
+    remote.replace("codex://", "https://chatgpt.com/"),
+  ];
+  for (const agent of ["codex", "chatgpt"]) {
+    assert.equal(getAgentLink(agent, "desktop", { session }), local);
+    assert.equal(getAgentLink(agent, "desktop", { session: remote }), remote);
+    assert.equal(getAgentLink(agent, "desktop", { session: opaque }), opaque);
+    assert.equal(new URL(remote).searchParams.get("hostId"), hostId);
+    assert.equal(getAgentLink(agent, "desktop", { session: remote, prompt: special }), null);
+    assert.equal(getAgentLink(agent, "desktop", { session: remote, path: "/tmp/project" }), null);
+    for (const value of rejected) {
+      assert.equal(getAgentLink(agent, "desktop", { session: value }), null, value);
+    }
+    for (const platform of ["web", "ios", "android", "cli", "vscode"]) {
+      assert.equal(getAgentLink(agent, platform, { session: remote }), null);
+    }
+  }
+  assert.equal(getAgentLink("claude", "desktop", { session: remote }), null);
+  assert.equal(getAgentLink("codex", "desktop", { prompt: special }), `codex://new?prompt=${encodeURIComponent(special)}`);
+});
+
 test("opens an existing Cursor Cloud Agent and preserves team URLs", () => {
   const cloudAgent = "bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0";
   const agentUrl = `https://cursor.com/agents/${cloudAgent}`;

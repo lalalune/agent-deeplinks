@@ -322,6 +322,8 @@ function App() {
   const isT3Thread = agent === "t3-code" && Boolean(extraValues.environment || extraValues.session);
   const currentPrompt = isT3Thread ? t3ThreadPrompt : prompt;
   const isExistingSession = Boolean(route?.sessionUrl && extraValues.session);
+  const supportsCopiedCodexThread = platform === "desktop" && (agent === "codex" || agent === "chatgpt");
+  const isCopiedCodexThread = supportsCopiedCodexThread && extraValues.session?.startsWith("codex://");
   const isCodexTask = agent === "codex" && Boolean(route?.fields?.task !== undefined && extraValues.task);
   const isCloudAgent = route?.fields?.cloudAgent !== undefined && Boolean(extraValues.cloudAgent);
   const visibleExtraFields = extraFields.filter((field) =>
@@ -378,7 +380,8 @@ function App() {
   const cloudAgentSource = agent === "cursor" && isCloudAgent && route?.sources.find((url) => platform === "desktop"
     ? url.includes("open-by-id-url-for-the-cloud-agent") : url.endsWith("/cloud-agent/api/endpoints"));
   const openCodeSessionSource = isOpenCodeBrowserSession && route?.sources.find((url) => url.endsWith("/routes/session.ts"));
-  const source = sshSource || threadSource || taskSource || cloudAgentSource || openCodeSessionSource ||
+  const copiedCodexThreadSource = isCopiedCodexThread && route?.sources.find((url) => url.includes("/codex-copied-remote-thread/"));
+  const source = sshSource || threadSource || taskSource || cloudAgentSource || openCodeSessionSource || copiedCodexThreadSource ||
     (options.server && route?.serverSource) || route?.sources[0];
   const visibleAgents = Object.values(agents).filter((entry) =>
     `${entry.name} ${entry.description}`.toLowerCase().includes(search.trim().toLowerCase()) &&
@@ -525,10 +528,12 @@ function App() {
                             : field === "session" && agent === "t3-code" ? "Thread ID"
                             : field === "session" && hasClaudeCodeCloudSession ? "Cloud session ID"
                             : field === "session" && isOpenCodeBrowser ? "OpenCode session ID (optional)"
+                            : field === "session" && supportsCopiedCodexThread ? "Chat ID or copied link"
                             : field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
                           <input value={extraValues[field] ?? ""} placeholder={field === "session" && isOpenClawBrowser
                             ? "https://gateway.example.com/chat/main" : field === "session" && (isOpenCodeAndroid || isOpenCodeBrowser)
-                              ? "ses_example" : field === "session" && hasClaudeCodeCloudSession ? "session_… or cse_…" : placeholder}
+                              ? "ses_example" : field === "session" && hasClaudeCodeCloudSession ? "session_… or cse_…"
+                                : field === "session" && supportsCopiedCodexThread ? "UUID or codex://threads/…?hostId=…" : placeholder}
                             onChange={(event) => updateExtraField(field, event.target.value)} />
                         </label>
                       );
@@ -560,7 +565,8 @@ function App() {
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
                     : isExistingSession ? (hasClaudeCodeCloudSession
                       ? "Enter a cloud session ID beginning with session_ or cse_."
-                      : "Enter the ID from the app’s existing chat link.")
+                      : supportsCopiedCodexThread ? "Enter a chat UUID or paste an app-copied remote chat link."
+                        : "Enter the ID from the app’s existing chat link.")
                     : isT3Thread ? "Enter both a valid environment ID and thread ID."
                     : isCodexTask ? "Enter a task_ ID or a Codex task URL on chatgpt.com."
                     : isCloudAgent ? `Enter a bc- ID or a Cloud Agent URL on ${agent === "grok-build" ? "grok.com" : "cursor.com"}.`
@@ -595,7 +601,8 @@ function App() {
               {isExistingSession ? (
                 <p className="route-note">{hasClaudeCodeCloudSession
                   ? "Opens the session for an account with access to it."
-                  : "Uses the app’s documented chat link. The app needs access to that conversation."}</p>
+                  : isCopiedCodexThread ? "Uses the copied owning-host link. Remote opening has source evidence and still needs a connected-host test."
+                    : "Uses the app’s documented chat link. The app needs access to that conversation."}</p>
               ) : route?.note && <p className="route-note">{route.note}</p>}
             </div>
           </section>
@@ -684,7 +691,8 @@ function App() {
                 : isCloudAgent ? "Enter a valid Cloud Agent to generate this example."
                 : isExistingSession ? (hasClaudeCodeCloudSession
                   ? "Enter a valid cloud session ID to generate this example."
-                  : "Enter a valid chat ID to generate this example.")
+                  : supportsCopiedCodexThread ? "Enter a valid chat UUID or copied remote chat link."
+                    : "Enter a valid chat ID to generate this example.")
                 : isT3Thread ? "Enter both a valid environment ID and thread ID."
                 : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin to generate this example."
                 : options.folder ? "Enter an absolute workspace folder path to generate this example."

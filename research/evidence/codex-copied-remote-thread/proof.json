@@ -1,0 +1,46 @@
+{
+  "date": "2026-11-25",
+  "scope": "Read-only inspection of packed JavaScript in OpenAI-signed macOS software. No account, remote host, pairing, or runtime dispatch was used.",
+  "bundle": {
+    "identifier": "com.openai.codex",
+    "version": "26.1117.41037",
+    "build": "29803",
+    "developerIdTeam": "2DC432GLL2",
+    "codeDirectoryHash": "b5215002d934d1b51fa2dba60375f702e4789f28"
+  },
+  "modules": [
+    {
+      "path": ".vite/build/early-bootstrap-7-ce4a67f0257ee973.js",
+      "sha256": "39c7f0f4e6172f48aafeb94846b8c4020f0f3a63e224418e482a9022cd6922a5",
+      "declaredPackedSha256Matched": true,
+      "byteOffsets": {
+        "nativeParser": 902408
+      }
+    },
+    {
+      "path": ".vite/build/early-bootstrap-916-90e0adb52d70fbc5.js",
+      "sha256": "1054c85006a5740ed3f48be9a592ee2135f33a6180884c500f968d1c18fdc221",
+      "declaredPackedSha256Matched": true,
+      "byteOffsets": {
+        "dispatcher": 4815493,
+        "snapshotContinuation": 4811771
+      }
+    },
+    {
+      "path": "webview/assets/async/911644.eaf037cac0.js",
+      "sha256": "0d3393b090dc0d1b6134be4ec10bafa0c58c5e3986b2f91ffca559579cd56a5d",
+      "declaredPackedSha256Matched": true,
+      "byteOffsets": {
+        "clipboardProducer": 5496234,
+        "hostIdSerializer": 8367583,
+        "linkReader": 5723388
+      }
+    }
+  ],
+  "behavior": {
+    "clipboard": "A local thread uses the bare URI. A non-local thread uses the actual hostId supplied by the app, serialized by URLSearchParams, with an optional access-mode field when provided.",
+    "nativeParser": "The parser retains hostId for a threads UUID. The main dispatcher adds it to the internal thread URL.",
+    "copiedLinkReader": "The renderer checks the threads UUID and exact path, allows at most one hostId and no other query field or fragment, and validates the decoded host ID.",
+    "unverified": "No connected remote host, sign-in, or remote thread opening was tested."
+  }
+}

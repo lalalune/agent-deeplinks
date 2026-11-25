@@ -26,9 +26,22 @@ const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
+const copiedCodexThreadUrl = /^codex:\/\/threads\/([a-fA-F\d-]+)\?hostId=([A-Za-z\d._*%\-]+)$/u;
+const opaqueCodexHostId = /^(?:[a-zA-Z0-9._:~!*'()-]|%[a-fA-F0-9]{2})+$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
 const sshFolderCharacters = /^[\p{L}\p{N}\p{M}\p{P} +<=>^`|~$]+$/u;
 const excludedSshFolderCharacters = /[\\'\u2018-\u201b\p{Default_Ignorable_Code_Point}\u0590-\u08ff\ufb1d-\ufdff\ufe70-\ufeff\u{10800}-\u{10fff}\u{1e800}-\u{1efff}\u{13441}\u{13442}\u{16910}\u{16fe4}]/u;
+
+function getCopiedCodexThreadLink(value: string): string | null {
+  const [, id = "", encodedHostId] = copiedCodexThreadUrl.exec(value) ?? [];
+  if (!encodedHostId || !conversationId.test(id) || hiddenPathCharacters.test(value)) return null;
+  const query = `hostId=${encodedHostId}`;
+  const params = new URLSearchParams(query);
+  const hostId = params.get("hostId");
+  return hostId && hostId !== "local" && opaqueCodexHostId.test(hostId) && params.toString() === query
+    ? value
+    : null;
+}
 
 function parseServerUrl(value: string): URL | null {
   try {
@@ -223,6 +236,7 @@ export function getAgentLink(
     const url = baseUrl + getLinkParameters(actionRoute, fields, baseUrl);
     return actionRoute.urlLimit && url.length > actionRoute.urlLimit ? null : url;
   }
+  const codexDesktopSession = platform === "desktop" && (agent === "codex" || agent === "chatgpt");
   const openClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
   if (agent === "grok-bot" && fields.prompt) {
     fields.prompt = fields.prompt.replace(/[\u0000-\u001f\u007f-\u009f]/gu, " ");
@@ -243,7 +257,7 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (!openClawBrowser && agent !== "t3-code" && fields.session && invalidSessionId.test(fields.session)) return null;
+  if (!codexDesktopSession && !openClawBrowser && agent !== "t3-code" && fields.session && invalidSessionId.test(fields.session)) return null;
   if (fields.workspace) {
     const workspace = parseWorkspaceUri(fields.workspace);
     if (!workspace) return null;
@@ -261,8 +275,8 @@ export function getAgentLink(
     (route.behavior === "send" && !allowSend)) return null;
   if (route.sessionUrl && fields.session) {
     const sessionId = agent === "claude-code" ? claudeCodeCloudSessionId : conversationId;
-    if (!sessionId.test(fields.session) ||
-      Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
+    if (Object.entries(fields).some(([field, value]) => field !== "session" && value)) return null;
+    if (!sessionId.test(fields.session)) return codexDesktopSession ? getCopiedCodexThreadLink(fields.session) : null;
     return `${route.sessionUrl}/${fields.session}${fragment}`;
   }
   if (agent === "grok-build" && fields.cloudAgent) {

@@ -45,6 +45,8 @@ const session = "12345678-1234-4234-9234-123456789abc"
 const existingChat = getAgentLink("codex", "desktop", { session })
 ```
 
+For an existing remote Codex thread, pass the exact URL from **Copy chat deep link** as `session` on ChatGPT or Codex Desktop. The helper preserves the copied thread ID and `hostId`. The app needs its existing owning-host connection. Remote opening is based on the app's shipped code and has not been tested with a connected host. [Remote links](research/openai-anthropic.md#copied-remote-codex-thread-links)
+
 Use `cloudAgent` on any Cursor target to open an existing Cloud Agent. Pass its `bc-…` ID or its Cursor URL, including team URLs. Desktop opens the agent by ID. Web and mobile keep the original team path when provided. This link is separate from a new prompt. [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints) · [Cursor desktop link](https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7)
 
 Use `getAgentLink("grok-build", "web")` to open the Grok Build inbox in a browser. Pass a `bc-…` Cloud Agent ID or its personal or team `https://grok.com/build/…` link as `cloudAgent` on `web`, `ios`, or `android`. iOS may open Cursor, and Android publishes a separate Grok Build app association. The Android browser fallback reaches Grok sign-in. The receiving app must have access to the agent. The separately installed `grok` terminal app uses `grok --resume <session-id>` for local sessions. [Grok Build links](research/other-agents.md#grok-build)

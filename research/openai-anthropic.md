@@ -84,6 +84,12 @@ Evidence checked November 25, 2026. The desktop tests used macOS 26.2 and an ine
 - **Production Android distribution**. OpenAI and Anthropic direct users to Google Play for ChatGPT and Claude. Codex uses the ChatGPT mobile app and depends on account and workspace availability. Google Play requires a Google account for downloads. The November 24 distribution audit found no publisher-hosted Android APK for a signed-out test. [ChatGPT Android](https://help.openai.com/en/articles/8142208-using-the-chatgpt-mobile-app-classic-experience) · [Codex mobile](https://learn.chatgpt.com/docs/mobile) · [Claude Android](https://support.claude.com/en/articles/9612887-install-claude-for-android) · [Google Play account setup](https://support.google.com/googleplay/answer/2521798)
 - [ChatGPT desktop app transition](https://help.openai.com/en/articles/20001276-moving-to-the-new-chatgpt-desktop-app), [Codex web](https://chatgpt.com/codex), [Claude Code cloud entry points](https://code.claude.com/docs/en/claude-code-on-the-web)
 
+## Copied remote Codex thread links
+
+OpenAI-signed macOS ChatGPT 26.1117.41037 copies `codex://threads/<UUID>?hostId=<opaque host ID>` for a remote thread. The shipped clipboard producer takes the ID of the thread's host and serializes it with `URLSearchParams`. The native receiver preserves that value when it opens the thread's internal route. A copied remote URL uses the owning configured connection. Legacy local UUID links keep their original form and behavior. [Packed source locations and hashes](evidence/codex-copied-remote-thread/proof.json) · [OpenAI remote connections guide](https://learn.chatgpt.com/docs/remote-connections)
+
+Pass the app-copied URL as `session` on ChatGPT or Codex Desktop. Links that include an access-mode hint or other query fields are outside this helper's contract. The remote route has source evidence. A signed-in, connected host test is still pending.
+
 ## Shared conversations
 
 `getAgentLink("chatgpt", "web", { action: "shared-chat", target: shareUrl })` and the equivalent Claude call accept an already shared URL from the selected provider or its UUID. The web variants add ChatGPT's `no_universal_links=1` query or Claude's `no_universal_links` fragment. The mobile variants use clean HTTPS links. Link creation and any access restrictions stay with the provider. [OpenAI sharing](https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt) · [Anthropic sharing](https://support.claude.com/en/articles/16762437-public-links-for-shared-chats)
