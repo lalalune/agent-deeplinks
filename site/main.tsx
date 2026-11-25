@@ -160,6 +160,11 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
     "remote-session": { target: "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id" },
   },
   hermes: { "skill-install": { target: "official/security/1password" } },
+  openclaw: {
+    "plugin-install": { target: "@openclaw/discord" },
+    "skill-install": { target: "@steipete/weather" },
+    "template-install": { target: "@jjjhenriksen/travel-copilot" },
+  },
   opencode: { "server-pair": { target: exampleOpenCodePairing } },
   gemini: { gem: { target: "gem-id" } },
   perplexity: { project: { target: "https://www.perplexity.ai/projects/sample-project" } },
@@ -194,7 +199,7 @@ function ActionPlayground() {
       <div className="section-heading">
         <div>
           <h2 id="apps-title">Apps and plugins</h2>
-          <p>Build a link to an app page, shared conversation, plugin, skill, or server.</p>
+          <p>Build a link to an app page, shared conversation, plugin, skill, template, or server.</p>
         </div>
       </div>
       <div className="action-layout">

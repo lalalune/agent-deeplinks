@@ -2,7 +2,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
-  | "skill" | "skill-install" | "connector" | "mcp-install"
+  | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template" | "remote-session" | "server-pair";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
@@ -43,6 +43,12 @@ const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
 const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
 const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
+const clawHubPackageName = /^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/u;
+const openClawCatalogSources = [
+  "https://github.com/openclaw/openclaw/blob/v2026.11.10/apps/linux/src-tauri/src/deep_links.rs",
+  "https://github.com/openclaw/openclaw/blob/v2026.11.10/apps/macos/Sources/OpenClaw/CatalogInstallDeepLink.swift",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45679828095/artifacts/15053761927",
+];
 
 function input(field: AgentActionField, label: string, placeholder?: string): AgentActionInput {
   return { field, label, placeholder };
@@ -365,6 +371,17 @@ const hermesSkill: ActionDefinition = {
   },
 };
 
+function openClawCatalogInstall(kind: "plugin" | "skill" | "template"): ActionDefinition {
+  return {
+    id: `${kind}-install`, label: `Review ClawHub ${kind}`, url: `openclaw://${kind}s/install`,
+    behavior: "confirm", evidence: "source", sources: openClawCatalogSources,
+    fields: { target: "name" }, required: ["target"],
+    inputs: [input("target", "ClawHub package name", "@scope/package")],
+    note: "OpenClaw 2026.11.10 for macOS and Linux routes to the item in the connected Gateway. Installation is a separate action.",
+    prepare: ({ target }, url) => target && target.length <= 214 && clawHubPackageName.test(target) ? url : null,
+  };
+}
+
 const claudePlugin: ActionDefinition = {
   id: "plugin-install", label: "Open Cowork plugin install", url: "https://claude.ai/desktop/customize/plugins/new",
   behavior: "handoff", evidence: "source", sources: ["https://claude.com/marketplace/plugins/slack", "https://claude.com/marketplace/plugins/productivity"],
@@ -472,6 +489,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [antigravityRemoteSession],
   },
   hermes: { desktop: [hermesSkill] },
+  openclaw: { desktop: [openClawCatalogInstall("plugin"), openClawCatalogInstall("skill"), openClawCatalogInstall("template")] },
   opencode: {
     web: [openCodePairing({
       url: "https://code.example.com/auth/connect/", label: "Sign in to a server", behavior: "launch", evidence: "verified",

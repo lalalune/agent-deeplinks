@@ -191,7 +191,7 @@ See [SVG sources and trademark notes](icons/README.md).
 
 ## Apps and plugins
 
-Use `getAgentActions(agent, platform)` to discover plugin, app, and skill destinations. Pass the action ID in `getAgentLink` or in the options for either `AgentLink` button variant. `getAgentRoute(agent, platform, action)` describes its accepted fields, behavior, and evidence.
+Use `getAgentActions(agent, platform)` to discover app, plugin, skill, and template destinations. Pass the action ID in `getAgentLink` or in the options for either `AgentLink` button variant. `getAgentRoute(agent, platform, action)` describes its accepted fields, behavior, and evidence.
 
 ```ts
 import { getAgentActions, getAgentLink } from "agent-deeplinks"
@@ -215,6 +215,8 @@ The Playground includes an editable example for each action. ChatGPT app links u
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
 
 To reopen an active Antigravity CLI conversation, pass its printed Remote Control URL with `action: "remote-session"` on `web`, `ios`, or `android`. The receiving browser needs the same Google account while the original CLI is still running. [Antigravity CLI Remote Control](https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control)
+
+For OpenClaw 2026.11.10 on macOS and Linux, use `plugin-install`, `skill-install`, or `template-install` with a ClawHub package name as `target`, such as `@openclaw/discord`. These links route to the item in the connected Gateway. Installation is a separate action. [OpenClaw catalog link formats and evidence](research/plugin-links.md)
 
 ## Develop and deploy
 

@@ -404,6 +404,51 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
   assert.equal(getHermesSkillLink("file:///tmp/skill.md"), null);
 });
 
+test("builds OpenClaw desktop ClawHub review links for valid package names", () => {
+  const actions = [
+    ["plugin-install", "plugins"],
+    ["skill-install", "skills"],
+    ["template-install", "templates"],
+  ];
+  assert.deepEqual(getAgentActions("openclaw", "desktop").map(({ id }) => id), actions.map(([id]) => id));
+  for (const [action, family] of actions) {
+    const route = getAgentRoute("openclaw", "desktop", action);
+    assert.equal(route.behavior, "confirm");
+    assert.equal(route.evidence, "source");
+    assert.deepEqual(route.fields, { target: "name" });
+    const base = `openclaw://${family}/install?name=`;
+    for (const [target, encoded] of [
+      ["0", "0"],
+      ["tool_1.2-3", "tool_1.2-3"],
+      ["@owner.name/tool_1.2-3", "%40owner.name%2Ftool_1.2-3"],
+      ["a".repeat(214), "a".repeat(214)],
+      [`@a/${"b".repeat(211)}`, `%40a%2F${"b".repeat(211)}`],
+    ]) {
+      assert.equal(getAgentLink("openclaw", "desktop", { action, target }), base + encoded);
+    }
+    const options = { action, target: "@fixture/agent-link-review" };
+    const href = base + "%40fixture%2Fagent-link-review";
+    for (const platform of platforms.filter((platform) => platform !== "desktop")) {
+      assert.equal(getAgentRoute("openclaw", platform, action), null);
+      assert.equal(getAgentLink("openclaw", platform, options), null);
+    }
+    for (const iconOnly of [true, false]) {
+      const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "openclaw", platform: "desktop", options, iconOnly }));
+      assert.ok(markup.includes(`href="${href}"`));
+    }
+    for (const target of [
+      "", " tool", "tool ", "tool\n", "tool\u2028", "café", "Tool", "@Owner/tool", "@owner/Tool",
+      "a/b", "@owner", "@/tool", "@owner/", "@owner/a/b", "@.owner/tool", "@owner/_tool",
+      "./tool", "..", "%40owner%2Ftool", "tool@latest", "tool&name=other", "tool#fragment",
+      "https://clawhub.ai/owner/plugins/tool", href, "a".repeat(215), `@a/${"b".repeat(212)}`,
+    ]) {
+      assert.equal(getAgentLink("openclaw", "desktop", { action, target }), null, target);
+    }
+    assert.equal(getAgentLink("openclaw", "desktop", { ...options, server: "https://gateway.example" }), null);
+    assert.equal(getAgentLink("openclaw", "desktop", { ...options, prompt: special }), null);
+  }
+});
+
 test("opens an authenticated OpenClaw browser draft in the last or specified chat", () => {
   const server = "https://gateway.example:18443/team/openclaw/";
   const session = "https://gateway.example:18443/team/openclaw/chat/link-fixture/draft/proof";
