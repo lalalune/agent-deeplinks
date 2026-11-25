@@ -179,7 +179,10 @@ test("opens configured self-hosted Web apps from another device", () => {
   assert.equal(getAgentLink("openclaw", "web", { server: "https://gateway.example/?token=private" }), null);
   assert.equal(getAgentLink("openclaw", "android"), null);
   assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/openclaw/" }), "https://gateway.example/openclaw/");
-  assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/openclaw/", prompt: special }), null);
+  assert.equal(
+    getAgentLink("openclaw", "android", { server: "https://gateway.example/openclaw/", prompt: special }),
+    `https://gateway.example/openclaw/chat?draft=${encodeURIComponent(special)}`,
+  );
   assert.equal(getAgentLink("openclaw", "android", { server: "https://gateway.example/?token=private" }), null);
   assert.equal(getAgentLink("hermes", "web", { server: "javascript:alert(1)" }), null);
   for (const platform of ["ios", "android"]) {
@@ -295,6 +298,27 @@ test("opens the OpenClaw dashboard without a prompt and encodes Hermes skill rev
   assert.equal(getHermesSkillLink("bare-name"), null);
   assert.equal(getHermesSkillLink("official/../skill"), null);
   assert.equal(getHermesSkillLink("file:///tmp/skill.md"), null);
+});
+
+test("opens an authenticated OpenClaw browser draft in the last or specified chat", () => {
+  const server = "https://gateway.example:18443/team/openclaw/";
+  const session = "https://gateway.example:18443/team/openclaw/chat/link-fixture/draft/proof";
+  const prompt = "Draft + & %2B 100% café ☃\nSecond line — 東京";
+  const query = `?draft=${encodeURIComponent(prompt)}`;
+  assert.equal(getAgentLink("openclaw", "web"), "http://127.0.0.1:18789/");
+  assert.equal(getAgentLink("openclaw", "web", { prompt }), `http://127.0.0.1:18789/chat${query}`);
+  assert.equal(getAgentLink("openclaw", "web", { server, prompt }), `${server}chat${query}`);
+  assert.equal(getAgentLink("openclaw", "web", { server, session }), session);
+  assert.equal(getAgentLink("openclaw", "web", { server, session, prompt }), `${session}${query}`);
+  assert.equal(getAgentLink("openclaw", "android", { server, session, prompt }), `${session}${query}`);
+  assert.equal(getAgentLink("openclaw", "android", { prompt }), null);
+  for (const invalid of [
+    "https://gateway.example:18443/team/other/chat/main",
+    "https://other.example:18443/team/openclaw/chat/main",
+    "https://gateway.example:18443/team/openclaw/chat/",
+    `${session}?token=private`, `${session}#token=private`, "openclaw://dashboard",
+    "/team/openclaw/chat/main",
+  ]) assert.equal(getAgentLink("openclaw", "web", { server, session: invalid, prompt }), null, invalid);
 });
 
 test("opens the OpenClaw macOS Gateway review with an uncredentialed HTTPS address", () => {

@@ -71,6 +71,21 @@ function getOpenClawGatewayLink(address: string, platform: "desktop" | "ios"): s
   return `openclaw://gateway?host=${encodeURIComponent(host)}&port=${port}&tls=${tls ? 1 : 0}`;
 }
 
+function getOpenClawBrowserTarget(address: string, sessionAddress: string | undefined, hasDraft: boolean): string | null {
+  const gateway = parseServerUrl(address);
+  if (!gateway) return null;
+  if (!sessionAddress && !hasDraft) return gateway.href;
+
+  const chatPath = `${gateway.pathname.replace(/\/+$/u, "")}/chat`;
+  if (!sessionAddress) return `${gateway.origin}${chatPath}`;
+
+  const session = parseServerUrl(sessionAddress);
+  const prefix = `${chatPath}/`;
+  if (!session || session.origin !== gateway.origin ||
+    !session.pathname.startsWith(prefix) || !session.pathname.slice(prefix.length).split("/")[0]) return null;
+  return `${session.origin}${session.pathname}`;
+}
+
 function getOpenCodeOrigin(url: URL): string | null {
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
   return url.pathname === "/" && (url.protocol === "https:" || local) ? url.origin : null;
@@ -135,6 +150,7 @@ export function getAgentLink(
   const route = getAgentRoute(agent, platform);
   if (!route) return null;
 
+  const openClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
   const { allowExperimental: _allowExperimental, allowSend: _allowSend, browserOnly, ...fields } = options;
   for (const [field, value] of Object.entries(fields)) {
     if (value !== undefined && (typeof value !== "string" || !Object.hasOwn(route.fields ?? {}, field))) {
@@ -160,7 +176,7 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (fields.session && invalidSessionId.test(fields.session)) return null;
+  if (!openClawBrowser && fields.session && invalidSessionId.test(fields.session)) return null;
   if (fields.workspace) {
     const workspace = parseWorkspaceUri(fields.workspace);
     if (!workspace) return null;
@@ -189,7 +205,11 @@ export function getAgentLink(
     !fields.repo && !fields.prompt?.trim() && !fields.customAgent?.trim()) return null;
 
   let baseUrl = route.launcher?.appUrl ?? route.url;
-  if (fields.server) {
+  if (openClawBrowser) {
+    const target = getOpenClawBrowserTarget(fields.server || route.url, fields.session, Boolean(fields.prompt));
+    if (!target) return null;
+    baseUrl = target;
+  } else if (fields.server) {
     const server = parseServerUrl(fields.server);
     if (!server) return null;
     if (agent === "opencode") {

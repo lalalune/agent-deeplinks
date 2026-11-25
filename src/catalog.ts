@@ -53,6 +53,8 @@ export interface Agent {
 const cursorDocs = "https://cursor.com/docs/reference/deeplinks";
 const cursorCloudDocs = "https://cursor.com/docs/cloud-agent";
 const cursorCloud = "https://cursor.com/agents";
+const openClawBrowserDocs = "https://docs.openclaw.ai/web/urls";
+const openClawBrowserProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45521782875/artifacts/14980377652";
 const openClawMacGatewaySource = "https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website";
 const openClawIosGatewaySource = "https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985";
 const claudeCodeDocs = "https://code.claude.com/docs/en/deep-links";
@@ -69,6 +71,7 @@ const codexMobile = "https://chatgpt.com/app/codex";
 const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
@@ -298,6 +301,7 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754025",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45461984963/job/138686754337",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45507895510/artifacts/14974440993",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45513144306/artifacts/14976811777",
         ],
         note: "LaunchServices started the signed Grok Bot 1.3.0 app on macOS. Stock Ubuntu and Windows x64 and ARM64 apps received the exact link and opened at sign-in. Drafts require an eligible account and use the primary Bot unless you supply a Bot ID.",
       },
@@ -520,7 +524,7 @@ const catalog = {
         url: "codex://threads/new",
         sessionUrl: "codex://threads",
         behavior: "draft",
-        evidence: "source",
+        evidence: "verified",
         sources: [
           codexDocs,
           "https://chatgpt.com/cdn/assets/617936.82c33d1781.js",
@@ -529,7 +533,7 @@ const catalog = {
         ],
         fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
-        note: "The stock Windows and Ubuntu clients received the Chat-mode URL. Visible composer prefill remains unverified.",
+        note: "Stock Windows and Ubuntu handlers received the Chat-mode link. The signed Ubuntu preview displayed the exact unsent draft and opened an existing local thread by ID. The Windows test stopped at sign-in.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -572,11 +576,11 @@ const catalog = {
         url: "codex://new",
         sessionUrl: "codex://threads",
         behavior: "draft",
-        evidence: "documented",
+        evidence: "verified",
         sources: [codexDocs, ...openAiDesktopChecks],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
-        note: "Native dispatch checked on macOS, Windows, and Ubuntu. Visible composer prefill remains unverified. The handler tries an existing local path before matching the Git remote.",
+        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Ubuntu preview showed the exact unsent draft after folder review and reopened a local thread by ID. The handler tries a local path before matching the Git remote.",
       },
       ios: {
         url: codexMobile,
@@ -896,11 +900,11 @@ const catalog = {
     routes: {
       web: {
         url: "http://127.0.0.1:18789/",
-        behavior: "launch",
+        behavior: "draft",
         evidence: "verified",
-        sources: ["https://docs.openclaw.ai/web/control-ui"],
-        fields: { server: "" },
-        note: "Rendered OpenClaw Control against an isolated Gateway v2026.6.11. Enter your configured URL or leave it blank for the default local Gateway.",
+        sources: [openClawBrowserDocs, openClawBrowserProof],
+        fields: { prompt: "draft", server: "", session: "" },
+        note: "Sign in to your Gateway in the same tab before opening the draft. OpenClaw 2026.11.8 showed the exact unsent draft in the main and saved-session composers. A blank link opens the Gateway.",
       },
       desktop: {
         url: "openclaw://agent",
@@ -912,6 +916,8 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45476772927/job/138738941929",
           openClawMacGatewaySource,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45491339853/job/138790178318",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45515180904/artifacts/14976494519",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/45517891382/artifacts/14978123936",
         ],
         fields: { prompt: "message", server: "" },
         serverBehavior: "confirm",
@@ -920,7 +926,7 @@ const catalog = {
         launchUrl: "openclaw://dashboard",
         promptLimit: 240,
         promptLimitUnit: "grapheme",
-        note: "With a connected Gateway, signed macOS 2026.11.7 showed the exact message and Run confirmation. A blank link opened its Control UI. Version 2026.11.8 displayed the exact HTTPS address in Add Gateway.",
+        note: "On macOS, Run confirmation showed the exact message with a connected Gateway, and HTTPS addresses opened Add Gateway. The Linux AppImage received the Dashboard link after first-launch registration. The Linux 2026.11.8 DEB opened without the URL. The Windows Hub reached native setup.",
       },
       ios: {
         url: "openclaw://agent",
@@ -944,16 +950,17 @@ const catalog = {
       },
       android: {
         url: "http://127.0.0.1:18789/",
-        behavior: "launch",
+        behavior: "draft",
         evidence: "verified",
         sources: [
-          "https://docs.openclaw.ai/web/control-ui",
+          openClawBrowserDocs,
+          openClawBrowserProof,
           "https://docs.openclaw.ai/platforms/android",
           "https://github.com/openclaw/openclaw/releases/tag/v2026.8.2",
         ],
-        fields: { server: "" },
+        fields: { prompt: "draft", server: "", session: "" },
         required: ["server"],
-        note: "Opens your configured Gateway Control UI in a browser. Android 16 found no native dashboard link handler in the official OpenClaw 2026.8.2 APK.",
+        note: "Sign in to the Gateway in the same browser tab. An authenticated Pixel Chromium profile showed the exact saved-session draft. Android 16 found no native dashboard link handler in the official OpenClaw 2026.8.2 APK.",
       },
     },
   },

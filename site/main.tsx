@@ -42,7 +42,7 @@ const extraFieldDetails: Record<ExtraField, { label: string; placeholder?: strin
 const extraFields = Object.keys(extraFieldDetails) as ExtraField[];
 const serverFieldLabels: Partial<Record<AgentId, string>> = {
   hermes: "Web Access address",
-  openclaw: "Gateway address",
+  openclaw: "Gateway base address",
 };
 
 const evidenceNames: Record<Evidence, string> = {
@@ -135,6 +135,7 @@ function App() {
   const directory = directoryByRoute[routeKey] ?? "";
   const hasGatewaySetup = agent === "openclaw" && (platform === "desktop" || platform === "ios");
   const isIosGateway = hasGatewaySetup && platform === "ios";
+  const isOpenClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
   const serverKey = hasGatewaySetup ? routeKey : agent;
   const server = serverByTarget[serverKey] ?? "";
   const isGatewaySetup = hasGatewaySetup && Boolean(server);
@@ -163,12 +164,14 @@ function App() {
     ...(options.allowSend ? { allowSend: true } : {}),
   };
   const exampleOptions = href ? options : sampleOptions;
-  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession;
+  const useSampleOptions = !hasSshOptions && !options.folder && !isGatewaySetup && !isExistingSession &&
+    (!isOpenClawBrowser || !options.session);
   const reactExample = href || (useSampleOptions && getAgentLink(agent, platform, exampleOptions))
     ? getReactExample(agent, platform, exampleOptions)
     : null;
   const isLaunchOption = Boolean(href && route?.launchUrl && href === getAgentLink(agent, platform, { browserOnly: options.browserOnly }));
-  const behavior = isLaunchOption ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
+  const behavior = isLaunchOption || (isOpenClawBrowser && !options.prompt)
+    ? "launch" : (options.server && route?.serverBehavior) || route?.behavior;
   const reviewLabel = isGatewaySetup ? "Reviews a Gateway address"
     : hasSshOptions ? "Reviews an SSH target"
     : options.folder ? "Reviews a workspace folder" : undefined;
@@ -275,7 +278,8 @@ function App() {
                 <label className="field">
                   <span>
                     {isIosGateway ? "Gateway address (optional)"
-                      : hasGatewaySetup ? "Gateway HTTPS address (optional)" : route?.required?.includes("server")
+                      : hasGatewaySetup ? "Gateway HTTPS address (optional)"
+                      : isOpenClawBrowser && platform === "web" ? "Gateway base address (optional)" : route?.required?.includes("server")
                       ? serverFieldLabels[agent] ?? "Server origin"
                       : route?.serverBehavior ? "Server origin (optional)" : "Web app address (optional)"}
                   </span>
@@ -283,7 +287,8 @@ function App() {
                     value={server}
                     onChange={(event) => setServerByTarget({ ...serverByTarget, [serverKey]: event.target.value })}
                     placeholder={isIosGateway ? "https://gateway.example.com:443"
-                      : hasGatewaySetup ? "https://gateway.example.com/openclaw/" : route?.url}
+                      : hasGatewaySetup || (isOpenClawBrowser && platform === "android")
+                        ? "https://gateway.example.com/openclaw/" : route?.url}
                   />
                 </label>
               )}
@@ -302,8 +307,10 @@ function App() {
                         </Select>
                       ) : (
                         <label className="field" key={field}>
-                          <span>{field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
-                          <input value={extraValues[field] ?? ""} placeholder={placeholder} onChange={(event) => updateExtraField(field, event.target.value)} />
+                          <span>{field === "session" && isOpenClawBrowser ? "Session URL (optional)"
+                            : field === "session" && route?.sessionUrl ? "Chat ID (UUID)" : label}</span>
+                          <input value={extraValues[field] ?? ""} placeholder={field === "session" && isOpenClawBrowser
+                            ? "https://gateway.example.com/chat/main" : placeholder} onChange={(event) => updateExtraField(field, event.target.value)} />
                         </label>
                       );
                     })}
@@ -333,6 +340,7 @@ function App() {
                   <p>{hasSshOptions
                     ? "Check the SSH host, port, and folder. Clear Workspace folder when using SSH."
                     : isExistingSession ? "Enter the ID from the app’s existing chat link."
+                    : isOpenClawBrowser && options.session ? "Enter a chat session URL on the configured Gateway."
                     : options.folder ? "Enter an absolute workspace folder path."
                     : isGatewaySetup ? (isIosGateway
                       ? "Enter a Gateway origin with HTTPS or WSS, or use HTTP or WS on a local network."
