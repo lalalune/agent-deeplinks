@@ -1,0 +1,19 @@
+{
+  "artifact": {
+    "updaterManifest": "https://hermes-assets.nousresearch.com/releases/darwin/canary/canary-mac.yml",
+    "appArtifact": "https://hermes-assets.nousresearch.com/releases/tag/canary.20261125T064800Z-v0.23.4/HermesBundled-0.23.4%2Bcanary.20261125T064800Z-mac-arm64.dmg",
+    "version": "0.23.4+canary.20261125T064800Z",
+    "bundle": "com.nousresearch.hermes-bundled-canary",
+    "dmgLength": 944483165,
+    "forPublisherDmGSHA512": "SKHPFt2pe/t9OESsgWVLFjnNHMkleZ5nvSqr2On4pNvcWAmLrxZxglhUhN9KZW0ejwOQMwQmIJCPtFjE1+N89Q==",
+    "publisherTeam": "763K57MW7Z",
+    "signatureScope": "Strict signed executable validation with resource verification omitted. DMG byte length and publisher SHA-512 match. Image mounted read-only."
+  },
+  "exactTarget": "hermes://plugin/install?catalog=hermes-workbench",
+  "case": "Direct process launch in read-only vendor DMG with isolated Electron user data and Hermes home before warm LaunchServices dispatch.",
+  "observedProcess": true,
+  "rendererAttachment": "Timed out after 45000 ms.",
+  "createdIsolatedHermesLog": false,
+  "deeplinkDispatched": false,
+  "nativeReviewVerified": false
+}

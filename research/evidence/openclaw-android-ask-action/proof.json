@@ -1,0 +1,23 @@
+{
+  "apkVersion": "2026.8.2",
+  "gatewayVersion": "2026.8.2",
+  "isolatedArmAndroid": true,
+  "action": "ai.openclaw.app.action.ASK_OPENCLAW",
+  "extra": "prompt",
+  "nativeExplicitOnly": true,
+  "gatewayReady": true,
+  "androidOperatorApproved": false,
+  "nodeApproved": false,
+  "modelConnections": 0,
+  "draftSubmitted": false,
+  "visibleExactComposer": false,
+  "noBrowserDashboardHandler": true,
+  "coldExplicitDelivered": true,
+  "coldVisibleWelcome": true,
+  "exactDisposableCredentialEntered": true,
+  "pendingRoles": [
+    "node"
+  ],
+  "visibleNodeGate": true,
+  "stage": "Native stock flow requires node approval"
+}

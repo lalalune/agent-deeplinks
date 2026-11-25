@@ -1084,8 +1084,13 @@ test("opens Kimi shares in both official regional browsers", () => {
     `https://www.kimi.ai.example/share/${ids[0]}`, `https://example.com@www.kimi.ai/share/${ids[0]}`,
     `http://www.kimi.com/share/${ids[0]}`, `https://www.kimi.ai/chat/${ids[0]}`, `https://www.kimi.ai/share/${ids[0]}/extra`,
   ]) assert.equal(getAgentLink("kimi", "web", { action, target }), null);
-  assert.equal(getAgentLink("kimi", "ios", { action, target: ids[0] }), null);
-  assert.equal(getAgentLink("kimi", "android", { action, target: ids[0] }), null);
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("kimi", platform, { action, target: ids[0] }), `https://www.kimi.ai/share/${ids[0]}`);
+    const regional = `https://www.kimi.com/share/en/${ids[1]}`;
+    assert.equal(getAgentLink("kimi", platform, { action, target: regional + "?source=inert" }), regional);
+    assert.equal(getAgentLink("kimi", platform, { action, target: regional.replace("www.kimi.com", "www.kimi.com.example") }), null);
+  }
+  assert.equal(getAgentLink("kimi", "desktop", { action, target: ids[0] }), null);
 });
 
 test("opens Codex and ChatGPT desktop pages without changing their settings", () => {

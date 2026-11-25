@@ -1,0 +1,72 @@
+{
+  "libraryVersion": "0.1.49",
+  "publisherApkVersion": "3.1.5",
+  "publisherApkBuild": 382,
+  "devicePlatformApi": 35,
+  "rule": "Stock Android Package Manager, ACTION_VIEW plus BROWSABLE, no activity launch",
+  "appRemainedStopped": true,
+  "nativeConsentUntouched": true,
+  "cases": [
+    {
+      "url": "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+      "inResolverCandidates": false,
+      "allResolverCandidates": [
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "restrictedCandidates": [
+        "No activities found"
+      ]
+    },
+    {
+      "url": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "inResolverCandidates": false,
+      "allResolverCandidates": [
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "restrictedCandidates": [
+        "No activities found"
+      ]
+    },
+    {
+      "url": "https://www.kimi.ai/share/en/d1qvs6d96bk3t9j9ble0",
+      "inResolverCandidates": false,
+      "allResolverCandidates": [
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "restrictedCandidates": [
+        "No activities found"
+      ]
+    },
+    {
+      "url": "https://www.kimi.com/share/en/d1qvs6d96bk3t9j9ble0",
+      "inResolverCandidates": false,
+      "allResolverCandidates": [
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "restrictedCandidates": [
+        "No activities found"
+      ]
+    },
+    {
+      "url": "https://kimi.onelink.me/BZg1/",
+      "inResolverCandidates": true,
+      "allResolverCandidates": [
+        "com.moonshot.kimichat/.MainActivity",
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "restrictedCandidates": [
+        "com.moonshot.kimichat/.MainActivity"
+      ]
+    },
+    {
+      "url": "kimi://page/chat",
+      "inResolverCandidates": true,
+      "allResolverCandidates": [
+        "com.moonshot.kimichat/.route.ExternalLinkActivity"
+      ],
+      "restrictedCandidates": [
+        "com.moonshot.kimichat/.route.ExternalLinkActivity"
+      ]
+    }
+  ]
+}

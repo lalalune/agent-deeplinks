@@ -1,0 +1,17 @@
+{
+  "marketplace": "https://hermes-agent.nousresearch.com/marketplace/hermes-workbench",
+  "marketplaceHTMLSHA256": "08846f90da849f09721090e3ff3216723fe8fa2c9e03b7c5855e9698874cf5b7",
+  "emittedHref": "hermes://plugin/install?catalog=hermes-workbench",
+  "configuredFeed": "https://hermes-agent.nousresearch.com/docs/api/plugins.json",
+  "resolvedFeed": "https://nousresearch.github.io/hermes-agent/docs/api/plugins.json",
+  "resolvedFeedSHA256": "2b51cb831a3520f0dccfcb84c008b3e509f974102e1043a466750dfd2116483b",
+  "catalogEntry": {
+    "name": "hermes-workbench",
+    "version": "0.2.1",
+    "repo": "https://github.com/sxuff/hermes-workbench",
+    "sha": "f07fb5c90e24c1a396604758feb0fd4ae077760b",
+    "tier": "community"
+  },
+  "routeSource": "https://github.com/NousResearch/hermes-agent/blob/canary.20261125T064800Z-v0.23.4/apps/desktop/src/lib/deeplink-routes.ts",
+  "reviewSource": "https://github.com/NousResearch/hermes-agent/blob/canary.20261125T064800Z-v0.23.4/apps/desktop/src/store/plugin-catalog-install.ts"
+}

@@ -93,6 +93,8 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/blob/ee4f7f74b993f4436711fabe079aff63295e41b6/evidence/openai-windows-warm-links/README.md",
   "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/chatgpt-macos-warm-thread/proof.json",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45686443928/artifacts/15056138458",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45709858989/artifacts/15067321431",
+  "https://github.com/lalalune/agent-deeplinks/actions/runs/45710629611/artifacts/15067582915",
 ] as const;
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
@@ -616,7 +618,7 @@ const catalog = {
         ],
         fields: { prompt: "prompt", session: "" },
         query: { mode: "chat" },
-        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch and warm delivery both passed in an isolated local Work profile. The signed Mac app reopened the exact local thread from both a cold start and a running window. Copied links can include their remote host ID. Remote opening is source-backed and needs the owning host connection.",
+        note: "The signed Windows and Ubuntu apps displayed the exact unsent draft and reopened a local thread by ID. Windows cold Shell dispatch and warm delivery both passed in an isolated local Work profile. The signed Mac app showed the exact multiline draft in ChatGPT Work and reopened the exact local thread from both a cold start and a running window. Copied links can include their remote host ID. Remote opening is source-backed and needs the owning host connection.",
       },
       web: {
         url: "https://chatgpt.com/",
@@ -664,7 +666,7 @@ const catalog = {
         sources: [codexDocs, ...openAiDesktopChecks, codexRemoteThreadSource],
         fields: { prompt: "prompt", path: "path", originUrl: "originUrl", session: "" },
         launchUrl: "codex://threads/new",
-        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. Windows warm dispatch updated the same window. On macOS, both cold and warm dispatch reopened the exact local thread. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote. Copied links can include their remote host ID. Remote opening is source-backed and needs the owning host connection.",
+        note: "Native dispatch passed on macOS, Windows, and Ubuntu. The signed Windows and Ubuntu apps showed the exact unsent draft and reopened a local thread. Windows warm dispatch updated the same window. On macOS, the exact multiline draft appeared unsent and both cold and warm dispatch reopened the exact local thread. The requested folder review passed on Ubuntu. The handler tries a local path before matching the Git remote. Copied links can include their remote host ID. Remote opening is source-backed and needs the owning host connection.",
       },
       ios: {
         url: codexMobile,

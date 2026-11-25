@@ -573,7 +573,7 @@ function App() {
                     : isOpenClawBrowser && options.session
                       ? options.prompt && getAgentLink(agent, platform, { ...options, prompt: undefined })
                         ? "Clear the draft to open this destination."
-                        : "Enter a chat or dashboard session URL on the configured Gateway."
+                        : "Enter a chat, dashboard, or Beam URL on the configured Gateway."
                     : isOpenCodeAndroid ? "Use a valid session ID or choose a session mode."
                     : isOpenCodeBrowserSession ? "Enter a valid OpenCode session ID and server origin."
                     : options.folder ? "Enter an absolute workspace folder path."

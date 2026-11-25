@@ -628,6 +628,7 @@ const kimiSharedChat: ActionDefinition = {
   sources: [
     "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/kimi-public-share/proof.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/kimi-android-stock-share/proof.json",
   ],
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Conversation share link or ID", "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0")],
@@ -798,7 +799,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     })],
   },
   zcode: { web: [zcodeSharedChat], ios: [zcodeSharedChat], android: [zcodeSharedChat] },
-  kimi: { web: [kimiSharedChat] },
+  kimi: { web: [kimiSharedChat], ios: [kimiSharedChat], android: [kimiSharedChat] },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },
 };
