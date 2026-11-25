@@ -149,6 +149,11 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
   cursor: {
     plugin: { target: "cursor/google-drive" },
     "mcp-install": { target: "Example Server", config: '{"url":"https://example.com/mcp"}' },
+    command: { target: "review-changes", content: "Summarize the changed files and flag any missing tests." },
+    rule: { target: "review-guide", content: "Explain user-visible changes and cite the affected files." },
+  },
+  kimi: {
+    "shared-chat": { target: "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0" },
   },
   grok: {
     "shared-chat": { target: "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5" },
@@ -204,7 +209,7 @@ function ActionPlayground() {
       <div className="section-heading">
         <div>
           <h2 id="apps-title">Apps and plugins</h2>
-          <p>Build a link to an app page, shared conversation, plugin, skill, template, or server.</p>
+          <p>Build a link to a shared conversation, settings page, plugin, or review screen.</p>
         </div>
       </div>
       <div className="action-layout">
@@ -220,12 +225,19 @@ function ActionPlayground() {
           <Select label="Destination" value={action.id} onChange={(value) => setAction(value as AgentActionId)}>
             {actions.map(({ id, label }) => <option key={id} value={id}>{label}</option>)}
           </Select>
-          {action.inputs.map(({ field, label, placeholder }) => {
+          {action.inputs.map(({ field, label, placeholder, choices }) => {
             const edit = (value: string) => setEdits((saved) => ({ ...saved, [key]: { ...saved[key], [field]: value } }));
+            if (choices) {
+              return (
+                <Select key={field} label={label} value={options[field] ?? ""} onChange={edit}>
+                  {choices.map(({ label, value }) => <option key={value} value={value}>{label}</option>)}
+                </Select>
+              );
+            }
             return (
               <label className="field" key={field}>
                 <span>{label}</span>
-                {field === "prompt" || field === "config"
+                {field === "prompt" || field === "config" || field === "content"
                   ? <textarea value={options[field] ?? ""} placeholder={placeholder} rows={3} onChange={(event) => edit(event.target.value)} />
                   : <input value={options[field] ?? ""} placeholder={placeholder}
                       autoComplete={isPairingAction ? "off" : undefined} spellCheck={isPairingAction ? false : undefined}

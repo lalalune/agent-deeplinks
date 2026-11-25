@@ -417,7 +417,7 @@ test("builds OpenClaw desktop ClawHub review links for valid package names", () 
   for (const [action, family] of actions) {
     const route = getAgentRoute("openclaw", "desktop", action);
     assert.equal(route.behavior, "confirm");
-    assert.equal(route.evidence, action === "plugin-install" ? "verified" : "source");
+    assert.equal(route.evidence, action === "skill-install" ? "source" : "verified");
     assert.deepEqual(route.fields, { target: "name" });
     const base = `openclaw://${family}/install?name=`;
     for (const [target, encoded] of [
@@ -877,6 +877,83 @@ test("opens public Grok conversations from both share ID forms", () => {
   assert.equal(getAgentLink("grok", "desktop", { action: "shared-chat", target: legacyId }), null);
 });
 
+test("opens Kimi shares in both official regional browsers", () => {
+  const action = "shared-chat";
+  const ids = ["d1qvs6d96bk3t9j9ble0", "1a1c897b-3812-8e72-8000-0000e51328e4"];
+  for (const id of ids) {
+    assert.equal(getAgentLink("kimi", "web", { action, target: id }), `https://www.kimi.ai/share/${id}`);
+    for (const host of ["www.kimi.ai", "www.kimi.com"]) {
+      const url = `https://${host}/share/${id}`;
+      const options = { action, target: url + "/?source=inert#drop" };
+      assert.equal(getAgentLink("kimi", "web", options), url);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "kimi", platform: "web", options, iconOnly }));
+        assert.ok(markup.includes(`href="${url}"`));
+      }
+    }
+  }
+  for (const [host, locale] of [["www.kimi.ai", "en"], ["www.kimi.ai", "zh-hans"], ["www.kimi.com", "en"], ["www.kimi.com", "zh"]]) {
+    const href = `https://${host}/share/${locale}/${ids[1]}`;
+    assert.equal(getAgentLink("kimi", "web", { action, target: href + "?source=inert" }), href);
+  }
+  for (const target of [
+    `https://www.kimi.com/share/zh-hans/${ids[0]}`, `https://www.kimi.ai/share/zh/${ids[0]}`,
+    `https://www.kimi.ai.example/share/${ids[0]}`, `https://example.com@www.kimi.ai/share/${ids[0]}`,
+    `http://www.kimi.com/share/${ids[0]}`, `https://www.kimi.ai/chat/${ids[0]}`, `https://www.kimi.ai/share/${ids[0]}/extra`,
+  ]) assert.equal(getAgentLink("kimi", "web", { action, target }), null);
+  assert.equal(getAgentLink("kimi", "ios", { action, target: ids[0] }), null);
+  assert.equal(getAgentLink("kimi", "android", { action, target: ids[0] }), null);
+});
+
+test("opens Codex and ChatGPT desktop pages without changing their settings", () => {
+  for (const agent of ["codex", "chatgpt"]) {
+    for (const action of ["settings", "skills", "automations"]) {
+      const options = { action };
+      const href = `codex://${action}`;
+      assert.equal(getAgentLink(agent, "desktop", options), href);
+      assert.equal(getAgentLink(agent, "desktop", { ...options, prompt: special }), null);
+      assert.equal(getAgentLink(agent, "web", options), null);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent, platform: "desktop", options, iconOnly }));
+        assert.ok(markup.includes(`href="${href}"`));
+      }
+    }
+    for (const target of ["browser-use", "computer-use/google-chrome", "connections", "connections/computer", "connections/devices", "connections/ssh"]) {
+      assert.equal(getAgentLink(agent, "desktop", { action: "settings", target }), `codex://settings/${target}`);
+    }
+    for (const target of ["unknown", "../skills", "connections/ssh/add?name=test", "codex://settings/connections"]) {
+      assert.equal(getAgentLink(agent, "desktop", { action: "settings", target }), null);
+    }
+    assert.equal(getAgentRoute(agent, "desktop", "automations").behavior, "confirm");
+  }
+});
+
+test("builds Cursor command and rule reviews with the hosted length limit", () => {
+  const target = "Review-Tests_1.md";
+  const content = "# Review café ☃\nKeep literal + % and &.";
+  for (const [platform, base] of [["web", "https://cursor.com/link/"], ["desktop", "cursor://anysphere.cursor-deeplink/"]]) {
+    for (const action of ["command", "rule"]) {
+      const options = { action, target, content };
+      const prefix = `${base}${action}?name=${target}&text=`;
+      const encoded = encodeURIComponent(content);
+      const href = prefix + (platform === "desktop" ? encodeURIComponent(encoded) : encoded);
+      assert.equal(getAgentLink("cursor", platform, options), href);
+      assert.equal(getAgentLink("cursor", platform, { ...options, content: "a".repeat(10_000 - prefix.length) })?.length, 10_000);
+      assert.equal(getAgentLink("cursor", platform, { ...options, content: "a".repeat(10_001 - prefix.length) }), null);
+      for (const iconOnly of [true, false]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "cursor", platform, options, iconOnly }));
+        assert.ok(markup.includes(`href="${href.replace("&", "&amp;")}"`));
+      }
+      for (const invalidTarget of ["", ".", "..", "sub/child", "nested\\file", "nested%2Ffile", "nested..file", "space name", "qa&tool=extra", "CoM1", "x".repeat(101)]) {
+        assert.equal(getAgentLink("cursor", platform, { ...options, target: invalidTarget }), null);
+      }
+      assert.equal(getAgentLink("cursor", platform, { ...options, content: "   " }), null);
+      assert.equal(getAgentLink("cursor", platform, { ...options, prompt: special }), null);
+      assert.equal(getAgentLink("cursor", "ios", options), null);
+    }
+  }
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");
@@ -893,7 +970,7 @@ test("discovers supported actions without replacing default routes and uses them
         for (const { field } of action.inputs) assert.ok(Object.hasOwn(action.fields, field));
         for (const field of action.required) assert.ok(action.inputs.some((input) => input.field === field));
         for (const source of action.sources) assert.equal(new URL(source).protocol, "https:");
-        assert.equal(getAgentLink(id, platform, { action: action.id }), null);
+        if (action.required.length) assert.equal(getAgentLink(id, platform, { action: action.id }), null);
       }
     }
   }

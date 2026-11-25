@@ -24,6 +24,14 @@ Checked November 24, 2026. Prompt links were inspected or decoded without submit
 - A later Windows Server 2025 run installed the signed official Cursor 3.31.15 build and warmed its classic editor. After stock Shell dispatch of the corrected package URL, the native window screenshot, renderer, and accessibility tree captured **Create chat with prompt** and the exact two-line prompt, including the literal plus sign, ampersand-prefixed text, percent escape, and Unicode. The eight-minute job limit cancelled the final host logging. The uploaded before-and-after evidence includes the exact URL and the review, with no chat created. [Windows classic-editor job](https://github.com/lalalune/agent-deeplinks/actions/runs/45492105855/job/138792842652) · [Native and renderer review evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45492105855/artifacts/14968450079)
 - Icon: `icons/cursor.svg` is `General Logos/Cube/SVG/CUBE_2D_LIGHT.svg` from the official archive, the dark-colored cube for light backgrounds. [Cursor brand kit](https://cursor.com/brand), [official archive](https://ptht05hbb1ssoooe.public.blob.vercel-storage.com/assets/brand/cursor-brand-assets.zip)
 
+### Command and rule review
+
+Cursor documents `/command` and `/rule` with `name` and `text`. The installed extension accepts a 1–100 character filename stem made from letters, digits, dots, underscores, or hyphens. It rejects dot-only, double-dot, and reserved Windows names. Cursor appends `.md` for a command or `.mdc` for a rule.
+
+Fresh Chromium rendered the exact multiline Unicode preview for both hosted URLs. Cursor's desktop handler decodes the query twice. Direct native links encode the text twice to preserve literal plus signs and percent escapes. Cursor's hosted previews encode their native handoff once. A literal plus can become a space and a percent escape can be decoded again by Cursor. [Cursor deeplink reference](https://cursor.com/docs/reference/deeplinks)
+
+Cursor 3.31.15 on Ubuntu accepted the exact direct links through stock XDG. The native command and rule dialogs displayed their names, literal plus, percent escape, and multiline Unicode text. Both showed **Decline** and **Add to Home**. The test left the controls untouched and verified that neither file existed. [Signed native review evidence](https://github.com/lalalune/agent-deeplinks/actions/runs/45698623799/artifacts/15061468954)
+
 ## Google Antigravity
 
 - Desktop launch: `antigravity://`. Local Antigravity 2.34.0 declares the scheme in its macOS `Info.plist`. `NSWorkspace` resolved it to `/Applications/Antigravity.app`. After `open -g 'antigravity://'`, the already-running Antigravity process became frontmost. No prompt parameter was supplied.

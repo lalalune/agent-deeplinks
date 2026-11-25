@@ -3,14 +3,16 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "remote-session" | "server-pair";
+  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "remote-session" | "server-pair"
+  | "settings" | "skills" | "automations" | "command" | "rule";
 
-export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
+export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
 export interface AgentActionInput {
   readonly field: AgentActionField;
   readonly label: string;
   readonly placeholder?: string;
+  readonly choices?: readonly { readonly label: string; readonly value: string }[];
 }
 
 export interface AgentActionRoute extends Omit<AgentRoute, "fields" | "required"> {
@@ -47,6 +49,8 @@ const grokPlugins = "https://docs.x.ai/grok-bot/deep-links#add-a-plugin";
 const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x.ai";
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
 const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control";
+const cursorCustomizationName = /^(?!(?:con|prn|aux|nul|com[1-9]|lpt[1-9])$)(?!.*\.\.)[a-z0-9_.-]{1,100}$/iu;
+const cursorDeeplinkDocs = "https://cursor.com/docs/reference/deeplinks";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
 const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt";
 const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
@@ -289,6 +293,27 @@ const cursorPlugin = pathAction({
   note: "Opens the marketplace listing and its Add to Cursor flow.",
 }, /^[a-z0-9][a-z0-9_-]*(?:\/[a-z0-9][a-z0-9_-]*)?$/iu);
 
+function cursorCustomization(kind: "command" | "rule", platform: "web" | "desktop"): ActionDefinition {
+  const base = platform === "web" ? "https://cursor.com/link/" : "cursor://anysphere.cursor-deeplink/";
+  return {
+    id: kind, label: `Review Cursor ${kind}`, url: base + kind,
+    encodeQueryValuesTwice: platform === "desktop",
+    behavior: platform === "web" ? "handoff" : "confirm",
+    evidence: "verified",
+    sources: [
+      `${cursorDeeplinkDocs}#${kind}s`,
+      "https://github.com/lalalune/agent-deeplinks/actions/runs/45698623799/artifacts/15061468954",
+    ],
+    fields: { target: "name", content: "text" }, required: ["target", "content"],
+    inputs: [input("target", `${kind === "command" ? "Command" : "Rule"} name`, `review-${kind}`), input("content", "Content")],
+    urlLimit: 10_000,
+    note: platform === "web"
+      ? "Cursor displays a browser preview. Its handoff can change literal plus signs and percent escapes. Use the desktop link to preserve those characters."
+      : `Review the content before adding this file to .cursor/${kind}s/. Cursor adds the file extension.`,
+    prepare: ({ target }, url) => target && target !== "." && cursorCustomizationName.test(target) ? url : null,
+  };
+}
+
 function cursorMcp(url: string, behavior: "confirm" | "handoff"): ActionDefinition {
   return {
     id: "mcp-install", label: "Open MCP install", url, behavior,
@@ -387,16 +412,26 @@ const hermesSkill: ActionDefinition = {
   },
 };
 
+const openClawCatalogChecks = {
+  plugin: [],
+  skill: ["https://github.com/lalalune/agent-deeplinks/actions/runs/45697986978/job/139500313326"],
+  template: ["https://github.com/lalalune/agent-deeplinks/actions/runs/45695622934/artifacts/15060241920"],
+};
+
 const openClawCatalogNotes = {
   plugin: "The signed Linux AppImage opened the exact Discord plugin review in a connected Gateway using public ClawHub metadata. Installation is a separate action.",
-  skill: "The signed Linux AppImage opened the connected Gateway’s Skills page. Selection of the named skill remains unverified.",
-  template: "The connected Gateway must enable experimental workspace templates. The signed Linux AppImage requested the exact package and release. The review also needs the published template artifact.",
+  skill: "The signed Linux AppImage opened the Skills list with its bundled Gateway UI. It opened the named Weather review when connected to the source-built Control UI containing OpenClaw’s skill-page change.",
+  template: "The signed Linux AppImage opened the Travel Copilot review with experimental workspace templates enabled in the Gateway and its published archive available. Adding the template is a separate action.",
 } as const;
 
 function openClawCatalogInstall(kind: "plugin" | "skill" | "template"): ActionDefinition {
   return {
     id: `${kind}-install`, label: `Review ClawHub ${kind}`, url: `openclaw://${kind}s/install`,
-    behavior: "confirm", evidence: kind === "plugin" ? "verified" : "source", sources: openClawCatalogSources,
+    behavior: "confirm", evidence: kind === "skill" ? "source" : "verified",
+    sources: [
+      ...openClawCatalogSources,
+      ...openClawCatalogChecks[kind],
+    ],
     fields: { target: "name" }, required: ["target"],
     inputs: [input("target", "ClawHub package name", "@scope/package")],
     note: openClawCatalogNotes[kind],
@@ -485,6 +520,38 @@ const chatgptSharedChat = "https://chatgpt.com/share/";
 const claudeSharedChat = "https://claude.ai/share/";
 const grokSharedChat = "https://grok.com/share/";
 
+const kimiShareId = /^(?:[a-z0-9]{20}|[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12})$/iu;
+const kimiShareLocales: Readonly<Record<string, readonly string[]>> = {
+  "https://www.kimi.ai": ["ar", "zh-hans", "zh-hant", "en", "fr", "de", "id", "it", "ja", "ko", "pt-br", "ru", "es-419", "th", "tr", "vi"],
+  "https://www.kimi.com": ["zh", "en"],
+};
+const kimiSharedChat: ActionDefinition = {
+  id: "shared-chat", label: "Open shared conversation", url: "https://www.kimi.ai/share/",
+  behavior: "launch", evidence: "verified",
+  sources: [
+    "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/kimi-public-share/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Conversation share link or ID", "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0")],
+  note: "Opens a public Kimi share in the browser. Pasted links keep the original regional website and language when supplied.",
+  prepare: ({ target }, url) => {
+    if (!target || unsafeCharacters.test(target)) return null;
+    const original = parseUrl(target.trim());
+    if (!original) {
+      const id = readId(target, kimiShareId);
+      return id ? url + id : null;
+    }
+    const locales = kimiShareLocales[original.origin];
+    if (!locales) return null;
+    const locale = original.pathname.split("/")[2];
+    const prefix = locale && locales.includes(locale) ? `${locale}/` : "";
+    const base = `${original.origin}/share/${prefix}`;
+    const id = readId(target, kimiShareId, base);
+    return id ? base + id : null;
+  },
+};
+
 function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavior" | "evidence" | "sources" | "note">): ActionDefinition {
   return {
     ...route,
@@ -502,7 +569,44 @@ function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavi
 }
 
 const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokBotTemplate.mobile];
-const codexDesktopPlugins = [codexPlugin, codexInstall, codexPluginChat];
+const codexSettingsSections = [
+  { value: "", label: "Main Settings" },
+  { value: "browser-use", label: "Browser use" },
+  { value: "computer-use/google-chrome", label: "Google Chrome" },
+  { value: "connections", label: "Remote connections" },
+  { value: "connections/computer", label: "Control this computer" },
+  { value: "connections/devices", label: "Control other devices" },
+  { value: "connections/ssh", label: "SSH connections" },
+];
+
+const codexNavigationChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45698311458/artifacts/15061049251";
+
+const codexSettings: ActionDefinition = {
+  id: "settings", label: "Open Settings", url: "codex://settings",
+  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#settings`, codexNavigationChecks],
+  note: "The signed Linux app opened General Settings. Availability of specific sections depends on the desktop build.",
+  fields: { target: "" }, required: [],
+  inputs: [{ field: "target", label: "Settings section", choices: codexSettingsSections }],
+  prepare: ({ target }, url) => !target ? url : codexSettingsSections.some(({ value }) => value === target) ? `${url}/${target}` : null,
+};
+
+const codexSkills: ActionDefinition = {
+  id: "skills", label: "Open Skills", url: "codex://skills",
+  behavior: "launch", evidence: "documented", sources: [`${desktopPlugins}#skills`, codexNavigationChecks],
+  note: "The signed Linux app opened the Plugins hub with a Skills tab. In that build the Plugins tab stayed selected.",
+  fields: {}, required: [], inputs: [],
+  prepare: (_fields, url) => url,
+};
+
+const codexAutomations: ActionDefinition = {
+  id: "automations", label: "Open Scheduled", url: "codex://automations",
+  behavior: "confirm", evidence: "documented", sources: [`${desktopPlugins}#scheduled`, codexNavigationChecks],
+  fields: {}, required: [], inputs: [],
+  note: "Opens Scheduled. OpenAI documents a create form, and the tested Linux build showed the New task button.",
+  prepare: (_fields, url) => url,
+};
+
+const codexDesktopActions = [codexPlugin, codexInstall, codexPluginChat, codexSettings, codexSkills, codexAutomations];
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
   chatgpt: {
     web: [chatgptApp(chatgptPlugins, false), chatgptPlugin, chatgptPluginInstall, chatgptPluginChat, customGpt,
@@ -510,7 +614,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
         url: chatgptSharedChat, evidence: "verified", sources: [chatgptShareDocs, sharedChatBrowserChecks],
         note: "The public conversation rendered in desktop Chromium and iPhone WebKit. The web query excludes iOS handoff. Android may still open ChatGPT.",
       }, "?no_universal_links=1")],
-    desktop: [chatgptDesktopApp, ...codexDesktopPlugins],
+    desktop: [chatgptDesktopApp, ...codexDesktopActions],
     ios: [{
       ...chatgptApp("chatgpt://plugins/", true),
       sources: [appSpec, "https://github.com/openai/mcp-extensions/issues/56"],
@@ -526,7 +630,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "The signed Android app accepted the share link. The offline test reached the splash screen, and in-app conversation rendering still needs a connected run.",
     })],
   },
-  codex: { desktop: codexDesktopPlugins },
+  codex: { desktop: codexDesktopActions },
   grok: {
     web: [sharedChat({
       url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks],
@@ -548,8 +652,8 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: grokMobileActions,
   },
   cursor: {
-    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff")],
-    desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm")],
+    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web")],
+    desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm"), cursorCustomization("command", "desktop"), cursorCustomization("rule", "desktop")],
   },
   antigravity: {
     web: [antigravityWebPlugin, antigravityRemoteSession],
@@ -589,6 +693,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "Apple’s production association matches the clean share URL. Opening a shared snapshot in the installed iPhone app still needs a device check.",
     })],
   },
+  kimi: { web: [kimiSharedChat] },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },
 };

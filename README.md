@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.46.tgz
+npm install ./agent-deeplinks-0.1.47.tgz
 ```
 
 ## Usage
@@ -212,7 +212,11 @@ const draft = getAgentLink("codex", "desktop", {
 
 The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
 
-Pass a ChatGPT, Claude, or Grok share URL or its share ID as `target` with `action: "shared-chat"`. iOS links use Universal Links, and ChatGPT and Grok also support Android App Links. Android may hand some web variants to the installed app. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
+Pass a ChatGPT, Claude, Grok, or Kimi share URL or its share ID as `target` with `action: "shared-chat"`. iOS links use Universal Links, and ChatGPT and Grok also support Android App Links. Android may hand some web variants to the installed app. Kimi shares open on the original regional website. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
+
+For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as `target` and its text as `content`. The desktop link opens the review. The web link opens Cursor’s hosted preview. Cursor adds the file extension when the recipient confirms. [Cursor link reference](https://cursor.com/docs/reference/deeplinks)
+
+In Codex and ChatGPT Desktop, use `action: "settings"`, `"skills"`, or `"automations"`. Settings accepts an optional documented section such as `connections/ssh`. Scheduled opens the task screen. Some app versions open the create form directly. [OpenAI desktop link reference](https://learn.chatgpt.com/docs/reference/commands#deep-links)
 
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
 

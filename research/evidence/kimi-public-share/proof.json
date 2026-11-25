@@ -1,0 +1,321 @@
+{
+  "observedDate": "2026-11-25",
+  "publications": {
+    "compactId": "https://www.uneiaparjour.fr/kimi-k2/",
+    "uuid": "https://philpapers.org/archive/ISLAFF.pdf",
+    "vendorHelp": "https://www.kimi.ai/help/others/chat-issues"
+  },
+  "browserBoundary": "Fresh signed-out contexts. First-party GET, HEAD and OPTIONS and only the GetChatShare read RPC. WebSockets, third-party requests and all other POSTs blocked.",
+  "browsers": [
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "requested": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "final": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "mainDocumentStatus": 200,
+      "visible": {
+        "pageTextLength": 14268,
+        "expectedTopic": true,
+        "signedOutControl": true,
+        "continueControl": false,
+        "missingShare": false,
+        "visibleUploadOrSend": false,
+        "possibleMessageNodes": 4
+      },
+      "shareContentRead": [
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "method": "POST",
+          "allowed": true
+        },
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://www.kimi.ai/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+      "final": "https://www.kimi.ai/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+      "mainDocumentStatus": 200,
+      "visible": {
+        "pageTextLength": 7310,
+        "expectedTopic": true,
+        "signedOutControl": false,
+        "continueControl": false,
+        "missingShare": false,
+        "visibleUploadOrSend": false,
+        "possibleMessageNodes": 4
+      },
+      "shareContentRead": [
+        {
+          "host": "www.kimi.ai",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "method": "POST",
+          "allowed": true
+        },
+        {
+          "host": "www.kimi.ai",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://www.kimi.com/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+      "final": "https://www.kimi.com/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+      "mainDocumentStatus": 200,
+      "visible": {
+        "pageTextLength": 7365,
+        "expectedTopic": true,
+        "signedOutControl": false,
+        "continueControl": false,
+        "missingShare": false,
+        "visibleUploadOrSend": false,
+        "possibleMessageNodes": 4
+      },
+      "shareContentRead": [
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "method": "POST",
+          "allowed": true
+        },
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+      "final": "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+      "mainDocumentStatus": 200,
+      "visible": {
+        "pageTextLength": 13946,
+        "expectedTopic": true,
+        "signedOutControl": false,
+        "continueControl": false,
+        "missingShare": false,
+        "visibleUploadOrSend": false,
+        "possibleMessageNodes": 4
+      },
+      "shareContentRead": [
+        {
+          "host": "www.kimi.ai",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "method": "POST",
+          "allowed": true
+        },
+        {
+          "host": "www.kimi.ai",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "requested": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "final": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "mainDocumentStatus": 200,
+      "visible": {
+        "pageTextLength": 14009,
+        "expectedTopic": true,
+        "signedOutControl": false,
+        "continueControl": false,
+        "missingShare": false,
+        "visibleUploadOrSend": false,
+        "possibleMessageNodes": 4
+      },
+      "shareContentRead": [
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "method": "POST",
+          "allowed": true
+        },
+        {
+          "host": "www.kimi.com",
+          "path": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare",
+          "status": 200
+        }
+      ]
+    }
+  ],
+  "hostAssociations": {
+    "ios": {
+      "appId": "2J9472RW75.com.moonshot.kimichat",
+      "vendorAndAppleCDNPaths": [
+        "/app/*",
+        "/wxShare/*"
+      ],
+      "plainSharePathMatches": false
+    },
+    "android": {
+      "package": "com.moonshot.kimichat",
+      "version": "3.1.5",
+      "plainShareHostManifestMatches": false,
+      "details": "The signed 3.1.5 APK declares HTTPS families kimi.onelink.me and kimi.volctrack.com. The public .ai and .com DAL endpoints redirected and did not provide valid DAL JSON."
+    }
+  },
+  "uuidExactBrowserRerun": {
+    "engine": "Chromium",
+    "version": "158.0.8127.18",
+    "context": "Fresh, signed out. First-party GET/HEAD/OPTIONS and exact GetChatShare read RPC only. All other POSTs and WebSockets blocked.",
+    "checked": [
+      {
+        "host": "www.kimi.ai",
+        "requested": "https://www.kimi.ai/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "final": "https://www.kimi.ai/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "status": 200,
+        "topicVisible": true,
+        "renderedTextChars": 7310,
+        "messageSelectors": {
+          "[data-message-id]": 0,
+          "[data-testid*=\"message\"]": 0,
+          "[class*=\"message-content\"]": 0,
+          "[class*=\"segment-content\"]": 4
+        },
+        "publicReads": [
+          {
+            "status": 200,
+            "method": "POST",
+            "pathname": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare"
+          }
+        ]
+      },
+      {
+        "host": "www.kimi.com",
+        "requested": "https://www.kimi.com/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "final": "https://www.kimi.com/share/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "status": 200,
+        "topicVisible": true,
+        "renderedTextChars": 7365,
+        "messageSelectors": {
+          "[data-message-id]": 0,
+          "[data-testid*=\"message\"]": 0,
+          "[class*=\"message-content\"]": 0,
+          "[class*=\"segment-content\"]": 4
+        },
+        "publicReads": [
+          {
+            "status": 200,
+            "method": "POST",
+            "pathname": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare"
+          }
+        ]
+      }
+    ]
+  },
+  "productionRouter": {
+    "path": "/share/:lang(<configured locale>)?/:id",
+    "browserTestedPath": "/share/<id>",
+    "explicitIdPatternInRoute": false,
+    "observedPublicIdFormats": [
+      "20-character lowercase ASCII alphanumeric",
+      "36-character hex UUID shape"
+    ],
+    "sources": [
+      {
+        "url": "https://statics.moonshot.cn/kimi-web/assets/cd8a2c06b64e8-DdwCptUf.js",
+        "sha256": "d4626d22eacaac08f0e946b6074e2412318ae64dfdb97e5a37d1bc4681760fff"
+      },
+      {
+        "url": "https://statics.kimi.ai/kimi-web/assets/cd8a2c06b64e8-CH2wu3nj.js",
+        "sha256": "4c4263c5b22654b7f483c9c0fb595af85636faca93b9a052b93f6ca35d7f1050"
+      }
+    ],
+    "localeConfig": {
+      "www.kimi.ai": {
+        "source": "https://statics.kimi.ai/kimi-web/assets/c768b729b442a-d74ky_hO.js",
+        "sha256": "10a74071d30aac7276cb9dd0024c1fb8b613df39ed552b4724cc0c9076e99941",
+        "configured": [
+          "ar",
+          "zh-hans",
+          "zh-hant",
+          "en",
+          "fr",
+          "de",
+          "id",
+          "it",
+          "ja",
+          "ko",
+          "pt-br",
+          "ru",
+          "es-419",
+          "th",
+          "tr",
+          "vi"
+        ]
+      },
+      "www.kimi.com": {
+        "source": "https://statics.moonshot.cn/kimi-web/assets/c768b729b442a-BbFv0_bq.js",
+        "sha256": "255276f89d7bbc794cc0e5370f774cf64c030a96f2a8db097f636d7f77838654",
+        "configured": [
+          "zh",
+          "en"
+        ]
+      }
+    }
+  },
+  "uuidEnglishBrowserRerun": {
+    "engine": "Chromium",
+    "version": "158.0.8127.18",
+    "context": "Fresh, signed out. First-party GET/HEAD/OPTIONS and exact GetChatShare read RPC only. All other POSTs and WebSockets blocked.",
+    "checked": [
+      {
+        "host": "www.kimi.ai",
+        "requested": "https://www.kimi.ai/share/en/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "final": "https://www.kimi.ai/share/en/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "status": 200,
+        "topicVisible": true,
+        "renderedTextChars": 7310,
+        "messageSelectors": {
+          "[data-message-id]": 0,
+          "[data-testid*=\"message\"]": 0,
+          "[class*=\"message-content\"]": 0,
+          "[class*=\"segment-content\"]": 4
+        },
+        "publicReads": [
+          {
+            "status": 200,
+            "method": "POST",
+            "pathname": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare"
+          }
+        ]
+      },
+      {
+        "host": "www.kimi.com",
+        "requested": "https://www.kimi.com/share/en/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "final": "https://www.kimi.com/share/en/1a1c897b-3812-8e72-8000-0000e51328e4",
+        "status": 200,
+        "topicVisible": true,
+        "renderedTextChars": 7416,
+        "messageSelectors": {
+          "[data-message-id]": 0,
+          "[data-testid*=\"message\"]": 0,
+          "[class*=\"message-content\"]": 0,
+          "[class*=\"segment-content\"]": 4
+        },
+        "publicReads": [
+          {
+            "status": 200,
+            "method": "POST",
+            "pathname": "/apiv2/kimi.gateway.chat.v1.ChatService/GetChatShare"
+          }
+        ]
+      }
+    ]
+  }
+}
