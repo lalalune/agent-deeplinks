@@ -765,3 +765,30 @@ test("discovers supported actions without replacing default routes and uses them
   }));
   assert.match(markup, /href="https:\/\/chatgpt\.com\/plugins\/sample-plugin\/app\/cad\.browse"/u);
 });
+
+test("copies Antigravity Remote Control conversations across browser surfaces", () => {
+  const url = "https://antigravity.google.com/r/Instance_01?p=c%2Fconversation-02";
+  const options = { action: "remote-session", target: url };
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("antigravity", platform, options), url);
+    assert.equal(getAgentLink("antigravity", platform, { ...options, target: url + "&source=inert#drop" }), url);
+    assert.equal(getAgentLink("antigravity", platform, { ...options, target: url.replace("%2F", "/") }), url);
+    assert.equal(getAgentLink("antigravity", platform, { ...options, prompt: special }), null);
+    assert.equal(getAgentRoute("antigravity", platform, options.action).evidence, "documented");
+  }
+  for (const target of [
+    "https://antigravity.google.com/remote",
+    url.replace("/r/", "/R/"),
+    "https://antigravity.google.com/r/Instance_01",
+    "https://antigravity.google.com/r/Instance_01?p=files%2Fa",
+    "https://antigravity.google.com/r/Instance_01?p=c%2F",
+    "https://antigravity.google.com/r/Instance_01?p=c%2Fconversation%2Fextra",
+    "https://antigravity.google.com/r/Instance_01?p=c%252Fconversation",
+    "https://antigravity.google.com/r/Instance_01?p=c%2Fconversation&p=",
+    url.replace("google.com", "google.com.example"),
+    url.replace("https://", "https://someone@"),
+    url + "\n",
+  ]) assert.equal(getAgentLink("antigravity", "web", { ...options, target }), null, target);
+  assert.equal(getAgentLink("antigravity", "desktop", options), null);
+  assert.equal(getAgentLink("antigravity", "desktop"), "antigravity://");
+});

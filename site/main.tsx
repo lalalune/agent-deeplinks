@@ -156,6 +156,7 @@ const actionExamples: Partial<Record<AgentId, Partial<Record<AgentActionId, Link
   antigravity: {
     plugin: { target: "firebase" },
     skill: { target: "sample", marketplace: "antigravity-plugins-partners" },
+    "remote-session": { target: "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id" },
   },
   hermes: { "skill-install": { target: "official/security/1password" } },
   gemini: { gem: { target: "gem-id" } },
@@ -177,8 +178,8 @@ function ActionPlayground() {
   const key = `${agent}/${platform}/${action.id}`;
   const options: LinkOptions = { ...actionExamples[exampleAgent]?.[action.id], ...edits[key], action: action.id };
   const href = getAgentLink(agent, platform, options);
-  const isGrokShare = action.id === "team-bot" || action.id === "bot-template";
-  const example = href && getReactExample(agent, platform, isGrokShare ? { ...options, target: href } : options);
+  const canonicalTarget = action.id === "team-bot" || action.id === "bot-template" || action.id === "remote-session";
+  const example = href && getReactExample(agent, platform, canonicalTarget ? { ...options, target: href } : options);
   const label = `${action.label} in ${agents[agent].name}`;
   const behavior = action.behavior === "confirm" ? "Opens a review"
     : action.behavior === "launch" ? "Opens the destination" : behaviorNames[action.behavior];
@@ -188,7 +189,7 @@ function ActionPlayground() {
       <div className="section-heading">
         <div>
           <h2 id="apps-title">Apps and plugins</h2>
-          <p>Build a link to an app page, plugin, skill, or install review.</p>
+          <p>Build a link to an app page, shared conversation, plugin, or skill.</p>
         </div>
       </div>
       <div className="action-layout">

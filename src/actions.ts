@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template";
+  | "custom-gpt" | "gem" | "project" | "team-bot" | "bot-template" | "remote-session";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt";
 
@@ -38,6 +38,7 @@ const desktopPlugins = "https://learn.chatgpt.com/docs/reference/commands";
 const grokPlugins = "https://docs.x.ai/grok-bot/deep-links#add-a-plugin";
 const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x.ai";
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
+const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control";
 const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
 
 function input(field: AgentActionField, label: string, placeholder?: string): AgentActionInput {
@@ -321,6 +322,22 @@ const antigravitySkill: ActionDefinition = {
     ? `${url}${marketplace}/skills/${target}` : null,
 };
 
+const antigravityRemoteSession: ActionDefinition = {
+  id: "remote-session", label: "Open remote conversation", url: "https://antigravity.google.com/r/",
+  behavior: "launch", evidence: "documented", sources: [antigravitySessionDocs],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Remote Control conversation URL", "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id")],
+  note: "Use the URL printed by Antigravity CLI. The interactive session must still be running and the browser needs the same Google account.",
+  prepare: ({ target }, url) => {
+    if (!target || unsafeCharacters.test(target)) return null;
+    const link = readLink(target.trim(), url);
+    if (!link || !/^\/r\/[A-Za-z0-9_-]+$/u.test(link.pathname)) return null;
+    const [conversation, duplicate] = link.searchParams.getAll("p");
+    if (!conversation || duplicate !== undefined || !/^c\/[A-Za-z0-9_-]+$/u.test(conversation)) return null;
+    return `${link.origin}${link.pathname}?p=${encodeURIComponent(conversation)}`;
+  },
+};
+
 const hermesSkill: ActionDefinition = {
   id: "skill-install", label: "Open skill install", url: "hermes://skill/install",
   behavior: "confirm", evidence: "verified", sources: [
@@ -429,7 +446,12 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff")],
     desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm")],
   },
-  antigravity: { web: [antigravityWebPlugin], desktop: [antigravityPlugin, antigravitySkill] },
+  antigravity: {
+    web: [antigravityWebPlugin, antigravityRemoteSession],
+    desktop: [antigravityPlugin, antigravitySkill],
+    ios: [antigravityRemoteSession],
+    android: [antigravityRemoteSession],
+  },
   hermes: { desktop: [hermesSkill] },
   claude: { web: [claudePluginDetails, claudeConnector, claudePlugin], desktop: [claudePlugin] },
   gemini: { web: [geminiGem] },

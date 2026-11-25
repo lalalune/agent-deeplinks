@@ -21,7 +21,7 @@ On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 in
 You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
 
 ```sh
-npm install ./agent-deeplinks-0.1.40.tgz
+npm install ./agent-deeplinks-0.1.41.tgz
 ```
 
 ## Usage
@@ -203,6 +203,8 @@ const draft = getAgentLink("codex", "desktop", {
 The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
 
 For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
+
+To reopen an active Antigravity CLI conversation, pass its printed Remote Control URL with `action: "remote-session"` on `web`, `ios`, or `android`. The receiving browser needs the same Google account while the original CLI is still running. [Antigravity CLI Remote Control](https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control)
 
 ## Develop and deploy
 
