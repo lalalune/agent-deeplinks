@@ -1,0 +1,72 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45912551307",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45912551307/artifacts/15160853402",
+  "diagnosticHead": "f06f94860278977eae9539ffb69112593bf6d84c",
+  "signedAppVersion": "26.1120.50957",
+  "packageVersionInNativeRunner": "0.1.50",
+  "publicPackageVersionCrossCheck": "0.1.55",
+  "publicCodexAndChatGPTBuildersPreserveNativeUri": true,
+  "clipboardBytes": 97,
+  "clipboardSha256": "c14da1b6f333de60497a352aa7f65cb15d856485ce7f82908f29d74b92197bff",
+  "packageMatchesNativeCopiedRemoteUri": true,
+  "warm": {
+    "uriDispatched": true,
+    "reopened": true,
+    "sameProcess": true,
+    "screenshot": "native-ssh-thread-warm.png"
+  },
+  "cold": {
+    "uriDispatched": true,
+    "reopened": true,
+    "previousProcessExited": true,
+    "screenshot": "native-ssh-thread-cold.png"
+  },
+  "evidenceMilestones": [
+    {
+      "stage": "a distinct stock empty composer replaced the target before warm dispatch",
+      "pid": 6727,
+      "upperMainTitle": false,
+      "fixtureTranscript": false
+    },
+    {
+      "stage": "warm stock URI dispatch opened the exact saved thread in the same process",
+      "pid": 6727,
+      "upperMainTitle": true,
+      "fixtureTranscript": true
+    },
+    {
+      "stage": "a distinct stock empty composer replaced the target before cold launch",
+      "pid": 6727,
+      "upperMainTitle": false,
+      "fixtureTranscript": false
+    },
+    {
+      "stage": "cold stock URI dispatch opened the exact saved thread in a different process",
+      "pid": 11173,
+      "upperMainTitle": true,
+      "fixtureTranscript": true
+    }
+  ],
+  "seedUnchanged": true,
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "accountUsed": false,
+  "providerRequests": [
+    {
+      "method": "POST",
+      "route": "/v1/responses",
+      "phase": "seed one canned loopback response into a named remote stock thread",
+      "admitted": true
+    }
+  ],
+  "noAdditionalProviderWrites": true
+}
