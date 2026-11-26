@@ -138,11 +138,13 @@ The v0.1.50 tag passed 50 package tests. Chromium 158 and WebKit 27.2 checked 77
 
 - T3 Code’s signed Android build 823 opened the same existing scratch thread with an empty composer and an exact unsent draft on native ARM64 Android 15 using ReDroid. Both the custom scheme and Android-verified HTTPS routes passed. [Native thread evidence](coding-agents.md#t3-code)
 
+- The signed macOS Hermes canary opened the exact `hermes-workbench` Marketplace review in a disposable profile. The **Install** control stayed untouched. [Native review proof](evidence/hermes-catalog-review/native-review-proof.json)
+
+- The exact Codex snapshot URLs rendered an intentionally published course example in signed-out desktop Chromium, iPhone WebKit, and Pixel Chromium. [Public browser proof](evidence/codex-shared-snapshot/public-browser-proof.json)
+
 ### Remaining native checks
 
-- Hermes Marketplace emitted the exact plugin review URI. The signed macOS canary timed out before the renderer attached and the URI was never dispatched. [Marketplace and native startup results](other-agents.md#hermes-agent-and-openclaw)
 - Cursor Origin pull requests and Grok Build Cloud Agents preserved their target through browser sign-in. Signed-in destination views and installed mobile delivery remain open. [Cursor Origin evidence](evidence/cursor-origin-pull-request/proof.json) · [Grok Build evidence](other-agents.md#grok-build)
-- Codex’s snapshot viewer rendered the unavailable state for the synthetic ID on desktop, iPhone, and Pixel browser profiles. Content verification requires an active viewable snapshot. [Browser proof](evidence/codex-shared-snapshot/proof.json)
 - ZCode’s viewer rendered its published rich-content fixture on desktop and mobile. Verifying content from the live service requires an active viewable share. [Browser proof](evidence/zcode-browser-share/proof.json)
 - Existing synced ChatGPT and Claude conversations and copied Codex desktop links to a connected remote host still need signed-in native checks. [Existing chat research](openai-anthropic.md)
 - Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)

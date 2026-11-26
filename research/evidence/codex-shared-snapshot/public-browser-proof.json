@@ -1,0 +1,47 @@
+{
+  "observedAtUtc": "2026-11-26T03:29Z",
+  "package": "agent-deeplinks@0.1.50 installed from npm",
+  "agent": "codex",
+  "action": "shared-chat",
+  "target": "cx_6aeab8561cfc8191b26133e89f99ac11",
+  "publicAuthorSource": "https://github.com/tpemartin/115-1-GAI-data-vis/issues/7",
+  "requestedAndFinalUrl": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+  "documentStatus": 200,
+  "snapshot": {
+    "method": "GET",
+    "path": "/backend-api/wham/shared_threads/cx_6aeab8561cfc8191b26133e89f99ac11",
+    "status": 200
+  },
+  "initialCookiesPerProfile": 0,
+  "visibleTitle": "規劃有效樣本分析流程",
+  "publicTopicMarkerMatched": true,
+  "structuralNodesPerProfile": 17,
+  "structuralSelector": "main, article, [data-message-author-role], [data-testid^=conversation-turn]",
+  "profiles": [
+    {
+      "profile": "Desktop Chromium",
+      "platform": "web",
+      "engine": "158.0.8127.18",
+      "visibleCharacters": 5155,
+      "continueInChatgptVisible": true,
+      "blockedNonReadRequests": 6
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "platform": "android",
+      "engine": "158.0.8127.18",
+      "visibleCharacters": 5135,
+      "continueInChatgptVisible": false,
+      "blockedNonReadRequests": 11
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "platform": "ios",
+      "engine": "27.2",
+      "visibleCharacters": 5140,
+      "continueInChatgptVisible": false,
+      "blockedNonReadRequests": 13
+    }
+  ],
+  "scope": "Fresh signed-out browser context per profile. Service workers and WebSockets blocked. Allowed HTTPS GET, HEAD and OPTIONS only to OpenAI and ChatGPT sites and assets. No account access, writes or UI actions."
+}

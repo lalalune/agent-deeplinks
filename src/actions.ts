@@ -444,14 +444,15 @@ const antigravityRemoteSession: ActionDefinition = {
 
 const hermesCatalogPlugin: ActionDefinition = {
   id: "plugin-install", label: "Review Marketplace plugin", url: "hermes://plugin/install",
-  behavior: "confirm", evidence: "source",
+  behavior: "confirm", evidence: "verified",
   sources: [
     "https://hermes-agent.nousresearch.com/marketplace/hermes-workbench",
     "https://github.com/NousResearch/hermes-agent/blob/v0.23.4/apps/desktop/src/store/plugin-catalog-install.ts",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/hermes-catalog-review/native-review-proof.json",
   ],
   fields: { target: "catalog" }, required: ["target"],
   inputs: [input("target", "Marketplace plugin name", "hermes-workbench")],
-  note: "Hermes Desktop resolves the name in its curated Marketplace and opens a review for the active profile.",
+  note: "The signed macOS canary opened the exact Marketplace plugin review for the active profile. Installation waits for confirmation.",
   prepare: ({ target }, url) => target && /^[a-z0-9][a-z0-9_-]*$/u.test(target) ? url : null,
 };
 
@@ -585,10 +586,11 @@ function sharedChat(
 
 const chatgptSharedChat = "https://chatgpt.com/share/";
 const codexSharedChat = sharedChat({
-  url: "https://chatgpt.com/s/", evidence: "source",
+  url: "https://chatgpt.com/s/", evidence: "verified",
   sources: [
     "https://learn.chatgpt.com/docs/use-chatgpt#share-a-read-only-snapshot-of-a-codex-thread",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/codex-shared-snapshot/proof.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/codex-shared-snapshot/public-browser-proof.json",
   ],
   note: "Opens the read-only Codex snapshot in the browser. A working share link and its original access permissions are required to view the content.",
 }, "", { id: /^cx_[a-f0-9]{32}$/u, example: "cx_00000000000080008000000000000000" });

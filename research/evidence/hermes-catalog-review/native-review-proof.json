@@ -1,0 +1,37 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45748728570",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45748728570/artifacts/15084582848",
+  "diagnosticHead": "2bcf989",
+  "testedRelease": "0.1.50",
+  "app": {
+    "updaterManifest": "https://hermes-assets.nousresearch.com/releases/darwin/canary/canary-mac.yml",
+    "zip": "https://hermes-assets.nousresearch.com/releases/tag/canary.20261125T064800Z-v0.23.4/HermesBundled-0.23.4%2Bcanary.20261125T064800Z-mac-arm64.zip",
+    "version": "0.23.4+canary.20261125T064800Z",
+    "bundle": "com.nousresearch.hermes-bundled-canary",
+    "signingTeam": "763K57MW7Z",
+    "zipLength": 982293003,
+    "publisherZipSha512Base64": "uH17vmr5rxo2jP45SYg7wO2XhjPpp+5HBZJCbPu7BFsbvSBm/I+ygfP8RKSR14ngmcwO511Pkg9pafNCHhqX4w==",
+    "signatureScope": "Strict executable signature validation with resource verification omitted. ZIP length and publisher SHA-512 checked."
+  },
+  "host": {
+    "version": "macOS 26.7.2",
+    "build": "25G332",
+    "architecture": "arm64"
+  },
+  "exactTarget": "hermes://plugin/install?catalog=hermes-workbench",
+  "dispatch": "Application-targeted macOS LaunchServices open to the signed bundle after its workspace appeared in a fresh scratch profile.",
+  "deliveryLog": "2026-11-26 03:27:20,357 [hermes] [deeplink] delivered plugin/install",
+  "visibleDialog": [
+    "hermes-workbench",
+    "Community",
+    "Reviewed by Nous. Installs for default and turns on right away.",
+    "Advanced",
+    "Cancel",
+    "Install",
+    "Close"
+  ],
+  "screenshot": "catalog-review.png",
+  "nativeReviewVerified": true,
+  "controlsClicked": false,
+  "installedNameMatchesInScratch": []
+}
