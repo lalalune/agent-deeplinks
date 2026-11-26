@@ -1,8 +1,34 @@
-# Agent Deeplinks
+# agent-deeplinks
 
-Open AI agents from a website, a README, or an app. The package builds provider URLs, includes SVG brand marks, and ships a React link that works with shadcn/ui.
+**Agents are the new frontend.** Open your app directly inside ChatGPT, Claude, Cursor, Codex, GitHub Copilot, and more with a single deep link.
 
-[Playground](https://playground.agent-deeplinks.pages.dev/) · [Download ZIP](https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip) · [Evidence and source notes](research/README.md)
+[deeplinks.fun](https://deeplinks.fun) · [npm](https://www.npmjs.com/package/agent-deeplinks) · [Research notes](research/README.md)
+
+<p>
+  <a href="https://chatgpt.com/?q=tell%20me%20about%20deeplinks.fun&disable_auto_send=1&no_universal_links=1"><img src="https://img.shields.io/badge/ChatGPT-18181b?style=for-the-badge" alt="ChatGPT" /></a>
+  <a href="https://claude.ai/new?q=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Claude-18181b?style=for-the-badge" alt="Claude" /></a>
+  <a href="https://cursor.com/link/prompt?text=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Cursor-18181b?style=for-the-badge" alt="Cursor" /></a>
+  <a href="https://claude.ai/code/new?q=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Claude%20Code-18181b?style=for-the-badge" alt="Claude Code" /></a>
+  <a href="https://github.com/copilot/app/launch?open=ghapp%3A%2F%2Fsession%2Fnew%3Fprompt%3Dtell%2520me%2520about%2520deeplinks.fun"><img src="https://img.shields.io/badge/GitHub%20Copilot-18181b?style=for-the-badge" alt="GitHub Copilot" /></a>
+  <a href="https://gemini.google.com/app?q=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Gemini-18181b?style=for-the-badge" alt="Gemini" /></a>
+  <a href="https://www.perplexity.ai/search?q=tell%20me%20about%20deeplinks.fun&s=o"><img src="https://img.shields.io/badge/Perplexity-18181b?style=for-the-badge" alt="Perplexity" /></a>
+  <a href="https://grok.com/?q=tell%20me%20about%20deeplinks.fun&stay_in_browser=true"><img src="https://img.shields.io/badge/Grok-18181b?style=for-the-badge" alt="Grok" /></a>
+  <a href="https://app.t3.codes/new?prompt=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/T3%20Code-18181b?style=for-the-badge" alt="T3 Code" /></a>
+  <a href="https://cursor.com/grok-bot/link/v1/prompt?text=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Grok%20Bot-18181b?style=for-the-badge" alt="Grok Bot" /></a>
+  <a href="https://www.meta.ai/?prompt=tell%20me%20about%20deeplinks.fun"><img src="https://img.shields.io/badge/Meta%20AI-18181b?style=for-the-badge" alt="Meta AI" /></a>
+  <a href="https://chatgpt.com/codex"><img src="https://img.shields.io/badge/Codex-18181b?style=for-the-badge" alt="Codex" /></a>
+  <a href="https://antigravity.google.com/remote"><img src="https://img.shields.io/badge/Antigravity-18181b?style=for-the-badge" alt="Antigravity" /></a>
+  <a href="https://grok.com/build"><img src="https://img.shields.io/badge/Grok%20Build-18181b?style=for-the-badge" alt="Grok Build" /></a>
+  <a href="https://www.kimi.ai/"><img src="https://img.shields.io/badge/Kimi-18181b?style=for-the-badge" alt="Kimi" /></a>
+  <a href="https://code-rc.kimi.ai/"><img src="https://img.shields.io/badge/Kimi%20Code-18181b?style=for-the-badge" alt="Kimi Code" /></a>
+  <a href="https://muse.ai/chat?nr=1"><img src="https://img.shields.io/badge/Meta%20Muse-18181b?style=for-the-badge" alt="Meta Muse" /></a>
+  <a href="https://zcode.z.ai/remote/v4?app_version=4.0.0"><img src="https://img.shields.io/badge/ZCode-18181b?style=for-the-badge" alt="ZCode" /></a>
+  <a href="https://deeplinks.fun"><img src="https://img.shields.io/badge/OpenClaw-18181b?style=for-the-badge" alt="OpenClaw" /></a>
+  <a href="https://deeplinks.fun"><img src="https://img.shields.io/badge/OpenCode-18181b?style=for-the-badge" alt="OpenCode" /></a>
+  <a href="https://deeplinks.fun"><img src="https://img.shields.io/badge/Hermes%20Agent-18181b?style=for-the-badge" alt="Hermes Agent" /></a>
+</p>
+
+Try Desktop & Mobile native links (`claude://`, `cursor://`, `codex://`, `ghapp://`, `openclaw://`, `opencode://`, `hermes://`) live at **[deeplinks.fun](https://deeplinks.fun)** — GitHub strips non-HTTPS URI schemes in READMEs.
 
 ## Install
 
@@ -10,168 +36,63 @@ Open AI agents from a website, a README, or an app. The package builds provider 
 npm install agent-deeplinks
 ```
 
-You can also install the tarball directly from GitHub Releases.
+Standalone ZIP archives with the bundled SVGs and static demo are also published on [GitHub Releases](https://github.com/lalalune/agent-deeplinks/releases/latest).
 
-```sh
-npm install https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.tgz
-```
+## Quick start
 
-On npm 12, add `--allow-remote=root` when installing the tarball URL. [npm 12 install defaults](https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/)
-
-You can also download the ZIP from GitHub Releases and install its bundled npm tarball. The ZIP includes a static demo and the SVG files.
-
-```sh
-npm install ./agent-deeplinks-0.1.53.tgz
-```
-
-## Usage
-
-The TypeScript API works without React.
+Works in any TypeScript or JavaScript project, with no React required:
 
 ```ts
-import { agents, getAgentLink, getAgentRoute } from "agent-deeplinks"
+import { getAgentLink, getAgentRoute, getAgentIcon } from "agent-deeplinks"
 
-const url = getAgentLink("cursor", "web", { prompt: "Explain this project." })
-const route = getAgentRoute("cursor", "web")
-console.log(url, route?.behavior, agents.cursor.name)
+const url = getAgentLink("claude", "desktop", {
+  prompt: "tell me about deeplinks.fun",
+})
+// => "claude://claude.ai/new?q=tell%20me%20about%20deeplinks.fun"
+
+const route = getAgentRoute("claude", "desktop") // fields, behavior, evidence, sources
+const icon = getAgentIcon("claude") // data:image/svg+xml,...
 ```
 
-`getAgentLink(agent, platform, options)` returns a URL or `null` if the route is unavailable, its parameters are invalid, or it needs an opt-in. Platform IDs are `web`, `desktop`, `ios`, `android`, `cli`, and `vscode`. Call `getAgentRoute` to see the accepted fields, behavior, constraints, sources, and evidence. `agents[id].home` is a product-site fallback.
+- `getAgentLink(agent, platform, options)` returns a URL string, or `null` if the route is unavailable, inputs are invalid, or an opt-in is required.
+- Platforms: `"web" | "desktop" | "ios" | "android" | "cli" | "vscode"`.
+- Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
+- Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
 
-To open an existing desktop chat in Claude, ChatGPT, or Codex, pass its conversation or local thread UUID as `session`. For Claude use the UUID from the chat URL. In ChatGPT and Codex use the ID from **Copy chat deep link**. The destination app needs access to the chat. [Claude Desktop links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link) · [ChatGPT and Codex links](https://learn.chatgpt.com/docs/reference/commands#deep-links)
+## Apps, plugins, MCP & skills
 
-```ts
-const session = "12345678-1234-4234-9234-123456789abc"
-const existingChat = getAgentLink("codex", "desktop", { session })
-```
-
-For an existing remote Codex thread, pass the exact URL from **Copy chat deep link** as `session` on ChatGPT or Codex Desktop. The helper preserves the copied thread ID and `hostId`. The app needs its existing owning-host connection. Remote opening is based on the app's shipped code and has not been tested with a connected host. [Remote links](research/openai-anthropic.md#copied-remote-codex-thread-links)
-
-Use `cloudAgent` on any Cursor target to open an existing Cloud Agent. Pass its `bc-…` ID or its Cursor URL, including team URLs. Desktop opens the agent by ID. Web and mobile keep the original team path when provided. This link is separate from a new prompt. [Cloud Agents API](https://cursor.com/docs/cloud-agent/api/endpoints) · [Cursor desktop link](https://forum.cursor.com/t/open-by-id-url-for-the-cloud-agent/159908/7)
-
-Use `getAgentLink("grok-build", "web")` to open the Grok Build inbox in a browser. Pass a `bc-…` Cloud Agent ID or its personal or team `https://grok.com/build/…` link as `cloudAgent` on `web`, `ios`, or `android`. iOS may open Cursor, and Android publishes a separate Grok Build app association. The Android browser fallback reaches Grok sign-in. The receiving app must have access to the agent. The separately installed `grok` terminal app uses `grok --resume <session-id>` for local sessions. [Grok Build links](research/other-agents.md#grok-build)
-
-Use `task` to open an existing Codex Cloud task on `web`, `ios`, or `android`. Pass the `task_…` ID emitted by the Codex CLI or paste the HTTPS task link from ChatGPT. The app needs access to that task. A pasted link keeps its task path and discards query and fragment text. On `web`, set `browserOnly: true` to apply the iOS browser-only exclusion. [Codex Cloud access](https://help.openai.com/en/articles/20001545-using-codex-cloud) · [Codex CLI URL format](https://github.com/openai/codex/blob/3f65e9f13165d85d1b1fbe20ce06c55758f927b9/codex-rs/cloud-tasks/src/util.rs#L122-L135)
-
-Experimental routes require `allowExperimental: true`. Routes that auto-submit require `allowSend: true`. Prompt text goes into the URL and can appear in browser history and logs. Keep credentials and private data out of shareable links.
-
-Cursor Desktop links encode the draft for both decoders in the app. The official Cursor web handoff can turn literal plus signs into spaces in the desktop review. Choose Desktop when the exact punctuation matters. [Cursor verification](research/coding-agents.md#cursor)
-
-Grok’s Web link opens a send review. Choosing **Cancel** leaves the prompt editable. Use the Web target for this behavior on a phone. The native iOS and Android targets are app handoffs.
-
-Claude Code's iOS, Android, and HTTPS draft links support a prompt, a session `mode` of `plan` or `code`, an optional GitHub `repo` in `owner/name` format, and an optional `branch` when a repository is supplied.
-
-Use `getAgentLink("claude-code", "vscode", { prompt: "Review my changes." })` to prefill a draft in the Claude Code extension for VS Code. Pass `session` to resume a session from the current workspace.
-
-For an existing Claude Code cloud session, pass its `session_…` or `cse_…` ID as `session` on `web`, `ios`, or `android`. The link opens the existing session. Fields for a new draft cannot be combined with `session`. [Anthropic’s cloud and mobile links](https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link)
-
-For Claude and Claude Code web links, use `browserOnly: true` to keep the link in the browser on iOS. Leave it unset for the usual Universal Link handoff.
-
-Claude Code Desktop accepts `folder` as an absolute local workspace path. It asks the user to confirm the folder before using it. [Claude Desktop deeplinks](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link)
-
-Claude Code Desktop also accepts `sshHost` with optional `sshPort` and `sshFolder`. Claude shows the target for review before use and keeps the prompt as an editable draft. This requires Desktop v2.110.0 or later and a signed-in account. [SSH deeplinks](https://code.claude.com/docs/en/desktop#open-an-ssh-session-from-a-link)
+Beyond chat drafts, `agent-deeplinks` builds action links for plugin apps, marketplace listings, MCP installs, skills, commands, rules, shared chats, and server pairing. Discover available actions with `getAgentActions(agent, platform)` and pass `action` to `getAgentLink`:
 
 ```ts
-const remoteDraft = getAgentLink("claude-code", "desktop", {
-  sshHost: "dev@build.example.com",
-  sshPort: "2222",
-  sshFolder: "~/project",
-  prompt: "Review the build logs.",
+import { getAgentActions, getAgentLink } from "agent-deeplinks"
+
+const actions = getAgentActions("chatgpt", "web")
+
+const appUrl = getAgentLink("chatgpt", "web", {
+  action: "app",
+  target: "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8",
+  tool: "cad.browse",
+  appPath: "/parts/part_joystick",
+})
+
+const pluginChatUrl = getAgentLink("codex", "desktop", {
+  action: "plugin-chat",
+  target: "openai-developers@openai-curated",
+  prompt: "Find the docs for app deep links.",
 })
 ```
 
-GitHub Copilot Desktop can open a draft with a prompt, an `owner/repo` repository, or a custom agent. The Web option wraps draft links in GitHub’s hosted launcher. Choose `vscode` to open the VS Code Agents window with a prompt and an optional `workspace` folder URI.
+See [research/plugin-links.md](research/plugin-links.md) for all supported action IDs, parameters, and provider requirements.
 
-```ts
-const copilot = getAgentLink("github-copilot", "web", {
-  prompt: "Explain how this project runs its tests.",
-  repo: "owner/repo",
-  mode: "interactive",
-})
-```
+## React & shadcn/ui
 
-Codex desktop links can carry both an absolute `path` and an `originUrl`. The desktop app tries the local path first and then matches the remote if the path does not resolve to a directory.
-
-For Hermes and OpenClaw, set `server` to the URL of your Webapp or Control UI when opening from another device. With no address supplied, the Web links use each product's localhost default. In a fresh local browser tab, Hermes shows how to sign in with the host's `hermes webapp` command. Hermes on iOS and Android requires your configured Web Access address.
-
-For OpenCode 2.x on the web or in an iPhone browser, supply the server origin in `server`. Add `session` to open a saved session by ID in a browser already connected to that server. On Web, `directory` alone builds the older OpenCode 1.x project URL. OpenCode Desktop accepts the local directory and an optional prompt.
-
-```ts
-getAgentLink("opencode", "web", {
-  server: "https://code.example.com",
-  session: "ses_example",
-})
-```
-
-To pair OpenCode, pass an issued `/auth/connect/<code>` URL from `opencode pair` as `target` with `action: "server-pair"`. Web opens the one-time sign-in URL. iOS opens the native TestFlight app’s pairing flow. Android opens a native pairing review, where the user confirms the connection. The address in the link must be reachable from the opening device. [OpenCode pairing command](https://opencode.ai/docs/cli/commands#pair)
-
-```ts
-const href = getAgentLink("opencode", "android", {
-  action: "server-pair",
-  target: issuedPairingUrl,
-})
-```
-
-`getOpenCodeAndroidPairingLink(issuedPairingUrl)` is also available. The package builds URLs locally. Opening the Web URL spends the code, so the Playground’s copyable React example uses a sample code. The iPhone route is sourced from OpenCode’s link serializer and awaits installed-app verification.
-
-After pairing OpenCode on Android, pass `session` to open a saved session by ID on the current server. Use `mode: "new"` for a blank session or `mode: "last"` to reopen the last session. The app uses its current paired server.
-
-```ts
-getAgentLink("opencode", "android", { session: "ses_example" })
-getAgentLink("opencode", "android", { mode: "new" })
-getAgentLink("opencode", "android", { mode: "last" })
-```
-
-T3 Code accepts an optional server origin on the web. Leave it unset for the hosted chooser. For a self-hosted link, pair that browser with your T3 server first. The link can then open a draft directly in the paired browser.
-
-Pass both `environment` and `session` to open an existing T3 Code thread. The Web link opens T3’s hosted chooser. Desktop, iOS, and Android use the app’s custom scheme. An optional `prompt` stages a draft. On mobile, T3 asks before replacing a different saved draft.
-
-```ts
-getAgentLink("t3-code", "web", {
-  environment: "your-environment-id",
-  session: "your-thread-id",
-  prompt: "Review the next step.",
-})
-```
-
-ZCode's web, iOS, and Android links open its versioned Remote Control sign-in page in a browser. Connecting requires the same account and region as an online desktop with Remote Control enabled. [ZCode Remote Control instructions](https://zcode.z.ai/en/docs/remote-control)
-
-Kimi Code Desktop accepts a local `directory` and opens a fresh draft. Hosted Remote Control uses the same Kimi account as the running host. Supply `server` for another region or for a local address from `kimi web`, then enter the local server token in the browser.
-
-Call `getAgentLink("openclaw", "desktop")` or choose `"ios"` for the dashboard URL. On macOS and iOS, supplying a prompt opens run confirmation when a Gateway is connected. The Linux 2026.11.9 AppImage opened the connected Dashboard on cold and warm launch after its first launch registered the handler. The DEB from that release opened the app and dropped the URL. Windows Hub opens its setup screen in a fresh profile. [Linux and Windows verification](research/other-agents.md#hermes-agent-and-openclaw)
-For the macOS [Add Gateway form](https://docs.openclaw.ai/platforms/mac/remote#open-the-mac-app-from-a-website), supply the Gateway HTTPS base address in `server`. The address can include a port and path. The user reviews it and chooses **Connect** in OpenClaw.
-On iOS, pass a Gateway origin in `server` to stage the host, port, and TLS for review. Use HTTPS or WSS for TLS. HTTP and WS are limited to local hosts. Omitted ports use 443 for TLS and 18789 for plaintext. Enter credentials in the app if prompted. [iOS Gateway review](https://github.com/openclaw/openclaw/blob/v2026.11.8/apps/ios/Sources/Onboarding/OnboardingWizardView.swift#L938-L985)
-For the OpenClaw Control UI, use `web` or `android` and sign in to the Gateway in the same browser tab first. Supply its base URL in `server` on Android or for a custom web address. With a `prompt`, the link opens an unsent draft in the last selected chat. Pass a copied chat or dashboard URL in `session` to choose a specific session on that same Gateway. Normal dashboards accept an optional draft. Focused dashboards open the presentation view without a draft. Gallery links preserve `dashboard=expanded` for plain launches. Adding a draft uses the same session’s standard Dashboard, which showed the composer in both tested browsers. [OpenClaw browser link formats](https://docs.openclaw.ai/web/urls#session-and-dashboard-urls)
-
-```ts
-const gatewaySetup = getAgentLink("openclaw", "desktop", {
-  server: "https://gateway.example.com/openclaw/",
-})
-const mobileGatewaySetup = getAgentLink("openclaw", "ios", {
-  server: "https://gateway.example.com:18443",
-})
-const browserDraft = getAgentLink("openclaw", "web", {
-  server: "https://gateway.example.com/openclaw/",
-  session: "https://gateway.example.com/openclaw/chat/main",
-  prompt: "Review today’s reminders.",
-})
-```
-
-To open a read-only OpenClaw Beam transcript, pass the copied `/beam/…` share URL as `session` on `web` or `android`. Use the same Gateway base in `server` and leave `prompt` empty. The link keeps the Gateway’s original access requirements. [OpenClaw Beam](https://docs.openclaw.ai/plugins/beam)
-
-Use `getHermesSkillLink("official/security/1password")` or pass a direct skill URL to open Hermes Desktop's [skill install review](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#desktop-install-links). The signed macOS canary displayed the requested skill and destination before installation. The official Linux diagnostic AppImage accepts `hermes://launch` as a command-line argument. Its first launch left the system URL handler unset.
-
-For Hermes Desktop, pass a curated Marketplace name as `target` with `action: "plugin-install"`. For example, `hermes-workbench` opens the catalog-backed install review for the active profile. [Hermes Marketplace](https://hermes-agent.nousresearch.com/marketplace/hermes-workbench)
-
-### shadcn/ui
-
-For your existing [shadcn/ui Button](https://ui.shadcn.com/docs/components/radix/button), use `asChild` to keep a regular anchor and keyboard navigation.
+Compose `<AgentLink>` with your existing [shadcn/ui Button](https://ui.shadcn.com/docs/components/radix/button) via `asChild`:
 
 ```tsx
 import { Button } from "@/components/ui/button"
-import { AgentLink } from "agent-deeplinks/react"
+import { AgentLink, AgentIcon } from "agent-deeplinks/react"
 
-const options = { prompt: "Explain this project." }
+const options = { prompt: "tell me about deeplinks.fun" }
 
 export function OpenInCodex() {
   return (
@@ -182,81 +103,52 @@ export function OpenInCodex() {
       <Button asChild variant="outline" size="icon">
         <AgentLink agent="codex" platform="desktop" options={options} iconOnly />
       </Button>
+      <AgentIcon agent="codex" width={20} height={20} />
     </>
   )
 }
 ```
 
-Check `getAgentLink` before showing a button if you offer dynamic agent and platform choices. `AgentLink` renders nothing for invalid or unavailable links. Supply `aria-label` to customize the default accessible name of an icon-only link. The demo also shows a product-site fallback for unavailable routes.
-
-Use `getAgentIcon(id)` for an SVG data URL, `AgentIcon` from the React entry point, or import a standalone SVG with a bundler that supports SVG assets.
+`<AgentLink>` renders `null` for unavailable or invalid routes (and accepts the same `action` options with custom link text as `children`). Standalone SVGs are also exported directly:
 
 ```ts
 import cursorIcon from "agent-deeplinks/icons/cursor.svg"
 ```
 
-See [SVG sources and trademark notes](icons/README.md).
+## Supported agents
 
-## Apps and plugins
+| Agent | ID | Platforms | Native scheme |
+| --- | --- | --- | --- |
+| ChatGPT | `chatgpt` | `web`, `desktop`, `ios`, `android` | `codex://threads/new?mode=chat` |
+| Claude | `claude` | `web`, `desktop`, `ios`, `android` | `claude://claude.ai/new` |
+| Cursor | `cursor` | `web`, `desktop`, `ios`, `android` | `cursor://anysphere.cursor-deeplink/prompt` |
+| Claude Code | `claude-code` | `web`, `desktop`, `ios`, `android`, `cli`, `vscode` | `claude://code/new`, `claude-cli://open`, `vscode://anthropic.claude-code/open` |
+| Codex | `codex` | `web`, `desktop`, `ios`, `android` | `codex://new` |
+| GitHub Copilot | `github-copilot` | `web`, `desktop`, `vscode` | `ghapp://session/new`, `vscode://agents/new` |
+| Gemini | `gemini` | `web`, `ios`, `android` | Universal / App Links |
+| Perplexity | `perplexity` | `web`, `ios` | Universal Link (`/search`) |
+| Grok | `grok` | `web`, `ios`, `android` | Universal / App Links |
+| Grok Build | `grok-build` | `web`, `ios`, `android` | Universal / App Links |
+| Grok Bot | `grok-bot` | `web`, `desktop`, `ios`, `android` | `grokbot://app/v1/prompt` |
+| T3 Code | `t3-code` | `web`, `desktop`, `ios`, `android` | `t3code://new` |
+| OpenClaw | `openclaw` | `web`, `desktop`, `ios`, `android` | `openclaw://agent`, `openclaw://dashboard` |
+| Meta AI | `meta-ai` | `web` | — |
+| Antigravity | `antigravity` | `web`, `desktop`, `ios`, `android` | `antigravity://open`, `antigravity://` |
+| OpenCode | `opencode` | `web`, `desktop`, `ios`, `android` | `opencode://new-session`, `opencode://` |
+| Kimi | `kimi` | `web`, `desktop`, `ios`, `android` | `kimi-work://home`, `kimi://page/chat` |
+| Kimi Code | `kimi-code` | `web`, `desktop`, `ios`, `android` | `kimi-code://open` |
+| Meta Muse | `meta-muse` | `web`, `desktop`, `ios`, `android` | Universal Links |
+| ZCode | `zcode` | `web`, `desktop`, `ios`, `android` | `zcode://workspace/open` |
+| Hermes Agent | `hermes` | `web`, `desktop`, `ios`, `android` | `hermes://launch`, `hermes://skill/install` |
 
-Use `getAgentActions(agent, platform)` to discover app, plugin, skill, template, and shared conversation destinations. Pass the action ID in `getAgentLink` or in the options for either `AgentLink` button variant. `getAgentRoute(agent, platform, action)` describes its accepted fields, behavior, and evidence.
+See [research/README.md](research/README.md) for per-platform parameters, limits, and evidence notes, and [icons/README.md](icons/README.md) for SVG sources and trademark info.
 
-```ts
-import { getAgentActions, getAgentLink } from "agent-deeplinks"
-
-const available = getAgentActions("chatgpt", "web")
-const app = getAgentLink("chatgpt", "web", {
-  action: "app",
-  target: "plugin_asdk_app_6abadab6e7d881919e7491d52c7846e8",
-  tool: "cad.browse",
-  appPath: "/parts/part_joystick",
-})
-const draft = getAgentLink("codex", "desktop", {
-  action: "plugin-chat",
-  target: "openai-developers@openai-curated",
-  prompt: "Find the docs for app deep links.",
-})
-```
-
-The Playground includes an editable example for each action. ChatGPT app links use the named global entrypoint in Work on the web, desktop, or iOS. A Codex plugin chat link stages an unsent draft. [Apps and plugins playground](https://playground.agent-deeplinks.pages.dev/#apps) · [Provider formats and evidence](research/plugin-links.md)
-
-Pass a ChatGPT, Claude, Grok, or Kimi share URL or its share ID as `target` with `action: "shared-chat"`. ChatGPT, Claude, and Grok use iOS Universal Links. ChatGPT and Grok also support Android App Links, and Android may hand some web variants to the installed app. Kimi shares open the original regional website on web, iOS, and Android. Access follows the conversation's original sharing settings. [ChatGPT and Claude](research/openai-anthropic.md#shared-conversations) · [Grok](research/other-agents.md#grok-and-grok-bot)
-
-For a shared Codex snapshot, use `getAgentLink("codex", platform, { action: "shared-chat", target })` with the snapshot URL or its `cx_…` identifier. Web, iOS, and Android open the read-only browser viewer. Shared workspace snapshots keep their original access permissions. [OpenAI snapshot guide](https://learn.chatgpt.com/docs/use-chatgpt#share-a-read-only-snapshot-of-a-codex-thread)
-
-For ZCode, use `action: "shared-chat"` on `web`, `ios`, or `android` with a share code or URL. The link opens the signed-out browser viewer when sharing permissions allow it. A pasted China share keeps its `/cn/` path. [ZCode sharing guide](https://zcode.z.ai/en/docs/agents#sharing-a-conversation)
-
-For Cursor, use `action: "command"` or `action: "rule"` with a filename stem as `target` and its text as `content`. The desktop link opens the review. The web link opens Cursor’s hosted preview. Cursor adds the file extension when the recipient confirms. [Cursor link reference](https://cursor.com/docs/reference/deeplinks)
-
-To open an existing Cursor Origin pull request, use `action: "pull-request"` with its full URL as `target`, such as `https://cursor.com/codebase/acme/rocket/pull/1`. Web and Android use the browser. iOS uses the same HTTPS Universal Link. The recipient needs access to the repository. [Cursor Origin pull requests](https://cursor.com/docs/origin/pull-requests)
-
-In Codex and ChatGPT Desktop, use `action: "settings"`, `"skills"`, or `"automations"`. Settings accepts an optional documented section such as `connections/ssh`. Scheduled opens the task screen. Some app versions open the create form directly. [OpenAI desktop link reference](https://learn.chatgpt.com/docs/reference/commands#deep-links)
-
-For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team-bot"`. For a published template, use `action: "bot-template"` with the shared URL or its 21-character ID. Desktop uses the native URL emitted by xAI. Web and mobile use xAI’s share pages, including the optional template slug. Opening a shared Team Bot requires access, and adding a template requires a separate confirmation. [Grok Bot share links](research/plugin-links.md)
-
-Use `action: "bot-marketplace"` on `web`, `ios`, or `android` to open the Grok Bot Marketplace. Leave `target` empty for the gallery, or pass a category such as `engineering`, a path such as `bots/projects-manager`, or the complete Marketplace URL. The template page has a separate **Import Bot** button. [Grok Bot Marketplace](https://x.ai/bot/marketplace)
-
-On Antigravity Desktop 2.29.0 or later, use `getAgentLink("antigravity", "desktop", { prompt: "Explain this project." })` to stage an editable Home draft. The app appends to existing draft text after sign-in and setup. [Google release notes](https://antigravity.google/docs/changelog) · [Link format and evidence](research/coding-agents.md#google-antigravity)
-
-To reopen an active Antigravity CLI conversation, pass its printed Remote Control URL with `action: "remote-session"` on `web`, `ios`, or `android`. The receiving browser needs the same Google account while the original CLI is still running. [Antigravity CLI Remote Control](https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control)
-
-For OpenClaw 2026.11.10 on macOS and Linux, use `plugin-install`, `skill-install`, or `template-install` with a ClawHub package name as `target`, such as `@openclaw/discord`. These links route to the item in the connected Gateway. Installation is a separate action. [OpenClaw catalog link formats and evidence](research/plugin-links.md)
-
-## Develop and deploy
+## Develop
 
 ```sh
 npm ci
-npm run dev
-npm run check
-npm test
-npm run build
-npm run release:zip
+npm run dev       # run deeplinks.fun locally
+npm run check     # generate icons + typecheck
+npm test          # build package + run test suite
+npm run build     # build package (dist/) + site (site/dist/)
 ```
-
-The npm package builds into `dist/` and the static site builds into `site/dist/`. Point a Cloudflare Pages Git project at the repository with build command `npm run build:site` and output directory `site/dist`. For a Direct Upload project, build locally and run `npx wrangler pages deploy site/dist --project-name agent-deeplinks`.
-
-Pushing a version tag matching `package.json` builds and attaches the ZIP and npm tarball to a GitHub release.
-
-### Publish to npm
-
-Matching version tags run the package checks and publish the tarball through GitHub Actions using npm trusted publishing. The registry publisher is `lalalune/agent-deeplinks` and `npm-publish.yml`. [npm trusted publishing setup](https://docs.npmjs.com/trusted-publishers/)

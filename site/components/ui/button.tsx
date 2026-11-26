@@ -7,19 +7,19 @@ import type { ComponentPropsWithoutRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:size-4",
+  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400 disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:size-4",
   {
     variants: {
       variant: {
-        default: "bg-accent text-accent-foreground hover:bg-accent-hover",
-        outline: "border border-line bg-surface text-foreground hover:bg-raised",
-        ghost: "text-muted hover:bg-raised hover:text-foreground",
+        default: "bg-violet-600 text-white hover:bg-violet-500",
+        outline: "border border-zinc-800 bg-zinc-900/60 text-zinc-100 hover:border-zinc-700 hover:bg-zinc-800/80",
+        ghost: "text-zinc-400 hover:bg-zinc-800/80 hover:text-zinc-100",
       },
       size: {
         default: "h-10 px-4",
         sm: "h-8 px-3",
         icon: "size-10",
-        "icon-sm": "size-8",
+        "icon-sm": "size-7",
       },
     },
     defaultVariants: { variant: "default", size: "default" },
