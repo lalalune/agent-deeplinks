@@ -1,0 +1,24 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45911106686",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45911106686/artifacts/15160491661",
+  "screenshot": "native-ssh-blank-composer.png",
+  "workspace": "workspace",
+  "host": "codex-fixture",
+  "visibleHeading": "What should we work on in workspace?",
+  "nativeThreadOpenedBeforeReset": true,
+  "packageMatchesNativeCopiedRemoteUri": true,
+  "exactRemoteStockDispatch": false,
+  "exactRemoteColdStockDispatch": false,
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "noAdditionalProviderWrites": true
+}

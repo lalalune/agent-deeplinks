@@ -99,6 +99,8 @@ After the Home-button matcher was updated, the stock sidebar showed the exact sa
 
 The signed app then opened the exact connected project thread and displayed its one canned exchange. The stock **Copy deeplink** shortcut populated the clipboard with the exact thread UUID and one opaque `hostId`. Both desktop helpers in public npm v0.1.55 preserved all 97 URI bytes. The stock resolver selected the signed app. The test stopped while returning to an empty composer before replay. [Native clipboard proof](evidence/codex-copied-remote-thread/native-clipboard-proof.json)
 
+A second signed run repeated the copy and opened a blank composer for the same connected workspace. The visible heading included the workspace name and the saved transcript disappeared. The run stopped at that baseline before dispatching the URI. [Blank composer proof](evidence/codex-copied-remote-thread/remote-blank-composer-proof.json)
+
 ## Shared conversations
 
 `getAgentLink("chatgpt", "web", { action: "shared-chat", target: shareUrl })` and the equivalent Claude call accept an already shared URL from the selected provider or its UUID. The web variants add ChatGPT's `no_universal_links=1` query or Claude's `no_universal_links` fragment. The mobile variants use clean HTTPS links. Link creation and any access restrictions stay with the provider. [OpenAI sharing](https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt) · [Anthropic sharing](https://support.claude.com/en/articles/16762437-public-links-for-shared-chats)

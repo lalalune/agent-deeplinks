@@ -26,5 +26,6 @@
     "source": "vscode",
     "listedExactThread": true
   },
-  "noAdditionalProviderWrites": true
+  "noAdditionalProviderWrites": true,
+  "copyToast": "Link copied!"
 }
