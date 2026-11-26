@@ -1,0 +1,44 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45751683725",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45751683725/artifacts/15085419154",
+  "appVersion": "26.1120.50957",
+  "publisherTeam": "2DC432GLL2",
+  "officialDmgSha256": "00db5b0c41e91d6d8c257a7ddfff15bfe2b1e56f1119b54079821b144e86a5a3",
+  "host": {
+    "os": "macOS 15.8.2",
+    "build": "24H232",
+    "architecture": "arm64"
+  },
+  "testedLibraryVersion": "0.1.50",
+  "appServerVersion": "codex-cli 0.171.0-alpha.13.2",
+  "prerequisites": [
+    "Fresh disposable standard SSH user with the signed Codex bundle on the remote PATH.",
+    "Pinned loopback SSH host and client keys in a disposable hosted macOS runner.",
+    "Built-in SSH account policy applied using that specific test-user membership.",
+    "Custom loopback provider with requires_openai_auth set to false."
+  ],
+  "accountUsed": false,
+  "remoteAppServerHasAccount": false,
+  "remoteAppServerRequiresOpenAIAuth": false,
+  "newKeyAuthenticatedConnectionsFromDesktop": 5,
+  "visibleNativeHostStatus": "Connected",
+  "screen": "native-ssh-connected-host.png",
+  "remoteAppServerInitialThread": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 0
+  },
+  "remoteAppServerFinalThread": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 0
+  },
+  "modelRequests": 0,
+  "exactRemoteLinkDispatched": false,
+  "exactRemoteThreadReopened": false,
+  "terminalCheckpoint": "Stock SSH connected but the named remote thread was not yet visible"
+}
