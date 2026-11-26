@@ -1,0 +1,30 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45910355673",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45910355673/artifacts/15160265735",
+  "diagnosticHead": "be46eb706e75f442f39b4e2ebd9d72d380942abe",
+  "signedAppVersion": "26.1120.50957",
+  "nativeShortcut": "Command+Option+L",
+  "screenshot": "native-ssh-thread-active.png",
+  "clipboardTemplate": "codex://threads/<exact remote thread UUID>?hostId=<opaque host ID>",
+  "clipboardBytes": 97,
+  "clipboardSha256": "dd725d31753b571d23fe0bd3ca20b88f013defe41f4a79fe6fe1fdcaffcae60a",
+  "packageVersion": "0.1.50",
+  "packageMatchesNativeCopiedRemoteUri": true,
+  "publicRegistryVersionCrossCheck": "0.1.55",
+  "publicCodexAndChatGPTBuildersPreserveNativeUri": true,
+  "reopenedWarm": false,
+  "reopenedCold": false,
+  "lastStage": "leave any open fixture in a neutral composer before warm stock dispatch",
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "noAdditionalProviderWrites": true
+}
