@@ -1,0 +1,41 @@
+{
+  "result": "Stock process crashed during application startup",
+  "runUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45546175408/job/138976225745",
+  "rawArtifactUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45546175408/artifacts/14991074116",
+  "apk": {
+    "publisherRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261125.5222",
+    "packageId": "com.t3tools.t3code",
+    "version": "2.3.0",
+    "build": 823,
+    "sha256": "20ad5543e1edd2872c7b6d85198c2e01ebad5ebd0648e0eec7b7489560de0d71",
+    "signingCertificateSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6",
+    "extractNativeLibs": false,
+    "storedReactNativeLibraries": [
+      "lib/arm64-v8a/libreactnative.so",
+      "lib/armeabi-v7a/libreactnative.so"
+    ],
+    "x86_64NativeLibraryCount": 0
+  },
+  "guest": {
+    "image": "system-images;android-36;google_apis;x86_64",
+    "emulatorVersion": "37.3.10.0",
+    "reportedAbis": [
+      "x86_64",
+      "arm64-v8a"
+    ],
+    "nativeBridge": "libndk_translation.so",
+    "apkInstallAbi": "arm64-v8a"
+  },
+  "observation": {
+    "stockActivity": "com.t3tools.t3code/.MainActivity",
+    "amStartStatus": "ok",
+    "startupCrashCount": 2,
+    "exception": "couldn't find DSO to load: libreactnative.so",
+    "crashSite": "com.t3tools.t3code.MainApplication.onCreate",
+    "soLoaderDirectApkPath": "base.apk!/lib/x86_64",
+    "resumedActivityAfterCrash": "com.google.android.apps.nexuslauncher/.NexusLauncherActivity",
+    "paired": false,
+    "threadUriDispatched": false,
+    "promptSubmitted": false
+  }
+}

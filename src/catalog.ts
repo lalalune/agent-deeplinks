@@ -89,8 +89,8 @@ const openAiDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45449086076/job/138640907273",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45450367734/job/138645480431",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45515751038/artifacts/14975884834",
-  "https://github.com/lalalune/agent-deeplinks/blob/afe1df7f5816e1cf1d8b43cead2662b102fc21a8/evidence/openai-windows-cold-links/README.md",
-  "https://github.com/lalalune/agent-deeplinks/blob/ee4f7f74b993f4436711fabe079aff63295e41b6/evidence/openai-windows-warm-links/README.md",
+  "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/openai-windows-cold-links/README.md",
+  "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/openai-windows-warm-links/README.md",
   "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/chatgpt-macos-warm-thread/proof.json",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45686443928/artifacts/15056138458",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45709858989/artifacts/15067321431",
@@ -99,7 +99,7 @@ const openAiDesktopChecks = [
 const grokBotDocs = "https://docs.x.ai/grok-bot/deep-links";
 const grokBotMobileDocs = "https://docs.x.ai/grok-bot/mobile";
 const t3Source = "https://github.com/pingdotgg/t3code/blob/v0.1.11/packages/shared/src/promptLinks.ts";
-const t3AndroidAppLinkProof = "https://github.com/lalalune/agent-deeplinks/blob/09dac84870eda35a0b635871b06aa6dcec8811cd/research/evidence/t3-android-verified-https/proof.json";
+const t3AndroidAppLinkProof = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-android-verified-https/proof.json";
 const t3AndroidColdAppLinkProof = "https://github.com/lalalune/agent-deeplinks/actions/runs/45706063833/artifacts/15065187869";
 const t3ThreadSource = "https://github.com/pingdotgg/t3code/blob/4da8d19d/packages/shared/src/threadLinks.ts#L42-L66";
 const openCodeTag = "https://github.com/anomalyco/opencode/blob/v1.19.6";
@@ -904,7 +904,7 @@ const catalog = {
         sources: [
           ...t3Route.sources,
           "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261123.5165",
-          "https://github.com/lalalune/agent-deeplinks/blob/cff6e2e17ef0e5db857a1755813117da4d76488d/research/evidence/t3-android-existing-thread-native-arm/proof.json",
+          "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-android-existing-thread-native-arm/proof.json",
           t3AndroidAppLinkProof,
           t3AndroidColdAppLinkProof,
         ],
@@ -1029,7 +1029,7 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45539495631/artifacts/14988856688",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45539535621/artifacts/14988891540",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45517891382/artifacts/14978123936",
-          "https://github.com/lalalune/agent-deeplinks/blob/01bdcfe4d4e317d6fad5d61bef7ea6171c00a78e/evidence/openclaw-windows-edge-dashboard.md",
+          "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/openclaw-windows-edge-dashboard/README.md",
         ],
         fields: { prompt: "message", server: "" },
         serverBehavior: "confirm",

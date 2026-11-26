@@ -1,0 +1,99 @@
+{
+  "stockVersion": "2026.11.10",
+  "created": {
+    "key": "agent:link-fixture:dashboard:proof",
+    "runStarted": false
+  },
+  "modelRequests": 0,
+  "initialHistoryCount": 0,
+  "finalHistoryCount": 0,
+  "sessionUserMessages": 0,
+  "routes": [
+    {
+      "profile": "desktop",
+      "scenario": "gallery-draft",
+      "requested": "/fixture/chat/link-fixture/dashboard/proof?dashboard=expanded&draft=OpenClaw%20dashboard%20draft%2047D%20%2B%20%26%20%252B%20100%25%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20%E2%80%94%20%E6%9D%B1%E4%BA%AC",
+      "finalPath": "/fixture/chat/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "restoreSplitInvoked": false,
+      "render": {
+        "width": 1440,
+        "height": 900,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "main",
+            "width": 1130,
+            "height": 856
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 1130,
+            "height": 814
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 0,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 0,
+        "hiddenExactDraft": false,
+        "storedExactDraft": false,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "pixel",
+      "scenario": "gallery-draft",
+      "requested": "/fixture/chat/link-fixture/dashboard/proof?dashboard=expanded&draft=OpenClaw%20dashboard%20draft%2047D%20%2B%20%26%20%252B%20100%25%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20%E2%80%94%20%E6%9D%B1%E4%BA%AC",
+      "finalPath": "/fixture/chat/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "restoreSplitInvoked": false,
+      "render": {
+        "width": 360,
+        "height": 732,
+        "fullscreen": false,
+        "dashboards": [],
+        "chromeNav": 1,
+        "sidePanels": 0,
+        "emptyBoard": false,
+        "sessionLabelVisible": true,
+        "boardTextMatches": null,
+        "visibleComposerCount": 1,
+        "hiddenExactDraft": false,
+        "storedExactDraft": false,
+        "editableExactDraft": true
+      }
+    }
+  ],
+  "source": {
+    "run": 45703514637,
+    "artifact": 15062744964,
+    "digest": "sha256:9fdee4c9018b8e59c4be6154001bcb9bea2db40485a2ef68705533f80f7642b3"
+  }
+}

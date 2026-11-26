@@ -1,0 +1,59 @@
+{
+  "appVersion": "2026.11.10",
+  "libraryVersion": "0.1.44",
+  "gatewayReady": true,
+  "templatesFlag": true,
+  "modelRequests": 0,
+  "catalogWrites": 0,
+  "publicArchive": {
+    "bytes": 47015,
+    "sha256": "e94488a057177a057fc7c06d64528a9ff2c158662e08aec7b5af232cfd62ed9c"
+  },
+  "route": {
+    "family": "templates",
+    "uri": "openclaw://templates/install?name=%40jjjhenriksen%2Ftravel-copilot",
+    "gatewayPath": "/control-proof/templates/packages/%40jjjhenriksen%2Ftravel-copilot",
+    "exactGatewayPath": true,
+    "sameApp": true,
+    "authGate": false,
+    "admissions": [
+      {
+        "client": "openclaw-linux",
+        "mode": "ui",
+        "role": "operator",
+        "auth": "token"
+      }
+    ],
+    "nativeGatewayAuth": true,
+    "exactRegistryRead": true,
+    "exactArchiveRead": true,
+    "visibleTitle": true
+  },
+  "registryReads": [
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8/security",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8/artifact/download",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/skills/goplaces/card?ownerHandle=steipete&version=1.0.0",
+      "cached": false
+    }
+  ],
+  "source": {
+    "run": 45695622934,
+    "artifact": 15060241920,
+    "digest": "sha256:1d3250aaa62b7252018e91bfedc7e6cdd2d717c1cf0b308f93cf8213eb187157"
+  }
+}

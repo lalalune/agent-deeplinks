@@ -1,0 +1,440 @@
+{
+  "stockVersion": "2026.11.10",
+  "created": {
+    "key": "agent:link-fixture:dashboard:proof",
+    "runStarted": false
+  },
+  "modelRequests": 0,
+  "initialHistoryCount": 0,
+  "finalHistoryCount": 0,
+  "sessionUserMessages": 0,
+  "routes": [
+    {
+      "profile": "desktop",
+      "scenario": "dashboard",
+      "requested": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 1440,
+        "height": 900,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "side",
+            "width": 480,
+            "height": 856
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": false,
+        "sessionLabelVisible": true,
+        "boardTextMatches": null,
+        "visibleComposerCount": 1,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "desktop",
+      "scenario": "focus",
+      "requested": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+      "finalPath": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 1440,
+        "height": 900,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 1440,
+            "height": 900
+          }
+        ],
+        "chromeNav": 0,
+        "sidePanels": 0,
+        "emptyBoard": true,
+        "sessionLabelVisible": false,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 0,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "desktop",
+      "scenario": "gallery",
+      "requested": "/fixture/chat/link-fixture/dashboard/proof?dashboard=expanded",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/chat/link-fixture/dashboard/proof",
+          "status": 404
+        },
+        {
+          "path": "/fixture/__openclaw__/session-entry",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 1440,
+        "height": 900,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "main",
+            "width": 644,
+            "height": 856
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 644,
+            "height": 814
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 1,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "desktop",
+      "scenario": "dashboard-draft",
+      "requested": "/fixture/dashboard/link-fixture/dashboard/proof?draft=OpenClaw%20dashboard%20draft%2047D%20%2B%20%26%20%252B%20100%25%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20%E2%80%94%20%E6%9D%B1%E4%BA%AC",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 1440,
+        "height": 900,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "side",
+            "width": 480,
+            "height": 856
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 480,
+            "height": 814
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 1,
+        "editableExactDraft": true
+      }
+    },
+    {
+      "profile": "pixel",
+      "scenario": "dashboard",
+      "requested": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 360,
+        "height": 732,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "side",
+            "width": 360,
+            "height": 271
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 360,
+            "height": 229
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 1,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "pixel",
+      "scenario": "focus",
+      "requested": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+      "finalPath": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/focus/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 360,
+        "height": 732,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 360,
+            "height": 732
+          }
+        ],
+        "chromeNav": 0,
+        "sidePanels": 0,
+        "emptyBoard": true,
+        "sessionLabelVisible": false,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 0,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "pixel",
+      "scenario": "gallery",
+      "requested": "/fixture/chat/link-fixture/dashboard/proof?dashboard=expanded",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/chat/link-fixture/dashboard/proof",
+          "status": 404
+        },
+        {
+          "path": "/fixture/__openclaw__/session-entry",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 360,
+        "height": 732,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "side",
+            "width": 360,
+            "height": 271
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 360,
+            "height": 229
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 1,
+        "editableExactDraft": false
+      }
+    },
+    {
+      "profile": "pixel",
+      "scenario": "dashboard-draft",
+      "requested": "/fixture/dashboard/link-fixture/dashboard/proof?draft=OpenClaw%20dashboard%20draft%2047D%20%2B%20%26%20%252B%20100%25%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20%E2%80%94%20%E6%9D%B1%E4%BA%AC",
+      "finalPath": "/fixture/dashboard/link-fixture/dashboard/proof",
+      "finalSearch": "",
+      "authenticatedAfterNavigation": true,
+      "sessionReads": [
+        {
+          "method": "board.get",
+          "accepted": true
+        }
+      ],
+      "matchedSession": true,
+      "draftQueryRemoved": true,
+      "receivedMarkerOnRpc": false,
+      "blockedRpc": [],
+      "documentResponses": [
+        {
+          "path": "/fixture/",
+          "status": 200
+        },
+        {
+          "path": "/fixture/dashboard/link-fixture/dashboard/proof",
+          "status": 200
+        }
+      ],
+      "render": {
+        "width": 360,
+        "height": 732,
+        "fullscreen": false,
+        "dashboards": [
+          {
+            "tag": "DIV",
+            "region": "side",
+            "width": 360,
+            "height": 271
+          },
+          {
+            "tag": "OPENCLAW-BOARD-VIEW",
+            "region": null,
+            "width": 360,
+            "height": 229
+          }
+        ],
+        "chromeNav": 1,
+        "sidePanels": 1,
+        "emptyBoard": true,
+        "sessionLabelVisible": true,
+        "boardTextMatches": "No widgets yet",
+        "visibleComposerCount": 1,
+        "editableExactDraft": true
+      }
+    }
+  ],
+  "source": {
+    "run": 45703008909,
+    "artifact": 15063712402,
+    "digest": "sha256:d2b113ba05b9e18df26a231ac7e53d63f5f4a0f112ad4f821cc8bd38918f6eb2"
+  }
+}

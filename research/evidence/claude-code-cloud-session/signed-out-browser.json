@@ -1,0 +1,79 @@
+{
+  "accountUsed": false,
+  "syntheticSessionIds": true,
+  "installedAppLaunchChecked": false,
+  "profiles": [
+    {
+      "profile": "desktop",
+      "browser": "158.0.8127.18",
+      "href": "https://claude.ai/code/session_01ADLcheck4p7V2Q9XYZABC#no_universal_links",
+      "responses": [
+        {
+          "host": "claude.ai",
+          "path": "/code/session_01ADLcheck4p7V2Q9XYZABC",
+          "preservesSession": true,
+          "code": 307
+        },
+        {
+          "host": "claude.ai",
+          "path": "/code/session_01ADLcheck4p7V2Q9XYZABC",
+          "preservesSession": true,
+          "code": 403
+        }
+      ],
+      "finalHost": "claude.ai",
+      "finalPath": "/code/session_01ADLcheck4p7V2Q9XYZABC",
+      "fragmentPreserved": true,
+      "browserSurface": "Cloudflare verification",
+      "blockedWriteCount": 1
+    },
+    {
+      "profile": "iphone",
+      "browser": "27.2",
+      "href": "https://claude.ai/code/cse_AgentDeeplinksQa7m19#no_universal_links",
+      "responses": [
+        {
+          "host": "claude.ai",
+          "path": "/code/cse_AgentDeeplinksQa7m19",
+          "preservesSession": true,
+          "code": 200
+        },
+        {
+          "host": "claude.ai",
+          "path": "/code/cse_AgentDeeplinksQa7m19",
+          "preservesSession": true,
+          "code": 200
+        }
+      ],
+      "finalHost": "claude.ai",
+      "finalPath": "/code/cse_AgentDeeplinksQa7m19",
+      "fragmentPreserved": true,
+      "browserSurface": "Claude Code",
+      "blockedWriteCount": 0
+    },
+    {
+      "profile": "android",
+      "browser": "158.0.8127.18",
+      "href": "https://claude.ai/code/session_01ADLcheck4p7V2Q9XYZABC#no_universal_links",
+      "responses": [
+        {
+          "host": "claude.ai",
+          "path": "/code/session_01ADLcheck4p7V2Q9XYZABC",
+          "preservesSession": true,
+          "code": 200
+        },
+        {
+          "host": "claude.ai",
+          "path": "/code/session_01ADLcheck4p7V2Q9XYZABC",
+          "preservesSession": true,
+          "code": 200
+        }
+      ],
+      "finalHost": "claude.ai",
+      "finalPath": "/logout",
+      "fragmentPreserved": false,
+      "browserSurface": "sign-in",
+      "blockedWriteCount": 8
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "result": "pass",
+  "app": {
+    "bundleId": "com.t3tools.t3code",
+    "version": "2.3.0",
+    "build": "1",
+    "configuration": "Release simulator build from upstream source",
+    "sourceCommit": "67c442a17e6e5d6c9f768714820cecb5f15d4f9b",
+    "executableSha256": "33b9961e6446d2d527ddc666124a480a1794c0b2e49a033c187a231e705c1448"
+  },
+  "simulator": {
+    "device": "iPhone 17",
+    "iOS": "26.4",
+    "runtimeBuild": "23E244"
+  },
+  "server": {
+    "version": "0.1.12-nightly.20261125.5222",
+    "stockLocalPairing": true,
+    "loopback": true
+  },
+  "fixture": {
+    "environmentId": "7b8fb716-defa-49fc-9ff6-122955a59524",
+    "threadId": "thread:project:ba11ded0-e5cf-4e34-96ff-f45de006d002:cd0a2124-0c44-48d5-8579-0db474131c77",
+    "nativeUri": "t3code://threads/7b8fb716-defa-49fc-9ff6-122955a59524/thread%3Aproject%3Aba11ded0-e5cf-4e34-96ff-f45de006d002%3Acd0a2124-0c44-48d5-8579-0db474131c77",
+    "promptUri": "t3code://threads/7b8fb716-defa-49fc-9ff6-122955a59524/thread%3Aproject%3Aba11ded0-e5cf-4e34-96ff-f45de006d002%3Acd0a2124-0c44-48d5-8579-0db474131c77?prompt=T3%20iOS%20existing%20thread%20draft%20%2B%20%26%20caf%C3%A9%20%E2%98%83",
+    "plainThreadRendered": true,
+    "visibleDraft": "T3 iOS existing thread draft + & café ☃"
+  },
+  "draftStoredUnderExistingScopedThread": true,
+  "promptSubmitted": false,
+  "serverCountsBeforeAndAfter": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "exitCode": 0
+}

@@ -1,0 +1,67 @@
+{
+  "result": "pass",
+  "jobUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45557117461/job/139011741213",
+  "artifactUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45557117461/artifacts/14996555552",
+  "testCommit": "3d3cda2c20c107a33c85ddd8b05e19224b235f6d",
+  "guest": {
+    "operatingSystem": "ReDroid Android 15",
+    "sdk": 35,
+    "hostRunner": "ubuntu-24.04-arm",
+    "primaryAbi": "arm64-v8a",
+    "nativeBridge": 0,
+    "image": "docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2",
+    "adbUid": "shell (2000)"
+  },
+  "app": {
+    "publisherRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261125.5222",
+    "package": "com.t3tools.t3code",
+    "version": "2.3.0",
+    "build": 823,
+    "sha256": "20ad5543e1edd2872c7b6d85198c2e01ebad5ebd0648e0eec7b7489560de0d71",
+    "signerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6"
+  },
+  "library": {
+    "version": "0.1.36",
+    "tarballSha256": "3e891546c7b07ece3bc8a23baf7626c21549f963a6996d9c3bc8bd95e2377c11",
+    "builder": "getAgentLink('t3-code', 'web', { environment, session, prompt })"
+  },
+  "serverVersion": "0.1.12-nightly.20261125.5222",
+  "domainVerification": {
+    "association": "https://app.t3.codes/.well-known/assetlinks.json",
+    "method": "Stock com.android.statementservice with pm verify-app-links --re-verify on fresh app install",
+    "before": "none",
+    "after": "verified",
+    "manualSelection": false,
+    "verificationEgressHosts": [
+      "app.t3.codes:443",
+      "connectivitycheck.gstatic.com:80",
+      "www.google.com:443"
+    ],
+    "publicEgressRemovedBeforeAppLaunch": true
+  },
+  "stockLoopbackPairing": true,
+  "transport": "Untargeted Android ACTION_VIEW with CATEGORY_BROWSABLE delivered to the running T3 Code MainActivity without a chooser",
+  "fixture": {
+    "environmentId": "c82df1ad-6d3a-4a0a-bed3-7c6eaf00b686",
+    "existingThreadId": "thread:project:d3d43461-2f25-4e33-8079-767b97b764c2:317f2b49-75eb-4844-9ef0-4dbceb60b675",
+    "httpsThread": "https://app.t3.codes/threads/c82df1ad-6d3a-4a0a-bed3-7c6eaf00b686/thread%3Aproject%3Ad3d43461-2f25-4e33-8079-767b97b764c2%3A317f2b49-75eb-4844-9ef0-4dbceb60b675",
+    "promptUri": "https://app.t3.codes/threads/c82df1ad-6d3a-4a0a-bed3-7c6eaf00b686/thread%3Aproject%3Ad3d43461-2f25-4e33-8079-767b97b764c2%3A317f2b49-75eb-4844-9ef0-4dbceb60b675?prompt=Existing%20T3%20thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA",
+    "exactVisibleDraft": "Existing T3 thread draft + & café 🧪"
+  },
+  "blankComposerObserved": true,
+  "promptNoticeObserved": true,
+  "editableUnicodeDraftObserved": true,
+  "promptSubmitted": false,
+  "serverCountsBeforeAndAfter": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "screenshotsSha256": {
+    "native-existing-thread.png": "f9727da64c75fb648dcbacde1aa8ca8526742228bc7327b76c9acd2a4e1ff7d0",
+    "existing-thread-prompt-notice.png": "b44ec3ca417c38fd604b8df14f1e739227d0e8229eb90f61a1dd7f170b5aac51",
+    "existing-thread-exact-unsent-composer.png": "8975a12bf05a0c50fab75e8f60d7e6d348d69cf1150c7ba7995cb532b60dead3"
+  },
+  "coverage": "Fresh pinned Android 15 ARM64 container with a publisher-signed nightly APK and a normally paired disposable loopback environment. Physical hardware, Play Store installation and cold dispatch require separate checks."
+}

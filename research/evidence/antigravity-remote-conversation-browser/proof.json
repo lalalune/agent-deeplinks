@@ -1,0 +1,68 @@
+{
+  "result": "Signed-out landing verified in three disposable browser profiles",
+  "officialDocs": "https://antigravity.google/docs/remote-control/?tab=cli",
+  "requested": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id",
+  "preservedPath": "/r/instance-id",
+  "decodedConversationQuery": "c/conversation-id",
+  "profiles": [
+    {
+      "browserProfile": "desktop-chromium",
+      "browserVersion": "158.0.8127.18",
+      "documentResponse": {
+        "status": 200,
+        "url": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id"
+      },
+      "finalUrl": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id",
+      "observedPageTitle": "Google Antigravity",
+      "visibleCopy": [
+        "Welcome to Antigravity",
+        "Sign in"
+      ],
+      "blockedNonReadHttpRequests": 2,
+      "blockedWebSocketRequests": 0,
+      "screenshot": "desktop-chromium.png",
+      "screenshotSha256": "74e87f2a7f60063affae688aa304a8e6b3f2658904c6077b41c178bb49453c57"
+    },
+    {
+      "browserProfile": "pixel-9-chromium",
+      "browserVersion": "158.0.8127.18",
+      "documentResponse": {
+        "status": 200,
+        "url": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id"
+      },
+      "finalUrl": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id",
+      "observedPageTitle": "Google Antigravity",
+      "visibleCopy": [
+        "Welcome to Antigravity",
+        "Sign in"
+      ],
+      "blockedNonReadHttpRequests": 2,
+      "blockedWebSocketRequests": 0,
+      "screenshot": "pixel-9-chromium.png",
+      "screenshotSha256": "a1a007d2ba7b1e6de082aad5957f5f20425bfe1c66087bce9b1e92abaa355e86"
+    },
+    {
+      "browserProfile": "iphone-15-webkit",
+      "browserVersion": "27.2",
+      "documentResponse": {
+        "status": 200,
+        "url": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id"
+      },
+      "finalUrl": "https://antigravity.google.com/r/instance-id?p=c%2Fconversation-id",
+      "observedPageTitle": "Google Antigravity",
+      "visibleCopy": [
+        "Welcome to Antigravity",
+        "Sign in"
+      ],
+      "blockedNonReadHttpRequests": 2,
+      "blockedWebSocketRequests": 0,
+      "screenshot": "iphone-15-webkit.png",
+      "screenshotSha256": "f5801718ddc69b0e1a0aba5346adb95e57db93ced060bd296c3b6bd2462d664c"
+    }
+  ],
+  "signInClicked": false,
+  "accountUsed": false,
+  "remoteTunnelStarted": false,
+  "messageSent": false,
+  "authenticatedConversationTested": false
+}

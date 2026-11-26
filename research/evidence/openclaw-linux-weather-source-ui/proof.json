@@ -1,0 +1,55 @@
+{
+  "appVersion": "2026.11.10",
+  "gatewayVersion": "2026.11.10",
+  "libraryVersion": "0.1.44",
+  "gatewayReady": true,
+  "sourceBuiltUi": {
+    "commit": "1ee9f29e6668e32ecfade57a540d10326ad3b8de",
+    "indexSha256": "392bff37d85a3eddffd6fca0430d8cdf0d5629bb5f71778276d2b1db1b646a14",
+    "served": true
+  },
+  "modelRequests": 0,
+  "catalogWrites": 0,
+  "route": {
+    "family": "skills",
+    "uri": "openclaw://skills/install?name=%40steipete%2Fweather",
+    "gatewayPath": "/control-proof/skills?clawhub=%40steipete%2Fweather",
+    "exactGatewayPath": true,
+    "sameApp": true,
+    "authGate": false,
+    "admissions": [
+      {
+        "client": "openclaw-linux",
+        "mode": "ui",
+        "role": "operator",
+        "auth": "token"
+      }
+    ],
+    "nativeGatewayAuth": true,
+    "exactRegistryRead": true,
+    "visibleTitle": true
+  },
+  "registryReads": [
+    {
+      "key": "/api/v1/skills/weather?ownerHandle=steipete",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/trending?kind=skills&limit=20",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/skills/weather/versions/1.0.0?ownerHandle=steipete",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/skills/weather/card?ownerHandle=steipete&version=1.0.0",
+      "cached": true
+    }
+  ],
+  "source": {
+    "run": 45697986978,
+    "artifact": 15061628142,
+    "digest": "sha256:e633585b2bfc82536ee40d2b26440e11680c8a8a7f9bfaed20da3ce3b00e43fa"
+  }
+}

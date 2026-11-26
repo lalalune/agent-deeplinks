@@ -1,0 +1,98 @@
+{
+  "appVersion": "2026.11.10",
+  "libraryVersion": "0.1.44",
+  "gatewayReady": true,
+  "templatesFlag": true,
+  "modelRequests": 0,
+  "catalogWrites": 0,
+  "routes": [
+    {
+      "family": "plugins",
+      "uri": "openclaw://plugins/install?name=%40openclaw%2Fdiscord",
+      "gatewayPath": "/control-proof/plugins/ch_QG9wZW5jbGF3L2Rpc2NvcmQ",
+      "exactGatewayPath": true,
+      "sameApp": true,
+      "authGate": false,
+      "admissions": [
+        {
+          "client": "openclaw-linux",
+          "mode": "ui",
+          "role": "operator",
+          "auth": "token"
+        }
+      ],
+      "nativeGatewayAuth": true,
+      "exactRegistryRead": true,
+      "visibleTitle": true
+    },
+    {
+      "family": "skills",
+      "uri": "openclaw://skills/install?name=%40steipete%2Fweather",
+      "gatewayPath": "/control-proof/skills?clawhub=%40steipete%2Fweather",
+      "exactGatewayPath": true,
+      "sameApp": true,
+      "authGate": false,
+      "admissions": [
+        {
+          "client": "openclaw-linux",
+          "mode": "ui",
+          "role": "operator",
+          "auth": "token"
+        }
+      ],
+      "nativeGatewayAuth": true,
+      "exactRegistryRead": false,
+      "visibleTitle": false
+    },
+    {
+      "family": "templates",
+      "uri": "openclaw://templates/install?name=%40jjjhenriksen%2Ftravel-copilot",
+      "gatewayPath": "/control-proof/templates/packages/%40jjjhenriksen%2Ftravel-copilot",
+      "exactGatewayPath": true,
+      "sameApp": true,
+      "authGate": false,
+      "admissions": [
+        {
+          "client": "openclaw-linux",
+          "mode": "ui",
+          "role": "operator",
+          "auth": "token"
+        }
+      ],
+      "nativeGatewayAuth": true,
+      "exactRegistryRead": true,
+      "visibleTitle": false
+    }
+  ],
+  "registryReads": [
+    {
+      "key": "/api/v1/packages/%40openclaw%2Fdiscord/detail",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/trending?kind=skills&limit=20",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8/security",
+      "cached": true
+    },
+    {
+      "key": "/api/v1/packages/%40jjjhenriksen%2Ftravel-copilot/versions/0.2.8/artifact/download",
+      "cached": false
+    }
+  ],
+  "source": {
+    "run": 45687863971,
+    "artifact": 15057671869,
+    "digest": "sha256:fa71b9b09999775156c0d03fe0168bff366bb41044699f2519b2ae58d3b7726a"
+  }
+}

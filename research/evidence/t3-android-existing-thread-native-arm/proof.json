@@ -1,0 +1,43 @@
+{
+  "result": "pass",
+  "jobUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45551535824/job/138993610653",
+  "artifactUrl": "https://github.com/lalalune/agent-deeplinks/actions/runs/45551535824/artifacts/14993607106",
+  "guest": {
+    "operatingSystem": "ReDroid Android 15",
+    "sdk": 35,
+    "hostRunner": "ubuntu-24.04-arm",
+    "primaryAbi": "arm64-v8a",
+    "nativeBridge": 0,
+    "image": "docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2",
+    "adbUid": "shell (2000)"
+  },
+  "app": {
+    "publisherRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.12-nightly.20261125.5222",
+    "package": "com.t3tools.t3code",
+    "version": "2.3.0",
+    "build": 823,
+    "sha256": "20ad5543e1edd2872c7b6d85198c2e01ebad5ebd0648e0eec7b7489560de0d71",
+    "signerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6"
+  },
+  "libraryVersion": "0.1.34",
+  "serverVersion": "0.1.12-nightly.20261125.5222",
+  "stockLoopbackPairing": true,
+  "transport": "Untargeted Android ACTION_VIEW, CATEGORY_BROWSABLE to running MainActivity",
+  "fixture": {
+    "environmentId": "e6d7e8a6-c8d3-4306-a3be-219ca2c2671a",
+    "existingThreadId": "thread:project:f34be060-89cb-4384-a997-e4061bf6f196:9144b893-08b5-4097-ac84-df6d4c36545a",
+    "nativeThread": "t3code://threads/e6d7e8a6-c8d3-4306-a3be-219ca2c2671a/thread%3Aproject%3Af34be060-89cb-4384-a997-e4061bf6f196%3A9144b893-08b5-4097-ac84-df6d4c36545a",
+    "promptUri": "t3code://threads/e6d7e8a6-c8d3-4306-a3be-219ca2c2671a/thread%3Aproject%3Af34be060-89cb-4384-a997-e4061bf6f196%3A9144b893-08b5-4097-ac84-df6d4c36545a?prompt=Existing%20T3%20thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA",
+    "exactVisibleDraft": "Existing T3 thread draft + & café 🧪"
+  },
+  "blankComposerObserved": true,
+  "editableUnicodeDraftObserved": true,
+  "promptSubmitted": false,
+  "serverCountsBeforeAndAfter": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "coverage": "App runtime on a pinned third-party Android ARM container. Physical hardware, Play-store install and HTTPS app-link association require separate runtime checks."
+}

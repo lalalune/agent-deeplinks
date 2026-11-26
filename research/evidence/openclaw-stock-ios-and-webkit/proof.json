@@ -1,0 +1,89 @@
+{
+  "appStoreSubmission": {
+    "version": "2026.11.70",
+    "build": "2",
+    "bundleId": "ai.openclawfoundation.app",
+    "gatewayVersion": "2026.11.7",
+    "frozenSourceCommit": "e2973f933f10364471f8d8e470d3c4a7c3d6be96",
+    "officialListing": "https://apps.apple.com/us/app/openclaw/id6780396132",
+    "publisherJob": "https://github.com/openclaw/openclaw/actions/runs/45244615276/job/137948103774",
+    "publisherArchive": "https://github.com/openclaw/openclaw/actions/runs/45244615276/artifacts/14856688424",
+    "publisherArchiveSha256": "2b890fd186ceaad4419a4618a22c5260e3c5a6ffa68050ac23d750c48f781b3b",
+    "ipaSha256": "6271430a4113a536048d5789b8fcf691973b77c34a8bf15819d4e94d8aabb71d",
+    "arm64CodeDirectoryHash": "f1be62c2d7b77dc5bd9889be10f15816df52a1da",
+    "verifiedSignature": "Apple Distribution: OpenClaw Foundation (FWJYW4S8P8)",
+    "verification": "codesign --verify --deep --strict",
+    "platform": [
+      "iPhoneOS"
+    ],
+    "minimumOS": "26.2",
+    "registeredSchemes": [
+      "openclaw"
+    ],
+    "pushMode": "appStore",
+    "productionApns": "production",
+    "productionAppAttest": "production",
+    "allowDebug": false,
+    "provisionsPhysicalDevice": false,
+    "receiptOrDownloadedStoreBinaryTested": false,
+    "installOrDispatchTested": false,
+    "coverage": "Publisher-signed pre-upload App Store IPA and selected build, matching the public App Store marketing version."
+  },
+  "iphoneWebKit": {
+    "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45567666200/job/139046321820",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45567666200/artifacts/15001345386",
+    "testCommit": "5a57c4633f6533c39d7e7485fa4ea2b64a82fad2",
+    "gatewayVersion": "2026.11.10",
+    "packageVersion": "0.1.39",
+    "browser": "Playwright WebKit 27.2 (iPhone 15 profile, Linux host)",
+    "viewport": {
+      "width": 393,
+      "height": 659
+    },
+    "generatedLink": "http://127.0.0.1:43611/fixture/chat/link-fixture/draft/proof?draft=OpenClaw%20web%20draft%20QA%2044B%20%2B%20%26%20%252B%20100%25%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20%E2%80%94%20%E6%9D%B1%E4%BA%AC",
+    "initialPrivateDocumentStatus": 404,
+    "documentAndFetchResponses": [
+      {
+        "path": "/fixture/",
+        "status": 200,
+        "resource": "document"
+      },
+      {
+        "path": "/fixture/chat/link-fixture/draft/proof",
+        "status": 404,
+        "resource": "document"
+      },
+      {
+        "path": "/fixture/__openclaw__/session-entry",
+        "status": 401,
+        "resource": "fetch"
+      },
+      {
+        "path": "/fixture/__openclaw__/session-entry",
+        "status": 200,
+        "resource": "document"
+      }
+    ],
+    "transport": "In one tab UI login used the temporary Gateway secret and normal Connect; one navigation to the package URL; built-in session-entry recovery without added HTTP authorization, cookies or headers",
+    "finalSavedSessionPath": "/fixture/chat/link-fixture/draft/proof",
+    "authenticatedAfterHandoff": true,
+    "exactEditableUnsentDraft": "OpenClaw web draft QA 44B + & %2B 100% café ☃\nSecond line — 東京",
+    "oneShotQueryRemoved": true,
+    "initialHistoryCount": 0,
+    "finalHistoryCount": 0,
+    "storedUserMessages": 0,
+    "modelConnections": 0,
+    "draftMarkerSentOnRpc": false,
+    "blockedBackgroundRpc": [
+      "presence.activity",
+      "plugin.surface.refresh",
+      "sessions.viewers.set",
+      "users.prefs.set"
+    ],
+    "reportedBrowserErrors": [
+      "/127.0.0.1:43611/fixture/index.html due to access control checks.",
+      "/127.0.0.1:43611/fixture/control-ui-config.json due to access control checks."
+    ],
+    "screenshotSha256": "9fe380b3a83c2e7423c3b0b97c79a3556efb170c4ba91073b9b7ec478b23d853"
+  }
+}
