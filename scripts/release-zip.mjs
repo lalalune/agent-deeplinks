@@ -15,6 +15,8 @@ try {
   for (const file of ["README.md", "LICENSE", "icons", "research"]) {
     cpSync(file, join(staging, file), { recursive: true });
   }
+  mkdirSync(join(staging, "assets"));
+  cpSync("assets/readme-buttons", join(staging, "assets/readme-buttons"), { recursive: true });
   cpSync(join(staging, tarball), join(artifacts, `${name}.tgz`));
   cpSync("site/dist", join(staging, "demo"), { recursive: true });
   writeFileSync(join(staging, "START-HERE.txt"), [

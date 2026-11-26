@@ -36,7 +36,7 @@ Try Desktop & Mobile native links (`claude://`, `cursor://`, `codex://`, `ghapp:
 npm install agent-deeplinks
 ```
 
-Standalone ZIP archives with the bundled SVGs and static demo are also published on [GitHub Releases](https://github.com/lalalune/agent-deeplinks/releases/latest).
+The [GitHub release ZIP](https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip) includes the npm tarball, SVGs, and static shadcn/ui demo. The playground offers icon-only and labeled buttons. Workspace and self-hosted examples accept your folder or server address.
 
 ## Quick start
 

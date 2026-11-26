@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-26T22:30:44.610451+00:00",
+  "upstreamVersion": "0.8.11",
+  "versionCode": 1033,
+  "packageId": "ai.opencode.mobilecode",
+  "upstreamRelease": "https://github.com/anomalyco/opencode-android/releases/tag/v0.8.11",
+  "sourceTagCommit": "5412d3d379783482c1e9a41789755fa3210d3183",
+  "passingTaggedSourceCI": "https://github.com/anomalyco/opencode-android/actions/runs/45860537172/job/140050082041",
+  "sameRouteSourceBaseline": {
+    "version": "0.8.9",
+    "tagCommit": "f437b160fbbbc50c49e2553f0e6cd3ff18ddb741",
+    "comparison": "https://github.com/anomalyco/opencode-android/compare/v0.8.9...v0.8.11",
+    "totalChangedPaths": 74,
+    "candidatePathsExamined": 31,
+    "changedCandidatePaths": [],
+    "matchingGitBlobs": {
+      "app/src/main/AndroidManifest.xml": "3d56ed5db85fa6251c2e7ba321f031cb0151eaa9",
+      "app/src/main/kotlin/ai/opencode/app/AppFeature.kt": "fd1e16fcaccf9184aa86421fc94fc5938d246dde",
+      "app/src/main/kotlin/ai/opencode/app/AppFeaturePairing.kt": "2a4ad964a2a4c1d0359c9f03cdee46b2d8481f8b",
+      "app/src/main/kotlin/ai/opencode/app/MainActivity.kt": "58478793c4521906d6709bc5f92a874cf1554b38",
+      "core/src/main/AndroidManifest.xml": "9e836459daca17e0935c5f75c85605f36e00206d",
+      "devtools/src/main/AndroidManifest.xml": "3637e665238f0f291051cd91398652cada39a918",
+      "feature/composer/src/main/AndroidManifest.xml": "d682ea02b5446c3dcb6665ab142e42a283d96085",
+      "feature/media/src/main/AndroidManifest.xml": "667e660ee7ecd3512265f8ceed2f085e61a397a3",
+      "feature/session/src/main/AndroidManifest.xml": "74f1c85f4d0c67855ca5e0687b03b3694a19abef",
+      "feature/settings/src/main/AndroidManifest.xml": "321524004ed89a966c8c0b4b7b855d713b1fc261",
+      "feature/system/src/main/AndroidManifest.xml": "4b33d7198603e7fcad923b146c7e924b2dd307a1",
+      "feature/voice/src/main/AndroidManifest.xml": "31da7bfe82f6efc6e856a9428c9081961ccd6d5b",
+      "server/src/main/AndroidManifest.xml": "409677aa8af277eb72d9c3885de6dd276cb5e093",
+      "server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt": "2ecee687f13a399830a08b61af6882e80d63d1f1",
+      "feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt": "acb302e74b66cc8099326429893caa7380a14167",
+      "feature/system/src/main/kotlin/ai/opencode/feature/system/share/ShareConversation.kt": "59c6e0688f30d27cc3501048ee6ddb827cb640fd"
+    }
+  },
+  "releasePublish": {
+    "job": "https://github.com/anomalyco/opencode-android/actions/runs/45872880209/job/140094946564",
+    "tracks": [
+      "internal",
+      "beta"
+    ],
+    "stableReleaseAssets": [],
+    "uploadSigningSource": "https://github.com/anomalyco/opencode-android/blob/v0.8.11/.github/workflows/release.yml#L100-L178"
+  },
+  "publicBuildArtifact": {
+    "url": "https://github.com/anomalyco/opencode-android/actions/runs/45872880209/artifacts/15144530846",
+    "artifactZipSha256": "c48d1c45d3f75f7c69fd3593c762e19560540f585fbed52113e3df1d9bdee3de",
+    "aabSha256": "fa9de94eada320035fa4bffe4401511fc573e2238c50440a121cb1c38b31493a",
+    "verifiedAgainstIncludedSha256Sums": true,
+    "signatureObservation": "jarsigner: jar is unsigned."
+  },
+  "publicDevelopmentApk": {
+    "release": "https://github.com/anomalyco/opencode-android/releases/tag/dev-latest",
+    "tagCommit": "dad19a7da6405756da613b0eefd43c3d88d18eff",
+    "workflow": "https://github.com/anomalyco/opencode-android/actions/runs/45891021543/job/140154994486",
+    "packageId": "ai.opencode.mobilecode.debug",
+    "version": "0.1.0-dad19a7",
+    "versionCode": 295,
+    "apkSha256": "7bcbf8527259409177c8e21397ba62d10bd2dffe0397f7f099a3ad8dbfb660e5",
+    "signer": "Android Debug",
+    "signerCertSha256": "fe46e02e0c04be5945799385446acc2f4c2c99e413d6fad4694c765dbb3ccce1"
+  },
+  "playDistribution": {
+    "listing": "https://play.google.com/store/apps/details?id=ai.opencode.mobilecode",
+    "listingStatus": 200,
+    "betaJoin": "https://play.google.com/apps/testing/ai.opencode.mobilecode",
+    "anonymousBetaJoinDestination": "Sign in - Google Accounts",
+    "generatedApksEndpoint": "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/ai.opencode.mobilecode/generatedApks/1033",
+    "anonymousGeneratedApksStatus": 401,
+    "reason": "CREDENTIALS_MISSING",
+    "generatedApksDocumentation": "https://developers.google.com/android-publisher/api-ref/rest/v3/generatedapks/list#authorization-scopes",
+    "developerConsoleDocumentation": "https://support.google.com/googleplay/android-developer/answer/9844279"
+  },
+  "domainAssociation": {
+    "androidAssetLinksStatus": 404,
+    "pairPathStatus": 404,
+    "appleAssociationStatus": 200
+  },
+  "scope": "Published artifacts, integrity and signing, official release source comparison and anonymous access checks. No APK installed and no production-signature dispatch tested."
+}

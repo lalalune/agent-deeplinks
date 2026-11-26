@@ -1,0 +1,98 @@
+{
+  "version": "opencode v2.4.2",
+  "origin": "http://127.0.0.1:59928",
+  "auth": "Stock OpenCode Use password browser form",
+  "providerOrExternalAccount": false,
+  "browser": [
+    {
+      "name": "desktop-chromium",
+      "version": "158.0.8127.18",
+      "html": [
+        [
+          200,
+          "/"
+        ],
+        [
+          200,
+          "/server/aHR0cDovLzEyNy4wLjAuMTo1OTkyOA/session/ses_de6059052ffehVt2Atl0Bry0oi"
+        ]
+      ],
+      "denied": [],
+      "authenticatedApi": [
+        "/api/info",
+        "/api/event",
+        "/api/project",
+        "/api/session",
+        "/api/info",
+        "/api/event",
+        "/api/session/ses_de6059052ffehVt2Atl0Bry0oi"
+      ],
+      "visibleTitle": true,
+      "signedInThroughApp": true,
+      "navigationStatus": 200,
+      "finalUrl": "http://127.0.0.1:59928/server/aHR0cDovLzEyNy4wLjAuMTo1OTkyOA/session/ses_de6059052ffehVt2Atl0Bry0oi",
+      "emptyComposer": true
+    },
+    {
+      "name": "iphone-15-webkit",
+      "version": "27.2",
+      "html": [
+        [
+          200,
+          "/"
+        ],
+        [
+          200,
+          "/server/aHR0cDovLzEyNy4wLjAuMTo1OTkyOA/session/ses_de6059052ffehVt2Atl0Bry0oi"
+        ]
+      ],
+      "denied": [
+        [
+          "POST",
+          "/api/rpc/opencode.goal/get"
+        ]
+      ],
+      "authenticatedApi": [
+        "/api/info",
+        "/api/info",
+        "/api/event",
+        "/api/session/ses_de6059052ffehVt2Atl0Bry0oi",
+        "/api/location",
+        "/api/project",
+        "/api/session/active",
+        "/api/location",
+        "/api/vcs",
+        "/api/project",
+        "/api/session/ses_de6059052ffehVt2Atl0Bry0oi/message",
+        "/api/session/ses_de6059052ffehVt2Atl0Bry0oi/inbox",
+        "/api/session/ses_de6059052ffehVt2Atl0Bry0oi",
+        "/api/session",
+        "/api/info",
+        "/api/provider",
+        "/api/model"
+      ],
+      "visibleTitle": true,
+      "signedInThroughApp": true,
+      "navigationStatus": 200,
+      "finalUrl": "http://127.0.0.1:59928/server/aHR0cDovLzEyNy4wLjAuMTo1OTkyOA/session/ses_de6059052ffehVt2Atl0Bry0oi",
+      "emptyComposer": true
+    }
+  ],
+  "fixture": {
+    "id": "ses_de6059052ffehVt2Atl0Bry0oi",
+    "label": "OpenCode existing web session QA 8EC",
+    "route": "http://127.0.0.1:59928/server/aHR0cDovLzEyNy4wLjAuMTo1OTkyOA/session/ses_de6059052ffehVt2Atl0Bry0oi"
+  },
+  "exactLibraryOutput": true,
+  "database": {
+    "sessions": 1,
+    "messages": 0,
+    "providerAccounts": 0
+  },
+  "release": "https://github.com/anomalyco/opencode/releases/tag/v2.4.2",
+  "artifact": "opencode-darwin-arm64.zip",
+  "artifactSha256": "d5a8c9fb4b121ebd531d9369d7ba6ce8af91c9d4d51d6685dbb4e0c7224fa5f3",
+  "strictCodeSignatureVerified": true,
+  "publisherTeam": "5NZ4Q7NXJ4",
+  "scope": "Fresh scratch service on loopback with one seeded zero-message session. Fresh browsers used the stock local password form. Browser writes, WebSockets and non-loopback requests were blocked. No external provider account was used."
+}
