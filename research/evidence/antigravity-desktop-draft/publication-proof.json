@@ -1,0 +1,28 @@
+{
+  "version": "0.1.53",
+  "tagCommit": "c68cb15353cfc0edaaadbe81f0d45f051948c301",
+  "packageTestsPassed": 51,
+  "publicRelease": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.53",
+  "npmWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758608826",
+  "canonicalTarballSha256": "2bb04dbd934bd05954e0b08f4000927a689e9671030189b6ba578cb98fa58e0c",
+  "githubZipSha256": "8a72a84d977b005ce18048779ceaa482162b9aa0c9abc07cc53660796e8c2c0c",
+  "productionHtmlSha256": "56279b0176d92cf778bd1a81ae6f9236cd0d19aa48a08e1a60692a63fefdc4d0",
+  "productionJavaScriptSha256": "3f5b94668a1d8a933262a3cd525def334501db3ce6482e61f21849318487fd0a",
+  "matchingPublicHosts": [
+    "deeplinks.fun",
+    "www.deeplinks.fun",
+    "agent-deeplinks.pages.dev",
+    "playground.agent-deeplinks.pages.dev"
+  ],
+  "pinnedProduction": "https://6ea667c6.agent-deeplinks.pages.dev/",
+  "pinnedPlayground": "https://f21d8b86.agent-deeplinks.pages.dev/",
+  "freshNpmInstallByName": {
+    "resolvedVersion": "0.1.53",
+    "reactMajor": 19,
+    "signatureAudit": {
+      "invalid": [],
+      "missing": []
+    }
+  },
+  "productionBrowserProof": "production-playground-proof.json"
+}

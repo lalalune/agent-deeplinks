@@ -1,0 +1,23 @@
+{
+  "site": "https://deeplinks.fun/",
+  "checkedAt": "2026-11-26T05:09:21.048Z",
+  "scope": "Browser builder and buttons without opening the system URI.",
+  "cases": [
+    {
+      "profile": "Desktop Chromium",
+      "browserVersion": "158.0.8127.18",
+      "emptyLaunch": "antigravity://",
+      "exactDraft": "antigravity://open?prompt=Agent%20Deeplinks%20QA%20%2B%20%26%20caf%C3%A9%20%252F%0AReview%20only",
+      "buttonHrefs": 2,
+      "showedExistingDraftGuidance": true
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browserVersion": "27.2",
+      "emptyLaunch": "antigravity://",
+      "exactDraft": "antigravity://open?prompt=Agent%20Deeplinks%20QA%20%2B%20%26%20caf%C3%A9%20%252F%0AReview%20only",
+      "buttonHrefs": 2,
+      "showedExistingDraftGuidance": true
+    }
+  ]
+}

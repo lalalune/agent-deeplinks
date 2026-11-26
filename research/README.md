@@ -120,6 +120,8 @@ The v0.1.51 tag passed all 50 package tests. Chromium 158 and WebKit 27.2 checke
 
 The v0.1.52 build passed 50 tests and a fresh archive install with React 19. Both shadcn/ui buttons in the deployed preview opened the live ZCode share. The production Cloudflare site and Playground alias serve the checked HTML and JavaScript. The canonical npm tarball matched the one on GitHub and inside the ZIP. A clean install by name selected v0.1.52 and passed the npm signature audit. [GitHub release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.52) · [Pinned production](https://cc9cf3b9.agent-deeplinks.pages.dev/) · [Pinned Playground](https://d2bd1fb9.agent-deeplinks.pages.dev/) · [Browser button proof](evidence/zcode-browser-share/playground-button-proof.json)
 
+The v0.1.53 release passed 51 package tests. Desktop Chromium and iPhone WebKit checked blank launch, exact draft encoding, and both shadcn/ui styles on the live Antigravity playground. The canonical npm tarball matches the GitHub tarball and the copy inside the ZIP. The ZIP demo matches the public Cloudflare HTML and JavaScript. A fresh install by name with React 19 passed signature verification. [Release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.53) · [Publication proof](evidence/antigravity-desktop-draft/publication-proof.json)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)
@@ -150,6 +152,7 @@ The v0.1.52 build passed 50 tests and a fresh archive install with React 19. Bot
 
 ### Remaining native checks
 
+- macOS resolved the exact Antigravity prompt URI to the signed app. Google’s receiver staged the exact text in a controlled test. The installed Home composer still needs a signed-in check. [Antigravity draft evidence](coding-agents.md#google-antigravity)
 - Cursor Origin pull requests and Grok Build Cloud Agents preserved their target through browser sign-in. Signed-in destination views and installed mobile delivery remain open. [Cursor Origin evidence](evidence/cursor-origin-pull-request/proof.json) · [Grok Build evidence](other-agents.md#grok-build)
 - Existing synced ChatGPT and Claude conversations still need signed-in native checks. The signed macOS app connected to a disposable Codex SSH host. Reopening a copied remote thread link remains pending. [Existing chat research](openai-anthropic.md)
 - Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)
