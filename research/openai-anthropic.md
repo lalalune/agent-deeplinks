@@ -93,6 +93,8 @@ Pass the app-copied URL as `session` on ChatGPT or Codex Desktop. Links that inc
 
 In a restarted stock app server, the zero-turn scratch thread was readable by ID and absent from six list queries. A separate disposable thread with one canned loopback turn appeared in all four list queries after restart. That fixture used no account and made one request to its local provider. [Thread-list fixture proof](evidence/codex-copied-remote-thread/thread-list-fixture-proof.json)
 
+The next signed macOS run verified that the SSH app server listed the one-turn fixture before and after the UI connection. The test reached **Connected**. Its screenshot matcher stopped at the Home button, which was visible with a notification dot. No link was copied or dispatched. [Hosted one-turn checkpoint](evidence/codex-copied-remote-thread/one-turn-native-checkpoint.json)
+
 ## Shared conversations
 
 `getAgentLink("chatgpt", "web", { action: "shared-chat", target: shareUrl })` and the equivalent Claude call accept an already shared URL from the selected provider or its UUID. The web variants add ChatGPT's `no_universal_links=1` query or Claude's `no_universal_links` fragment. The mobile variants use clean HTTPS links. Link creation and any access restrictions stay with the provider. [OpenAI sharing](https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt) · [Anthropic sharing](https://support.claude.com/en/articles/16762437-public-links-for-shared-chats)

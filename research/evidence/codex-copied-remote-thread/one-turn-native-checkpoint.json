@@ -1,0 +1,46 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45907852551",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45907852551/artifacts/15158567939",
+  "diagnosticHead": "04b1202f69edc4c96e9766fc7a4fa9ddd1531ecd",
+  "packageVersion": "0.1.50",
+  "cliVersion": "codex-cli 0.171.0-alpha.13.2",
+  "seedNetwork": "OS denies network except designated loopback provider port",
+  "seed": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "ownedSshConnectionsFromStockApp": 2,
+  "providerRequests": [
+    {
+      "method": "POST",
+      "route": "/v1/responses",
+      "phase": "seed one canned loopback response into a named remote stock thread",
+      "admitted": true
+    }
+  ],
+  "noAdditionalProviderWrites": true,
+  "lastStage": "return from the verified connected Settings page to Projects and Recents",
+  "terminalScreen": "Settings / Connections with codex-fixture Connected",
+  "homeVisibleOnScreenshot": true,
+  "linkCopied": false,
+  "linkDispatched": false,
+  "screenshot": "native-ssh-one-turn-connected.png"
+}
