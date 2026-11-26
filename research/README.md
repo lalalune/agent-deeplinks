@@ -144,10 +144,11 @@ The v0.1.51 tag passed all 50 package tests. Chromium 158 and WebKit 27.2 checke
 
 - The exact Codex snapshot URLs rendered an intentionally published course example in signed-out desktop Chromium, iPhone WebKit, and Pixel Chromium. [Public browser proof](evidence/codex-shared-snapshot/public-browser-proof.json)
 
+- ZCode’s live public conversation rendered through the exact library links in fresh desktop Chromium, Pixel Chromium, and iPhone WebKit. The viewer displayed the published title and attachment name. [Live ZCode proof](evidence/zcode-browser-share/live-public-proof.json)
+
 ### Remaining native checks
 
 - Cursor Origin pull requests and Grok Build Cloud Agents preserved their target through browser sign-in. Signed-in destination views and installed mobile delivery remain open. [Cursor Origin evidence](evidence/cursor-origin-pull-request/proof.json) · [Grok Build evidence](other-agents.md#grok-build)
-- ZCode’s viewer rendered its published rich-content fixture on desktop and mobile. Verifying content from the live service requires an active viewable share. [Browser proof](evidence/zcode-browser-share/proof.json)
 - Existing synced ChatGPT and Claude conversations still need signed-in native checks. The signed macOS app connected to a disposable Codex SSH host. Reopening a copied remote thread link remains pending. [Existing chat research](openai-anthropic.md)
 - Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)
 - Apple lists Cursor 1.19.0 and Kimi 3.2.0 as iPhone and iPad builds. The vendor download paths use the App Store listings. Apple documents that App Store apps cannot install on Simulator. The remaining stock check needs an authorized Apple device with those apps installed. [Cursor App Store](https://apps.apple.com/us/app/cursor/id6767085653) · [Kimi App Store](https://apps.apple.com/us/app/kimi-your-personal-ai-agent/id6474233312) · [Apple Simulator documentation](https://developer.apple.com/library/archive/documentation/IDEs/Conceptual/iOS_Simulator_Guide/InteractingwiththeiOSSimulator/InteractingwiththeiOSSimulator.html)

@@ -1,0 +1,182 @@
+{
+  "checkedAt": "2026-11-26T04:21:01.103Z",
+  "package": "agent-deeplinks@0.1.51",
+  "upstreamGuide": "https://zcode.z.ai/en/docs/agents#sharing-a-conversation",
+  "publicAuthorSource": "https://www.locdd.com/t/topic/112498/12",
+  "sourceShare": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+  "scope": "Each context began with no cookies and blocked service workers and WebSockets. HTTPS read methods to zcode.z.ai and cdn-zcode.z.ai only. The real live preview was used without interception or fixture responses. No sign-in, share creation, writes, import, download or use of the shared HTML attachment.",
+  "checks": [
+    {
+      "profile": "Desktop Chromium",
+      "platform": "web",
+      "browserVersion": "158.0.8127.18",
+      "target": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "documentStatus": 200,
+      "initialCookies": 0,
+      "blockedNonRead": 0,
+      "preview": {
+        "method": "GET",
+        "status": 200,
+        "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview",
+        "responseCode": 0,
+        "schemaVersion": 1,
+        "accessMode": "public_readonly",
+        "expiresAt": "2026-11-30T05:05:26.965Z",
+        "rowCount": 54,
+        "rowTypes": {
+          "artifact": 1,
+          "assistantText": 8,
+          "reasoning": 16,
+          "toolCall": 27,
+          "turnHeader": 1,
+          "userInput": 1
+        },
+        "artifacts": [
+          {
+            "name": "pelican-bicycle.html",
+            "mimeType": "text/html"
+          }
+        ]
+      },
+      "rendered": {
+        "documentTitle": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+        "exactTitleVisible": true,
+        "artifactNameVisible": true,
+        "publicTopicVisible": true,
+        "visibleCharacters": 602
+      }
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "platform": "android",
+      "browserVersion": "158.0.8127.18",
+      "target": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "documentStatus": 200,
+      "initialCookies": 0,
+      "blockedNonRead": 0,
+      "preview": {
+        "method": "GET",
+        "status": 200,
+        "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview",
+        "responseCode": 0,
+        "schemaVersion": 1,
+        "accessMode": "public_readonly",
+        "expiresAt": "2026-11-30T05:05:26.965Z",
+        "rowCount": 54,
+        "rowTypes": {
+          "artifact": 1,
+          "assistantText": 8,
+          "reasoning": 16,
+          "toolCall": 27,
+          "turnHeader": 1,
+          "userInput": 1
+        },
+        "artifacts": [
+          {
+            "name": "pelican-bicycle.html",
+            "mimeType": "text/html"
+          }
+        ]
+      },
+      "rendered": {
+        "documentTitle": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+        "exactTitleVisible": true,
+        "artifactNameVisible": true,
+        "publicTopicVisible": true,
+        "visibleCharacters": 602
+      }
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "platform": "ios",
+      "browserVersion": "27.2",
+      "target": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "documentStatus": 200,
+      "initialCookies": 0,
+      "blockedNonRead": 0,
+      "preview": {
+        "method": "GET",
+        "status": 200,
+        "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview",
+        "responseCode": 0,
+        "schemaVersion": 1,
+        "accessMode": "public_readonly",
+        "expiresAt": "2026-11-30T05:05:26.965Z",
+        "rowCount": 54,
+        "rowTypes": {
+          "artifact": 1,
+          "assistantText": 8,
+          "reasoning": 16,
+          "toolCall": 27,
+          "turnHeader": 1,
+          "userInput": 1
+        },
+        "artifacts": [
+          {
+            "name": "pelican-bicycle.html",
+            "mimeType": "text/html"
+          }
+        ]
+      },
+      "rendered": {
+        "documentTitle": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+        "exactTitleVisible": true,
+        "artifactNameVisible": true,
+        "publicTopicVisible": true,
+        "visibleCharacters": 602
+      }
+    },
+    {
+      "profile": "Desktop Chromium English ID",
+      "platform": "web",
+      "browserVersion": "158.0.8127.18",
+      "target": "UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "expected": "https://zcode.z.ai/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "requested": "https://zcode.z.ai/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "documentStatus": 200,
+      "initialCookies": 0,
+      "blockedNonRead": 0,
+      "preview": {
+        "method": "GET",
+        "status": 200,
+        "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview",
+        "responseCode": 0,
+        "schemaVersion": 1,
+        "accessMode": "public_readonly",
+        "expiresAt": "2026-11-30T05:05:26.965Z",
+        "rowCount": 54,
+        "rowTypes": {
+          "artifact": 1,
+          "assistantText": 8,
+          "reasoning": 16,
+          "toolCall": 27,
+          "turnHeader": 1,
+          "userInput": 1
+        },
+        "artifacts": [
+          {
+            "name": "pelican-bicycle.html",
+            "mimeType": "text/html"
+          }
+        ]
+      },
+      "rendered": {
+        "documentTitle": "SVG 鹈鹕骑自行车动画 · ZCode Conversation Share",
+        "exactTitleVisible": true,
+        "artifactNameVisible": true,
+        "publicTopicVisible": true,
+        "visibleCharacters": 630
+      }
+    }
+  ]
+}

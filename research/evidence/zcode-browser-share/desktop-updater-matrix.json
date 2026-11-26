@@ -1,0 +1,179 @@
+{
+  "checkedAt": "2026-11-26T04:24:37.407961+00:00",
+  "scope": "Read-only public desktop update metadata. No ZCode account, device ID, binaries, app use, private release cohort or changes.",
+  "officialChangelog": "https://zcode.z.ai/en/changelog",
+  "updaterSource": "https://github.com/zai-org/ZCode/blob/a4b4445141eb7d3b3e99eada9292775383bfc44e/packages/desktop/src/main/manifestUpdateProvider.ts#L23-L94",
+  "updaterRequestHeadersSource": "https://github.com/zai-org/ZCode/blob/a4b4445141eb7d3b3e99eada9292775383bfc44e/packages/desktop/src/main/manifestUpdateProvider.ts#L209-L247",
+  "desktopParserSource": "https://github.com/zai-org/ZCode/blob/a4b4445141eb7d3b3e99eada9292775383bfc44e/packages/desktop/src/main/desktopDeepLinkUrl.ts#L55-L94",
+  "github": {
+    "latestTag": "v4.0.0",
+    "url": "https://github.com/zai-org/ZCode/releases/tag/v4.0.0",
+    "publishedAt": "2026-11-23T08:14:37Z",
+    "prerelease": false,
+    "refObjectType": "commit",
+    "refObjectSha": "a4b4445141eb7d3b3e99eada9292775383bfc44e",
+    "tagCommit": "a4b4445141eb7d3b3e99eada9292775383bfc44e",
+    "compareUrl": "https://github.com/zai-org/ZCode/compare/v4.0.0...main",
+    "compareStatus": "identical",
+    "aheadBy": 0,
+    "behindBy": 0
+  },
+  "manifests": [
+    {
+      "platform": "darwin-aarch64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=darwin-aarch64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-mac-arm64.zip",
+        "ZCode-4.0.0-mac-arm64.dmg"
+      ]
+    },
+    {
+      "platform": "darwin-aarch64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=darwin-aarch64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-mac-arm64.zip",
+        "ZCode-4.0.0-mac-arm64.dmg"
+      ]
+    },
+    {
+      "platform": "darwin-x86_64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=darwin-x86_64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-mac-x64.zip",
+        "ZCode-4.0.0-mac-x64.dmg"
+      ]
+    },
+    {
+      "platform": "darwin-x86_64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=darwin-x86_64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-mac-x64.zip",
+        "ZCode-4.0.0-mac-x64.dmg"
+      ]
+    },
+    {
+      "platform": "windows-aarch64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=windows-aarch64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-win-arm64.exe"
+      ]
+    },
+    {
+      "platform": "windows-aarch64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=windows-aarch64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-win-arm64.exe"
+      ]
+    },
+    {
+      "platform": "windows-x86_64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=windows-x86_64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-win-x64.exe"
+      ]
+    },
+    {
+      "platform": "windows-x86_64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=windows-x86_64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-win-x64.exe"
+      ]
+    },
+    {
+      "platform": "linux-aarch64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=linux-aarch64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-linux-arm64.AppImage",
+        "ZCode-4.0.0-linux-arm64.deb",
+        "ZCode-4.0.0-linux-arm64.rpm",
+        "ZCode-4.0.0-linux-arm64.pkg.tar.zst"
+      ]
+    },
+    {
+      "platform": "linux-aarch64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=linux-aarch64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-linux-arm64.AppImage",
+        "ZCode-4.0.0-linux-arm64.deb",
+        "ZCode-4.0.0-linux-arm64.rpm",
+        "ZCode-4.0.0-linux-arm64.pkg.tar.zst"
+      ]
+    },
+    {
+      "platform": "linux-x86_64",
+      "channel": "stable",
+      "channelCode": "1",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=linux-x86_64&channel=1",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-linux-x64.AppImage",
+        "ZCode-4.0.0-linux-x64.deb",
+        "ZCode-4.0.0-linux-x64.rpm",
+        "ZCode-4.0.0-linux-x64.pkg.tar.zst"
+      ]
+    },
+    {
+      "platform": "linux-x86_64",
+      "channel": "preview",
+      "channelCode": "3",
+      "url": "https://zcode.z.ai/api/v1/releases/electron/manifest?platform=linux-x86_64&channel=3",
+      "httpStatus": 200,
+      "version": "4.0.0",
+      "files": [
+        "ZCode-4.0.0-linux-x64.AppImage",
+        "ZCode-4.0.0-linux-x64.deb",
+        "ZCode-4.0.0-linux-x64.rpm",
+        "ZCode-4.0.0-linux-x64.pkg.tar.zst"
+      ]
+    }
+  ],
+  "stablePreviewMatchingAssetURLsAndSHA512": {
+    "darwin-aarch64": true,
+    "darwin-x86_64": true,
+    "windows-aarch64": true,
+    "windows-x86_64": true,
+    "linux-aarch64": true,
+    "linux-x86_64": true
+  }
+}

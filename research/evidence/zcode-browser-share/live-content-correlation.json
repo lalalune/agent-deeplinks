@@ -1,0 +1,45 @@
+{
+  "publicAuthorSource": "https://www.locdd.com/t/topic/112498/12",
+  "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+  "previewStatus": 200,
+  "browser": "158.0.8127.18",
+  "matchingRule": "Largest exact contiguous substring after Unicode normalization and removing nonletters/non-numbers. Raw conversation text omitted.",
+  "matches": [
+    {
+      "kind": "userInput",
+      "longestVisibleExactNormalizedSubstring": 29
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 0
+    },
+    {
+      "kind": "assistantText",
+      "longestVisibleExactNormalizedSubstring": 381
+    }
+  ]
+}

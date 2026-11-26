@@ -602,10 +602,11 @@ const zcodeShare = "https://zcode.z.ai/share/";
 const zcodeChineseShare = "https://zcode.z.ai/cn/share/";
 const zcodeSharedChat: ActionDefinition = {
   id: "shared-chat", label: "Open shared conversation", url: zcodeShare,
-  behavior: "launch", evidence: "source",
+  behavior: "launch", evidence: "verified",
   sources: [
     "https://zcode.z.ai/en/docs/agents#sharing-a-conversation",
     "https://github.com/zai-org/ZCode/blob/a4b4445141eb7d3b3e99eada9292775383bfc44e/packages/web/src/share/conversationShareRoute.ts",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/zcode-browser-share/live-public-proof.json",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/zcode-browser-share/proof.json",
   ],
   fields: { target: "" }, required: ["target"],
