@@ -26,6 +26,7 @@ const claudeCodeCloudSessionId = /^(?:session|cse)_[A-Za-z0-9_-]+$/u;
 const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
+const openCodeAndroidSessionUrl = /^opencode:\/\/session\/([A-Za-z0-9_-]+)\?server=[0-9a-f]{12}$/u;
 const copiedCodexThreadUrl = /^codex:\/\/threads\/([a-fA-F\d-]+)\?hostId=([A-Za-z\d._*%\-]+)$/u;
 const opaqueCodexHostId = /^(?:[a-zA-Z0-9._:~!*'()-]|%[a-fA-F0-9]{2})+$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
@@ -167,6 +168,12 @@ function isOpenCodeSessionId(session: string): boolean {
   return session.startsWith("ses") && !/[^A-Za-z0-9_-]/u.test(session);
 }
 
+function getOpenCodeAndroidSessionLink(session: string): string | null {
+  if (isOpenCodeSessionId(session)) return `opencode://session/${session}`;
+  const match = openCodeAndroidSessionUrl.exec(session);
+  return match?.[0] === session && match[1] && isOpenCodeSessionId(match[1]) ? session : null;
+}
+
 function isLocalPath(path: string): boolean {
   return (/^\/(?!\/)|^[a-z]:[\\/]/iu.test(path)) &&
     !hiddenPathCharacters.test(path) &&
@@ -238,6 +245,7 @@ export function getAgentLink(
   }
   const codexDesktopSession = platform === "desktop" && (agent === "codex" || agent === "chatgpt");
   const openClawBrowser = agent === "openclaw" && (platform === "web" || platform === "android");
+  const openCodeAndroid = agent === "opencode" && platform === "android";
   if (agent === "grok-bot" && fields.prompt) {
     fields.prompt = fields.prompt.replace(/[\u0000-\u001f\u007f-\u009f]/gu, " ");
   }
@@ -257,7 +265,8 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (!codexDesktopSession && !openClawBrowser && agent !== "t3-code" && fields.session && invalidSessionId.test(fields.session)) return null;
+  if (!codexDesktopSession && !openClawBrowser && !openCodeAndroid && agent !== "t3-code" &&
+    fields.session && invalidSessionId.test(fields.session)) return null;
   if (fields.workspace) {
     const workspace = parseWorkspaceUri(fields.workspace);
     if (!workspace) return null;
@@ -310,12 +319,13 @@ export function getAgentLink(
     const draft = fields.prompt?.trim() ? `?prompt=${encodeLinkValue(fields.prompt)}` : "";
     return `${base}/${environment}/${thread}${draft}`;
   }
-  if (agent === "opencode" && platform === "android") {
-    if (fields.session) {
-      return !fields.mode && isOpenCodeSessionId(fields.session)
-        ? `opencode://session/${fields.session}` : null;
-    }
-    return fields.mode ? `opencode://${fields.mode}-session` : route.url;
+  if (openCodeAndroid) {
+    const { mode, project, session } = fields;
+    if (project && (mode !== "new" || !project.trim() || hiddenPathCharacters.test(project) ||
+      /[\ud800-\udfff]/u.test(project))) return null;
+    if (session) return mode ? null : getOpenCodeAndroidSessionLink(session);
+    const baseUrl = mode ? `opencode://${mode}-session` : route.url;
+    return baseUrl + getLinkParameters(route, fields, baseUrl);
   }
   if (agent === "openclaw" && (platform === "desktop" || platform === "ios") && fields.server) {
     return fields.prompt ? null : getOpenClawGatewayLink(fields.server, platform);

@@ -23,7 +23,7 @@ export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" |
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"
   | "provider" | "model" | "botId" | "folder" | "server" | "mode" | "branch"
-  | "session" | "environment" | "task" | "cloudAgent" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder";
+  | "session" | "environment" | "task" | "cloudAgent" | "pr" | "customAgent" | "workspace" | "sshHost" | "sshPort" | "sshFolder" | "project";
 
 export interface AgentRoute {
   readonly url: string;
@@ -962,14 +962,15 @@ const catalog = {
         behavior: "launch",
         evidence: "verified",
         sources: [
-          "https://github.com/anomalyco/opencode-android/blob/v0.8.9/feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt#L43-L75",
-          "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.11/feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt#L48-L83",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.11/feature/system/src/main/kotlin/ai/opencode/feature/system/intents/SystemSearchIndex.kt#L83-L102",
+          "https://github.com/anomalyco/opencode-android/blob/v0.8.11/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt",
           `${openCodeDesktopTag}/packages/schema/src/session-id.ts`,
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187",
         ],
-        fields: { session: "", mode: "" },
+        fields: { session: "", mode: "", project: "project" },
         modes: ["new", "last"],
-        note: "Pair the Android app first. OpenCode 0.8.9 paired with OpenCode 2.4.1 and opened the requested session, a blank draft, and the last session. The release bundle used a disposable test signature.",
+        note: "Pair the Android app first. The test-signed Android 0.8.9 bundle opened a saved session, a blank draft, and the last session. Android 0.8.11 source and parser checks also cover saved-server session links and project-targeted drafts.",
       },
     },
   },

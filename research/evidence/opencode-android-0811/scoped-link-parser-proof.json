@@ -1,0 +1,34 @@
+{
+  "testedOn": "2026-11-26",
+  "release": "v0.8.11",
+  "commit": "5412d3d379783482c1e9a41789755fa3210d3183",
+  "parserSource": "https://github.com/anomalyco/opencode-android/blob/v0.8.11/feature/system/src/main/kotlin/ai/opencode/feature/system/SystemAction.kt#L48-L83",
+  "parserSourceSha256": "b254f0d6a20d06b9db7e3fe5111b81236090df6afd3cea771b79a31a177a4fcb",
+  "method": "Compiled the unchanged tagged SystemAction.kt on JDK 21 with Kotlin 2.2.20 and its two supporting declarations, then asserted the SystemAction.fromUrl() result and startsCall=false for each parsed URL. The inputs use synthetic IDs and contain no pairing codes or credentials.",
+  "fixtureServerKey": {
+    "serialization": "Join the username and the sorted, distinct primary and alternate URLs with |, then take the first six bytes of the UTF-8 SHA-256 digest as lowercase hexadecimal.",
+    "persistenceID": "fixture|https://other.invalid|https://saved.invalid",
+    "key": "676517cbf8eb",
+    "persistenceIDSource": "https://github.com/anomalyco/opencode-android/blob/v0.8.11/server/src/main/kotlin/ai/opencode/server/OpenCodeServer.kt#L61-L71",
+    "keySource": "https://github.com/anomalyco/opencode-android/blob/v0.8.11/feature/system/src/main/kotlin/ai/opencode/feature/system/share/ShareConversation.kt#L13-L17"
+  },
+  "packageForms": [
+    {
+      "url": "opencode://session/ses_fixture?server=676517cbf8eb",
+      "server": "676517cbf8eb",
+      "session": "ses_fixture"
+    },
+    {
+      "url": "opencode://new-session?project=prj_fixture",
+      "server": null,
+      "project": "prj_fixture"
+    },
+    {
+      "url": "opencode://new-session?project=folder%3A%2Fscratch%2Fspace%20%2B%20caf%C3%A9%20%26%20%E2%98%83%20%F0%9F%9A%80%20%231",
+      "server": null,
+      "project": "folder:/scratch/space + café & ☃ 🚀 #1"
+    }
+  ],
+  "upstreamCI": "https://github.com/anomalyco/opencode-android/actions/runs/45860537172/job/140050082041",
+  "scope": "Tagged JVM parser behavior. Android intent dispatch, actual server selection, the visible composer, and Play signing were outside this local run."
+}

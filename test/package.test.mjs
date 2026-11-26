@@ -342,6 +342,53 @@ test("opens an exact, new, or last OpenCode session on the current paired Androi
   }
 });
 
+test("preserves the Android AppSearch URL for an OpenCode session on a saved server", () => {
+  const session = "opencode://session/ses_fixture?server=676517cbf8eb";
+  assert.equal(getAgentLink("opencode", "android", { session }), session);
+  assert.equal(getAgentLink("opencode", "android", { session: "ses_fixture" }), "opencode://session/ses_fixture");
+  assert.equal(getAgentLink("opencode", "android", { session, mode: "new" }), null);
+  assert.equal(getAgentLink("opencode", "android", { session, project: "prj_fixture" }), null);
+  assert.equal(getAgentLink("opencode", "android", { session, server: "https://saved.invalid" }), null);
+  assert.equal(getAgentLink("opencode", "web", { session, server: "https://saved.invalid" }), null);
+  for (const invalid of [
+    session.replace("//session/", "//server/"),
+    session.replace("//session/", "//other@session/"),
+    session.replace("//session/", "//session:443/"),
+    session.replace("opencode:", "https:"),
+    session.replace("ses_fixture", "ses_café"),
+    session.replace("ses_fixture", "ses_%63af%C3%A9"),
+    session.replace("ses_fixture", "ses_x%2Ftail"),
+    session.replace("ses_fixture", "ses_x/../ses_y"),
+    session.replace("676517cbf8eb", "https%3A%2F%2Fsaved.invalid"),
+    session.replace("676517cbf8eb", "676517CBF8EB"),
+    session.replace("676517cbf8eb", "676517cbf8e"),
+    `${session}&prompt=send`,
+    `${session}&server=123456789abc`,
+    `${session}#fragment`,
+    `${session}\n`,
+  ]) {
+    assert.equal(getAgentLink("opencode", "android", { session: invalid }), null, invalid);
+  }
+});
+
+test("opens a blank Android OpenCode draft in a project on the current paired server", () => {
+  const project = "folder:/scratch/space + café & ☃ 🚀 #1";
+  const link = getAgentLink("opencode", "android", { mode: "new", project });
+  assert.equal(link, "opencode://new-session?project=folder%3A%2Fscratch%2Fspace%20%2B%20caf%C3%A9%20%26%20%E2%98%83%20%F0%9F%9A%80%20%231");
+  assert.deepEqual([...new URL(link).searchParams], [["project", project]]);
+  assert.equal(getAgentLink("opencode", "android", { mode: "new", project: "prj_fixture" }), "opencode://new-session?project=prj_fixture");
+  assert.equal(getAgentLink("opencode", "android", { mode: "new", project: "" }), "opencode://new-session");
+  assert.equal(getAgentLink("opencode", "android", { project }), null);
+  assert.equal(getAgentLink("opencode", "android", { mode: "last", project }), null);
+  assert.equal(getAgentLink("opencode", "android", { mode: "new", project, session: "ses_fixture" }), null);
+  assert.equal(getAgentLink("opencode", "android", { mode: "new", project, prompt: "Send this" }), null);
+  assert.equal(getAgentLink("opencode", "android", { mode: "new", project, server: "https://saved.invalid" }), null);
+  assert.equal(getAgentLink("opencode", "desktop", { project, directory: "/scratch" }), null);
+  for (const invalid of ["   ", "project\0", "project\n", "project\u202E", "project\uD800"]) {
+    assert.equal(getAgentLink("opencode", "android", { mode: "new", project: invalid }), null, invalid);
+  }
+});
+
 test("builds documented Claude Code mobile drafts and their HTTPS equivalents", () => {
   const options = { prompt: special, mode: "plan", repo: "owner/repo", branch: "feature/café" };
   const ios = new URL(getAgentLink("claude-code", "ios", options));

@@ -59,6 +59,23 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 - Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
 - Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
 
+### OpenCode on Android
+
+Pair a server in OpenCode first. Use the Android app's **Copy Session ID** action to open a saved session on the active server. If your integration already has the full Android AppSearch URI, pass it as `session` to preserve the saved server. For a blank draft in a specific project on the active server, pass its `id` from that server's `GET /api/project` response as `project` with `mode: "new"`. [OpenCode API](https://opencode.ai/docs/api#project.list) · [Android link research](research/coding-agents.md#opencode)
+
+```ts
+getAgentLink("opencode", "android", { session: "ses_fixture" })
+// opencode://session/ses_fixture
+
+getAgentLink("opencode", "android", {
+  session: "opencode://session/ses_fixture?server=676517cbf8eb",
+})
+// opencode://session/ses_fixture?server=676517cbf8eb
+
+getAgentLink("opencode", "android", { mode: "new", project: "prj_fixture" })
+// opencode://new-session?project=prj_fixture
+```
+
 ## Apps, plugins, MCP & skills
 
 Beyond chat drafts, `agent-deeplinks` builds action links for plugin apps, marketplace listings, MCP installs, skills, commands, rules, shared chats, and server pairing. Discover available actions with `getAgentActions(agent, platform)` and pass `action` to `getAgentLink`:
