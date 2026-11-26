@@ -1,0 +1,66 @@
+{
+  "packageVersion": "0.1.50",
+  "context": "Fresh signed-out mobile browser contexts, exact package-generated routes. First-party reads and exact GetChatShare read RPC allowed. All other POSTs, WebSockets, and external traffic blocked.",
+  "results": [
+    {
+      "platform": "android",
+      "profile": "Pixel 7",
+      "engineVersion": "158.0.8127.18",
+      "url": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "publicReadStatuses": [
+        200
+      ],
+      "officialAssetLoadCount": 168,
+      "blockedNonRead": 14,
+      "blockedWebSockets": 0,
+      "documentStatus": 200,
+      "visibleExactConversation": true,
+      "visibleTextLength": 14125
+    },
+    {
+      "platform": "android",
+      "profile": "Pixel 7",
+      "engineVersion": "158.0.8127.18",
+      "url": "https://www.kimi.com/share/en/d1qvs6d96bk3t9j9ble0",
+      "publicReadStatuses": [
+        200
+      ],
+      "officialAssetLoadCount": 169,
+      "blockedNonRead": 13,
+      "blockedWebSockets": 0,
+      "documentStatus": 200,
+      "visibleExactConversation": true,
+      "visibleTextLength": 14268
+    },
+    {
+      "platform": "ios",
+      "profile": "iPhone 15",
+      "engineVersion": "27.2",
+      "url": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "publicReadStatuses": [
+        200
+      ],
+      "officialAssetLoadCount": 169,
+      "blockedNonRead": 12,
+      "blockedWebSockets": 0,
+      "documentStatus": 200,
+      "visibleExactConversation": true,
+      "visibleTextLength": 14268
+    },
+    {
+      "platform": "ios",
+      "profile": "iPhone 15",
+      "engineVersion": "27.2",
+      "url": "https://www.kimi.com/share/en/d1qvs6d96bk3t9j9ble0",
+      "publicReadStatuses": [
+        200
+      ],
+      "officialAssetLoadCount": 169,
+      "blockedNonRead": 14,
+      "blockedWebSockets": 0,
+      "documentStatus": 200,
+      "visibleExactConversation": true,
+      "visibleTextLength": 14268
+    }
+  ]
+}

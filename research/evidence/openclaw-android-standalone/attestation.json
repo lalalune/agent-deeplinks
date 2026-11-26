@@ -1,0 +1,17 @@
+[
+  {
+    "subject": {
+      "name": "OpenClaw-Android.apk",
+      "digest": {
+        "sha256": "e5e528488d50bd2a0fd1813ab4260ecbb5973de8c1b6936f39eeb0ba4e648e19"
+      }
+    },
+    "sourceWorkflow": {
+      "path": ".github/workflows/android-release.yml",
+      "ref": "refs/tags/v2026.8.2",
+      "repository": "https://github.com/openclaw/openclaw"
+    },
+    "runner": "https://github.com/openclaw/openclaw/.github/workflows/android-release.yml@refs/tags/v2026.8.2",
+    "oidcIssuer": "https://token.actions.githubusercontent.com"
+  }
+]

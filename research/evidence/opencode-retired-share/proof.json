@@ -1,0 +1,108 @@
+{
+  "observedAt": "2026-11-26T03:22:47.233Z",
+  "upstream": {
+    "retirement": "https://github.com/anomalyco/opencode/pull/55716",
+    "commit": "9e6877007419dd10b841d6ab600af69dcbba1019",
+    "releaseDocumentation": "https://github.com/anomalyco/opencode/blob/v2.4.1/services/legacy/README.md"
+  },
+  "conditions": [
+    "fresh browser contexts",
+    "service workers and WebSockets blocked",
+    "GET and HEAD requests only"
+  ],
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "browserVersion": "158.0.8127.18",
+      "cases": [
+        {
+          "input": "https://opncd.ai/share/Jsj3hNIW",
+          "final": "https://opncd.ai/share/Jsj3hNIW",
+          "source": "https://github.com/anomalyco/opencode/issues/7106",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        },
+        {
+          "input": "https://opencode.ai/s/It7ivB4n",
+          "final": "https://opncd.ai/share/It7ivB4n",
+          "source": "https://github.com/anomalyco/opencode/issues/26417",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued",
+          "redirectStatus": 301
+        },
+        {
+          "input": "https://opncd.ai/share/deeplinkSample",
+          "final": "https://opncd.ai/share/deeplinkSample",
+          "source": "synthetic ID",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        }
+      ]
+    },
+    {
+      "profile": "Pixel 7 Chromium",
+      "browserVersion": "158.0.8127.18",
+      "cases": [
+        {
+          "input": "https://opncd.ai/share/Jsj3hNIW",
+          "final": "https://opncd.ai/share/Jsj3hNIW",
+          "source": "https://github.com/anomalyco/opencode/issues/7106",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        },
+        {
+          "input": "https://opencode.ai/s/It7ivB4n",
+          "final": "https://opncd.ai/share/It7ivB4n",
+          "source": "https://github.com/anomalyco/opencode/issues/26417",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued",
+          "redirectStatus": 301
+        },
+        {
+          "input": "https://opncd.ai/share/deeplinkSample",
+          "final": "https://opncd.ai/share/deeplinkSample",
+          "source": "synthetic ID",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        }
+      ]
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "browserVersion": "27.2",
+      "cases": [
+        {
+          "input": "https://opncd.ai/share/Jsj3hNIW",
+          "final": "https://opncd.ai/share/Jsj3hNIW",
+          "source": "https://github.com/anomalyco/opencode/issues/7106",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        },
+        {
+          "input": "https://opencode.ai/s/It7ivB4n",
+          "final": "https://opncd.ai/share/It7ivB4n",
+          "source": "https://github.com/anomalyco/opencode/issues/26417",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued",
+          "redirectStatus": 301
+        },
+        {
+          "input": "https://opncd.ai/share/deeplinkSample",
+          "final": "https://opncd.ai/share/deeplinkSample",
+          "source": "synthetic ID",
+          "method": "GET",
+          "status": 410,
+          "heading": "Session sharing has been discontinued"
+        }
+      ]
+    }
+  ]
+}
