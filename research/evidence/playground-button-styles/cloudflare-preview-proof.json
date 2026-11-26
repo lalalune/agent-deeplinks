@@ -1,0 +1,96 @@
+{
+  "checkedAt": "2026-11-26T22:35:09.944Z",
+  "site": "https://72949eff.agent-deeplinks.pages.dev/",
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-Dvnzckyd.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "desktop",
+          "primaryRoutes": 16,
+          "configured": [
+            "kimi-code",
+            "zcode"
+          ],
+          "actionExamples": 22,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "configured": [
+            "opencode"
+          ],
+          "actionExamples": 28,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 13,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "version": "27.2",
+      "script": "/assets/index-Dvnzckyd.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 393
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-Dvnzckyd.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 13,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 412
+        }
+      ]
+    }
+  ],
+  "scope": "The browser verified generated links without performing app handoffs."
+}
