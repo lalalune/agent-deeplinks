@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { Check, Copy, Github, Terminal } from "lucide-react";
+import { Check, Copy, Download, Github, Terminal } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
   agents, getAgentActions, getAgentIcon, getAgentLink, getAgentRoute,
@@ -10,6 +10,7 @@ import { Button } from "./components/ui/button.js";
 import "./styles.css";
 
 const REPOSITORY = "https://github.com/lalalune/agent-deeplinks";
+const RELEASE_ZIP = `${REPOSITORY}/releases/latest/download/agent-deeplinks.zip`;
 const INSTALL_CMD = "npm install agent-deeplinks";
 const LIVE_PROMPT = "tell me about deeplinks.fun";
 
@@ -57,8 +58,9 @@ interface ResolvedTile {
   id: AgentId;
   name: string;
   platform: Platform;
-  href: string;
+  href: string | null;
   hasPrompt: boolean;
+  setupField?: "directory" | "server";
 }
 
 interface ActionExample {
@@ -347,8 +349,10 @@ function resolvePlatformTiles(platform: Platform): ResolvedTile[] {
       });
     }
 
-    if (!href) continue;
-    tiles.push({ id: entry.id, name: entry.name, platform, href, hasPrompt });
+    const required = route.required?.length === 1 ? route.required[0] : undefined;
+    const setupField = !href && (required === "directory" || required === "server") ? required : undefined;
+    if (!href && !setupField) continue;
+    tiles.push({ id: entry.id, name: entry.name, platform, href, hasPrompt, setupField });
   }
 
   return tiles.sort((a, b) => {
@@ -444,6 +448,42 @@ function AgentLogo({ agent }: { agent: AgentId }) {
   );
 }
 
+function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }) {
+  const [value, setValue] = useState("");
+  if (!tile.setupField) return null;
+  const isDirectory = tile.setupField === "directory";
+  const label = isDirectory ? "Local folder"
+    : tile.id === "opencode" ? "OpenCode server origin"
+      : tile.id === "hermes" ? "Hermes Web Access address" : "Gateway address";
+  const example = isDirectory ? "/absolute/path/to/project"
+    : tile.id === "opencode" ? "https://opencode.example.com" : "https://agent.example.com";
+  const href = getAgentLink(tile.id, tile.platform, { [tile.setupField]: isDirectory ? value : value.trim() });
+
+  return (
+    <div role="region" aria-label={`Configure ${tile.name} link`} className="link-setup">
+      <label>
+        {label}
+        <input
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+          placeholder={example}
+          inputMode={isDirectory ? "text" : "url"}
+          autoComplete="off"
+          spellCheck={false}
+        />
+      </label>
+      {href ? (
+        <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+          <a href={href} {...linkAttrs(href)} aria-label={`Open ${tile.name}`} title={tile.name}>
+            <AgentLogo agent={tile.id} />
+            {!iconOnly && <span className="agent-name">Open {tile.name}</span>}
+          </a>
+        </Button>
+      ) : value.trim() && <p role="status">Enter {isDirectory ? "an absolute folder path" : "a valid server address"}.</p>}
+    </div>
+  );
+}
+
 function HighlightedSnippet() {
   return (
     <pre>
@@ -481,10 +521,14 @@ function App() {
   const [initial] = useState(detectInitialEnvironment);
   const [activeTab, setActiveTab] = useState<TabId>(initial.tab);
   const [mobileOs, setMobileOs] = useState<MobileOs>(initial.mobileOs);
+  const [iconOnly, setIconOnly] = useState(false);
+  const [setup, setSetup] = useState<{ agent: AgentId; platform: ActivePlatform }>();
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
   const actionExamples = examplesByPlatform[activePlatform];
+  const setupTile = setup?.platform === activePlatform ? visibleTiles.find((tile) => tile.id === setup.agent) : undefined;
+  const agentButtonClass = iconOnly ? "agent-btn agent-btn-icon" : "agent-btn";
 
   return (
     <>
@@ -525,42 +569,66 @@ function App() {
               ))}
             </div>
 
-            {activeTab === "mobile" && !initial.isMobileVisitor && (
-              <div className="mobile-os-toggle" role="group" aria-label="Mobile OS">
+            <div className="view-options">
+              {activeTab === "mobile" && !initial.isMobileVisitor && (
+                <div className="view-toggle" role="group" aria-label="Mobile OS">
+                  <button type="button" className="view-option" aria-pressed={mobileOs === "ios"} onClick={() => setMobileOs("ios")}>
+                    iOS
+                  </button>
+                  <button type="button" className="view-option" aria-pressed={mobileOs === "android"} onClick={() => setMobileOs("android")}>
+                    Android
+                  </button>
+                </div>
+              )}
+              <div className="view-toggle" role="group" aria-label="Button style">
                 <button
                   type="button"
-                  className="mobile-os-btn"
-                  aria-pressed={mobileOs === "ios"}
-                  onClick={() => setMobileOs("ios")}
+                  className="view-option"
+                  aria-pressed={!iconOnly}
+                  onClick={() => setIconOnly(false)}
                 >
-                  iOS
+                  Icons + names
                 </button>
                 <button
                   type="button"
-                  className="mobile-os-btn"
-                  aria-pressed={mobileOs === "android"}
-                  onClick={() => setMobileOs("android")}
+                  className="view-option"
+                  aria-pressed={iconOnly}
+                  onClick={() => setIconOnly(true)}
                 >
-                  Android
+                  Icons only
                 </button>
               </div>
-            )}
+            </div>
           </div>
 
           <div className="agent-row">
-            {visibleTiles.map((tile) => (
-              <a
-                key={`${tile.id}-${tile.platform}`}
-                className="agent-btn"
-                href={tile.href}
-                {...linkAttrs(tile.href)}
-                aria-label={`Open ${tile.name}`}
+            {visibleTiles.map((tile) => tile.href ? (
+              <Button key={tile.id} asChild variant="ghost" className={agentButtonClass}>
+                <a href={tile.href} {...linkAttrs(tile.href)} aria-label={`Open ${tile.name}`} title={tile.name}>
+                  <AgentLogo agent={tile.id} />
+                  {!iconOnly && <span className="agent-name">{tile.name}</span>}
+                </a>
+              </Button>
+            ) : (
+              <Button
+                key={tile.id}
+                type="button"
+                variant="ghost"
+                className={agentButtonClass}
+                aria-label={`Configure ${tile.name}`}
+                aria-expanded={setupTile?.id === tile.id}
+                title={`Configure ${tile.name}`}
+                onClick={() => setSetup(setupTile?.id === tile.id ? undefined : { agent: tile.id, platform: activePlatform })}
               >
                 <AgentLogo agent={tile.id} />
-                <span className="agent-name">{tile.name}</span>
-              </a>
+                {!iconOnly && <span className="action-btn-text">
+                  <span className="agent-name">{tile.name}</span>
+                  <span className="action-btn-kind">Configure link</span>
+                </span>}
+              </Button>
             ))}
           </div>
+          {setupTile && <LinkSetup key={`${activePlatform}-${setupTile.id}`} tile={setupTile} iconOnly={iconOnly} />}
         </section>
 
         {actionExamples.length > 0 && (
@@ -568,19 +636,20 @@ function App() {
             <h2 id="action-heading">Apps and plugins</h2>
             <div className="agent-row action-row">
               {actionExamples.map((example) => (
-                <a
-                  key={example.key}
-                  className="agent-btn action-btn"
-                  href={example.href}
-                  {...linkAttrs(example.href)}
-                  aria-label={`${example.agentName}: ${example.label}`}
-                >
-                  <AgentLogo agent={example.agent} />
-                  <span className="action-btn-text">
-                    <span className="agent-name">{example.agentName}</span>
-                    <span className="action-btn-kind">{example.label}</span>
-                  </span>
-                </a>
+                <Button key={example.key} asChild variant="ghost" className={agentButtonClass}>
+                  <a
+                    href={example.href}
+                    {...linkAttrs(example.href)}
+                    aria-label={`${example.agentName}: ${example.label}`}
+                    title={`${example.agentName}: ${example.label}`}
+                  >
+                    <AgentLogo agent={example.agent} />
+                    {!iconOnly && <span className="action-btn-text">
+                      <span className="agent-name">{example.agentName}</span>
+                      <span className="action-btn-kind">{example.label}</span>
+                    </span>}
+                  </a>
+                </Button>
               ))}
             </div>
           </section>
@@ -617,7 +686,7 @@ function App() {
           </span>
           <div className="footer-links">
             <a href={REPOSITORY} target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href={`${REPOSITORY}/releases`} target="_blank" rel="noopener noreferrer">Releases</a>
+            <a href={RELEASE_ZIP}><Download size={14} aria-hidden="true" /> Download ZIP</a>
           </div>
         </div>
       </footer>

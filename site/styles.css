@@ -161,7 +161,14 @@ pre {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
-.mobile-os-toggle {
+.view-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.view-toggle {
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -171,7 +178,7 @@ pre {
   background: var(--color-surface);
 }
 
-.mobile-os-btn {
+.view-option {
   height: 26px;
   padding: 0 10px;
   border-radius: 5px;
@@ -184,11 +191,11 @@ pre {
   transition: background-color 130ms ease, color 130ms ease;
 }
 
-.mobile-os-btn:hover {
+.view-option:hover {
   color: var(--color-foreground);
 }
 
-.mobile-os-btn[aria-pressed="true"] {
+.view-option[aria-pressed="true"] {
   background: rgba(139, 92, 246, 0.18);
   color: #ddd6fe;
 }
@@ -204,6 +211,7 @@ pre {
 .agent-btn {
   display: inline-flex;
   align-items: center;
+  height: auto;
   gap: 9px;
   padding: 6px 12px 6px 6px;
   border-radius: 10px;
@@ -211,6 +219,10 @@ pre {
   color: #e4e4e7;
   text-decoration: none;
   transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.agent-btn-icon {
+  padding: 6px;
 }
 
 .agent-btn:hover {
@@ -271,10 +283,6 @@ pre {
   gap: 10px 14px;
 }
 
-.action-btn {
-  padding: 6px 12px 6px 6px;
-}
-
 .action-btn-text {
   display: flex;
   flex-direction: column;
@@ -288,6 +296,37 @@ pre {
   color: var(--color-subtle);
   white-space: nowrap;
   transition: color 140ms ease;
+}
+
+.link-setup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.link-setup label {
+  display: grid;
+  gap: 5px;
+  width: min(100%, 360px);
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.link-setup input {
+  min-width: 0;
+  padding: 9px 10px;
+  border: 1px solid var(--color-line-hover);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-foreground);
+}
+
+.link-setup p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
 }
 
 .action-btn:hover .action-btn-kind {
@@ -431,6 +470,9 @@ pre {
 }
 
 .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--color-muted);
   text-decoration: none;
   border-radius: 4px;
