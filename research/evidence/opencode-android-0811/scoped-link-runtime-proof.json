@@ -1,0 +1,87 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45907676133",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45907676133/artifacts/15158283970",
+  "diagnosticHead": "cd4d4aa69a5246c722340ce532e41cf573171ecc",
+  "client": "Anomaly 0.8.11 (1033) upstream release AAB with disposable test signing",
+  "android": "Android 16 x86_64 stock emulator",
+  "upstreamAabSha256": "fa9de94eada320035fa4bffe4401511fc573e2238c50440a121cb1c38b31493a",
+  "disposableCertificateSha256": "a392f93093a74cac7fc6ad88e15f288c991aab492fa968dfda8a5319ac520186",
+  "server": "Two isolated OpenCode 2.4.2 servers",
+  "pairs": {
+    "A": {
+      "endpoint": "10.0.2.2:41505",
+      "confirmed": true
+    },
+    "B": {
+      "endpoint": "10.0.2.2:55397",
+      "confirmed": true
+    }
+  },
+  "stockResolverActivity": "ai.opencode.mobilecode/ai.opencode.app.MainActivity",
+  "routes": {
+    "scoped-A": {
+      "url": "opencode://session/ses_de5edf9ceffergMc1CrBDWXSjD?server=9cf92df40a73",
+      "destinationVisible": true
+    },
+    "project-draft-A": {
+      "url": "opencode://new-session?project=4df32b573d6dfa1018f2ce7ca105eb922b17c376",
+      "destinationVisible": true
+    }
+  },
+  "publicPackageVersion": "0.1.55",
+  "packageLinksMatchNativeTrace": true,
+  "observations": {
+    "existing-B": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode B Default idle session, OpenCode B Default",
+      "Send message",
+      "Start the session below"
+    ],
+    "scoped-A": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode A Default idle session, OpenCode A Default",
+      "Send message",
+      "Start the session below"
+    ],
+    "project-draft-A": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Message",
+      "New Session, OpenCode A Target",
+      "Open sessions",
+      "OpenCode A Default",
+      "OpenCode A Target",
+      "Send message"
+    ]
+  },
+  "database": {
+    "serverA": {
+      "sessions": 2,
+      "messages": 0,
+      "accounts": 0
+    },
+    "serverB": {
+      "sessions": 1,
+      "messages": 0,
+      "accounts": 0
+    }
+  },
+  "screenshots": {
+    "sourceSession": "existing-B.png",
+    "scopedSession": "scoped-A.png",
+    "projectDraft": "project-draft-A.png"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "scope": "Local stock bundled Codex app server listing a disposable workspace thread",
+  "stockCli": "0.171.0-alpha.13.2",
+  "zeroTurn": {
+    "threadRead": {
+      "exactTitle": true,
+      "exactCwd": true,
+      "turns": 0,
+      "source": "vscode",
+      "previewLength": 0
+    },
+    "threadLists": {
+      "default": {
+        "rows": 0,
+        "containsFixture": false
+      },
+      "exactWorkspace": {
+        "rows": 0,
+        "containsFixture": false
+      },
+      "withStorageOnly": {
+        "rows": 0,
+        "containsFixture": false
+      },
+      "exactId": {
+        "rows": 0,
+        "containsFixture": false
+      },
+      "allSources": {
+        "rows": 0,
+        "containsFixture": false
+      },
+      "currentAccount": {
+        "rows": 0,
+        "containsFixture": false
+      }
+    },
+    "sends": 0,
+    "network": "denied at process level"
+  },
+  "oneLoopbackTurn": {
+    "stockCliVersion": "0.171.0-alpha.13.2",
+    "sandbox": {
+      "modelLoopbackPortAllowed": true,
+      "secondLoopbackPortBlocked": true,
+      "allOtherNetworkDenied": true,
+      "ownerHomeDenied": true
+    },
+    "authenticatedAccount": false,
+    "providerRequests": [
+      {
+        "method": "POST",
+        "path": "/v1/responses",
+        "hasFixturePrompt": true
+      }
+    ],
+    "restartedAppServer": true,
+    "source": "vscode",
+    "previewMatchesFixture": true,
+    "savedTurns": 1,
+    "turnStatus": "completed",
+    "lists": {
+      "default": {
+        "rows": 1,
+        "exactId": true,
+        "exactTitle": true,
+        "exactWorkspace": true,
+        "source": "vscode"
+      },
+      "exactWorkspace": {
+        "rows": 1,
+        "exactId": true,
+        "exactTitle": true,
+        "exactWorkspace": true,
+        "source": "vscode"
+      },
+      "vscodeSource": {
+        "rows": 1,
+        "exactId": true,
+        "exactTitle": true,
+        "exactWorkspace": true,
+        "source": "vscode"
+      },
+      "exactId": {
+        "rows": 1,
+        "exactId": true,
+        "exactTitle": true,
+        "exactWorkspace": true,
+        "source": "vscode"
+      }
+    }
+  },
+  "signedNativeFollowup": "https://github.com/lalalune/agent-deeplinks/actions/runs/45907852551"
+}
