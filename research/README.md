@@ -122,6 +122,8 @@ The v0.1.52 build passed 50 tests and a fresh archive install with React 19. Bot
 
 The v0.1.53 release passed 51 package tests. Desktop Chromium and iPhone WebKit checked blank launch, exact draft encoding, and both shadcn/ui styles on the live Antigravity playground. The canonical npm tarball matches the GitHub tarball and the copy inside the ZIP. The ZIP demo matches the public Cloudflare HTML and JavaScript. A fresh install by name with React 19 passed signature verification. [Release](https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.53) · [Publication proof](evidence/antigravity-desktop-draft/publication-proof.json)
 
+The v0.1.54 package passed 51 tests. The production playground showed all 74 desktop, web, and mobile primary routes in both shadcn/ui styles, plus 79 rendered action examples. Desktop Chromium exercised all seven route setup controls, and iPhone WebKit and Pixel Chromium exercised their mobile options. The published ZIP includes all 21 illustrated README buttons and the exact Cloudflare demo. A fresh React 19 npm install matched the release tarball and passed signature verification. [Production browser proof](evidence/playground-button-styles/production-proof.json) · [Publication proof](evidence/playground-button-styles/publication-proof.json) · [Desktop](evidence/playground-button-styles/desktop-labeled.png) · [Mobile](evidence/playground-button-styles/mobile-icon-only.png)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)

@@ -1,0 +1,39 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45905126829",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45905126829/artifacts/15157622466",
+  "diagnosticHead": "f021a66063fea684a4e060436b9561366e5656cf",
+  "packageVersion": "0.1.50",
+  "localFixtureTrust": {
+    "confirmedPath": "/Users/codexsshqa/workspace",
+    "matchingWindowObservation": {
+      "stage": "stock trust dialog confirms the exact SSH alias and disposable workspace",
+      "remoteTrustPath": "/Users/codexsshqa/workspace",
+      "accountGateLabels": []
+    },
+    "promptScreenshot": "native-ssh-workspace-trust.png"
+  },
+  "terminalWindow": {
+    "connectionsPage": true,
+    "possibleSshLabels": [
+      "add",
+      "connections",
+      "o • connected",
+      "ssh connections from this mac",
+      "® codex-fixture"
+    ],
+    "namedThreadVisible": false,
+    "screenshot": "last-owned-window.png"
+  },
+  "exactRemoteStockDispatch": false,
+  "exactRemoteThreadReopened": false,
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 0
+  },
+  "providerRequests": [],
+  "lastStage": "observe the existing idle remote thread after trusting the scratch workspace",
+  "error": "Stock SSH connected but the named remote thread was not yet visible"
+}

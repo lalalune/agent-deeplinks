@@ -1,0 +1,20 @@
+{
+  "version": "0.1.54",
+  "tagCommit": "bd998026478d3250f1c8edd9a27d505e2cdb9537",
+  "packageTestsPassed": 51,
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/45905773014",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/45905773023",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.54",
+  "canonicalNpmAndGithubTarballSha256": "1dc1e7e139e33ccb25feabc7478c5ae6be47466c4beb82f2de2f20a6454cd8d3",
+  "githubReleaseZipSha256": "280181df3c9a940f064d0c4a0756af6c91c2d70a53b1c3861f66450797ca7802",
+  "productionHtmlAndZipHtmlSha256": "b0e43d382f4f11478753e4d483909692c7c0f6f12df7c612571e5e8ab1edd834",
+  "productionJavaScriptAndZipJavaScriptSha256": "5aad22645b6660748c04cee842171f04cff81bbb04931d8a75e36b419eadb640",
+  "production": "https://8833be43.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://8cd95702.agent-deeplinks.pages.dev/",
+  "freshInstallReactMajor": 19,
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  },
+  "readmeBadgeCountInZip": 21
+}
