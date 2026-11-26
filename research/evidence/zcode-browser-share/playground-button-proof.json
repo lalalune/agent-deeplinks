@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-11-26T04:29:25.510Z",
+  "playground": "https://b8d837bc.agent-deeplinks.pages.dev/",
+  "chromium": "158.0.8127.18",
+  "results": [
+    {
+      "variant": "labeled",
+      "initialCookies": 0,
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "previewStatus": 200,
+      "visibleTitle": true,
+      "visibleAttachmentName": true
+    },
+    {
+      "variant": "icon-only",
+      "initialCookies": 0,
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "previewStatus": 200,
+      "visibleTitle": true,
+      "visibleAttachmentName": true
+    }
+  ]
+}
