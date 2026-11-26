@@ -95,6 +95,8 @@ In a restarted stock app server, the zero-turn scratch thread was readable by ID
 
 The next signed macOS run verified that the SSH app server listed the one-turn fixture before and after the UI connection. The test reached **Connected**. Its screenshot matcher stopped at the Home button, which was visible with a notification dot. No link was copied or dispatched. [Hosted one-turn checkpoint](evidence/codex-copied-remote-thread/one-turn-native-checkpoint.json)
 
+After the Home-button matcher was updated, the stock sidebar showed the exact saved thread under the connected SSH project and again under Recents. The test stopped at a project-row recognition check before link copy. The fixture still had one saved turn and zero additional provider writes. [Native sidebar checkpoint](evidence/codex-copied-remote-thread/one-turn-thread-visible.json) · [Visible remote thread](evidence/codex-copied-remote-thread/native-ssh-one-turn-visible.png)
+
 ## Shared conversations
 
 `getAgentLink("chatgpt", "web", { action: "shared-chat", target: shareUrl })` and the equivalent Claude call accept an already shared URL from the selected provider or its UUID. The web variants add ChatGPT's `no_universal_links=1` query or Claude's `no_universal_links` fragment. The mobile variants use clean HTTPS links. Link creation and any access restrictions stay with the provider. [OpenAI sharing](https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt) · [Anthropic sharing](https://support.claude.com/en/articles/16762437-public-links-for-shared-chats)

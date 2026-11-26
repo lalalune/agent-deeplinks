@@ -1,0 +1,30 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45908456831",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45908456831/artifacts/15159451523",
+  "diagnosticHead": "279df51cb89ee80f552ff4747a806f4e7a3490b6",
+  "packageVersion": "0.1.50",
+  "cliVersion": "codex-cli 0.171.0-alpha.13.2",
+  "window": {
+    "screen": "Codex Home",
+    "project": "workspace",
+    "remoteAlias": "codex-fixture",
+    "connectionIndicator": "green",
+    "projectThread": "SSH Link QA",
+    "recentsThread": "SSH Link QA",
+    "screenshot": "native-ssh-one-turn-visible.png"
+  },
+  "final": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 1,
+    "exactSavedTurn": true,
+    "previewMatchesFixture": true,
+    "source": "vscode",
+    "listedExactThread": true
+  },
+  "noAdditionalProviderWrites": true,
+  "linkCopied": false,
+  "linkDispatched": false
+}
