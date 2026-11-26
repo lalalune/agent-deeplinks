@@ -230,6 +230,10 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     },
   },
   antigravity: {
+    marketplace: {
+      label: "Marketplace",
+      options: () => ({}),
+    },
     plugin: {
       label: "Marketplace plugin",
       options: (platform) =>

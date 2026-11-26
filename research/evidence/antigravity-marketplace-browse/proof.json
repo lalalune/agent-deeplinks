@@ -1,0 +1,21 @@
+{
+  "browser": {
+    "checkedAt": "2026-11-26T23:57:22.932Z",
+    "url": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins",
+    "status": 200,
+    "browser": "Chromium 158.0.8127.18",
+    "section": "Browse Marketplace plugins",
+    "firebaseCardVisible": true
+  },
+  "desktop": {
+    "uri": "antigravity://customizations/marketplaces",
+    "macOS": "26.2",
+    "applicationVersion": "2.34.0",
+    "bundleId": "com.google.antigravity",
+    "signerTeam": "EQHXZ8M8AV",
+    "strictSignatureVerified": true,
+    "launchServicesResolvedInstalledApp": true,
+    "launched": false
+  },
+  "officialDocumentation": "https://antigravity.google/docs/marketplace/#open-plugins-with-deep-links"
+}

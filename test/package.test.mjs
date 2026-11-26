@@ -922,6 +922,8 @@ test("builds provider-specific plugin, skill and shared-assistant destinations",
   const cases = [
     ["grok-bot", "web", { action: "plugin", target: "9007199254740993" }, "https://x.ai/bot/plugin/9007199254740993"],
     ["grok-bot", "ios", { action: "team-plugin", target: "grokbot://app/v1/plugin/add?id=456" }, "grokbot://app/v1/plugin/add?id=456"],
+    ["antigravity", "web", { action: "marketplace" }, "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins"],
+    ["antigravity", "desktop", { action: "marketplace" }, "antigravity://customizations/marketplaces"],
     ["antigravity", "web", { action: "plugin", target: "firebase" }, "https://antigravity.google/docs/marketplace/?plugin=firebase#browse-marketplace-plugins"],
     ["antigravity", "desktop", { action: "plugin", target: "stripe", marketplace: "antigravity-plugins-partners" }, "antigravity://plugin/stripe?marketplace=antigravity-plugins-partners"],
     ["antigravity", "desktop", { action: "skill", target: "sample", marketplace: "antigravity-plugins-partners" }, "antigravity://customizations/marketplaces/antigravity-plugins-partners/skills/sample"],

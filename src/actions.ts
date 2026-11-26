@@ -4,7 +4,7 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
-  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request";
+  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
@@ -48,6 +48,7 @@ const desktopPlugins = "https://learn.chatgpt.com/docs/reference/commands";
 const grokPlugins = "https://docs.x.ai/grok-bot/deep-links#add-a-plugin";
 const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x.ai";
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
+const antigravityMarketplaceDocs = "https://antigravity.google/docs/marketplace/#open-plugins-with-deep-links";
 const antigravitySessionDocs = "https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control";
 const cursorCustomizationName = /^(?!(?:con|prn|aux|nul|com[1-9]|lpt[1-9])$)(?!.*\.\.)[a-z0-9_.-]{1,100}$/iu;
 const cursorDeeplinkDocs = "https://cursor.com/docs/reference/deeplinks";
@@ -397,6 +398,21 @@ function cursorMcp(url: string, behavior: "confirm" | "handoff"): ActionDefiniti
     },
   };
 }
+
+const antigravityMarketplace: ActionDefinition = {
+  id: "marketplace", label: "Browse Antigravity Marketplace", url: "antigravity://customizations/marketplaces",
+  behavior: "launch", evidence: "documented", sources: [antigravityMarketplaceDocs, antigravityPlugins],
+  fields: {}, required: [], inputs: [],
+  note: "Opens the Marketplace tab in the signed-in Antigravity app.",
+  prepare: (_fields, url) => url,
+};
+
+const antigravityWebMarketplace: ActionDefinition = {
+  ...antigravityMarketplace,
+  url: "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins",
+  evidence: "verified",
+  note: "Opens Google's public Marketplace catalog in a browser.",
+};
 
 const antigravityWebPlugin: ActionDefinition = {
   id: "plugin", label: "Open marketplace plugin", url: "https://antigravity.google/docs/marketplace/",
@@ -764,8 +780,8 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [cursorPullRequest("android")],
   },
   antigravity: {
-    web: [antigravityWebPlugin, antigravityRemoteSession],
-    desktop: [antigravityPlugin, antigravitySkill],
+    web: [antigravityWebMarketplace, antigravityWebPlugin, antigravityRemoteSession],
+    desktop: [antigravityMarketplace, antigravityPlugin, antigravitySkill],
     ios: [antigravityRemoteSession],
     android: [antigravityRemoteSession],
   },
