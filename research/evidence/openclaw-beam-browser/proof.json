@@ -1,0 +1,206 @@
+{
+  "gatewayVersion": "2026.11.10",
+  "basePath": "/fixture",
+  "authMode": "isolated token",
+  "modelRequests": [
+    {
+      "phase": "browser-read",
+      "method": "GET",
+      "path": "/api/tags"
+    },
+    {
+      "phase": "browser-read",
+      "method": "POST",
+      "path": "/api/show"
+    }
+  ],
+  "blockedBrowserWrites": [],
+  "browsers": [
+    {
+      "profile": "desktop",
+      "engine": "158.0.8127.18",
+      "label": "fresh-tab",
+      "loggedIn": false,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": false,
+      "transcriptOrderVerified": false,
+      "requestMethods": []
+    },
+    {
+      "profile": "desktop",
+      "engine": "158.0.8127.18",
+      "label": "named",
+      "loggedIn": true,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "talk.catalog",
+        "sessions.catalog.list",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "desktop",
+      "engine": "158.0.8127.18",
+      "label": "bare",
+      "loggedIn": true,
+      "requested": "/fixture/beam/0123456789abcdef02468ace13579bdf",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef02468ace13579bdf",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "sessions.catalog.list",
+        "talk.catalog",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "desktop",
+      "engine": "158.0.8127.18",
+      "label": "stale-slug",
+      "loggedIn": true,
+      "requested": "/fixture/beam/old-title-0123456789abcdef",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "sessions.catalog.list",
+        "talk.catalog",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "pixel",
+      "engine": "158.0.8127.18",
+      "label": "fresh-tab",
+      "loggedIn": false,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": false,
+      "transcriptOrderVerified": false,
+      "requestMethods": []
+    },
+    {
+      "profile": "pixel",
+      "engine": "158.0.8127.18",
+      "label": "named",
+      "loggedIn": true,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "talk.catalog",
+        "sessions.catalog.list",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "pixel",
+      "engine": "158.0.8127.18",
+      "label": "bare",
+      "loggedIn": true,
+      "requested": "/fixture/beam/0123456789abcdef02468ace13579bdf",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef02468ace13579bdf",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "sessions.catalog.list",
+        "talk.catalog",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "pixel",
+      "engine": "158.0.8127.18",
+      "label": "stale-slug",
+      "loggedIn": true,
+      "requested": "/fixture/beam/old-title-0123456789abcdef",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "sessions.catalog.list",
+        "talk.catalog",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "iphone",
+      "engine": "27.2",
+      "label": "fresh-tab",
+      "loggedIn": false,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": false,
+      "transcriptOrderVerified": false,
+      "requestMethods": []
+    },
+    {
+      "profile": "iphone",
+      "engine": "27.2",
+      "label": "named",
+      "loggedIn": true,
+      "requested": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789ab",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "talk.catalog",
+        "sessions.catalog.list",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "iphone",
+      "engine": "27.2",
+      "label": "bare",
+      "loggedIn": true,
+      "requested": "/fixture/beam/0123456789abcdef02468ace13579bdf",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef02468ace13579bdf",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "talk.catalog",
+        "sessions.catalog.list",
+        "sessions.catalog.read"
+      ]
+    },
+    {
+      "profile": "iphone",
+      "engine": "27.2",
+      "label": "stale-slug",
+      "loggedIn": true,
+      "requested": "/fixture/beam/old-title-0123456789abcdef",
+      "canonical": "/fixture/beam/beam-link-fixture-0123456789abcdef",
+      "http": 200,
+      "visibleTranscript": true,
+      "transcriptOrderVerified": true,
+      "requestMethods": [
+        "talk.catalog",
+        "sessions.catalog.list",
+        "sessions.catalog.read"
+      ]
+    }
+  ],
+  "uploadStatus": 200,
+  "receipt": {
+    "status": 200,
+    "path": "/fixture/beam/beam-link-fixture-0123456789ab",
+    "beamId": "0123456789abcdef02468ace13579bdf"
+  }
+}

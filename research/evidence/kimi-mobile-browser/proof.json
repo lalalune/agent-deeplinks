@@ -1,0 +1,46 @@
+[
+  {
+    "profile": "Pixel 7 Chromium",
+    "engineVersion": "158.0.8127.18",
+    "sharePublication": "https://www.uneiaparjour.fr/kimi-k2/",
+    "target": "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+    "firstPartyShareRead": 200,
+    "renderedVisibleConversation": true,
+    "bodyCharacterCount": 14163
+  },
+  {
+    "profile": "Pixel 7 Chromium",
+    "target": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+    "renderedVisibleConversation": false,
+    "error": "TimeoutError: page.waitForResponse: Timeout 30000ms exceeded while waiting for event \"response\"",
+    "responses": [
+      {
+        "host": "www.kimi.com",
+        "path": "/share/d1qvs6d96bk3t9j9ble0",
+        "status": 200
+      }
+    ]
+  },
+  {
+    "profile": "iPhone 15 WebKit",
+    "engineVersion": "27.2",
+    "sharePublication": "https://www.uneiaparjour.fr/kimi-k2/",
+    "target": "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+    "firstPartyShareRead": 200,
+    "renderedVisibleConversation": true,
+    "bodyCharacterCount": 14163
+  },
+  {
+    "profile": "iPhone 15 WebKit",
+    "target": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+    "renderedVisibleConversation": false,
+    "error": "TimeoutError: page.waitForResponse: Timeout 30000ms exceeded while waiting for event \"response\"",
+    "responses": [
+      {
+        "host": "www.kimi.com",
+        "path": "/share/d1qvs6d96bk3t9j9ble0",
+        "status": 200
+      }
+    ]
+  }
+]
