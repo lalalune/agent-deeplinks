@@ -236,6 +236,8 @@ For Grok Bot, pass a shared Team Bot URL or UUID as `target` with `action: "team
 
 Use `action: "bot-marketplace"` on `web`, `ios`, or `android` to open the Grok Bot Marketplace. Leave `target` empty for the gallery, or pass a category such as `engineering`, a path such as `bots/projects-manager`, or the complete Marketplace URL. The template page has a separate **Import Bot** button. [Grok Bot Marketplace](https://x.ai/bot/marketplace)
 
+On Antigravity Desktop 2.29.0 or later, use `getAgentLink("antigravity", "desktop", { prompt: "Explain this project." })` to stage an editable Home draft. The app appends to existing draft text after sign-in and setup. [Google release notes](https://antigravity.google/docs/changelog) · [Link format and evidence](research/coding-agents.md#google-antigravity)
+
 To reopen an active Antigravity CLI conversation, pass its printed Remote Control URL with `action: "remote-session"` on `web`, `ios`, or `android`. The receiving browser needs the same Google account while the original CLI is still running. [Antigravity CLI Remote Control](https://antigravity.google/docs/remote-control/#enable-remote-control-in-an-active-session-remote-control)
 
 For OpenClaw 2026.11.10 on macOS and Linux, use `plugin-install`, `skill-install`, or `template-install` with a ClawHub package name as `target`, such as `@openclaw/discord`. These links route to the item in the connected Gateway. Installation is a separate action. [OpenClaw catalog link formats and evidence](research/plugin-links.md)

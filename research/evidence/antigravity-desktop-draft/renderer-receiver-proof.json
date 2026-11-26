@@ -1,0 +1,31 @@
+{
+  "verifiedAt": "2026-11-26T04:37:31.888Z",
+  "source": "https://antigravity.google/docs/changelog",
+  "releaseAnnounced": "2.29.0",
+  "renderer": {
+    "asset": "https://www.gstatic.com/_/mss/boq-jetski/_/js/k=boq-jetski.GoogleAntigravity.en_US.lLq2tp-G6lg.2024.O/ck=boq-jetski.GoogleAntigravity.16o0Am-kCm0.L.B1.O/d=1/exm=_b/excm=_b/ed=1/br=1/wt=2/ujg=1/rs=AGC4XsqDlCmY9jPZCU1Hu18XG_DXl0eTXw/dti=1/m=Mc2QKe",
+    "sha256": "910971469049a0a6e7f231949e3560723b2c56d329e872763f41e936a22be6cc",
+    "bytes": 17949998,
+    "receiverByteOffset": 4926075,
+    "draftHelperByteOffset": 3801587,
+    "openHostsByteOffset": 12558307,
+    "ipcBootstrapByteOffset": 4861125
+  },
+  "syntax": "antigravity://open?prompt=<once-percent-encoded-UTF-8>",
+  "exactExample": "antigravity://open?prompt=Agent%20Deeplinks%20QA%20%2B%20%26%20caf%C3%A9%20%252F%0AReview%20only",
+  "fixtureText": "Agent Deeplinks QA + & café %2F\nReview only",
+  "sourceOptions": {
+    "draftKey": "HOME_DRAFT_KEY",
+    "appendToExisting": true,
+    "parseScopeItemLinks": false
+  },
+  "signedInAndOnboardingRequired": true,
+  "enableDeepLinkHandlerRequired": true,
+  "blockingModalPreventsDraft": true,
+  "controlledReceiverResults": {
+    "unicodeAndFormatting": "exact draft text matched",
+    "sanitization": "Selected zero-width, bidi and control characters removed; plus and LF retained",
+    "withoutPrompt": "navigates Home"
+  },
+  "boundary": "Google renderer bytes recovered from public signed-out Remote Agents asset. This executes only the exact receiver in a constrained VM with IPC listener, settings and editor callbacks stubbed. The vendor changelog confirms the native capability. No installed native draft or signed-in UI verification."
+}

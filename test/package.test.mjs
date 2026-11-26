@@ -1204,6 +1204,25 @@ test("discovers supported actions without replacing default routes and uses them
   assert.match(markup, /href="https:\/\/chatgpt\.com\/plugins\/sample-plugin\/app\/cad\.browse"/u);
 });
 
+test("builds a single-encoded Antigravity desktop draft and preserves blank launch", () => {
+  const prompt = "Agent Deeplinks QA + & café %2F\nReview only";
+  const url = "antigravity://open?prompt=Agent%20Deeplinks%20QA%20%2B%20%26%20caf%C3%A9%20%252F%0AReview%20only";
+  assert.equal(getAgentLink("antigravity", "desktop", { prompt }), url);
+  assert.equal(new URL(url).searchParams.get("prompt"), prompt);
+  assert.equal(getAgentLink("antigravity", "desktop"), "antigravity://");
+  assert.equal(getAgentLink("antigravity", "desktop", { prompt: "" }), "antigravity://");
+  assert.equal(getAgentRoute("antigravity", "desktop").behavior, "draft");
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("antigravity", platform, { prompt }), null);
+  }
+  for (const iconOnly of [true, false]) {
+    const markup = renderToStaticMarkup(createElement(AgentLink, {
+      agent: "antigravity", platform: "desktop", options: { prompt }, iconOnly,
+    }));
+    assert.ok(markup.includes(`href="${url}"`));
+  }
+});
+
 test("copies Antigravity Remote Control conversations across browser surfaces", () => {
   const url = "https://antigravity.google.com/r/Instance_01?p=c%2Fconversation-02";
   const options = { action: "remote-session", target: url };

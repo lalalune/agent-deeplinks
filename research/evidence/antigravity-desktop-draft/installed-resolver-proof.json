@@ -1,0 +1,22 @@
+{
+  "exactUri": "antigravity://open?prompt=Agent%20Deeplinks%20QA%20%2B%20%26%20caf%C3%A9%20%252F%0AReview%20only",
+  "resolver": "macOS LaunchServices through NSWorkspace",
+  "resolvedApplication": {
+    "bundleIdentifier": "com.google.antigravity",
+    "bundleVersion": "2.34.0",
+    "resolvedPath": "/Applications/Antigravity.app"
+  },
+  "publisherTeam": "EQHXZ8M8AV",
+  "strictBundleSignatureVerified": true,
+  "installedArtifact": {
+    "path": "Contents/Resources/app.asar",
+    "sha256": "8934adef0622c9271c92eea950a71848764a66f7b10023ccbd82e54b959adb0e",
+    "member": "dist/main.js",
+    "memberSha256": "383fcb66595c57b4d9efacdc7b11e3a2a334cb825b254d922cd4fe40455831bd",
+    "reaParentEvidence": "ev_9b89bfc6b3c42715ecf2e2e35ee416414139c911c185c6fb220de0eb710adcd2",
+    "reaMemberEvidence": "ev_dda1d1395f41a04ed3ab6dce85917943b8853b0d5ea742535e5a8b0fe7a8bb53",
+    "scope": "Inert static inventory focused on the main JS member."
+  },
+  "linkDispatched": false,
+  "installedComposerObserved": false
+}
