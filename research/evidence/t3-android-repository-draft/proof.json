@@ -1,0 +1,26 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45754851189",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45754851189/artifacts/15087859560",
+  "upstreamRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13-nightly.20261125.5258",
+  "packageVersion": "0.1.51",
+  "android": {
+    "sdk": 35,
+    "runtime": "ReDroid",
+    "architecture": "native ARM64",
+    "bundle": "com.t3tools.t3code",
+    "version": "2.3.0",
+    "build": 825,
+    "apkSha256": "fa8df0226749d47015818e445e718804930701d332f56b93c723db5656c995b5",
+    "playSignerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6"
+  },
+  "fixtureRepository": "agent-link-fixture/mobile-repo-link-74f2",
+  "dispatch": "Untargeted browsable ACTION_VIEW, cold-starting MainActivity.",
+  "nativeNotice": "Prompt from a link",
+  "visibleEditorText": "T3 Android repo target QA + & literal %2F café 🧪",
+  "editable": true,
+  "modelAvailable": false,
+  "screenshot": "unsent-draft.png",
+  "projectBindingVerified": false,
+  "missingRepositoryControlExecuted": false,
+  "terminalCheckpoint": "The visible model-free composer did not include the expected project title."
+}
