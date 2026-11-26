@@ -40,5 +40,14 @@
   "modelRequests": 0,
   "exactRemoteLinkDispatched": false,
   "exactRemoteThreadReopened": false,
-  "terminalCheckpoint": "Stock SSH connected but the named remote thread was not yet visible"
+  "terminalCheckpoint": "Stock SSH connected but the named remote thread was not yet visible",
+  "projectSetup": {
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45752338911",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45752338911/artifacts/15086850082",
+    "screen": "native-ssh-project-setup.png",
+    "visibleDialog": "Create project",
+    "selectedSourceHost": "codex-fixture",
+    "sourceFolderSelected": false,
+    "terminalCheckpoint": "Remote project picker did not show the scratch workspace or fixture host"
+  }
 }
