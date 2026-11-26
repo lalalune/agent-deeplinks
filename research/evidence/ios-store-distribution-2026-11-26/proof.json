@@ -1,0 +1,71 @@
+{
+  "checkedOn": "2026-11-26",
+  "openclaw": {
+    "publicStore": {
+      "listing": "https://apps.apple.com/us/app/openclaw/id6780396132",
+      "displayVersion": "2026.11.70",
+      "catalogLookup": "https://itunes.apple.com/lookup?id=6780396132&country=us",
+      "minimumIos": "26.2",
+      "appleSiliconMacCompatibility": "macOS 26.2 or later and an Apple M1 chip or later"
+    },
+    "testFlight": {
+      "publisherJob": "https://github.com/openclaw/openclaw/actions/runs/45844821509/job/139995633648",
+      "publisherArtifact": "https://github.com/openclaw/openclaw/actions/runs/45844821509/artifacts/15131199451",
+      "sourceCommitRecordedInBundle": "b13c10deed7688cabb0a29bf028f9f0da01a36d3",
+      "publisherState": "IN_BETA_TESTING",
+      "canonicalGatewayVersion": "2026.11.10",
+      "bundleMarketingVersion": "2026.11.100",
+      "bundleBuild": "2",
+      "ipaFileName": "OpenClaw-2026.11.10.ipa",
+      "artifactZipSha256MatchesPublisher": true,
+      "artifactZipSha256": "b33254dce3dfe3988592ca7b73186b7110c887f82cc6628fecb8a9ab1ab46876",
+      "ipaSha256": "04142ba8f4e8d2b75634619d6bd1e9740cbb3af4975ef12518e2ea426f69635e",
+      "bundleId": "ai.openclawfoundation.app",
+      "teamId": "FWJYW4S8P8",
+      "certificateAuthority": "Apple Distribution: OpenClaw Foundation (FWJYW4S8P8)",
+      "strictDeepSignatureVerified": true,
+      "cdHash": "ee63cd5012100dc521767284fd367e7643a186d4",
+      "schemes": [
+        "openclaw"
+      ],
+      "supportedPlatforms": [
+        "iPhoneOS"
+      ],
+      "executableArchitecture": "arm64",
+      "machoPlatform": "IOS",
+      "machoSdk": "27.1",
+      "minimumIos": "26.2",
+      "supportedDeviceFamilies": [
+        1,
+        2
+      ],
+      "pushRegistrationMode": "appStore",
+      "pushEntitlement": "production",
+      "betaReportsActive": true,
+      "provisionedDeviceCount": 0,
+      "appInstalledOrExecuted": false
+    }
+  },
+  "t3Code": {
+    "publicStore": "https://apps.apple.com/us/app/t3-code-remote-claude-more/id6787819824",
+    "catalogLookup": "https://itunes.apple.com/lookup?id=6787819824&country=us",
+    "displayVersion": "2.4.0",
+    "catalogVersionReleaseDate": "2026-11-26T16:53:42Z",
+    "minimumIos": "18.0",
+    "bundleId": "com.t3tools.t3code",
+    "publisherSubmissionJob": "https://github.com/pingdotgg/t3code/actions/runs/45748476128/job/139670842269",
+    "buildRecord": "mobile-ios-build/production/2.4.0/89d32d0fd784089b948d099417d7d41403526273",
+    "buildSourceCommit": "7deb51b5503c172eb3abddc6f0efec701e685cd4",
+    "publicSubmissionArtifactPlatforms": [
+      "Android"
+    ],
+    "macCompatibilityListed": false,
+    "storeAppInstalledOrExecuted": false
+  },
+  "deviceAvailability": {
+    "physicalIosDevicesInCoreDevice": 2,
+    "availablePhysicalIosDevicesInCoreDevice": 0,
+    "officialOpenCodeTestFlight": "https://testflight.apple.com/join/M9eFEE1q",
+    "openCodeTestFlightState": "This beta is full"
+  }
+}
