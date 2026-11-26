@@ -124,6 +124,9 @@ The v0.1.53 release passed 51 package tests. Desktop Chromium and iPhone WebKit 
 
 The v0.1.54 package passed 51 tests. The production playground showed all 74 desktop, web, and mobile primary routes in both shadcn/ui styles, plus 79 rendered action examples. Desktop Chromium exercised all seven route setup controls, and iPhone WebKit and Pixel Chromium exercised their mobile options. The published ZIP includes all 21 illustrated README buttons and the exact Cloudflare demo. A fresh React 19 npm install matched the release tarball and passed signature verification. [Production browser proof](evidence/playground-button-styles/production-proof.json) · [Publication proof](evidence/playground-button-styles/publication-proof.json) · [Desktop](evidence/playground-button-styles/desktop-labeled.png) · [Mobile](evidence/playground-button-styles/mobile-icon-only.png)
 
+
+The v0.1.55 preview passed 53 package tests. Desktop Chromium checked all 74 primary routes and 79 action examples. Desktop Chromium, Pixel Chromium, and Firefox verified the exact OpenCode Android links in both shadcn/ui styles. The checks covered a bare session ID, a saved-server link, a project ID with Unicode and reserved characters, and rejection of a raw server address. [Preview](https://e2629b41.agent-deeplinks.pages.dev/) · [Browser proof](evidence/opencode-android-0811/playground-preview-proof.json) · [Android session controls](evidence/opencode-android-0811/playground-session-controls.png)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)

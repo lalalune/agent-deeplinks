@@ -1,0 +1,133 @@
+{
+  "checkedAt": "2026-11-26T22:49:05.191Z",
+  "site": "https://e2629b41.agent-deeplinks.pages.dev/",
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-D1JMkKja.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "desktop",
+          "primaryRoutes": 16,
+          "configured": [
+            "kimi-code",
+            "zcode"
+          ],
+          "actionExamples": 22,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "configured": [
+            "opencode"
+          ],
+          "actionExamples": 28,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 13,
+          "sessionLinks": {
+            "scoped": "opencode://session/ses_playground?server=19b6af391c22",
+            "projectDraft": "opencode://new-session?project=Release%20%2B%20caf%C3%A9%20%231",
+            "bothStyles": true,
+            "rejectedRawServerAddress": true
+          },
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "version": "27.2",
+      "script": "/assets/index-D1JMkKja.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 393
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-D1JMkKja.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 13,
+          "sessionLinks": {
+            "scoped": "opencode://session/ses_playground?server=19b6af391c22",
+            "projectDraft": "opencode://new-session?project=Release%20%2B%20caf%C3%A9%20%231",
+            "bothStyles": true,
+            "rejectedRawServerAddress": true
+          },
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 412
+        }
+      ]
+    },
+    {
+      "profile": "Desktop Firefox",
+      "version": "159.0",
+      "script": "/assets/index-D1JMkKja.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 13,
+          "sessionLinks": {
+            "scoped": "opencode://session/ses_playground?server=19b6af391c22",
+            "projectDraft": "opencode://new-session?project=Release%20%2B%20caf%C3%A9%20%231",
+            "bothStyles": true,
+            "rejectedRawServerAddress": true
+          },
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        }
+      ]
+    }
+  ],
+  "scope": "The browser verified generated links without performing app handoffs."
+}

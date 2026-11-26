@@ -484,6 +484,57 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
   );
 }
 
+function OpenCodeSessionLinks({ iconOnly }: { iconOnly: boolean }) {
+  const [session, setSession] = useState("");
+  const [project, setProject] = useState("");
+  const links = [
+    {
+      label: "Saved session ID or link",
+      placeholder: "ses_… or opencode://session/…",
+      value: session,
+      setValue: setSession,
+      href: getAgentLink("opencode", "android", { session: session.trim() }),
+      action: "Open saved session",
+    },
+    {
+      label: "Project ID",
+      placeholder: "Project ID from your OpenCode server",
+      value: project,
+      setValue: setProject,
+      href: project.trim() && getAgentLink("opencode", "android", { mode: "new", project: project.trim() }),
+      action: "Open new draft",
+    },
+  ];
+
+  return (
+    <div role="region" aria-label="OpenCode Android session links">
+      <p className="session-setup-note">Pair the Android app with your OpenCode server first.</p>
+      {links.map(({ label, placeholder, value, setValue, href, action }) => (
+        <div key={label} className="link-setup">
+          <label>
+            {label}
+            <input
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+              placeholder={placeholder}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </label>
+          {value.trim() && (href ? (
+            <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+              <a href={href} {...linkAttrs(href)} aria-label={action} title={action}>
+                <AgentLogo agent="opencode" />
+                {!iconOnly && <span className="agent-name">{action}</span>}
+              </a>
+            </Button>
+          ) : <p role="status">Enter a valid {label.toLowerCase()}.</p>)}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function HighlightedSnippet() {
   return (
     <pre>
@@ -523,6 +574,7 @@ function App() {
   const [mobileOs, setMobileOs] = useState<MobileOs>(initial.mobileOs);
   const [iconOnly, setIconOnly] = useState(false);
   const [setup, setSetup] = useState<{ agent: AgentId; platform: ActivePlatform }>();
+  const [showOpenCodeSessions, setShowOpenCodeSessions] = useState(false);
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
@@ -651,7 +703,25 @@ function App() {
                   </a>
                 </Button>
               ))}
+              {activePlatform === "android" && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className={agentButtonClass}
+                  aria-label="Configure OpenCode Android session links"
+                  aria-expanded={showOpenCodeSessions}
+                  title="OpenCode Android session links"
+                  onClick={() => setShowOpenCodeSessions((visible) => !visible)}
+                >
+                  <AgentLogo agent="opencode" />
+                  {!iconOnly && <span className="action-btn-text">
+                    <span className="agent-name">OpenCode</span>
+                    <span className="action-btn-kind">Session links</span>
+                  </span>}
+                </Button>
+              )}
             </div>
+            {activePlatform === "android" && showOpenCodeSessions && <OpenCodeSessionLinks iconOnly={iconOnly} />}
           </section>
         )}
 

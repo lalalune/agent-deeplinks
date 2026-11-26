@@ -1,0 +1,28 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45906141152",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45906141152/artifacts/15158420875",
+  "diagnosticHead": "3d48c94b728917198aea13ef083267304428c9d8",
+  "appVersion": "26.1120.50957",
+  "packageVersion": "0.1.50",
+  "window": {
+    "screen": "Codex Home",
+    "project": "workspace",
+    "remoteAlias": "codex-fixture",
+    "connectionIndicator": "green",
+    "projectChats": "No chats",
+    "recents": "No chats",
+    "screenshot": "native-ssh-home-no-chats.png"
+  },
+  "lastStage": "observe the existing idle remote thread in the Projects and Recents view",
+  "seedStillReadable": {
+    "exactId": true,
+    "exactTitle": true,
+    "exactRemoteWorkspace": true,
+    "provider": "qa-local",
+    "turns": 0
+  },
+  "providerRequests": [],
+  "accountUsed": false,
+  "linkCopied": false,
+  "linkDispatched": false
+}

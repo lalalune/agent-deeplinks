@@ -323,10 +323,15 @@ pre {
   color: var(--color-foreground);
 }
 
-.link-setup p {
+.link-setup p,
+.session-setup-note {
   margin: 0;
   color: var(--color-muted);
   font-size: 13px;
+}
+
+.session-setup-note {
+  margin-top: 16px;
 }
 
 .action-btn:hover .action-btn-kind {
