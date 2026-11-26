@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="36" viewBox="0 0 128 36" role="img" aria-label="Claude Code">
+  <title>Claude Code</title>
+  <rect x="0.5" y="0.5" width="127" height="35" rx="8" fill="#111114" stroke="#27272a" stroke-width="1"/>
+  <rect x="7" y="7" width="22" height="22" rx="5" fill="#ffffff"/>
+  <svg x="10" y="10" width="16" height="16" viewBox="0 0 24 24" fill="#111114" preserveAspectRatio="xMidYMid meet" overflow="hidden">
+    <g transform="translate(0 4)" shape-rendering="crispEdges">
+    <path fill="#d97757" d="M4 0h16v4h4v4h-4v8h-2v-4h-2v4h-2v-4h-4v4H8v-4H6v4H4V8H0V4h4z"/>
+    <path fill="#141413" d="M6 2h2v2H6zM16 2h2v2h-2z"/>
+  </g>
+  </svg>
+  <text x="37" y="22.5" fill="#fafafa" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13" font-weight="500">Claude Code</text>
+</svg>
