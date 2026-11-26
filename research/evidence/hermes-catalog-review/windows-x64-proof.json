@@ -1,0 +1,43 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758885680",
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758885680/job/139703914176",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758885680/artifacts/15090050897",
+  "diagnosticHead": "fbf488c1dfe263eee3d6ee2b2ae8945c94555f95",
+  "testedRelease": "0.1.51",
+  "npmIntegrity": "sha512-LnKH26B+WgsGlIg1/ScMXj+hAuRvAj11vD+G0qH+lNjEr8pH5+H14sprnbCGoRh5G8DOyYLPksN3qeLE9kQDiQ==",
+  "nativePlatform": "Windows Server 2025 Datacenter",
+  "artifactVerification": {
+    "url": "https://hermes-assets.nousresearch.com/releases/tag/canary.20261124T064706Z-v0.23.3/HermesBundled-0.23.3%2Bcanary.20261124T064706Z-win-x64.msix",
+    "packageFullName": "NousResearch.HermesBundledCanary_26.1124.6.4706_x64__e60prshbsznhj",
+    "bytes": 2861472760,
+    "sha256": "6bb41e7af179f0b82692f312d80aa9864530000902abba9c12cd69bcd70e31e2",
+    "authenticode": "Valid",
+    "publisher": "CN=Nous Research Inc., O=Nous Research Inc., L=Austin, S=Texas, C=US",
+    "signerThumbprint": "1791ABA320E5B40C6E80D4CEF1ED25E2E1CEADFB"
+  },
+  "windowsDeploymentSeconds": 530.2,
+  "exactTarget": "hermes://plugin/install?catalog=hermes-workbench",
+  "osDispatch": "Stock Windows Shell to the installed vendor MSIX for the registered hermes scheme after its disposable Gateway and workspace opened.",
+  "deliveryLog": "2026-11-26 05:15:57,865 [hermes] [deeplink] delivered plugin/install",
+  "visibleDialog": [
+    "hermes-workbench",
+    "Community",
+    "Reviewed by Nous. Installs for default and turns on right away.",
+    "Advanced",
+    "Cancel",
+    "Install"
+  ],
+  "installControlHitTestable": true,
+  "cancelControlHitTestable": true,
+  "nativeReviewVerified": true,
+  "signedIn": false,
+  "reviewControlsClicked": false,
+  "pluginInstalled": false,
+  "installedNameMatchesInScratch": [],
+  "sourceEvidence": {
+    "evidence.json": "384a2f5fbdf64afcd72820715ae9577ecfb4b61ff40a7584dffa1d079a5a7b7c",
+    "marketplace-review.png": "4b14f9f11f95a078bf8795ecd1a583f5dd3ba0f7dfc32a2547524d73f21d5f70",
+    "marketplace-window-uia.txt": "867d8abcadeb7a19b0978e58aa4f208c785a25284049038878d90cf8d0bc9847",
+    "backend-and-delivery.log": "235205d6630242880b73522b650ee3e4cbf8cdcf804f4d353dfaeda8d5505217"
+  }
+}

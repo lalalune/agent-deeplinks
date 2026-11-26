@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-26T20:31:45.669Z",
+  "site": "https://deeplinks.fun/",
+  "packageVersion": "0.1.53",
+  "nativeRuns": [
+    "https://github.com/lalalune/agent-deeplinks/actions/runs/45758926332",
+    "https://github.com/lalalune/agent-deeplinks/actions/runs/45758885680"
+  ],
+  "scope": "The checksum-verified npm package and production playground generate the exact URIs opened in the signed native tests. Browser fixture did not activate protocol links.",
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "browserVersion": "158.0.8127.18",
+      "script": "/assets/index-CS6rKSWC.js",
+      "t3ExactLinks": 2,
+      "hermesExactLinks": 1,
+      "stylesPerLink": 2
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browserVersion": "27.2",
+      "script": "/assets/index-CS6rKSWC.js",
+      "t3ExactLinks": 2,
+      "hermesExactLinks": 1,
+      "stylesPerLink": 2
+    }
+  ],
+  "checkedUris": {
+    "t3AndroidRegisteredRepository": "t3code://new?prompt=T3%20Android%20repo%20target%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2",
+    "t3AndroidUnknownRepository": "t3code://new?prompt=T3%20Android%20repo%20target%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmissing-repo-link-74f2",
+    "hermesWindowsMarketplaceReview": "hermes://plugin/install?catalog=hermes-workbench"
+  }
+}

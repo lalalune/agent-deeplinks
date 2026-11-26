@@ -1,0 +1,56 @@
+{
+  "build": 825,
+  "version": "2.3.0",
+  "promptSubmitted": false,
+  "coldDispatches": {
+    "matched-repository": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    },
+    "unmatched-repository": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    }
+  },
+  "registeredProjectTitle": "T3 Native Target 74F2",
+  "packageVersion": "0.1.51",
+  "expectedProject": "T3 Native Target 74F2",
+  "initialProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "pairingFormOpenedByStockRoute": false,
+  "stockLocalPairing": true,
+  "matchedUri": "t3code://new?prompt=T3%20Android%20repo%20target%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2",
+  "exactVisibleDraft": "T3 Android repo target QA + & literal %2F café 🧪",
+  "nativeEditableDraftObserved": true,
+  "projectLabelVisibleInComposer": false,
+  "visibleNoModelMessage": true,
+  "localDraftProjectBinding": {
+    "exactPersistedDraft": true,
+    "pairedEnvironmentIdMatches": true,
+    "registeredProjectIdMatches": true
+  },
+  "matchedProjectExactEditableDraft": true,
+  "unmatchedUri": "t3code://new?prompt=T3%20Android%20repo%20target%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmissing-repo-link-74f2",
+  "unmatchedRepositoryShowsExplicitCloneChoice": true,
+  "cloneControlClicked": false,
+  "finalProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758926332",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45758926332/artifacts/15089177780",
+  "runtime": "ReDroid Android 15 on native ARM64",
+  "signedDistribution": "Play internal-track mirror from the publisher",
+  "screenshots": [
+    "bound-draft.png",
+    "missing-repository-review.png"
+  ]
+}

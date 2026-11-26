@@ -144,7 +144,9 @@ The v0.1.53 release passed 51 package tests. Desktop Chromium and iPhone WebKit 
 
 - T3 Code’s signed Android build 823 opened the same existing scratch thread with an empty composer and an exact unsent draft on native ARM64 Android 15 using ReDroid. Both the custom scheme and Android-verified HTTPS routes passed. [Native thread evidence](coding-agents.md#t3-code)
 
-- The signed macOS Hermes canary opened the exact `hermes-workbench` Marketplace review in a disposable profile. The **Install** control stayed untouched. [Native review proof](evidence/hermes-catalog-review/native-review-proof.json)
+- The signed Hermes macOS and Windows x64 canaries opened the exact `hermes-workbench` Marketplace review in disposable profiles. The **Install** controls stayed untouched. [macOS proof](evidence/hermes-catalog-review/native-review-proof.json) · [Windows proof](evidence/hermes-catalog-review/windows-x64-proof.json)
+- The publisher’s Play-signed T3 Code Android build cold-opened an exact repository draft, bound it to the registered project, and showed an explicit clone choice for an unknown repository. [Native proof](evidence/t3-android-repository-draft/project-binding-proof.json)
+- The published npm v0.1.53 package and both shadcn/ui styles on the live playground generated all three exact T3 and Hermes URIs from those native checks in desktop Chromium and iPhone WebKit. [Link comparison](evidence/hermes-t3-playground/proof.json)
 
 - The exact Codex snapshot URLs rendered an intentionally published course example in signed-out desktop Chromium, iPhone WebKit, and Pixel Chromium. [Public browser proof](evidence/codex-shared-snapshot/public-browser-proof.json)
 
