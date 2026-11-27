@@ -99,6 +99,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://github.com/owner/repo/pull/1", action: "pull-request" },
   { agent: "t3-code", label: "Existing thread", inputLabel: "Copied T3 Code thread link",
     placeholder: "https://app.t3.codes/threads/environment/thread", field: "session" },
+  { agent: "antigravity", label: "IDE file or folder", inputLabel: "Absolute local path",
+    placeholder: "/absolute/path/to/project", action: "ide-open" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -568,7 +570,8 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
 }) {
   const [value, setValue] = useState("");
   const [prompt, setPrompt] = useState("");
-  const target = value.trim();
+  const isIdePath = example.action === "ide-open";
+  const target = isIdePath ? value : value.trim();
   const promptLimit = (example.action || example.field === "session")
     ? getAgentRoute(example.agent, platform, example.action)?.promptLimit : undefined;
   const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
@@ -599,7 +602,8 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
           </a>
         </Button>
       ) : target && <p role="status">
-        {example.field === "session" ? "Check the thread link and supply at most one draft prompt." : `Enter a valid ${example.inputLabel}.`}
+        {example.field === "session" ? "Check the thread link and supply at most one draft prompt."
+          : isIdePath ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
       </p>}
     </div>
   );

@@ -4,7 +4,7 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
-  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install";
+  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
@@ -438,6 +438,26 @@ function cursorMcp(url: string, behavior: "confirm" | "handoff"): ActionDefiniti
   };
 }
 
+const antigravityIdeOpen: ActionDefinition = {
+  id: "ide-open", label: "Open a file or folder in Antigravity IDE", url: "antigravity-ide://file",
+  behavior: "confirm", evidence: "source",
+  sources: ["https://antigravity.google/download?app=antigravity-ide"],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Absolute local path", "/absolute/path/to/project")],
+  note: "Requires the standalone Antigravity IDE. The IDE can ask for confirmation before opening the path.",
+  prepare: ({ target }, url) => {
+    if (!target || unsafeCharacters.test(target)) return null;
+    const drive = /^([a-z]:)[/\\]/iu.exec(target)?.[1];
+    if (!drive && (!target.startsWith("/") || target.startsWith("//"))) return null;
+
+    const path = drive ? target.slice(2).replaceAll("\\", "/") : target;
+    const segments = path.split("/");
+    if (segments.some((segment) => segment === "." || segment === "..")) return null;
+    const encodedPath = segments.map(encodeURIComponent).join("/");
+    return drive ? `${url}/${drive}${encodedPath}` : url + encodedPath;
+  },
+};
+
 const antigravityMarketplace: ActionDefinition = {
   id: "marketplace", label: "Browse Antigravity Marketplace", url: "antigravity://customizations/marketplaces",
   behavior: "launch", evidence: "documented",
@@ -841,7 +861,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
   },
   antigravity: {
     web: [antigravityWebMarketplace, antigravityWebPlugin, antigravityRemoteSession],
-    desktop: [antigravityMarketplace, antigravityPlugin, antigravitySkill],
+    desktop: [antigravityMarketplace, antigravityPlugin, antigravitySkill, antigravityIdeOpen],
     ios: [antigravityRemoteSession],
     android: [antigravityRemoteSession],
   },

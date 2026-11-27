@@ -1376,6 +1376,36 @@ test("builds a single-encoded Antigravity desktop draft and preserves blank laun
   }
 });
 
+test("opens local files and folders in the separate Antigravity IDE", () => {
+  const action = "ide-open";
+  for (const [target, encoded] of [
+    ["/tmp/Example + & café/a#b?c%2F.txt", "/tmp/Example%20%2B%20%26%20caf%C3%A9/a%23b%3Fc%252F.txt"],
+    ["/Users/example/Project.code-workspace", "/Users/example/Project.code-workspace"],
+    ["/tmp/Example folder/", "/tmp/Example%20folder/"],
+    ["C:\\Projects\\File + café.txt", "/C:/Projects/File%20%2B%20caf%C3%A9.txt"],
+    ["d:/Work/", "/d:/Work/"],
+  ]) {
+    const options = { action, target };
+    const expected = "antigravity-ide://file" + encoded;
+    assert.equal(getAgentLink("antigravity", "desktop", options), expected);
+    for (const iconOnly of [true, false]) {
+      const markup = renderToStaticMarkup(createElement(AgentLink, {
+        agent: "antigravity", platform: "desktop", options, iconOnly,
+      }));
+      assert.ok(markup.includes(`href="${expected}"`));
+    }
+  }
+  for (const target of [
+    "relative/file.txt", "C:relative.txt", "https://example.net/file", "file:///tmp/file",
+    "//host/share/file", "\\\\host\\share\\file", "/tmp/../file", "/tmp/./file", "/tmp/\nfile", "/tmp/\ud800",
+  ]) assert.equal(getAgentLink("antigravity", "desktop", { action, target }), null);
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("antigravity", platform, { action, target: "/tmp/file" }), null);
+  }
+  assert.equal(getAgentRoute("antigravity", "desktop", action).behavior, "confirm");
+  assert.equal(getAgentLink("antigravity", "desktop", { action, target: "/tmp/file", prompt: special }), null);
+});
+
 test("copies Antigravity Remote Control conversations across browser surfaces", () => {
   const url = "https://antigravity.google.com/r/Instance_01?p=c%2Fconversation-02";
   const options = { action: "remote-session", target: url };

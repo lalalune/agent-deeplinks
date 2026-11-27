@@ -89,6 +89,18 @@ getAgentLink("claude-code", "desktop", {
 })
 ```
 
+### Open a local file in Antigravity IDE
+
+Choose **Antigravity → IDE file or folder** under Desktop in the playground. Enter the absolute path to a file, folder, or workspace on this computer. The standalone IDE may ask for confirmation before opening it. [Google Antigravity downloads](https://antigravity.google/download?app=antigravity-ide)
+
+```ts
+getAgentLink("antigravity", "desktop", {
+  action: "ide-open",
+  target: "/Users/example/project/README.md",
+})
+// antigravity-ide://file/Users/example/project/README.md
+```
+
 ### OpenClaw Gateway sessions
 
 Choose **Configure OpenClaw** in the Web or Android playground and enter your Gateway address. Sign in to the Gateway in the same tab, then go back and paste a session link copied from OpenClaw. You can add an unsent draft to a Chat or Dashboard session. Use Focus and Beam links with an empty draft. [OpenClaw URL guide](https://docs.openclaw.ai/web/urls) · [Live playground](https://deeplinks.fun/)
