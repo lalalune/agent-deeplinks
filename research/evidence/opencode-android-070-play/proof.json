@@ -1,0 +1,92 @@
+{
+  "release": {
+    "package": "ai.opencode.mobilecode",
+    "versionName": "0.7.0",
+    "versionCode": 178,
+    "playListing": "https://play.google.com/store/apps/details?id=ai.opencode.mobilecode",
+    "upstreamTag": "https://github.com/anomalyco/opencode-android/releases/tag/v0.7.0",
+    "sourceMirror": "https://d.apkpure.net/b/XAPK/ai.opencode.mobilecode?versionCode=178",
+    "archiveSha256": "3b167ffe001f0421a0966323bfbfa6dedd77a6bdfea35fe4e6fb20755d76ee54",
+    "apkV3VerifiedForAllSplits": true,
+    "apkSignerSha256": "0aafd2181b878d49e25fb9cf6b2b4f291b51fefbc971db890fabab1f422d268c",
+    "googlePlaySourceStampVerifiedForAllSplits": true,
+    "sourceStampSignerSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d",
+    "sourceStampSignedAt": "2026-11-13T00:12:31Z",
+    "splitSha256": {
+      "ai.opencode.mobilecode.apk": "c6c70b689e0095a36cf70dbb22b0ee29d0cc75cd09c860edc74e93e442e1f802",
+      "config.arm64_v8a.apk": "98dea3a5e72f91735a3e22afc6921210189cd23434e6de0813b55ae6b32323fa",
+      "config.xxhdpi.apk": "4e4fa85f629e7a6074d62f37ac58ef4b7e938677dd73363d1839007b00232ba4"
+    }
+  },
+  "runtime": {
+    "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916090655/job/140235554604",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916090655/artifacts/15161834468",
+    "qaCommit": "47457f80b184bfe4c76d1b5844a607f32ec32c53",
+    "packageVersion": "0.1.56",
+    "packageTarballSha256": "d364174488b3aa03baa6843fd18c21b3a42cd226fb7943ed11a9394191ad4e21",
+    "android": "Android 15 API 35 on native arm64 Redroid",
+    "adb": "Dedicated loopback transport",
+    "network": "Guest-only bridge forwarding to two sandbox loopback servers with guest internet egress denied",
+    "server": "OpenCode v2.4.2",
+    "stockPairingConfirmed": [
+      "A",
+      "B"
+    ],
+    "beforeScopedOpen": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode B Default idle session, OpenCode B Default",
+      "Send message",
+      "Start the session below"
+    ],
+    "scopedSession": {
+      "url": "opencode://session/ses_de59fd342ffehINxmkNgz03c4e?server=e282d8468491",
+      "destinationVisible": true,
+      "visibleTitle": "OpenCode A Default idle session",
+      "visibleMessageState": "No messages yet",
+      "screenshot": "scoped-session.png"
+    },
+    "targetProjectDraft": {
+      "url": "opencode://new-session?project=0b96c9227533e7a3e38ff0b5f576aae3857337b2",
+      "destinationVisible": true,
+      "visibleTitle": "New Session",
+      "visibleProject": "OpenCode A Target",
+      "screenshot": "target-project-draft.png"
+    },
+    "finalDatabaseCounts": {
+      "A": {
+        "session_v2": 2,
+        "session_message": 0,
+        "account": 0
+      },
+      "B": {
+        "session_v2": 1,
+        "session_message": 0,
+        "account": 0
+      }
+    },
+    "noAccountOrMessageUsed": true,
+    "deliveryScope": "Archived Play-signed APK splits installed in a scratch environment"
+  },
+  "currentUpstreamRelease": {
+    "tag": "v0.8.12",
+    "versionCode": 1035,
+    "uploadJob": "https://github.com/anomalyco/opencode-android/actions/runs/45914853936/job/140233144450",
+    "playTracks": [
+      "internal",
+      "beta"
+    ],
+    "publicRelease": "https://github.com/anomalyco/opencode-android/releases/tag/v0.8.12",
+    "publicStandaloneApkAssets": [],
+    "ciBundleArtifact": "https://github.com/anomalyco/opencode-android/actions/runs/45914853936/artifacts/15161613502",
+    "ciArtifactZipSha256": "c99db05fecc6d657ef2b564efc7ae57de5f4250596e47f0213953dedb2815492",
+    "ciAabSha256": "d2ba6eeb09ccf38bf7ca8f62227c2267eb14c1775f3e5635e5da2259fcc73a83",
+    "ciAabJarSignature": "unsigned",
+    "vs0811": "One commit affecting a parity note and two background-work session UI files",
+    "newerPlaySignedInstallVerified": false
+  }
+}
