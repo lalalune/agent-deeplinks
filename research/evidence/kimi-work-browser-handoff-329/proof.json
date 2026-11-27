@@ -1,11 +1,12 @@
 {
-  "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914438204",
-  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914438204/artifacts/15161851442",
-  "diagnosticHead": "9feb00b8b06c381c7a83f833716a1fc340629ad2",
+  "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914901667",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914901667/artifacts/15162116643",
+  "diagnosticHead": "a63be48710b3088991d37c6afc014326908d8d29",
+  "firstNativeDispatchWithLocalNetworkPrompt": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914438204/artifacts/15161851442",
   "sourceImage": "https://kimi-img.moonshot.cn/app/download/mac/kimi_3.2.29.dmg",
   "imageSha256": "d57083fcbd16c953926927b98afeee87368b09498d5f81e9747c9794f2c43b00",
   "appProvenance": "Unchanged client inside the official signed Kimi Installer; copied and registered in a fresh hosted macOS runner",
-  "appleDistribution": "Notarized Developer ID",
+  "macOSSignature": "Notarized Developer ID",
   "signerTeam": "2J9472RW75",
   "libraryVersion": "0.1.55",
   "site": "https://deeplinks.fun/",
@@ -13,7 +14,7 @@
   "installedBundleId": "com.moonshot.kimichat",
   "installedVersion": "3.2.29",
   "installedBuild": "3.2.29.35",
-  "chromeVersion": "158.0.8127.37",
+  "chromeVersion": "157.0.8103.79",
   "accountUsed": false,
   "promptSubmitted": false,
   "permanentBrowserPermissionSelected": false,
@@ -23,17 +24,15 @@
     "active": true,
     "href": "kimi-work://home"
   },
-  "browserConfirmation": "Clicked Chrome’s one-time Open Kimi button at (700.9999994491458, 279.00000031590406)",
+  "browserConfirmation": "Clicked Chrome’s one-time Open Kimi button at (699.9999995140156, 280.0000000841686)",
   "launched": {
-    "pid": "5178",
-    "path": "/Applications/Kimi.app"
+    "path": "/Applications/Kimi.app",
+    "pid": "3966"
   },
-  "nativeScreen": {
-    "workAndProjectsVisible": true,
-    "signInVisible": true,
-    "macOSLocalNetworkPermissionPromptVisible": true,
-    "permissionPromptActedOn": false,
-    "screenshot": "signed-kimi-work-window.png"
-  },
-  "resultScope": "Cold browser-to-app dispatch and signed-out window. The automatic check required an unobscured Dashboard label."
+  "workNavigationAndLoginVisible": true,
+  "appPermissionPromptsActedOn": false,
+  "screenshots": {
+    "chromeConfirmation": "chrome-confirmation.png",
+    "signedOutNativeWindow": "signed-kimi-work-window.png"
+  }
 }

@@ -1,0 +1,118 @@
+{
+  "site": "https://deeplinks.fun/",
+  "checkedAt": "2026-11-27T00:10:05.802Z",
+  "results": [
+    {
+      "name": "Chromium",
+      "version": "158.0.8127.18",
+      "entries": [
+        {
+          "platform": "Desktop",
+          "style": "Icons + names",
+          "href": "antigravity://customizations/marketplaces"
+        },
+        {
+          "platform": "Desktop",
+          "style": "Icons only",
+          "href": "antigravity://customizations/marketplaces"
+        },
+        {
+          "platform": "Web",
+          "style": "Icons + names",
+          "href": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins"
+        },
+        {
+          "platform": "Web",
+          "style": "Icons only",
+          "href": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://claude.ai/new"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://play.google.com/store/apps/details?id=com.anthropic.claude"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://claude.ai/new"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://play.google.com/store/apps/details?id=com.anthropic.claude"
+        }
+      ]
+    },
+    {
+      "name": "WebKit",
+      "version": "27.2",
+      "entries": [
+        {
+          "platform": "Desktop",
+          "style": "Icons + names",
+          "href": "antigravity://customizations/marketplaces"
+        },
+        {
+          "platform": "Desktop",
+          "style": "Icons only",
+          "href": "antigravity://customizations/marketplaces"
+        },
+        {
+          "platform": "Web",
+          "style": "Icons + names",
+          "href": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins"
+        },
+        {
+          "platform": "Web",
+          "style": "Icons only",
+          "href": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://claude.ai/new"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons + names",
+          "href": "https://play.google.com/store/apps/details?id=com.anthropic.claude"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://claude.ai/new"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00"
+        },
+        {
+          "platform": "Android",
+          "style": "Icons only",
+          "href": "https://play.google.com/store/apps/details?id=com.anthropic.claude"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "checkedAt": "2026-11-27T00:10:27.390Z",
+  "site": "https://deeplinks.fun/",
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-DD1tdic-.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "desktop",
+          "primaryRoutes": 16,
+          "configured": [
+            "kimi-code",
+            "zcode"
+          ],
+          "actionExamples": 23,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "configured": [
+            "opencode"
+          ],
+          "actionExamples": 29,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        },
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 15,
+          "sessionLinks": {
+            "scoped": "opencode://session/ses_playground?server=19b6af391c22",
+            "projectDraft": "opencode://new-session?project=Release%20%2B%20caf%C3%A9%20%231",
+            "bothStyles": true,
+            "rejectedRawServerAddress": true
+          },
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 1250
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "version": "27.2",
+      "script": "/assets/index-DD1tdic-.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "configured": [
+            "opencode",
+            "hermes"
+          ],
+          "actionExamples": 16,
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 393
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "script": "/assets/index-DD1tdic-.js",
+      "downloadZipHref": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "state": [
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "configured": [
+            "hermes",
+            "openclaw"
+          ],
+          "actionExamples": 15,
+          "sessionLinks": {
+            "scoped": "opencode://session/ses_playground?server=19b6af391c22",
+            "projectDraft": "opencode://new-session?project=Release%20%2B%20caf%C3%A9%20%231",
+            "bothStyles": true,
+            "rejectedRawServerAddress": true
+          },
+          "iconOnlyLabelsAccessible": true,
+          "viewWidth": 412
+        }
+      ]
+    }
+  ],
+  "scope": "The browser verified generated links without performing app handoffs."
+}
