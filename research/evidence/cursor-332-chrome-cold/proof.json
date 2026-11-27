@@ -1,0 +1,40 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916458785",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916458785/artifacts/15161893719",
+  "diagnosticHead": "49d0179f59f3304162aa5942a9f67362b020e3b4",
+  "liveStepPassed": true,
+  "officialDownloadPage": "https://cursor.com/download",
+  "officialChannel": "https://api2.cursor.sh/updates/download/golden/darwin-arm64/cursor/3.32",
+  "officialImage": "https://downloads.cursor.com/production/0925c4b8226c56947c43f0b555fb98e187a7e029/darwin/arm64/Cursor-darwin-arm64.dmg",
+  "officialImageSha256": "057918c464adcb9bf9be975fbae714763a6e92e424bfd589d816874596717b35",
+  "imageBytes": 305973617,
+  "signedTeamId": "VDXQ22DGB9",
+  "gatekeeper": "Notarized Developer ID",
+  "libraryVersion": "0.1.56",
+  "site": "https://deeplinks.fun/",
+  "uri": "cursor://anysphere.cursor-deeplink/prompt?text=tell%2520me%2520about%2520deeplinks.fun",
+  "installedBundleId": "com.todesktop.230313mzl4w4u92",
+  "installedVersion": "3.32.4",
+  "chromeVersion": "157.0.8103.79",
+  "accountUsed": false,
+  "promptSubmitted": false,
+  "permanentBrowserPermissionSelected": false,
+  "osResolverMatchesInstalledApp": true,
+  "trustedActivation": {
+    "trusted": true,
+    "active": true,
+    "href": "cursor://anysphere.cursor-deeplink/prompt?text=tell%2520me%2520about%2520deeplinks.fun"
+  },
+  "appColdLaunched": true,
+  "nativeWindow": "signed-out",
+  "nativeWindowLabels": [
+    "CURSOR",
+    "Log In",
+    "Sign Up"
+  ],
+  "screenshots": {
+    "browserConfirmation": "browser-confirmation.png",
+    "nativeWindow": "native-logged-out.png"
+  },
+  "loopbackUnicodeFollowup": "The trusted click opened the one-time Chrome confirmation. Both the fixture anchor and confirmation button read Open Cursor, so the observer left the modal untouched and no app launch was observed."
+}
