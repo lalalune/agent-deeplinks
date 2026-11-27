@@ -40,7 +40,7 @@ jobs:
           fetch "$vendor/aptrepo/dists/grok-bot/InRelease" "$qa/InRelease" 65536
           gpgv --keyring "$qa/vendor.gpg" --output "$qa/Release" "$qa/InRelease" 2>&1 | tee "$qa/evidence/gpgv.txt"
           fetch "$vendor/aptrepo/dists/grok-bot/$apt_index" "$qa/evidence/Packages" 65536
-          index_hash="$(awk -v index="$apt_index" '$0=="SHA256:"{inside=1;next} inside && $3==index{print $1;exit}' "$qa/Release")"
+          index_hash="$(awk -v target="$apt_index" '$0=="SHA256:"{inside=1;next} inside && $3==target{print $1;exit}' "$qa/Release")"
           printf '%s  %s\n' "$index_hash" "$qa/evidence/Packages" | sha256sum --check
           grep -Fx "SHA256: $vendor_hash" "$qa/evidence/Packages"
           deb="$qa/grok-bot_1.3.0_amd64.deb"
