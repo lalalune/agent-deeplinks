@@ -33,6 +33,42 @@ const TABS: readonly { id: TabId; label: string }[] = [
 const DESKTOP_CHAT_AGENTS = ["chatgpt", "claude", "codex"] as const;
 type DesktopChatAgent = (typeof DESKTOP_CHAT_AGENTS)[number];
 
+type DesktopToolField = "cwd" | "repo" | "session" | "workspace";
+
+interface DesktopToolExample {
+  agent: "claude-code" | "github-copilot";
+  platform: "cli" | "vscode";
+  label: string;
+  name: string;
+  fields: readonly { key: DesktopToolField; label: string; placeholder: string }[];
+  note: string;
+  invalidInput: string;
+}
+
+const DESKTOP_TOOL_EXAMPLES: readonly DesktopToolExample[] = [
+  {
+    agent: "claude-code", platform: "cli", label: "Terminal", name: "Claude Code in Terminal",
+    fields: [
+      { key: "cwd", label: "Absolute working directory (optional)", placeholder: "/absolute/path/to/project" },
+      { key: "repo", label: "Local GitHub repository (optional)", placeholder: "owner/repo" },
+    ],
+    note: "Requires Claude Code’s registered terminal handler. A working directory takes precedence over a repository.",
+    invalidInput: "Check the absolute directory, repository slug, and prompt length.",
+  },
+  {
+    agent: "claude-code", platform: "vscode", label: "VS Code", name: "Claude Code in VS Code",
+    fields: [{ key: "session", label: "Claude Code session ID (optional)", placeholder: "Session ID from the open workspace" }],
+    note: "Requires the Claude Code extension. A saved session uses the workspace open in VS Code.",
+    invalidInput: "Enter a valid Claude Code session ID.",
+  },
+  {
+    agent: "github-copilot", platform: "vscode", label: "VS Code Agents", name: "VS Code Agents",
+    fields: [{ key: "workspace", label: "Workspace folder URI (optional)", placeholder: "file:///absolute/path/to/project" }],
+    note: "Opens a draft in the VS Code Agents window.",
+    invalidInput: "Enter a file or VS Code Remote folder URI.",
+  },
+];
+
 const DISPLAY_ORDER: readonly string[] = [
   "chatgpt",
   "claude",
@@ -234,7 +270,7 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
   "grok-bot": {
     plugin: {
       label: "Marketplace plugin",
-      options: () => ({ target: "9007199254740993" }),
+      options: () => ({ target: "https://x.ai/bot/plugin/674" }),
     },
     "team-plugin": {
       label: "Team plugin",
@@ -773,6 +809,44 @@ function ClaudeCodeWorkspaceLink({ iconOnly }: { iconOnly: boolean }) {
   );
 }
 
+function DesktopToolLinkSetup({ example, iconOnly }: { example: DesktopToolExample; iconOnly: boolean }) {
+  const [fields, setFields] = useState<Partial<Record<DesktopToolField, string>>>({});
+  const [prompt, setPrompt] = useState(LIVE_PROMPT);
+  const route = getAgentRoute(example.agent, example.platform);
+  const needsPrompt = route?.required?.includes("prompt") ?? false;
+  const href = getAgentLink(example.agent, example.platform, { ...fields, prompt });
+  const label = `Open ${example.name}`;
+
+  return (
+    <div role="region" aria-label={`${example.name} link`} className="workspace-setup">
+      <div className="link-setup">
+        {example.fields.map(({ key, label: fieldLabel, placeholder }) => (
+          <label key={key}>
+            {fieldLabel}
+            <input value={fields[key] ?? ""} placeholder={placeholder} autoComplete="off" spellCheck={false}
+              onChange={(event) => setFields({ ...fields, [key]: event.target.value || undefined })} />
+          </label>
+        ))}
+        <label>
+          {needsPrompt ? "Draft prompt" : "Draft prompt (optional)"}
+          <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} maxLength={route?.promptLimit} />
+        </label>
+        {href ? (
+          <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+            <a href={href} aria-label={label} title={label}>
+              <AgentLogo agent={example.agent} />
+              {!iconOnly && <span className="agent-name">{label}</span>}
+            </a>
+          </Button>
+        ) : (
+          <p role="status">{needsPrompt && !prompt.trim() ? "Enter a draft prompt." : example.invalidInput}</p>
+        )}
+      </div>
+      <p className="session-setup-note">{example.note}</p>
+    </div>
+  );
+}
+
 function HighlightedSnippet() {
   return (
     <pre>
@@ -815,6 +889,7 @@ function App() {
   const [showOpenCodeSessions, setShowOpenCodeSessions] = useState(false);
   const [showClaudeWorkspace, setShowClaudeWorkspace] = useState(false);
   const [desktopChatAgent, setDesktopChatAgent] = useState<DesktopChatAgent>();
+  const [desktopToolExample, setDesktopToolExample] = useState<DesktopToolExample>();
   const [destination, setDestination] = useState<{ example: DestinationExample; platform: ActivePlatform }>();
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
@@ -999,6 +1074,20 @@ function App() {
                   </span>}
                 </Button>
               )}
+              {activePlatform === "desktop" && DESKTOP_TOOL_EXAMPLES.map((example) => {
+                const label = `Configure ${example.name} link`;
+                return (
+                  <Button key={example.name} type="button" variant="ghost" className={agentButtonClass}
+                    aria-label={label} aria-expanded={desktopToolExample === example} title={label}
+                    onClick={() => setDesktopToolExample((current) => current === example ? undefined : example)}>
+                    <AgentLogo agent={example.agent} />
+                    {!iconOnly && <span className="action-btn-text">
+                      <span className="agent-name">{agents[example.agent].name}</span>
+                      <span className="action-btn-kind">{example.label}</span>
+                    </span>}
+                  </Button>
+                );
+              })}
               {activePlatform === "android" && (
                 <Button
                   type="button"
@@ -1025,6 +1114,9 @@ function App() {
               <ExistingDesktopChatLink key={desktopChatAgent} agent={desktopChatAgent} iconOnly={iconOnly} />
             )}
             {activePlatform === "desktop" && showClaudeWorkspace && <ClaudeCodeWorkspaceLink iconOnly={iconOnly} />}
+            {activePlatform === "desktop" && desktopToolExample && (
+              <DesktopToolLinkSetup key={desktopToolExample.name} example={desktopToolExample} iconOnly={iconOnly} />
+            )}
             {activePlatform === "android" && showOpenCodeSessions && <OpenCodeSessionLinks iconOnly={iconOnly} />}
           </section>
         )}

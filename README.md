@@ -89,6 +89,22 @@ getAgentLink("claude-code", "desktop", {
 })
 ```
 
+### Open a terminal or VS Code draft
+
+Under **Desktop** in the playground, choose **Claude Code → Terminal**, **Claude Code → VS Code**, or **GitHub Copilot → VS Code Agents**. Claude Code Terminal takes a local directory or a GitHub repository slug. The VS Code extension can reopen a session from the open workspace. VS Code Agents requires a draft prompt in VS Code 1.148.0 and accepts an optional workspace folder URI. The prompts stay unsent. [Claude Code terminal links](https://code.claude.com/docs/en/deep-links) · [Claude Code extension](https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools) · [VS Code Agents draft links](https://code.visualstudio.com/docs/configure/command-line#_prepare-a-new-agent-session-draft) · [VS Code 1.148.0 parser tests](https://github.com/microsoft/vscode/blob/661626d0e72f97806550790a98fb87116c9db825/src/vs/platform/window/test/common/window.test.ts#L77)
+
+```ts
+getAgentLink("claude-code", "cli", {
+  cwd: "/absolute/path/to/project",
+  prompt: "Review this workspace.",
+})
+getAgentLink("claude-code", "vscode", { prompt: "Review this workspace." })
+getAgentLink("github-copilot", "vscode", {
+  workspace: "file:///absolute/path/to/project",
+  prompt: "Review this workspace.",
+})
+```
+
 ### Open a local file in Antigravity IDE
 
 Choose **Antigravity → IDE file or folder** under Desktop in the playground. Enter the absolute path to a file, folder, or workspace on this computer. The standalone IDE may ask for confirmation before opening it. [Google Antigravity downloads](https://antigravity.google/download?app=antigravity-ide)

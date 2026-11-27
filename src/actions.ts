@@ -46,6 +46,7 @@ const chatgptPlugins = "https://chatgpt.com/plugins/";
 const appSpec = "https://github.com/openai/mcp-extensions/blob/main/docs/spec.md#deep-links";
 const desktopPlugins = "https://learn.chatgpt.com/docs/reference/commands";
 const grokPlugins = "https://docs.x.ai/grok-bot/deep-links#add-a-plugin";
+const grokAndroidPluginCheck = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-bot-android-plugin/proof.json";
 const grokMobileAssociation = "https://app-site-association.cdn-apple.com/a/v1/x.ai";
 const antigravityPlugins = "https://antigravity.google/docs/build-plugins#share-deep-links-to-your-plugin";
 const antigravityMarketplaceDocs = "https://antigravity.google/docs/marketplace/#open-plugins-with-deep-links";
@@ -444,10 +445,11 @@ const antigravityIdeOpen: ActionDefinition = {
   sources: ["https://antigravity.google/download?app=antigravity-ide",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/macos-review.json",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/windows-review.json",
-    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/linux-review.json"],
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/linux-review.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/linux-file-render.json"],
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Absolute local path", "/absolute/path/to/project")],
-  note: "The standalone Antigravity IDE showed the exact local file confirmation on macOS, Windows, and Ubuntu. The Linux tarball test required registering its URL handler.",
+  note: "The standalone IDE showed the exact file confirmation on macOS, Windows, and Ubuntu. After confirmation, the Ubuntu tarball displayed the file in Restricted Mode. Register its URL handler for desktop dispatch.",
   prepare: ({ target }, url) => {
     if (!target || unsafeCharacters.test(target)) return null;
     const drive = /^([a-z]:)[/\\]/iu.exec(target)?.[1];
@@ -854,7 +856,17 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web, grokBotMarketplace],
     desktop: [grokPlugin, grokTeamPlugin, grokTeamBot.desktop, grokBotTemplate.desktop],
     ios: [...grokMobileActions, grokBotMarketplace],
-    android: [...grokMobileActions, grokBotMarketplace],
+    android: [
+      {
+        ...grokPlugin, sources: [...grokPlugin.sources, grokAndroidPluginCheck],
+        note: "The signed Android app received the public Slack plugin link through its App Link. The test reached Google Play license verification. The browser is available as a fallback.",
+      },
+      {
+        ...grokTeamPlugin, sources: [...grokTeamPlugin.sources, grokAndroidPluginCheck],
+        note: "The signed Android app received the custom URI and reached Google Play license verification. Team plugin review requires sign-in and access.",
+      },
+      grokTeamBot.mobile, grokBotTemplate.mobile, grokBotMarketplace,
+    ],
   },
   cursor: {
     web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web"), cursorSharedChat],

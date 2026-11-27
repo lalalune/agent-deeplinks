@@ -1,0 +1,68 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934086753/job/140293161767",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934086753/artifacts/15169597996",
+  "diagnosticHead": "e6658acc597180ab9fc18e5b36bb2fc42150bae7",
+  "testedRelease": {
+    "version": "0.1.65",
+    "npmIntegrity": "sha512-O+RHjw+zU/80/Ifsk8o0KVygxdsWSb38EoOSkz7vMMkN8QnqR58dXMpjugnHNl/2J3gHTlwWDOoyC9kJ9WKkBQ==",
+    "marketplace": "https://x.ai/bot/plugin/674",
+    "native": "grokbot://app/v1/plugin/add?id=674"
+  },
+  "runtime": [
+    "guestArchitecture=aarch64",
+    "sdk=35",
+    "primaryCpuAbi=arm64-v8a",
+    "bridge=0"
+  ],
+  "artifactSigners": {
+    "grok": "521bf5ce7c981faba4ebd86d23f778885537cad021bc107d8915d005e99f4a12",
+    "grokBot": "f68872ec9f95894ecea37bf8d096d3609abef72765d9350cf10f1c3231863b74",
+    "grokBotSplitCount": 4
+  },
+  "xAiDomainVerifiedForGrokAndGrokBot": true,
+  "beforeInstall": {
+    "marketplace": "1 activities found:\n  Activity #0:\n    priority=0 preferredOrder=0 match=0x208000 specificIndex=-1 isDefault=true\n    org.chromium.webview_shell/.WebViewBrowserActivity",
+    "native": "No activities found"
+  },
+  "afterInstall": [
+    {
+      "case": "grok-bot-slack-https",
+      "url": "https://x.ai/bot/plugin/674",
+      "resolver": "priority=0 preferredOrder=0 match=0x0 specificIndex=-1 isDefault=false\nandroid/com.android.internal.app.ResolverActivity",
+      "foreground": "ai.x.grok.bot/com.pairip.licensecheck.LicenseActivity",
+      "grokBotForeground": true,
+      "slackVisible": false,
+      "googlePlayVisible": true,
+      "signInVisible": false,
+      "addAuthorizeVisible": false,
+      "pluginControlsClicked": false,
+      "accountUsed": false,
+      "coldStart": "LaunchState: COLD",
+      "startedActivity": "ai.x.grok.bot/.MainActivity",
+      "visibleGate": [
+        "Check that Google Play is enabled on your device and that you're using an up-to-date version before opening the app. If the problem persists try reinstalling the app."
+      ],
+      "nativeScreenshotSha256": "93e97d78e079d1ad44fe75829141db6b315bf418e59cc971c09e32f6f281259e"
+    },
+    {
+      "case": "grok-bot-slack-custom",
+      "url": "grokbot://app/v1/plugin/add?id=674",
+      "resolver": "priority=0 preferredOrder=0 match=0x208000 specificIndex=-1 isDefault=true\nai.x.grok.bot/.MainActivity",
+      "foreground": "ai.x.grok.bot/com.pairip.licensecheck.LicenseActivity",
+      "grokBotForeground": true,
+      "slackVisible": false,
+      "googlePlayVisible": true,
+      "signInVisible": false,
+      "addAuthorizeVisible": false,
+      "pluginControlsClicked": false,
+      "accountUsed": false,
+      "coldStart": "LaunchState: COLD",
+      "startedActivity": "ai.x.grok.bot/.MainActivity",
+      "visibleGate": [
+        "Check that Google Play is enabled on your device and that you're using an up-to-date version before opening the app. If the problem persists try reinstalling the app."
+      ],
+      "nativeScreenshotSha256": "93e97d78e079d1ad44fe75829141db6b315bf418e59cc971c09e32f6f281259e"
+    }
+  ],
+  "boundary": "Forwarded guest egress blocked after stock DAL verification. App-native LicenseActivity required Google Play. Neither Slack nor Authorize rendered. No plugin action, login or prompt."
+}
