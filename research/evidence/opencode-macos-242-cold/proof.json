@@ -1,0 +1,23 @@
+{
+  "appVersion": "2.4.2",
+  "operatingSystem": "macOS 15.8.2 arm64",
+  "packageVersion": "0.1.62",
+  "coldLaunch": true,
+  "launchMethod": "Default LaunchServices handler",
+  "uri": "opencode://new-session?prompt=OpenCode%202.4.2%20cold%20draft%20QA%20%2B%20%26%20caf%C3%A9&directory=%2FUsers%2Frunner%2Fwork%2F_temp%2Fopencode-macos-cold%2FCold%20project%20%2B%20%26%20caf%C3%A9",
+  "directory": "/Users/runner/work/_temp/opencode-macos-cold/Cold project + & café",
+  "prompt": "OpenCode 2.4.2 cold draft QA + & café",
+  "stockOpenAccepted": true,
+  "recognizedExactDraft": true,
+  "recognizedExactProject": true,
+  "accountUsed": false,
+  "submitted": false,
+  "signer": "Developer ID Application and Gatekeeper notarization, Anomaly team 5NZ4Q7NXJ4",
+  "vendorDiskImageSha256": "e7bd4ab50d5c870e5eec5f0d57effee94ae54e0f76ac86502f20ed41ff3e39a7",
+  "screenshot": {
+    "file": "visible-draft.png",
+    "sha256": "03e9740e73785c13ee0f730032e44bd79ba06f12975b15f8d8ece99560a61470"
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45927633369/job/140272631083",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45927633369/artifacts/15167092752"
+}
