@@ -401,9 +401,11 @@ function cursorMcp(url: string, behavior: "confirm" | "handoff"): ActionDefiniti
 
 const antigravityMarketplace: ActionDefinition = {
   id: "marketplace", label: "Browse Antigravity Marketplace", url: "antigravity://customizations/marketplaces",
-  behavior: "launch", evidence: "documented", sources: [antigravityMarketplaceDocs, antigravityPlugins],
+  behavior: "launch", evidence: "documented",
+  sources: [antigravityMarketplaceDocs, antigravityPlugins,
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-2352-chrome-cold/proof.json"],
   fields: {}, required: [], inputs: [],
-  note: "Opens the Marketplace tab in the signed-in Antigravity app.",
+  note: "Stock Chrome launched signed Antigravity 2.35.2 to its welcome screen. The Marketplace tab requires a signed-in account.",
   prepare: (_fields, url) => url,
 };
 
@@ -411,6 +413,8 @@ const antigravityWebMarketplace: ActionDefinition = {
   ...antigravityMarketplace,
   url: "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins",
   evidence: "verified",
+  sources: [antigravityMarketplaceDocs,
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-marketplace-browse/proof.json"],
   note: "Opens Google's public Marketplace catalog in a browser.",
 };
 
@@ -812,8 +816,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     })],
     android: [openCodePairing({
       url: "opencode://pair", label: "Pair with a server", behavior: "confirm", evidence: "verified",
-      sources: [openCodePairSource, openCodePairDocs, "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187"],
-      note: "Opens native pairing review for the server. The signed development APK and test-signed 0.8.9 release configuration opened this review.",
+      sources: [openCodePairSource, openCodePairDocs,
+        "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187",
+        "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/opencode-android-070-play/proof.json"],
+      note: "Opens native pairing review for the server. Play-signed 0.7.0 and test-signed 0.8.11 each paired two isolated servers.",
     })],
   },
   claude: {
