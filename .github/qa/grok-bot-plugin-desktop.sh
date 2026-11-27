@@ -6,7 +6,8 @@ for path in home config data cache state runtime tmp; do mkdir -m 700 "$profile/
 script="$(realpath .github/qa/grok-bot-plugin-desktop.mjs)"
 # The fresh child shell expands its own environment and window-manager PID.
 # shellcheck disable=SC2016
-env -i PATH="$PATH" LANG=C.UTF-8 HOME="$profile/home" HOME_ROOT="$profile" QA_DIR="$qa" QA_SCRIPT="$script" \
+env -i PATH="$PATH" LANG=C.UTF-8 USER="$(id -un)" LOGNAME="$(id -un)" SHELL=/bin/bash \
+  HOME="$profile/home" QA_DIR="$qa" QA_SCRIPT="$script" G_MESSAGES_DEBUG=all \
   XDG_CONFIG_HOME="$profile/config" XDG_DATA_HOME="$profile/data" XDG_CACHE_HOME="$profile/cache" \
   XDG_STATE_HOME="$profile/state" XDG_RUNTIME_DIR="$profile/runtime" XDG_CURRENT_DESKTOP=GNOME TMPDIR="$profile/tmp" \
   xvfb-run -a --server-args='-screen 0 1440x1000x24' dbus-run-session -- bash -c '

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, readlinkSync, writeFileSync } from "node:fs";
+import { closeSync, existsSync, openSync, readdirSync, readFileSync, readlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
 import { pathToFileURL } from "node:url";
@@ -58,11 +58,15 @@ try {
   assert.equal(proof.xdg.stdout, "grok-bot.desktop");
   assert.match(proof.gio.stdout, /Default application[^\n]+grok-bot\.desktop/u);
   assert.equal(applications().length, 0);
-  const cold = spawn("xdg-open", [uri], { stdio: "ignore" });
+  const output = openSync(join(evidence, "xdg-launch.txt"), "w");
+  const cold = spawn("xdg-open", [uri], { stdio: ["ignore", output, output] });
+  closeSync(output);
   children.push(cold);
+  cold.on("exit", (status, signal) => { proof.coldXdgExit = { status, signal }; });
   const until = Date.now() + 35000;
   while (Date.now() < until) {
     const installed = applications();
+    if (installed.length) proof.coldObservedProcess ??= installed[0];
     proof.coldReceiver ??= installed.find(({ argv }) => argv.some(arg => arg === uri || arg.endsWith(" " + uri)));
     if (proof.coldReceiver) {
       const frame = capture("cold-checkpoint", [proof.coldReceiver]);
@@ -93,6 +97,10 @@ try {
 } finally {
   writeFileSync(join(evidence, "proof.json"), JSON.stringify(proof, null, 2) + "\n");
   console.log(JSON.stringify(proof));
+  const exact = Boolean(proof.coldReceiver);
+  const visible = Boolean(proof.coldWindow);
+  const windowTitle = (proof.coldWindow?.window ?? "").split(/\s+/u).slice(4).join(" ");
+  console.log(`::notice title=Grok Bot desktop result::Exact cold URI ${exact}, native window ${visible}, title ${windowTitle}, warm shell ${proof.warmExactShellDelivery ?? false}, ${proof.error ?? "checks passed"}`);
   for (const child of children) child.kill();
   for (const { pid } of applications()) {
     try { process.kill(pid, "SIGTERM"); } catch (error) { if (error.code !== "ESRCH") throw error; }
