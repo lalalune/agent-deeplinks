@@ -702,14 +702,18 @@ test("opens existing desktop chats with the provider's session UUID route", () =
   assert.equal(getAgentLink("codex", "desktop", { prompt: "Existing new-chat behavior" }), "codex://new?prompt=Existing%20new-chat%20behavior");
 });
 
-test("preserves copied remote Codex thread links on ChatGPT and Codex Desktop", () => {
+test("preserves copied local and remote thread links on ChatGPT and Codex Desktop", () => {
   const session = "12345678-1234-4234-9234-123456789abc";
   const local = `codex://threads/${session}`;
   const hostId = "remote-ssh-discovered:fixture-host";
   const remote = `${local}?${new URLSearchParams({ hostId })}`;
   const opaque = `${local}?${new URLSearchParams({ hostId: "remote-ssh-codex-managed:a~b%3Aname*" })}`;
   const rejected = [
-    local,
+    `${local}/`,
+    `${local}\n`,
+    `${local}#fragment`,
+    `${local}?mode=chat`,
+    "codex://threads/new",
     `${local}?hostId=local`,
     `${local}?hostId=`,
     `${local}?hostId=first&hostId=second`,
@@ -729,6 +733,7 @@ test("preserves copied remote Codex thread links on ChatGPT and Codex Desktop", 
   ];
   for (const agent of ["codex", "chatgpt"]) {
     assert.equal(getAgentLink(agent, "desktop", { session }), local);
+    assert.equal(getAgentLink(agent, "desktop", { session: local }), local);
     assert.equal(getAgentLink(agent, "desktop", { session: remote }), remote);
     assert.equal(getAgentLink(agent, "desktop", { session: opaque }), opaque);
     assert.equal(new URL(remote).searchParams.get("hostId"), hostId);
@@ -738,6 +743,7 @@ test("preserves copied remote Codex thread links on ChatGPT and Codex Desktop", 
       assert.equal(getAgentLink(agent, "desktop", { session: value }), null, value);
     }
     for (const platform of ["web", "ios", "android", "cli", "vscode"]) {
+      assert.equal(getAgentLink(agent, platform, { session: local }), null);
       assert.equal(getAgentLink(agent, platform, { session: remote }), null);
     }
   }

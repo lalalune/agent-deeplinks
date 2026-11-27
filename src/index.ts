@@ -27,7 +27,7 @@ const githubRepo = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/iu;
 const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
 const openCodeAndroidSessionUrl = /^opencode:\/\/session\/([A-Za-z0-9_-]+)\?server=[0-9a-f]{12}$/u;
-const copiedCodexThreadUrl = /^codex:\/\/threads\/([a-fA-F\d-]+)\?hostId=([A-Za-z\d._*%\-]+)$/u;
+const copiedCodexThreadUrl = /^codex:\/\/threads\/([a-fA-F\d-]+)(?:\?hostId=([A-Za-z\d._*%\-]+))?$/u;
 const opaqueCodexHostId = /^(?:[a-zA-Z0-9._:~!*'()-]|%[a-fA-F0-9]{2})+$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
 const sshFolderCharacters = /^[\p{L}\p{N}\p{M}\p{P} +<=>^`|~$]+$/u;
@@ -35,7 +35,8 @@ const excludedSshFolderCharacters = /[\\'\u2018-\u201b\p{Default_Ignorable_Code_
 
 function getCopiedCodexThreadLink(value: string): string | null {
   const [, id = "", encodedHostId] = copiedCodexThreadUrl.exec(value) ?? [];
-  if (!encodedHostId || !conversationId.test(id) || hiddenPathCharacters.test(value)) return null;
+  if (!conversationId.test(id) || hiddenPathCharacters.test(value)) return null;
+  if (encodedHostId === undefined) return value;
   const query = `hostId=${encodedHostId}`;
   const params = new URLSearchParams(query);
   const hostId = params.get("hostId");

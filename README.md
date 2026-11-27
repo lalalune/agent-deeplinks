@@ -61,6 +61,16 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 
 On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
 
+### Existing desktop chats
+
+Choose **Existing chat** for Claude, ChatGPT, or Codex in the desktop playground. Use the UUID from a Claude conversation URL. ChatGPT and Codex also accept the link from **Copy chat deep link**, including the owning host ID for an SSH chat. The desktop app needs access to the chat and its connection. [Claude desktop links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link) · [ChatGPT desktop commands](https://learn.chatgpt.com/docs/reference/commands#deep-links) · [Codex SSH test](research/evidence/codex-copied-remote-thread/native-ssh-reopen-proof.json)
+
+```ts
+const chatId = "12345678-1234-4234-9234-123456789abc"
+getAgentLink("claude", "desktop", { session: chatId })
+getAgentLink("codex", "desktop", { session: `codex://threads/${chatId}` })
+```
+
 ### Claude Code desktop workspaces
 
 Choose **Claude Code → Workspace link** in the desktop playground to try a local folder or SSH target. Claude Code asks you to review the destination. The prompt stays unsent.

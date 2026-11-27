@@ -30,6 +30,9 @@ const TABS: readonly { id: TabId; label: string }[] = [
   { id: "mobile", label: "Mobile" },
 ];
 
+const DESKTOP_CHAT_AGENTS = ["chatgpt", "claude", "codex"] as const;
+type DesktopChatAgent = (typeof DESKTOP_CHAT_AGENTS)[number];
+
 const DISPLAY_ORDER: readonly string[] = [
   "chatgpt",
   "claude",
@@ -492,6 +495,43 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
   );
 }
 
+function ExistingDesktopChatLink({ agent, iconOnly }: { agent: DesktopChatAgent; iconOnly: boolean }) {
+  const [value, setValue] = useState("");
+  const name = agents[agent].name;
+  const session = value.trim();
+  const href = session && getAgentLink(agent, "desktop", { session });
+  const action = `Open existing ${name} chat`;
+  const claude = agent === "claude";
+
+  return (
+    <div role="region" aria-label={`${name} existing chat link`}>
+      <p className="session-setup-note">
+        {claude ? "Use the UUID at the end of your Claude conversation URL."
+          : "Use Copy chat deep link in the desktop app. SSH chats need their original connection."}
+      </p>
+      <div className="link-setup">
+        <label>
+          {claude ? "Chat ID (UUID)" : "Chat ID or copied link"}
+          <input value={value} onChange={(event) => setValue(event.target.value)}
+            placeholder={claude ? "12345678-1234-4234-9234-123456789abc" : "UUID or codex://threads/…"}
+            aria-invalid={Boolean(session && !href)}
+            autoComplete="off" autoCapitalize="off" spellCheck={false} />
+        </label>
+        {href ? (
+          <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+            <a href={href} aria-label={action} title={action}>
+              <AgentLogo agent={agent} />
+              {!iconOnly && <span className="agent-name">{action}</span>}
+            </a>
+          </Button>
+        ) : session && <p role="status">
+          {claude ? "Enter a valid Claude chat UUID." : "Enter a chat UUID or paste a link copied from the desktop app."}
+        </p>}
+      </div>
+    </div>
+  );
+}
+
 function OpenCodeSessionLinks({ iconOnly }: { iconOnly: boolean }) {
   const [session, setSession] = useState("");
   const [project, setProject] = useState("");
@@ -652,6 +692,7 @@ function App() {
   const [setup, setSetup] = useState<{ agent: AgentId; platform: ActivePlatform }>();
   const [showOpenCodeSessions, setShowOpenCodeSessions] = useState(false);
   const [showClaudeWorkspace, setShowClaudeWorkspace] = useState(false);
+  const [desktopChatAgent, setDesktopChatAgent] = useState<DesktopChatAgent>();
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
@@ -780,6 +821,21 @@ function App() {
                   </a>
                 </Button>
               ))}
+              {activePlatform === "desktop" && DESKTOP_CHAT_AGENTS.map((agent) => {
+                const name = agents[agent].name;
+                const label = `Configure existing ${name} chat link`;
+                return (
+                  <Button key={agent} type="button" variant="ghost" className={agentButtonClass}
+                    aria-label={label} aria-expanded={desktopChatAgent === agent} title={label}
+                    onClick={() => setDesktopChatAgent((current) => current === agent ? undefined : agent)}>
+                    <AgentLogo agent={agent} />
+                    {!iconOnly && <span className="action-btn-text">
+                      <span className="agent-name">{name}</span>
+                      <span className="action-btn-kind">Existing chat</span>
+                    </span>}
+                  </Button>
+                );
+              })}
               {activePlatform === "desktop" && (
                 <Button
                   type="button"
@@ -815,6 +871,9 @@ function App() {
                 </Button>
               )}
             </div>
+            {activePlatform === "desktop" && desktopChatAgent && (
+              <ExistingDesktopChatLink key={desktopChatAgent} agent={desktopChatAgent} iconOnly={iconOnly} />
+            )}
             {activePlatform === "desktop" && showClaudeWorkspace && <ClaudeCodeWorkspaceLink iconOnly={iconOnly} />}
             {activePlatform === "android" && showOpenCodeSessions && <OpenCodeSessionLinks iconOnly={iconOnly} />}
           </section>
