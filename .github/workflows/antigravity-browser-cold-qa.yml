@@ -1,0 +1,84 @@
+name: Antigravity 2.35.2 production browser handoff
+on:
+  push:
+    branches: [codex/qa-antigravity-2352-chrome-cold]
+permissions:
+  contents: read
+jobs:
+  stock-arm:
+    runs-on: macos-26
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify the published library and the current Google disk image
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$(uname -m)" = arm64
+          scratch="$RUNNER_TEMP/antigravity-browser-qa"
+          mkdir -p "$scratch/evidence" "$scratch/mount" "$scratch/library"
+          { sw_vers; uname -m; } > "$scratch/evidence/system.txt"
+          library=https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.56.tgz
+          curl -fsSL --proto '=https' --max-time 30 --max-filesize 400000 "$library" -o "$scratch/library.tgz"
+          printf '%s  %s\n' d364174488b3aa03baa6843fd18c21b3a42cd226fb7943ed11a9394191ad4e21 "$scratch/library.tgz" | shasum -a 256 -c
+          tar -xzf "$scratch/library.tgz" -C "$scratch/library"
+          page=https://antigravity.google/download
+          dmg=https://storage.googleapis.com/antigravity-public/antigravity-hub/2.35.2-4585983447007232/darwin-arm/Antigravity.dmg
+          curl -fsSL --proto '=https' --max-time 30 --max-filesize 3000000 "$page" -o "$scratch/download-page.html"
+          grep -Fq "$dmg" "$scratch/download-page.html"
+          curl -fsSL --proto '=https' --connect-timeout 15 --max-time 150 --max-filesize 250000000 -D "$scratch/download-headers.txt" "$dmg" -o "$scratch/Antigravity.dmg"
+          test "$(stat -f %z "$scratch/Antigravity.dmg")" = 242102864
+          printf '%s  %s\n' 33b2123f12dee526b2d2d6bd7fe622ff328e697f51ece8c606ccdffe1aadd038 "$scratch/Antigravity.dmg" | shasum -a 256 -c
+          tr -d '\r' < "$scratch/download-headers.txt" | grep -iFx 'x-goog-generation: 1795561153563749'
+          { printf '%s\n' "$page" "$dmg"; shasum -a 256 "$scratch/Antigravity.dmg"; } > "$scratch/evidence/official-download.txt"
+      - name: Verify and register the unchanged Google-signed app
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/antigravity-browser-qa"
+          app=/Applications/Antigravity.app
+          test ! -e "$app"
+          hdiutil attach -readonly -nobrowse -noautoopen -mountpoint "$scratch/mount" "$scratch/Antigravity.dmg"
+          candidate="$scratch/mount/Antigravity.app"
+          test -d "$candidate"
+          info="$candidate/Contents/Info.plist"
+          test "$(plutil -extract CFBundleIdentifier raw "$info")" = com.google.antigravity
+          test "$(plutil -extract CFBundleShortVersionString raw "$info")" = 2.35.2
+          exe=$(plutil -extract CFBundleExecutable raw "$info")
+          lipo -archs "$candidate/Contents/MacOS/$exe" | tee "$scratch/evidence/app-architectures.txt" | grep -wq arm64
+          /usr/bin/ditto "$candidate" "$app"
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+          printf '%s\n' "$app" > "$scratch/app-path.txt"
+          xcrun swiftc .github/qa/antigravity-browser-observe.swift -o "$scratch/browser-observe"
+      - name: Cold-launch through the production Playground draft button
+        shell: bash
+        run: node .github/qa/antigravity-browser-handoff.mjs "$RUNNER_TEMP/antigravity-browser-qa" draft
+      - name: Cold-launch through the production Playground Marketplace button
+        shell: bash
+        if: ${{ !cancelled() && (success() || failure()) }}
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/antigravity-browser-qa"
+          if [[ -x "$scratch/browser-observe" ]]; then
+            node .github/qa/antigravity-browser-handoff.mjs "$scratch" marketplace
+          fi
+      - name: Unmount the vendor image
+        if: always()
+        run: |
+          mount="$RUNNER_TEMP/antigravity-browser-qa/mount"
+          if /sbin/mount | grep -Fq " on $mount "; then hdiutil detach "$mount"; fi
+      - name: Upload browser and native handoff evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: antigravity-2352-production-chrome
+          path: ${{ runner.temp }}/antigravity-browser-qa/evidence/
+          if-no-files-found: error
+          retention-days: 30
