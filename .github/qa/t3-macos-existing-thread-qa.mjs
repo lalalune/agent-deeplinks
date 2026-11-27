@@ -192,6 +192,7 @@ async function state(environmentId, threadId, expected) {
       (candidate.tagName === 'TEXTAREA' && !candidate.disabled && !candidate.readOnly)) &&
       ((candidate.value ?? candidate.innerText).trimEnd() === ${JSON.stringify(expected)}));
     return { packaged: location.protocol === 't3code:' && location.host === 'app', root: route.pathname === '/',
+      draftRoute: route.pathname.startsWith('/draft/'), observedRoute: route.pathname,
       matchesThread, hasRetainedPromptQuery: route.searchParams.has('prompt'), title: document.title,
       visibleHeading: body.includes('New thread'), hasText: Boolean(body.trim()), visiblePanels: body.trim().length > 25,
       logoOnly: body.trim().length <= 25 && !editor, editableExact: Boolean(editor), skipAgent };
@@ -320,24 +321,25 @@ try {
   proof.startupRenderer = await observeRenderer(environmentId, threadId, '',
     observed => observed.visiblePanels || observed.skipAgent, 40000);
   proof.startupFrame = await saveFrame('01-ordinary-startup');
+  const offTarget = observed => observed.packaged && observed.visiblePanels && !observed.matchesThread && observed.editableExact;
   let ready = proof.startupRenderer;
-  if (!ready.packaged || !ready.root || !ready.visiblePanels) {
+  if (!offTarget(ready) && !ready.skipAgent) {
     checkpoint('bootstrap only the packaged root, off the target route');
     const navigation = await renderer.ask('Page.navigate', { url: bundledRoot });
     proof.bundledRootBootstrap = { used: true, error: navigation.errorText ?? null };
     ready = await observeRenderer(environmentId, threadId, '', observed =>
-      observed.packaged && (observed.skipAgent || (observed.root && observed.visiblePanels)), 22000);
+      observed.skipAgent || offTarget(observed), 22000);
   }
   if (ready.skipAgent) {
     const { x, y } = ready.skipAgent;
     await renderer.ask('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 });
     await renderer.ask('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 });
     proof.startedWithoutAgent = true;
-    ready = await observeRenderer(environmentId, threadId, '', observed => observed.packaged && observed.root && observed.visiblePanels);
+    ready = await observeRenderer(environmentId, threadId, '', offTarget);
   }
   proof.offTarget = ready;
   proof.offTargetFrame = await saveFrame('02-off-target');
-  assert.ok(ready.packaged && ready.root && ready.visiblePanels && !ready.matchesThread, 'The packaged renderer did not reach a visible off-target root');
+  assert.ok(offTarget(ready), 'The packaged renderer did not reach a visible editable composer outside the target thread');
 
   checkpoint('stock LaunchServices exact existing thread without draft');
   stockDispatch(blank);
