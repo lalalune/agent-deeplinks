@@ -1,0 +1,118 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46082557905/job/140784632741",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46082557905/artifacts/15238025451",
+  "headSha": "42e71f650895b5e7c1dd30fbb651d8544d455d72",
+  "coldScreenshotSha256": "f7e85206bd63b513e9661f05a581498fbde82b7eef8bffdb9034032dea2721f0",
+  "runtime": {
+    "release": "agent-deeplinks@0.1.66",
+    "t3": "0.1.13 win32 x64",
+    "desktopBinary": "D:\\a\\_temp\\t3-windows-existing-thread\\installed\\T3 Code (Beta).exe",
+    "accountUsed": false,
+    "nonLoopbackEgressBlocked": true,
+    "seedHttp": 200,
+    "seedThreadCount": 1,
+    "seedDatabaseExists": true,
+    "seedIdentityExists": true,
+    "seedProcessExit": null,
+    "seed": {
+      "environmentId": "d71595ef-9a2c-4a88-bb96-991279bdbfe6",
+      "threadId": "thread:project:a096f1bc-81d6-48b7-9162-772afa760d70:bf4ee1a7-987d-4c3d-afec-1fe21b0c0dad",
+      "counts": {
+        "threads": 1,
+        "runs": 0,
+        "provider_sessions": 0,
+        "provider_turns": 0
+      }
+    },
+    "cliExit": {
+      "code": null,
+      "signal": "SIGTERM"
+    },
+    "rendererObservation": "TypeError",
+    "observedLocalRendererTarget": true,
+    "rendererOwnedLoopback": true,
+    "association": "\"D:\\a\\_temp\\t3-windows-existing-thread\\installed\\T3 Code (Beta).exe\" \"%1\"",
+    "nativeStartupOffTarget": true,
+    "blankDispatch": {
+      "pid": 908,
+      "shellInput": "t3code://threads/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad",
+      "capturedExactChildArgument": true
+    },
+    "blank": {
+      "uri": "t3code://threads/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad",
+      "path": "/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad",
+      "value": "",
+      "editable": true,
+      "title": "T3 Code (Beta)",
+      "retainedPromptInURL": false
+    },
+    "draftDispatch": {
+      "pid": 9896,
+      "shellInput": "t3code://threads/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad?prompt=T3%20Windows%200.1.13%20warm%20saved%20thread%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA",
+      "capturedExactChildArgument": true
+    },
+    "draft": {
+      "uri": "t3code://threads/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad?prompt=T3%20Windows%200.1.13%20warm%20saved%20thread%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA",
+      "path": "/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad",
+      "value": "T3 Windows 0.1.13 warm saved thread + & literal %2F café 🧪",
+      "editable": true,
+      "title": "fixture / New thread",
+      "retainedPromptInURL": false
+    },
+    "clearedWarmDraftBeforeCold": true,
+    "cold": {
+      "shellInput": "t3code://threads/d71595ef-9a2c-4a88-bb96-991279bdbfe6/thread%3Aproject%3Aa096f1bc-81d6-48b7-9162-772afa760d70%3Abf4ee1a7-987d-4c3d-afec-1fe21b0c0dad?prompt=T3%20Windows%200.1.13%20cold%20saved%20thread%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA",
+      "exactChildArgument": true,
+      "visibleDraft": {
+        "editable": true,
+        "value": "T3 Windows 0.1.13 cold saved thread + & literal %2F café 🧪",
+        "method": "UI Automation ValuePattern"
+      },
+      "before": {
+        "stopped": true
+      },
+      "shellPid": 1492,
+      "launchPid": 1492,
+      "window": {
+        "title": "fixture / New thread",
+        "pid": 1492
+      },
+      "screenshot": "03-cold-existing-thread-unsent.png"
+    },
+    "finalCounts": {
+      "threads": 1,
+      "runs": 0,
+      "provider_sessions": 0,
+      "provider_turns": 0
+    },
+    "result": "passed"
+  },
+  "signedArtifacts": {
+    "os": "Microsoft Windows Server 2025 Datacenter",
+    "accountUsed": false,
+    "phase": "complete",
+    "installerSHA256": "244f6992aade889b9fae763d8bc41d194992d8f89f70d9a3fdbbfab15ba68594",
+    "cliSHA256": "691457b9fb0fec2de132a0da1e801997a79e9be9c148981d291c37bf6d312a3e",
+    "helperSHA256": "51d42aeb4932005fb89590f9779121f39f1b9a91ef941b3ea13207d6bf4aceca",
+    "installerSignature": {
+      "subject": "CN=T3 Tools Inc, O=T3 Tools Inc, L=San Fransisco, S=California, C=US",
+      "status": "Valid"
+    },
+    "app": {
+      "signature": {
+        "subject": "CN=T3 Tools Inc, O=T3 Tools Inc, L=San Fransisco, S=California, C=US",
+        "status": "Valid"
+      },
+      "productVersion": "0.1.13.0"
+    },
+    "egress": {
+      "remote": [
+        "0.0.0.0-126.255.255.255",
+        "128.0.0.0-255.255.255.255",
+        "::2-ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"
+      ],
+      "scopedOutboundBlockCount": 2,
+      "activeFirewallEnabled": true
+    }
+  }
+}
