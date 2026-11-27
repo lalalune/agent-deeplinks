@@ -1,0 +1,173 @@
+{
+  "site": "https://deeplinks.fun/",
+  "gatewayVersion": "2026.11.10",
+  "basePath": "/fixture",
+  "tests": [
+    {
+      "profile": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "tab": "Web",
+      "successfulConnects": 4,
+      "exactBoardRequests": [
+        "board.get",
+        "board.get",
+        "board.get"
+      ],
+      "checks": [
+        {
+          "kind": "dashboard draft",
+          "buttonStyle": "icon and name",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "gallery with draft",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "focused dashboard",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true
+        }
+      ],
+      "rejected": [
+        "credentialed Gateway",
+        "cross-origin session",
+        "credentialed session",
+        "Beam with draft"
+      ],
+      "cleanBeamLinkGenerated": true,
+      "signedInUsingVisibleGatewayForm": true
+    },
+    {
+      "profile": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "tab": "Mobile",
+      "successfulConnects": 4,
+      "exactBoardRequests": [
+        "board.get",
+        "board.get",
+        "board.get"
+      ],
+      "checks": [
+        {
+          "kind": "dashboard draft",
+          "buttonStyle": "icon and name",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "gallery with draft",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "focused dashboard",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true
+        }
+      ],
+      "rejected": [
+        "credentialed Gateway",
+        "cross-origin session",
+        "credentialed session",
+        "Beam with draft"
+      ],
+      "cleanBeamLinkGenerated": true,
+      "signedInUsingVisibleGatewayForm": true
+    },
+    {
+      "profile": "iphone-webkit",
+      "browser": "27.2",
+      "tab": "Web",
+      "successfulConnects": 4,
+      "exactBoardRequests": [
+        "board.get",
+        "board.get",
+        "board.get"
+      ],
+      "checks": [
+        {
+          "kind": "dashboard draft",
+          "buttonStyle": "icon and name",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "gallery with draft",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true,
+          "exactEditableDraft": true,
+          "draftQueryConsumed": true
+        },
+        {
+          "kind": "focused dashboard",
+          "buttonStyle": "icon",
+          "requestedPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "shownPath": "/fixture/focus/dashboard/link-fixture/dashboard/playground-proof",
+          "sameTab": true,
+          "retainedSignIn": true,
+          "noReferrer": true
+        }
+      ],
+      "rejected": [
+        "credentialed Gateway",
+        "cross-origin session",
+        "credentialed session",
+        "Beam with draft"
+      ],
+      "cleanBeamLinkGenerated": true,
+      "signedInUsingVisibleGatewayForm": true
+    }
+  ],
+  "modelRequests": [],
+  "blockedBrowserWrites": [],
+  "gatewayControlUi": {
+    "status": 200,
+    "contentType": "text/html; charset=utf-8"
+  },
+  "finalIdleSessionMessageCount": 0,
+  "modelGenerationRequests": 0,
+  "siteJavaScript": "/assets/index-CRRHrrME.js",
+  "publishedGatewayIntegrity": "sha512-/FKDjxY1ZdUSXHx1a9b4EUpPRZywM3uv4181g22XImJfp/5+h+fFUZ7B7HthNrdYzq//05zH0Yf7mefzIlWFaQ=="
+}
