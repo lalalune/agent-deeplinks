@@ -1,0 +1,26 @@
+{
+  "site": "https://deeplinks.fun/",
+  "checkedAt": "2026-11-27T00:32:04.175Z",
+  "results": [
+    {
+      "name": "Chromium",
+      "version": "158.0.8127.18",
+      "width": 1250,
+      "localHref": "claude://code/new?q=Review%20the%20workspace.%0AUnicode%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20and%20literal%20%252F&folder=%2Ftmp%2FClaude%20caf%C3%A9%20%2B%20%26%20workspace",
+      "sshHref": "claude://code/new?q=Review%20the%20workspace.%0AUnicode%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20and%20literal%20%252F&ssh_host=qa%40build.example.test&ssh_port=2222&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20workspace",
+      "bothButtonStyles": true,
+      "invalidInputRejected": true,
+      "mobileAndWebExcludeConfig": true
+    },
+    {
+      "name": "WebKit",
+      "version": "27.2",
+      "width": 375,
+      "localHref": "claude://code/new?q=Review%20the%20workspace.%0AUnicode%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20and%20literal%20%252F&folder=%2Ftmp%2FClaude%20caf%C3%A9%20%2B%20%26%20workspace",
+      "sshHref": "claude://code/new?q=Review%20the%20workspace.%0AUnicode%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20and%20literal%20%252F&ssh_host=qa%40build.example.test&ssh_port=2222&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20workspace",
+      "bothButtonStyles": true,
+      "invalidInputRejected": true,
+      "mobileAndWebExcludeConfig": true
+    }
+  ]
+}

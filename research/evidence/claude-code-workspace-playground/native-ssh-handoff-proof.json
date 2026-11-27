@@ -1,13 +1,14 @@
 {
-  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916413875",
-  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916413875/artifacts/15162347465",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916958235",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916958235/artifacts/15162697786",
+  "initialWelcomeTrace": "https://github.com/lalalune/agent-deeplinks/actions/runs/45916413875/artifacts/15162347465",
   "sourceManifest": "https://downloads.claude.ai/releases/darwin/universal/RELEASES.json",
   "sourceArchiveSha256": "800806556cacece6bdacbb9f3aef1849a9ed8d6fc2ee0eb2ed881a098d094eab",
   "signerTeam": "Q6L2SF6YDW",
-  "macOS": "26.7.2 (25G332), Apple Silicon",
+  "macOS": "Apple Silicon",
   "libraryVersion": "0.1.56",
   "site": "https://5f44e72b.agent-deeplinks.pages.dev/",
-  "uri": "claude://code/new?q=Review%20this%20isolated%20test%20folder.%0ACaf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F&ssh_host=fixture%40127.0.0.1&ssh_port=49168&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20code",
+  "uri": "claude://code/new?q=Review%20this%20isolated%20test%20folder.%0ACaf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F&ssh_host=fixture%40127.0.0.1&ssh_port=49167&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20code",
   "installedVersion": "7.37095.0",
   "installedBundleId": "com.anthropic.claudefordesktop",
   "chromeVersion": "157.0.8103.79",
@@ -15,21 +16,24 @@
   "trustedActivation": {
     "trusted": true,
     "active": true,
-    "href": "claude://code/new?q=Review%20this%20isolated%20test%20folder.%0ACaf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F&ssh_host=fixture%40127.0.0.1&ssh_port=49168&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20code"
+    "href": "claude://code/new?q=Review%20this%20isolated%20test%20folder.%0ACaf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F&ssh_host=fixture%40127.0.0.1&ssh_port=49167&ssh_folder=~%2FQA%20caf%C3%A9%20%2B%20%26%20code"
   },
   "browserConfirmation": "Clicked Chrome’s one-time Open Claude button at (763.99999895, 299.00000012500004)",
   "launched": {
-    "pid": "6082",
-    "path": "/Users/runner/Applications/Claude.app"
+    "path": "/Users/runner/Applications/Claude.app",
+    "pid": "2693"
   },
   "accountUsed": false,
   "promptSubmitted": false,
   "permanentBrowserPermissionSelected": false,
   "loopbackConnections": 0,
-  "ownedWelcomeScreenObserved": true,
-  "observerStoppedAt": "Claude for Mac with Get started",
+  "welcomeWindowId": "54",
+  "onboardingAction": "Clicked the plain Claude for Mac Get started button at (512.9999998999999, 563.9999999846154)",
+  "ownedClaudeWindowId": "54",
+  "signedOutWindowVisible": true,
   "screenshots": {
     "chromeConfirmation": "ssh-browser-confirmation.png",
-    "nativeWelcome": "claude-7-37095-native-welcome.png"
+    "nativeWelcome": "claude-7-37095-native-welcome.png",
+    "nativeSignIn": "claude-7-37095-native-sign-in.png"
   }
 }
