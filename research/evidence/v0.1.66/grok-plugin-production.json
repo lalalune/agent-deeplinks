@@ -1,0 +1,75 @@
+{
+  "site": "https://deeplinks.fun/",
+  "expected": "https://x.ai/bot/plugin/674",
+  "native": "grokbot://app/v1/plugin/add?id=674",
+  "checks": [
+    {
+      "name": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Desktop",
+      "iconOnly": false,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    },
+    {
+      "name": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Desktop",
+      "iconOnly": true,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    },
+    {
+      "name": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Mobile",
+      "iconOnly": false,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    },
+    {
+      "name": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Mobile",
+      "iconOnly": true,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    },
+    {
+      "name": "iphone-webkit",
+      "browser": "27.2",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Mobile",
+      "iconOnly": false,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    },
+    {
+      "name": "iphone-webkit",
+      "browser": "27.2",
+      "script": "/assets/index-CE6zc2QR.js",
+      "platform": "Mobile",
+      "iconOnly": true,
+      "destination": "https://x.ai/bot/plugin/674",
+      "status": 200,
+      "exactListing": true,
+      "nativeLink": "grokbot://app/v1/plugin/add?id=674"
+    }
+  ],
+  "accountUsed": false,
+  "pluginControlActivated": false
+}

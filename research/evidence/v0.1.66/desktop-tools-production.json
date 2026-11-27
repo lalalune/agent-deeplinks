@@ -1,0 +1,172 @@
+{
+  "checkedAtUtc": "2026-11-27T23:18:49.688Z",
+  "site": "https://deeplinks.fun/",
+  "profiles": [
+    {
+      "name": "chromium",
+      "version": "158.0.8127.18",
+      "links": [
+        {
+          "name": "Claude Code in Terminal",
+          "expected": "claude-cli://open?q=Desktop%20link%20QA%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ALeave%20this%20draft%20unsent.&cwd=%2Ftmp%2FAgent%20examples%20%2B%20caf%C3%A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "Claude Code in VS Code",
+          "expected": "vscode://anthropic.claude-code/open?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&session=540c7fc1-4628-4001-912b-6f843dc0048a",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "VS Code Agents",
+          "expected": "vscode://agents/new?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&workspace=file%253A%252F%252F%252Ftmp%252FAgent%252520examples%252520%25252B%252520caf%2525C3%2525A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        }
+      ],
+      "bundle": "/assets/index-CE6zc2QR.js",
+      "controlsDesktopOnly": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "firefox-375px",
+      "version": "159.0",
+      "links": [
+        {
+          "name": "Claude Code in Terminal",
+          "expected": "claude-cli://open?q=Desktop%20link%20QA%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ALeave%20this%20draft%20unsent.&cwd=%2Ftmp%2FAgent%20examples%20%2B%20caf%C3%A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "Claude Code in VS Code",
+          "expected": "vscode://anthropic.claude-code/open?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&session=540c7fc1-4628-4001-912b-6f843dc0048a",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "VS Code Agents",
+          "expected": "vscode://agents/new?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&workspace=file%253A%252F%252F%252Ftmp%252FAgent%252520examples%252520%25252B%252520caf%2525C3%2525A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        }
+      ],
+      "bundle": "/assets/index-CE6zc2QR.js",
+      "controlsDesktopOnly": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "webkit",
+      "version": "27.2",
+      "links": [
+        {
+          "name": "Claude Code in Terminal",
+          "expected": "claude-cli://open?q=Desktop%20link%20QA%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ALeave%20this%20draft%20unsent.&cwd=%2Ftmp%2FAgent%20examples%20%2B%20caf%C3%A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "Claude Code in VS Code",
+          "expected": "vscode://anthropic.claude-code/open?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&session=540c7fc1-4628-4001-912b-6f843dc0048a",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "VS Code Agents",
+          "expected": "vscode://agents/new?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&workspace=file%253A%252F%252F%252Ftmp%252FAgent%252520examples%252520%25252B%252520caf%2525C3%2525A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        }
+      ],
+      "bundle": "/assets/index-CE6zc2QR.js",
+      "controlsDesktopOnly": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "iphone-webkit",
+      "version": "27.2",
+      "links": [
+        {
+          "name": "Claude Code in Terminal",
+          "expected": "claude-cli://open?q=Desktop%20link%20QA%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ALeave%20this%20draft%20unsent.&cwd=%2Ftmp%2FAgent%20examples%20%2B%20caf%C3%A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "Claude Code in VS Code",
+          "expected": "vscode://anthropic.claude-code/open?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&session=540c7fc1-4628-4001-912b-6f843dc0048a",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "VS Code Agents",
+          "expected": "vscode://agents/new?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&workspace=file%253A%252F%252F%252Ftmp%252FAgent%252520examples%252520%25252B%252520caf%2525C3%2525A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        }
+      ],
+      "bundle": "/assets/index-CE6zc2QR.js",
+      "controlsDesktopOnly": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "name": "pixel-chromium",
+      "version": "158.0.8127.18",
+      "links": [
+        {
+          "name": "Claude Code in Terminal",
+          "expected": "claude-cli://open?q=Desktop%20link%20QA%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ALeave%20this%20draft%20unsent.&cwd=%2Ftmp%2FAgent%20examples%20%2B%20caf%C3%A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "Claude Code in VS Code",
+          "expected": "vscode://anthropic.claude-code/open?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&session=540c7fc1-4628-4001-912b-6f843dc0048a",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        },
+        {
+          "name": "VS Code Agents",
+          "expected": "vscode://agents/new?prompt=Desktop%2520link%2520QA%2520%252B%2520%2526%2520%25252F%2520caf%25C3%25A9%2520%25E2%2598%2583%250ALeave%2520this%2520draft%2520unsent.&workspace=file%253A%252F%252F%252Ftmp%252FAgent%252520examples%252520%25252B%252520caf%2525C3%2525A9",
+          "styles": [
+            "icon-and-name",
+            "icon-only"
+          ]
+        }
+      ],
+      "bundle": "/assets/index-CE6zc2QR.js",
+      "controlsDesktopOnly": true,
+      "noHorizontalOverflow": true
+    }
+  ],
+  "scope": "Custom-scheme clicks captured in the page. Native runtime was tested separately."
+}

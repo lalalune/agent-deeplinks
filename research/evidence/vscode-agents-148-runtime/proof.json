@@ -1,0 +1,67 @@
+{
+  "app": "Microsoft Visual Studio Code",
+  "runner": "Ubuntu",
+  "version": "1.148.0",
+  "appCommit": "661626d0e72f97806550790a98fb87116c9db825",
+  "upstreamParser": "https://github.com/microsoft/vscode/blob/661626d0e72f97806550790a98fb87116c9db825/src/vs/platform/window/common/window.ts#L125",
+  "hostedRun": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934798770",
+  "rawArtifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934798770/artifacts/15169607991",
+  "scope": "Three fresh stock editor profiles. Calls used stock xdg-open. The positive control composer was read from the app renderer, while its native capture still showed the sign-in dialog. No prompt was submitted.",
+  "checks": [
+    {
+      "case": "blank",
+      "uri": "vscode://agents/new",
+      "stockHandler": "com.microsoft.VSCode.UrlHandler.desktop",
+      "exactStockArgv": true,
+      "agentsOpened": false,
+      "exactControlComposer": false,
+      "requestedWorkspaceVisible": false,
+      "stockMainLog": [
+        "2026-11-27 03:33:50.129 [trace] app#handleProtocolUrl(): vscode://agents/new {\"originalUrl\":\"vscode://agents/new\"}",
+        "2026-11-27 03:33:50.130 [trace] app#handleProtocolUrl(): not handled vscode://agents/new {\"originalUrl\":\"vscode://agents/new\"}"
+      ],
+      "didSubmit": false,
+      "didUseAccount": false,
+      "clickedTrust": false,
+      "workspaceEmptyAfter": true,
+      "composer": []
+    },
+    {
+      "case": "workspace",
+      "uri": "vscode://agents/new?workspace=file%253A%252F%252F%252Fhome%252Frunner%252Fwork%252F_temp%252Fvscode-optional-draft%252Fworkspace%252Fhome%252FVS%252520Code%252520workspace%252520caf%2525C3%2525A9%252520%252B%252520%2526%252520%2525E2%252598%252583",
+      "stockHandler": "com.microsoft.VSCode.UrlHandler.desktop",
+      "exactStockArgv": true,
+      "agentsOpened": false,
+      "exactControlComposer": false,
+      "requestedWorkspaceVisible": false,
+      "stockMainLog": [
+        "2026-11-27 03:34:06.894 [trace] app#handleProtocolUrl(): vscode://agents/new?workspace=file%3A%2F%2F%2Fhome%2Frunner%2Fwork%2F_temp%2Fvscode-optional-draft%2Fworkspace%2Fhome%2FVS%2520Code%2520workspace%2520caf%25C3%25A9%2520%2B%2520%26%2520%25E2%2598%2583 {\"originalUrl\":\"vscode://agents/new?workspace=file%253A%252F%252F%252Fhome%252Frunner%252Fwork%252F_temp%252Fvscode-optional-draft%252Fworkspace%252Fhome%252FVS%252520Code%252520workspace%252520caf%2525C3%2525A9%252520%252B%252520%2526%252520%2525E2%252598%252583\"}",
+        "2026-11-27 03:34:06.894 [trace] app#handleProtocolUrl(): not handled vscode://agents/new?workspace=file%3A%2F%2F%2Fhome%2Frunner%2Fwork%2F_temp%2Fvscode-optional-draft%2Fworkspace%2Fhome%2FVS%2520Code%2520workspace%2520caf%25C3%25A9%2520%2B%2520%26%2520%25E2%2598%2583 {\"originalUrl\":\"vscode://agents/new?workspace=file%253A%252F%252F%252Fhome%252Frunner%252Fwork%252F_temp%252Fvscode-optional-draft%252Fworkspace%252Fhome%252FVS%252520Code%252520workspace%252520caf%2525C3%2525A9%252520%252B%252520%2526%252520%2525E2%252598%252583\"}"
+      ],
+      "didSubmit": false,
+      "didUseAccount": false,
+      "clickedTrust": false,
+      "workspaceEmptyAfter": true,
+      "composer": []
+    },
+    {
+      "case": "prompt",
+      "uri": "vscode://agents/new?prompt=Unsent%2520VS%2520Code%2520official%2520route%2520control%2520QA%25206608",
+      "stockHandler": "com.microsoft.VSCode.UrlHandler.desktop",
+      "exactStockArgv": true,
+      "agentsOpened": true,
+      "exactControlComposer": true,
+      "requestedWorkspaceVisible": false,
+      "stockMainLog": [
+        "2026-11-27 03:34:23.670 [trace] app#handleProtocolUrl(): vscode://agents/new?prompt=Unsent%20VS%20Code%20official%20route%20control%20QA%206608 {\"originalUrl\":\"vscode://agents/new?prompt=Unsent%2520VS%2520Code%2520official%2520route%2520control%2520QA%25206608\"}"
+      ],
+      "didSubmit": false,
+      "didUseAccount": false,
+      "clickedTrust": false,
+      "workspaceEmptyAfter": true,
+      "composer": [
+        "Unsent VS Code official route control QA 6608"
+      ]
+    }
+  ]
+}
