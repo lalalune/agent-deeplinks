@@ -1,0 +1,21 @@
+{
+  "site": "https://deeplinks.fun/",
+  "runs": [
+    {
+      "profile": "desktop-chromium",
+      "engine": "158.0.8127.18",
+      "link": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "shareRead": 200,
+      "exactPublicConversationVisible": true,
+      "title": "Kimi | Educational Multiplication Game: Farm Themed Multiplication Tables"
+    },
+    {
+      "profile": "iphone-webkit",
+      "engine": "27.2",
+      "link": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "shareRead": 200,
+      "exactPublicConversationVisible": true,
+      "title": "Kimi | Educational Multiplication Game: Farm Themed Multiplication Tables"
+    }
+  ]
+}

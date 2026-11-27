@@ -1,0 +1,411 @@
+{
+  "site": "https://deeplinks.fun/",
+  "packageVersion": "0.1.65",
+  "profiles": [
+    {
+      "profile": "desktop-chromium",
+      "platformChecks": [
+        {
+          "platform": "web",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853?no_universal_links=1",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00#no_universal_links",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        },
+        {
+          "platform": "desktop",
+          "targetChecks": []
+        },
+        {
+          "platform": "ios",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        },
+        {
+          "platform": "android",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        }
+      ],
+      "engineVersion": "158.0.8127.18",
+      "siteScript": "/assets/index-DdGCyWqx.js"
+    },
+    {
+      "profile": "desktop-firefox",
+      "platformChecks": [
+        {
+          "platform": "web",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853?no_universal_links=1",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00#no_universal_links",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        },
+        {
+          "platform": "desktop",
+          "targetChecks": []
+        },
+        {
+          "platform": "ios",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        },
+        {
+          "platform": "android",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        }
+      ],
+      "engineVersion": "159.0",
+      "siteScript": "/assets/index-DdGCyWqx.js"
+    },
+    {
+      "profile": "iphone-webkit",
+      "platformChecks": [
+        {
+          "platform": "ios",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        }
+      ],
+      "engineVersion": "27.2",
+      "siteScript": "/assets/index-DdGCyWqx.js"
+    },
+    {
+      "profile": "pixel-chromium",
+      "platformChecks": [
+        {
+          "platform": "android",
+          "targetChecks": [
+            {
+              "agent": "chatgpt",
+              "expected": "https://chatgpt.com/share/68ec50da-cf00-8005-b5f6-b683506e5853",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "codex",
+              "expected": "https://chatgpt.com/s/cx_6aeab8561cfc8191b26133e89f99ac11",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "claude",
+              "expected": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "grok",
+              "expected": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "kimi",
+              "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            },
+            {
+              "agent": "zcode",
+              "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+              "bothStyles": true,
+              "invalidAndEmptyHidden": true
+            }
+          ]
+        }
+      ],
+      "engineVersion": "158.0.8127.18",
+      "siteScript": "/assets/index-DdGCyWqx.js"
+    }
+  ],
+  "destinationClicks": [
+    {
+      "agent": "kimi",
+      "iconOnly": false,
+      "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "final": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "readStatus": 200,
+      "title": "Kimi | Educational Multiplication Game: Farm Themed Multiplication Tables",
+      "bodyMarkerMet": false
+    },
+    {
+      "agent": "kimi",
+      "iconOnly": true,
+      "expected": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "final": "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
+      "readStatus": 200,
+      "title": "Kimi | Educational Multiplication Game: Farm Themed Multiplication Tables",
+      "bodyMarkerMet": false
+    },
+    {
+      "agent": "zcode",
+      "iconOnly": false,
+      "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "readStatus": 200,
+      "title": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+      "bodyMarkerMet": true
+    },
+    {
+      "agent": "zcode",
+      "iconOnly": true,
+      "expected": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "readStatus": 200,
+      "title": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+      "bodyMarkerMet": true
+    }
+  ],
+  "submittedPrompt": false,
+  "accountUsed": false,
+  "scope": "Both button styles generated and validated the exact share URLs. Only the Kimi and ZCode links were clicked in this matrix. Kimi returned the conversation read and title. The run used a generic Kimi body marker. See kimi-public-example.json for a separate exact-content check."
+}

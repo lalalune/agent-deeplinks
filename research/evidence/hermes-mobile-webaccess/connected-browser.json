@@ -1,0 +1,241 @@
+{
+  "site": "https://deeplinks.fun/",
+  "address": "https://hermes.qa.localhost:62277/",
+  "packageVersion": "0.1.65",
+  "appArtifact": "0.23.3+canary.20261124T064706Z",
+  "auth": "Stock Hermes Web Access username/password with disposable loopback credentials and loopback-only HTTPS reverse proxy",
+  "providerOrExternalAccountUsed": false,
+  "submittedModelPrompt": false,
+  "browser": [
+    {
+      "name": "iphone-webkit",
+      "platform": "ios",
+      "passwordLoginStatuses": [
+        200
+      ],
+      "socketTicketStatuses": [
+        200,
+        200
+      ],
+      "gatewayMethods": [
+        "client.capabilities",
+        "model.options",
+        "setup.status",
+        "setup.runtime_check",
+        "free_tier.status",
+        "pet.info",
+        "onboarding.state",
+        "wake.status",
+        "mcp.servers.status",
+        "config.get",
+        "session.active_list",
+        "commands.catalog",
+        "i18n.languages",
+        "profiles.list",
+        "shared_metrics.status",
+        "bot_relay.roster.sync",
+        "wake.start"
+      ],
+      "gatewayReplies": [
+        "client.capabilities",
+        "model.options",
+        "setup.status",
+        "setup.runtime_check",
+        "free_tier.status",
+        "pet.info",
+        "mcp.servers.status",
+        "config.get",
+        "onboarding.state",
+        "session.active_list",
+        "wake.status",
+        "commands.catalog",
+        "i18n.languages",
+        "profiles.list",
+        "shared_metrics.status"
+      ],
+      "externalRequestsDenied": 4,
+      "clicks": [
+        {
+          "iconOnly": false,
+          "requestedAddress": "https://hermes.qa.localhost:62277/",
+          "arrivedPath": "/login",
+          "usedPassword": true,
+          "newWindow": true,
+          "siteView": {
+            "visibleLogin": false,
+            "newSession": true,
+            "modelSetup": false,
+            "emptyEditable": false,
+            "connecting": false,
+            "viewport": {
+              "width": 393,
+              "height": 659
+            }
+          }
+        },
+        {
+          "iconOnly": true,
+          "requestedAddress": "https://hermes.qa.localhost:62277/",
+          "arrivedPath": "/",
+          "usedPassword": false,
+          "newWindow": true,
+          "siteView": {
+            "visibleLogin": false,
+            "newSession": true,
+            "modelSetup": false,
+            "emptyEditable": false,
+            "connecting": false,
+            "viewport": {
+              "width": 393,
+              "height": 659
+            }
+          }
+        }
+      ],
+      "failedRequests": [],
+      "pageErrorTypes": [],
+      "documentStatuses": [
+        [
+          "/",
+          302
+        ],
+        [
+          "/login",
+          200
+        ],
+        [
+          "/",
+          200
+        ],
+        [
+          "/",
+          200
+        ]
+      ],
+      "engineVersion": "27.2",
+      "siteScript": "/assets/index-DdGCyWqx.js",
+      "visibleCheckpoint": "Model-provider setup",
+      "evidenceImage": "iphone-webkit-model-setup.png"
+    },
+    {
+      "name": "pixel-chromium",
+      "platform": "android",
+      "passwordLoginStatuses": [
+        200
+      ],
+      "socketTicketStatuses": [
+        200,
+        200
+      ],
+      "gatewayMethods": [
+        "client.capabilities",
+        "model.options",
+        "setup.status",
+        "setup.runtime_check",
+        "free_tier.status",
+        "pet.info",
+        "onboarding.state",
+        "wake.status",
+        "mcp.servers.status",
+        "config.get",
+        "session.active_list",
+        "commands.catalog",
+        "i18n.languages",
+        "profiles.list",
+        "shared_metrics.status",
+        "wake.start",
+        "bot_relay.roster.sync"
+      ],
+      "gatewayReplies": [
+        "client.capabilities",
+        "model.options",
+        "setup.status",
+        "setup.runtime_check",
+        "free_tier.status",
+        "pet.info",
+        "onboarding.state",
+        "wake.status",
+        "mcp.servers.status",
+        "config.get",
+        "session.active_list",
+        "commands.catalog",
+        "i18n.languages",
+        "profiles.list",
+        "shared_metrics.status"
+      ],
+      "externalRequestsDenied": 4,
+      "clicks": [
+        {
+          "iconOnly": false,
+          "requestedAddress": "https://hermes.qa.localhost:62277/",
+          "arrivedPath": "/login",
+          "usedPassword": true,
+          "newWindow": true,
+          "siteView": {
+            "visibleLogin": false,
+            "newSession": true,
+            "modelSetup": false,
+            "emptyEditable": false,
+            "connecting": false,
+            "viewport": {
+              "width": 360,
+              "height": 732
+            }
+          }
+        },
+        {
+          "iconOnly": true,
+          "requestedAddress": "https://hermes.qa.localhost:62277/",
+          "arrivedPath": "/",
+          "usedPassword": false,
+          "newWindow": true,
+          "siteView": {
+            "visibleLogin": false,
+            "newSession": true,
+            "modelSetup": false,
+            "emptyEditable": false,
+            "connecting": false,
+            "viewport": {
+              "width": 360,
+              "height": 732
+            }
+          }
+        }
+      ],
+      "failedRequests": [],
+      "pageErrorTypes": [],
+      "documentStatuses": [
+        [
+          "/",
+          302
+        ],
+        [
+          "/login",
+          200
+        ],
+        [
+          "/",
+          200
+        ],
+        [
+          "/",
+          200
+        ]
+      ],
+      "engineVersion": "158.0.8127.18",
+      "siteScript": "/assets/index-DdGCyWqx.js",
+      "visibleCheckpoint": "Model-provider setup",
+      "evidenceImage": "pixel-chromium-model-setup.png"
+    }
+  ],
+  "exactCliVersion": true,
+  "gatewayLastStatus": 302,
+  "gatewayOwnedAndBoundToLoopback": true,
+  "proxyOwnedAndBoundToLoopback": true,
+  "success": true,
+  "database": {
+    "sessions": 0,
+    "messages": 0
+  },
+  "scope": "iPhone and Pixel browser profiles used an isolated HTTPS reverse proxy and the official Hermes canary. Both styles connected after normal password sign-in, then displayed the model-provider setup checkpoint. No provider, native mobile app, physical device or Nous account was used."
+}

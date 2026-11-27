@@ -149,6 +149,8 @@ The v0.1.64 release passed all 57 package tests. The OpenCode Web and iOS browse
 
 Desktop Chromium and 375px Firefox checked all 74 primary routes and 80 static action examples on the live bundle. Separate iPhone WebKit and Pixel Chromium profiles checked their default mobile views. [Production browser matrix](evidence/v0.1.64/production-matrix.json)
 
+The v0.1.65 release passed 57 package tests. Desktop Chromium and Firefox checked 74 primary routes and 65 static examples on the live build. Chromium, Firefox, iPhone WebKit, and Pixel Chromium also checked the new Shared Chat inputs for ChatGPT, Claude, Codex, Grok, Kimi, and ZCode. Both shadcn/ui styles preserved the expected platform-specific URLs and hid the launch link for invalid input. Both styles opened the published ZCode conversation, and Kimi's public example rendered its conversation in desktop Chromium and iPhone WebKit. The npm, GitHub, and ZIP tarballs matched. Fresh React 18 and 19 installs loaded all 21 SVG exports, and the npm signature audit passed. [Production matrix](evidence/v0.1.65/production-matrix.json) · [Shared Chat controls](evidence/v0.1.65/shared-chat-controls.json) · [Kimi conversation](evidence/v0.1.65/kimi-public-example.json) · [Publication proof](evidence/v0.1.65/publication-proof.json)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)
