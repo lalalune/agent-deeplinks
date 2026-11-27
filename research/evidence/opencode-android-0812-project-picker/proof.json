@@ -1,0 +1,62 @@
+{
+  "certificate": "4613745d78ed01d94e55fc60d1f5ae553c715f22413e9b1c8bda1cbc793f558d",
+  "client": "Anomaly 0.8.12 (1035) upstream release AAB with disposable test signing",
+  "server": "Isolated OpenCode 2.4.2 server with two scratch projects",
+  "pairs": {
+    "A": {
+      "endpoint": "10.0.2.2:40887",
+      "confirmed": true
+    }
+  },
+  "routes": {
+    "known-project-control": {
+      "url": "opencode://new-session?project=c1917577aa95b015b9058c2c144cec1821d6292b",
+      "destinationVisible": true
+    },
+    "missing-project": {
+      "url": "opencode://new-session?project=prj_agent_deeplinks_missing_0812",
+      "cold": true,
+      "destinationVisible": true,
+      "visibleChoices": [
+        "OpenCode A Default",
+        "OpenCode A Target"
+      ],
+      "retainedPreviousProjectHeader": true
+    }
+  },
+  "libraryVersion": "0.1.59",
+  "selectedProject": "OpenCode A Default",
+  "chosenProjectBlank": true,
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45922076009/job/140254882135",
+  "workflowCommit": "933903e26bae21a0b3908c05bfe5e3f67aa793ae",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45922076009/artifacts/15165315739",
+  "runtime": {
+    "android": "16",
+    "api": 36,
+    "architecture": "x86_64",
+    "hypervisor": "KVM",
+    "dispatch": "Untargeted Android ACTION_VIEW plus BROWSABLE"
+  },
+  "distribution": {
+    "package": "ai.opencode.mobilecode",
+    "version": "0.8.12",
+    "build": 1035,
+    "upstreamRelease": "https://github.com/anomalyco/opencode-android/releases/tag/v0.8.12",
+    "upstreamBundle": "https://github.com/anomalyco/opencode-android/actions/runs/45914853936/artifacts/15161613502",
+    "archiveSha256": "c99db05fecc6d657ef2b564efc7ae57de5f4250596e47f0213953dedb2815492",
+    "aabSha256": "d2ba6eeb09ccf38bf7ca8f62227c2267eb14c1775f3e5635e5da2259fcc73a83",
+    "apkSha256": "491c5317972854d3e1b956c4811709fe43a3e5ade63b1fec703c7be239e62798",
+    "signing": "The official CI AAB was unsigned. Google bundletool generated the installed APK with a disposable QA certificate."
+  },
+  "libraryTarballSha256": "4e68f17e5931256fb11ca9eae9c8bc904b372b7024f3ff4744fce4b0a91f0d46",
+  "finalServerDbCounts": {
+    "session_v2": 2,
+    "session_message": 0,
+    "account": 0
+  },
+  "screenshots": {
+    "missing-project-choices.png": "695c4897aa10b19797c934265d08228e091c3145660517e293f7b44721ab308d",
+    "chosen-project-draft.png": "cbd7c8391d0b19ccd0e5268b7d2afc9a8344c1a87a71062cb5751fa5ed5bd608"
+  },
+  "scope": "Installed runtime behavior from the exact release bundle with test signing. Google Play identity still needs an installed check."
+}

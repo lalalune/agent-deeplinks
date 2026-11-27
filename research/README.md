@@ -167,6 +167,7 @@ The v0.1.59 release passed all 54 package tests. The production browser matrix c
 - The published npm v0.1.53 package and both shadcn/ui styles on the live playground generated all three exact T3 and Hermes URIs from those native checks in desktop Chromium and iPhone WebKit. [Link comparison](evidence/hermes-t3-playground/proof.json)
 
 - OpenCode Android 0.8.11 switched to the exact session on a second paired server, then opened a blank draft in the selected project. The upstream bundle used disposable signing on Android 16. Both OpenCode 2.4.2 servers recorded zero messages and provider accounts. [Native proof](evidence/opencode-android-0811/scoped-link-runtime-proof.json) · [Session](evidence/opencode-android-0811/scoped-A.png) · [Project draft](evidence/opencode-android-0811/project-draft-A.png)
+- The exact OpenCode Android 0.8.12 bundle with disposable signing exposed both project choices for a missing ID and retained the previous project heading. Choosing another project opened its blank native draft. [Native proof](evidence/opencode-android-0812-project-picker/proof.json)
 
 - OpenCode 0.7.0’s archived Play-signed APKs passed Android 15 ARM64 native pairing on two scratch servers. The v0.1.56 session link switched from server B to the exact idle session on A. The project route opened the blank composer in the selected project. Both databases remained free of messages and accounts. [Production signing and runtime proof](evidence/opencode-android-070-play/proof.json)
 
