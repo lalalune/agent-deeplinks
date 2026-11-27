@@ -1,0 +1,21 @@
+{
+  "routes": {
+    "fileWithPosition": "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt:3:4"
+  },
+  "accountUsed": false,
+  "changedAppSettings": false,
+  "resolutionVerified": true,
+  "file": {
+    "consent": {
+      "clickedYes": true,
+      "consentIsVisible": true,
+      "eventAccess": true
+    },
+    "visible": false,
+    "lineAndColumnVisible": false
+  },
+  "afterConsentVisibleScreen": "Welcome to Antigravity IDE / Get Started",
+  "image": "macos-first-run.png",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45928596902/job/140275734437",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45928596902/artifacts/15167850657"
+}

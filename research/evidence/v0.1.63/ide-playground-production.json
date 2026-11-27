@@ -1,0 +1,61 @@
+{
+  "site": "https://deeplinks.fun/",
+  "rows": [
+    {
+      "profile": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-qnhytK0f.js",
+      "bothShadcnButtonStyles": true,
+      "desktopOnly": true,
+      "checkedUris": [
+        "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt",
+        "antigravity-ide://file/tmp/Antigravity%20%2B%20caf%C3%A9/Local%20%23note%20%252F.txt",
+        "antigravity-ide://file/C:/QA%20Files/notes%20%2B%20caf%C3%A9.txt"
+      ],
+      "relativeAndRemoteInputRejected": true,
+      "installedAppOpened": false
+    },
+    {
+      "profile": "firefox-375px",
+      "browser": "159.0",
+      "script": "/assets/index-qnhytK0f.js",
+      "bothShadcnButtonStyles": true,
+      "desktopOnly": true,
+      "checkedUris": [
+        "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt",
+        "antigravity-ide://file/tmp/Antigravity%20%2B%20caf%C3%A9/Local%20%23note%20%252F.txt",
+        "antigravity-ide://file/C:/QA%20Files/notes%20%2B%20caf%C3%A9.txt"
+      ],
+      "relativeAndRemoteInputRejected": true,
+      "installedAppOpened": false
+    },
+    {
+      "profile": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-qnhytK0f.js",
+      "bothShadcnButtonStyles": true,
+      "desktopOnly": true,
+      "checkedUris": [
+        "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt",
+        "antigravity-ide://file/tmp/Antigravity%20%2B%20caf%C3%A9/Local%20%23note%20%252F.txt",
+        "antigravity-ide://file/C:/QA%20Files/notes%20%2B%20caf%C3%A9.txt"
+      ],
+      "relativeAndRemoteInputRejected": true,
+      "installedAppOpened": false
+    },
+    {
+      "profile": "iphone-webkit",
+      "browser": "27.2",
+      "script": "/assets/index-qnhytK0f.js",
+      "bothShadcnButtonStyles": true,
+      "desktopOnly": true,
+      "checkedUris": [
+        "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt",
+        "antigravity-ide://file/tmp/Antigravity%20%2B%20caf%C3%A9/Local%20%23note%20%252F.txt",
+        "antigravity-ide://file/C:/QA%20Files/notes%20%2B%20caf%C3%A9.txt"
+      ],
+      "relativeAndRemoteInputRejected": true,
+      "installedAppOpened": false
+    }
+  ]
+}
