@@ -343,6 +343,10 @@ pre {
   font-size: 13px;
 }
 
+.openclaw-link-setup p {
+  flex-basis: 100%;
+}
+
 .session-setup-note {
   margin-top: 16px;
 }

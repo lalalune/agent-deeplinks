@@ -359,6 +359,11 @@ function resolvePlatformTiles(platform: Platform): ResolvedTile[] {
     const route = getAgentRoute(entry.id, platform);
     if (!route) continue;
 
+    if (entry.id === "openclaw" && (platform === "web" || platform === "android")) {
+      tiles.push({ id: entry.id, name: entry.name, platform, href: null, hasPrompt: false, setupField: "server" });
+      continue;
+    }
+
     let href: string | null = null;
     let hasPrompt = false;
 
@@ -509,6 +514,49 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
           </a>
         </Button>
       ) : value.trim() && <p role="status">Enter {isDirectory ? "an absolute folder path" : "a valid server address"}.</p>}
+    </div>
+  );
+}
+
+function OpenClawLinkSetup({ platform, iconOnly }: { platform: Platform; iconOnly: boolean }) {
+  const [address, setAddress] = useState("");
+  const [copiedLink, setCopiedLink] = useState("");
+  const [prompt, setPrompt] = useState("");
+  const server = address.trim();
+  const session = copiedLink.trim();
+  const validServer = server && getAgentLink("openclaw", platform, { server });
+  const validSession = !session || (validServer && getAgentLink("openclaw", platform, { server, session }));
+  const href = validServer && validSession && getAgentLink("openclaw", platform, { server, session, prompt });
+  const error = server && (!validServer ? "Enter a Gateway address without credentials."
+    : !validSession ? "Paste a clean link from the same Gateway."
+      : !href ? "Clear the draft to open this link." : "");
+
+  return (
+    <div role="region" aria-label="Configure OpenClaw link" className="link-setup openclaw-link-setup">
+      <p>Sign in to your Gateway in this tab, then return here to open a session or draft.</p>
+      <label>
+        Gateway address
+        <input value={address} onChange={(event) => setAddress(event.target.value)}
+          placeholder="https://gateway.example.com/openclaw/" inputMode="url" autoComplete="off" spellCheck={false} />
+      </label>
+      <label>
+        Session link (optional)
+        <input value={copiedLink} onChange={(event) => setCopiedLink(event.target.value)}
+          placeholder="Paste a link copied from OpenClaw" inputMode="url" autoComplete="off" spellCheck={false} />
+      </label>
+      <label>
+        Draft prompt (optional)
+        <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} />
+      </label>
+      {href && (
+        <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+          <a href={href} referrerPolicy="no-referrer" aria-label="Open OpenClaw" title="Open OpenClaw">
+            <AgentLogo agent="openclaw" />
+            {!iconOnly && <span className="agent-name">Open OpenClaw</span>}
+          </a>
+        </Button>
+      )}
+      {error && <p role="status">{error}</p>}
     </div>
   );
 }
@@ -866,7 +914,9 @@ function App() {
               </Button>
             ))}
           </div>
-          {setupTile && <LinkSetup key={`${activePlatform}-${setupTile.id}`} tile={setupTile} iconOnly={iconOnly} />}
+          {setupTile && (setupTile.id === "openclaw"
+            ? <OpenClawLinkSetup key={activePlatform} platform={activePlatform} iconOnly={iconOnly} />
+            : <LinkSetup key={`${activePlatform}-${setupTile.id}`} tile={setupTile} iconOnly={iconOnly} />)}
         </section>
 
         {actionExamples.length > 0 && (
