@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { join } from 'node:path';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -68,7 +68,7 @@ const port = 39347;
 const seedName = 'Claude native draft QA baseline.txt';
 const seed = join(qa, seedName);
 writeFileSync(seed, 'Stock editor baseline before protocol dispatch.\n', { flag: 'wx', mode: 0o600 });
-const editor = spawn('code', ['--new-window', '--disable-gpu', '--extensions-dir', join(qa, 'extensions'),
+const editor = spawn('code', ['--new-window', '--disable-gpu', '--log', 'trace', '--extensions-dir', join(qa, 'extensions'),
   '--remote-debugging-address=127.0.0.1', `--remote-debugging-port=${port}`, fixture, seed], { stdio: 'ignore', detached: true });
 const endpoint = `http://127.0.0.1:${port}`;
 let browser;
@@ -152,14 +152,14 @@ async function prepareWorkbench() {
     record.vscodeFixtureTrusted = true;
     return false;
   }
-  const restricted = page.locator('.monaco-banner').filter({ hasText: 'Restricted Mode is intended for safe code browsing' });
+  const restricted = page.locator('.part.banner').filter({ hasText: 'Restricted Mode is intended for safe code browsing' });
   const manageTrust = restricted.getByText('Manage', { exact: true });
-  if (!record.vscodeFixtureTrusted && await manageTrust.isVisible()) {
+  const workspaceTrust = page.locator('.workspace-trust-editor');
+  if (!record.vscodeFixtureTrusted && (await manageTrust.isVisible() || await workspaceTrust.isVisible())) {
     assert((await page.title()).includes(' - fixture - '), 'Unexpected workspace in the Workspace Trust window');
     assert.deepEqual(readdirSync(fixture), []);
-    await manageTrust.click({ timeout: 3500 });
-    const workspaceTrust = page.locator('.workspace-trust-editor');
-    const trustFolder = workspaceTrust.getByRole('button', { name: 'Trust', exact: true });
+    if (!(await workspaceTrust.isVisible())) await manageTrust.click({ timeout: 3500 });
+    const trustFolder = workspaceTrust.getByRole('button', { name: /^Trust(?:, Keyboard Shortcut:.*)?$/ });
     if (await trustFolder.isVisible()) {
       await trustFolder.click({ timeout: 3500 });
       record.vscodeFixtureTrusted = true;
@@ -168,7 +168,8 @@ async function prepareWorkbench() {
   }
   const workbench = page.locator('.monaco-workbench');
   const editorTab = workbench.locator('.tabs-container [role="tab"]').filter({ hasText: seedName });
-  if (await editorTab.isVisible() && !(await page.locator('.monaco-dialog-box').first().isVisible())) {
+  if (await editorTab.isVisible() && !(await restricted.isVisible()) &&
+      !(await page.locator('.monaco-dialog-box').first().isVisible())) {
     record.baselineTitle = await page.title();
     return true;
   }
@@ -238,6 +239,11 @@ try {
   record.error = error.message.split('\n')[0];
   process.exitCode = 1;
 } finally {
+  const logs = join(process.env.XDG_CONFIG_HOME, 'Code', 'logs');
+  record.extensionActivationLogged = existsSync(logs) && readdirSync(logs, { recursive: true }).filter(name => name.endsWith('/exthost.log')).some(name => {
+    const lines = readFileSync(join(logs, name), 'utf8').split('\n');
+    return lines.some(line => /(?:activateExtension|ExtensionService#_doActivateExtension).+anthropic\.claude-code/i.test(line));
+  });
   writeFileSync(outputFile('proof.json'), JSON.stringify(record, null, 2) + '\n');
   console.log(JSON.stringify(record));
   await browser?.close().catch(() => {});
