@@ -1,0 +1,36 @@
+{
+  "stage": "complete",
+  "packageVersion": "0.1.57",
+  "exactNpmURL": "https://agent.meta.ai/chat",
+  "safariVersion": "27.2",
+  "museInstallation": "/Users/runner/Applications/Muse.app",
+  "museVersion": "14.1",
+  "variants": {
+    "new-tab": {
+      "fixture": {
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "marker": "Open Meta Muse in Safari"
+      },
+      "before": {
+        "frontmost": {
+          "bundleId": "com.apple.Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "pid": 32037
+        },
+        "frontmostOwnedVisibleWindows": [
+          {
+            "frame": "{{0, 31}, {1024, 674}}",
+            "id": 44
+          }
+        ],
+        "muse": []
+      },
+      "beforeOCR": "Safari\nEdit\nView\nHistory\nBookmarks\nWindow\nHelp\nC\n• •\n127.0.0.1\nFri Nov 27 12:42 AM\nG + G\n27\netv\nA",
+      "safariUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "result": "no visible Safari fixture button"
+    }
+  },
+  "consentOrAccountSubmitted": false,
+  "error": "AssertionError [ERR_ASSERTION]: No visible Safari pointer activation"
+}
