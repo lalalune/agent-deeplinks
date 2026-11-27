@@ -8,5 +8,19 @@
   "handlerPresentAtFirstPostInstallLookup": false,
   "nativeUrlDispatched": false,
   "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45929198241/job/140277610396",
-  "installerLog": "https://github.com/lalalune/agent-deeplinks/actions/runs/45929198241/artifacts/15167468762"
+  "installerLog": "https://github.com/lalalune/agent-deeplinks/actions/runs/45929198241/artifacts/15167468762",
+  "installerWaitChecks": [
+    {
+      "installerReportedSuccess": true,
+      "installerRequestedLaunchAsOriginalUser": true,
+      "workflowTimedOut": true,
+      "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45928247810/artifacts/15167871377"
+    },
+    {
+      "installerReportedSuccess": true,
+      "installerRequestedLaunchAsOriginalUser": true,
+      "workflowTimedOut": true,
+      "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45928469091/artifacts/15168640185"
+    }
+  ]
 }
