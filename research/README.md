@@ -158,6 +158,10 @@ The v0.1.56 release passed all 53 package tests. The production playground rende
 
 - OpenCode Android 0.8.11 switched to the exact session on a second paired server, then opened a blank draft in the selected project. The upstream bundle used disposable signing on Android 16. Both OpenCode 2.4.2 servers recorded zero messages and provider accounts. [Native proof](evidence/opencode-android-0811/scoped-link-runtime-proof.json) · [Session](evidence/opencode-android-0811/scoped-A.png) · [Project draft](evidence/opencode-android-0811/project-draft-A.png)
 
+- A live Playground click in stock Chrome cold-launched the signed Kimi Work 3.2.29 app on Apple Silicon. The native Work and Projects sidebar and sign-in form were visible. [Native browser handoff proof](evidence/kimi-work-browser-handoff-329/proof.json)
+
+- T3 Code 2.3.0 cold-launched on an iOS 26.4 simulator into an exact unsent draft for a registered repository. A second cold link for an unknown repository displayed **Cancel**, **Clone**, and **Use without project**. Both links match the published v0.1.56 package. [Native simulator proof](evidence/t3-ios-cold-repository-draft/proof.json)
+
 - The publisher-signed Claude Android 1.261124.19 app cold-opened the exact new-chat and public share links, and both Claude Code draft and session formats. All six reached native sign-in. Fresh Pixel Chromium reached web sign-in from the new-chat URL. [Android proof](evidence/claude-android-26112419/proof.json)
 
 - The signed macOS Codex app copied a remote SSH thread URI and reopened the exact thread while running and after a full quit. The connected scratch thread retained its sole canned turn, with zero provider requests during replay. Both public npm v0.1.55 desktop helpers preserved every URI byte. [Native copy and reopen proof](evidence/codex-copied-remote-thread/native-ssh-reopen-proof.json)
