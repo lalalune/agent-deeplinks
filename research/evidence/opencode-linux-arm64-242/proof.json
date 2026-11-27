@@ -1,0 +1,29 @@
+{
+  "package": "OpenCode Desktop 2.4.2 arm64",
+  "library": "agent-deeplinks@0.1.65",
+  "architecture": "arm64",
+  "egress": "loopback only",
+  "submitted": false,
+  "projectName": "OpenCode Linux project + & café",
+  "association": "ai.opencode.desktop.desktop",
+  "url": "opencode://new-session?prompt=OpenCode%20ARM64%20cold%20draft%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F&directory=%2Fhome%2Frunner%2Fwork%2F_temp%2Fopencode-linux-N3egab%2FOpenCode%20Linux%20project%20%2B%20%26%20caf%C3%A9",
+  "nativeArgumentDelivered": true,
+  "executable": "/opt/OpenCode/ai.opencode",
+  "windowTitle": "OpenCode",
+  "editable": {
+    "method": "X11 copy from the focused control",
+    "draft": "OpenCode ARM64 cold draft + & café ☃ %2F"
+  },
+  "installedReleaseAsset": {
+    "name": "opencode-desktop-linux-arm64.deb",
+    "sha256": "b20427185cc593952aa79cd018ce67d5ee11a6c378b37b50224c35cdaa69f532",
+    "distribution": "Official GitHub release"
+  },
+  "hostedRun": {
+    "run": 45934156024,
+    "job": 140293388378,
+    "commit": "bb7bab6655072ac8cc9b1d1ccd6339ae059ffe66",
+    "os": "Ubuntu 24.04 ARM64"
+  },
+  "visibleProjectScreenshot": "OpenCode Linux project + & café"
+}
