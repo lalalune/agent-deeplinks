@@ -89,6 +89,29 @@
         }
       },
       "storeAppInstalledOrExecuted": false
+    },
+    "parserVerification": {
+      "packageVersion": "0.1.55",
+      "sourceCommit": "7deb51b5503c172eb3abddc6f0efec701e685cd4",
+      "repoDraftUri": "t3code://new?prompt=T3%20iOS%20signed-source%20interop%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F%0Aexpo-development-client&repo=agent-link-fixture%2Fnative-store-parser",
+      "threadDraftUri": "t3code://threads/a013fa63-bc44-44de-8ac4-8599aa7cad7e/thread%3Aproject%3A3714e7eb-5bf5-4459-a932-511c84f39fa3%3A442dd9db-8e55-4785-919e-cf5c6c826573?prompt=T3%20iOS%20signed-source%20interop%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F%0Aexpo-development-client",
+      "prompt": "T3 iOS signed-source interop + & café ☃ %2F\nexpo-development-client",
+      "repository": "agent-link-fixture/native-store-parser",
+      "sourceFileSha256": {
+        "promptLinks.ts": "e992d14720267fdac3f756766c0592f00f71c383170e426e0e5594097a2fa01c",
+        "appLinking.ts": "d3b5997da307e629af40ae5649351e1509fd2ebf862657abd968a9c8d437a08e",
+        "connectAuth.ts": "287baca5ab6ca54e9dac18fb357e66a41d5031f795d925fa0033a35f4be985a6",
+        "remote.ts": "8399406fbb3c4f4d50bf5234e654f8b5c35724d28f1ae2546f59138b760273be",
+        "url.ts": "c57e1bf62b968c40b7c0602ad81dc7d43a57f3e3db153a4a278a663342b87779"
+      },
+      "result": "pass",
+      "executionMode": "Direct imports of the unmodified TypeScript from the publisher's 2.4.0 submission source",
+      "effectVersion": "4.1.5",
+      "newDraftParserPreservedRepositoryAndPrompt": true,
+      "threadDraftParserPreservedPrompt": true,
+      "filterIgnoredPromptTextThatNamesTheExpoLauncher": true,
+      "filterRejectedTheExpoLauncherRoute": true,
+      "storeAppInstalledOrExecuted": false
     }
   },
   "deviceAvailability": {
