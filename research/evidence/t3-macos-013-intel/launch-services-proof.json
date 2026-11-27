@@ -1,0 +1,113 @@
+{
+  "release": "agent-deeplinks@0.1.58",
+  "t3": "0.1.13 macOS x86_64",
+  "desktopBinary": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app/Contents/MacOS/T3 Code (Beta)",
+  "accountUsed": false,
+  "modelCliPresent": false,
+  "stockAppLaunchAccepted": true,
+  "runningBundle": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app",
+  "seedObservation": "ERR_SQLITE_ERROR",
+  "seedThreadCount": 1,
+  "seedProjectCount": 1,
+  "seed": {
+    "environmentId": "a2520fa7-87e7-47d6-9b50-c7c1af62d69f",
+    "threadId": "thread:project:a0d46ad0-2363-42eb-b2f2-a4ba4351fd73:f8a246a5-fba6-4a89-a652-df82f2e6b9a4",
+    "counts": {
+      "threads": 1,
+      "runs": 0,
+      "provider_sessions": 0,
+      "provider_turns": 0
+    },
+    "projectIsDisposableGit": true
+  },
+  "nativeScope": {
+    "bundle": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app",
+    "pid": 10145,
+    "blank": "t3code://threads/a2520fa7-87e7-47d6-9b50-c7c1af62d69f/thread%3Aproject%3Aa0d46ad0-2363-42eb-b2f2-a4ba4351fd73%3Af8a246a5-fba6-4a89-a652-df82f2e6b9a4",
+    "draft": "t3code://threads/a2520fa7-87e7-47d6-9b50-c7c1af62d69f/thread%3Aproject%3Aa0d46ad0-2363-42eb-b2f2-a4ba4351fd73%3Af8a246a5-fba6-4a89-a652-df82f2e6b9a4?prompt=T3%20Mac%20existing%20draft%20%2B%20%26%20caf%C3%A9",
+    "marker": "T3 Mac existing draft + & café",
+    "baseline": "t3code://new?prompt=T3%20QA%20baseline%20unsent",
+    "baselineMarker": "T3 QA baseline unsent"
+  },
+  "nativeObservations": {
+    "01-off-target-local-draft": {
+      "matched": false,
+      "attempts": 17,
+      "last": {
+        "windowId": 115,
+        "exactNativeTitle": false,
+        "mainThreadTitle": false,
+        "recognizedLines": 0,
+        "targetMarker": false,
+        "baselineMarker": false,
+        "promptAddedNotice": false,
+        "blankComposer": false
+      }
+    },
+    "02-existing-thread-blank": {
+      "matched": false,
+      "attempts": 13,
+      "last": {
+        "windowId": 115,
+        "exactNativeTitle": false,
+        "targetMarker": false,
+        "promptAddedNotice": false,
+        "recognizedLines": 0,
+        "mainThreadTitle": false,
+        "baselineMarker": false,
+        "blankComposer": false
+      }
+    },
+    "03-existing-thread-unsent": {
+      "matched": false,
+      "attempts": 13,
+      "last": {
+        "windowId": 115,
+        "exactNativeTitle": false,
+        "recognizedLines": 0,
+        "blankComposer": false,
+        "baselineMarker": false,
+        "promptAddedNotice": false,
+        "mainThreadTitle": false,
+        "targetMarker": false
+      }
+    }
+  },
+  "stockBaselineDispatchAccepted": true,
+  "stockBlankDispatchAccepted": true,
+  "stockDraftDispatchAccepted": true,
+  "result": "failed",
+  "failedAt": "assert all three signed-app window transitions",
+  "error": "Expected values to be strictly deep-equal:",
+  "beforeOrAtFailure": {
+    "stateDatabase": true,
+    "persistedEnvironment": true,
+    "appPid": 10145,
+    "logs": {
+      "processSignals": []
+    }
+  },
+  "rendererBoot": {
+    "history": true,
+    "records": [
+      {
+        "surface": "main",
+        "event": "created"
+      },
+      {
+        "surface": "main",
+        "event": "dom-ready"
+      }
+    ],
+    "processSignals": [
+      "bootstrap resolved backend endpoint",
+      "main window created"
+    ]
+  },
+  "zeroProviderAudit": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  }
+}
