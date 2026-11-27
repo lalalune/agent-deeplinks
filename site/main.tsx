@@ -147,6 +147,10 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     },
   },
   claude: {
+    install: {
+      label: "Google Play",
+      options: () => ({}),
+    },
     plugin: {
       label: "Plugin details",
       options: () => ({ target: "268ba6b9-a27c-4bc8-9dc2-2a0b5ab79bfb@anthropic-plugin-directory" }),

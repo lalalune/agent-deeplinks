@@ -1,6 +1,6 @@
 {
   "name": "agent-deeplinks",
-  "version": "0.1.55",
+  "version": "0.1.56",
   "description": "Evidence-backed deep links for AI agents with SVG icons and React helpers.",
   "type": "module",
   "license": "MIT",

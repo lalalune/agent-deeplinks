@@ -59,7 +59,7 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 - Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
 - Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
 
-On Android, Claude's default link opens the installed app through its HTTPS App Link. Use the `shared-chat` action for a public Claude share. The official installer is available on [Google Play](https://play.google.com/store/apps/details?id=com.anthropic.claude).
+On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
 
 ### OpenCode on Android
 

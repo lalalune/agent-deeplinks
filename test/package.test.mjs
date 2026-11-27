@@ -1227,8 +1227,10 @@ test("opens a Cursor Origin pull request on web, iOS, and Android", () => {
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");
-  assert.deepEqual(getAgentActions("claude", "android").map(({ id }) => id), ["shared-chat"]);
+  assert.deepEqual(getAgentActions("claude", "android").map(({ id }) => id), ["install", "shared-chat"]);
   assert.equal(getAgentLink("claude", "android"), "https://claude.ai/new");
+  assert.equal(getAgentLink("claude", "android", { action: "install" }),
+    "https://play.google.com/store/apps/details?id=com.anthropic.claude");
   assert.deepEqual(getAgentActions("does-not-exist", "web"), []);
   assert.equal(getAgentRoute("chatgpt", "android", "app"), null);
   assert.equal(getAgentRoute("chatgpt", "web").url, "https://chatgpt.com/");

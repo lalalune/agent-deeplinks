@@ -4,7 +4,7 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
-  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace";
+  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
@@ -611,6 +611,18 @@ const codexSharedChat = sharedChat({
   note: "Opens the read-only Codex snapshot in the browser. A working share link and its original access permissions are required to view the content.",
 }, "", { id: /^cx_[a-f0-9]{32}$/u, example: "cx_00000000000080008000000000000000" });
 const claudeSharedChat = "https://claude.ai/share/";
+const claudeAndroidInstall: ActionDefinition = {
+  id: "install", label: "Get Claude on Google Play",
+  url: "https://play.google.com/store/apps/details?id=com.anthropic.claude",
+  behavior: "handoff", evidence: "verified",
+  sources: [
+    "https://support.claude.com/en/articles/9612887-install-claude-for-android",
+    "https://github.com/lalalune/agent-deeplinks/actions/runs/45494428908/artifacts/14967049982",
+  ],
+  fields: {}, required: [], inputs: [],
+  note: "Opens Claude's Google Play listing. Installation uses the Play Store account and controls.",
+  prepare: (_fields, url) => url,
+};
 const grokSharedChat = "https://grok.com/share/";
 
 const zcodeShareCode = /^(?!(?:\.{1,2}|manage|callback)$)[A-Za-z0-9._~-]{1,512}$/u;
@@ -816,7 +828,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       sources: ["https://claude.ai/.well-known/apple-app-site-association", sharedChatAppleChecks],
       note: "Apple’s production association matches the clean share URL. Opening a shared snapshot in the installed iPhone app still needs a device check.",
     })],
-    android: [sharedChat({
+    android: [claudeAndroidInstall, sharedChat({
       url: claudeSharedChat, evidence: "source",
       sources: [claudeShareDocs, "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/claude-android-26112419/proof.json"],
       note: "The verified Claude App Link opened the signed Android app to sign-in. Viewing the shared snapshot in the app still needs a check.",
