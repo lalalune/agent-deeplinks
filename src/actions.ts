@@ -56,6 +56,12 @@ const cursorMcpDocs = "https://cursor.com/docs/mcp/install-links";
 const cursorOriginDocs = "https://cursor.com/docs/origin/pull-requests";
 const cursorOriginPullRequestPath = /^[A-Za-z0-9][A-Za-z0-9_-]*\/(?!\.{1,2}\/)[A-Za-z0-9_.-]+\/pull\/[1-9][0-9]*$/u;
 const cursorOriginPullRequestChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/cursor-origin-pull-request/proof.json";
+const t3PullRequestSource = "https://github.com/pingdotgg/t3code/blob/v0.1.13/packages/shared/src/promptLinks.ts";
+const t3PullRequestUrl = /^https?:\/\/(?:www\.)?github\.com\/([^/?#]+)\/([^/?#]+)\/pull\/(\d+)(?:[/?#].*)?$/iu;
+const t3PullRequestShorthand = /^([^/\s#]+)\/([^/\s#]+)(?:\/|#)(\d+)$/u;
+const t3PullRequestOwner = /^[A-Za-z0-9][A-Za-z0-9-]{0,38}$/u;
+const t3PullRequestRepository = /^(?!\.+$)[A-Za-z0-9._-]{1,100}$/u;
+const t3PromptLimit = 8_000;
 const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt";
 const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
 const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/shared-chat-browser/proof.json";
@@ -366,6 +372,39 @@ function cursorCustomization(kind: "command" | "rule", platform: "web" | "deskto
       ? "Cursor displays a browser preview. Its handoff can change literal plus signs and percent escapes. Use the desktop link to preserve those characters."
       : `Review the content before adding this file to .cursor/${kind}s/. Cursor adds the file extension.`,
     prepare: ({ target }, url) => target && target !== "." && cursorCustomizationName.test(target) ? url : null,
+  };
+}
+
+function t3PullRequest(platform: "web" | "desktop" | "ios" | "android"): ActionDefinition {
+  return {
+    id: "pull-request", label: "Open GitHub pull request",
+    url: platform === "web" ? "https://app.t3.codes/new" : "t3code://new",
+    behavior: platform === "web" ? "handoff" : platform === "desktop" ? "confirm" : "draft",
+    evidence: "source",
+    sources: [
+      t3PullRequestSource,
+      platform === "ios" || platform === "android"
+        ? "https://github.com/pingdotgg/t3code/blob/v0.1.13/apps/mobile/src/features/prompt-links/newTaskPromptLink.ts"
+        : "https://github.com/pingdotgg/t3code/blob/v0.1.13/apps/web/src/components/promptLinks/NewThreadLinkView.tsx",
+    ],
+    fields: { target: "", prompt: "prompt" }, required: ["target"], promptLimit: t3PromptLimit,
+    inputs: [
+      input("target", "GitHub pull request URL or owner/repo#number", "https://github.com/owner/repo/pull/1"),
+      input("prompt", "Draft prompt (optional)"),
+    ],
+    note: "T3 Code opens a linked thread if it finds one. A connected project can open a new review or draft. Checkout and prompt submission require user action.",
+    prepare: ({ target, prompt }, url) => {
+      if (!target || unsafeCharacters.test(target) || (prompt?.length ?? 0) > t3PromptLimit) return null;
+      const value = target.trim();
+      const match = t3PullRequestUrl.exec(value) ?? t3PullRequestShorthand.exec(value);
+      const [, owner = "", rawRepository = "", rawNumber] = match ?? [];
+      const repository = rawRepository.replace(/\.git$/iu, "");
+      const number = Number(rawNumber);
+      if (!t3PullRequestOwner.test(owner) || !t3PullRequestRepository.test(repository) ||
+        !Number.isSafeInteger(number) || number < 1) return null;
+      const pullRequest = `https://github.com/${owner}/${repository}/pull/${number}`;
+      return `${url}?pr=${encodeURIComponent(pullRequest)}`;
+    },
   };
 }
 
@@ -808,6 +847,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
   },
   hermes: { desktop: [hermesSkill, hermesCatalogPlugin] },
   openclaw: { desktop: [openClawCatalogInstall("plugin"), openClawCatalogInstall("skill"), openClawCatalogInstall("template")] },
+  "t3-code": {
+    web: [t3PullRequest("web")], desktop: [t3PullRequest("desktop")],
+    ios: [t3PullRequest("ios")], android: [t3PullRequest("android")],
+  },
   opencode: {
     web: [openCodePairing({
       url: "https://code.example.com/auth/connect/", label: "Sign in to a server", behavior: "launch", evidence: "verified",

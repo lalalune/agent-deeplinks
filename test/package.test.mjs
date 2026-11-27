@@ -282,6 +282,40 @@ test("builds T3 Code links to a thread with exact scoped ID encoding", () => {
   }
 });
 
+test("opens a GitHub pull request in T3 Code with an optional draft", () => {
+  const target = "https://github.com/lalalune/agent-deeplinks/pull/1";
+  const options = { action: "pull-request", target };
+  const variants = [target, target + "/files?ref=fixture#diff", "lalalune/agent-deeplinks#1",
+    "lalalune/agent-deeplinks.git/001", "http://www.github.com/lalalune/agent-deeplinks/pull/1"];
+  for (const [platform, behavior] of [["web", "handoff"], ["desktop", "confirm"], ["ios", "draft"], ["android", "draft"]]) {
+    const base = platform === "web" ? "https://app.t3.codes/new" : "t3code://new";
+    const href = `${base}?pr=${encodeURIComponent(target)}`;
+    assert.equal(getAgentRoute("t3-code", platform, "pull-request").behavior, behavior);
+    for (const variant of variants) {
+      assert.equal(getAgentLink("t3-code", platform, { ...options, target: variant }), href);
+    }
+    const draftLink = `${href}&prompt=${encodeURIComponent(special)}`;
+    assert.equal(getAgentLink("t3-code", platform, { ...options, prompt: special }), draftLink);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, prompt: "a".repeat(8000) })?.length, href.length + 8008);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, prompt: "a".repeat(8001) }), null);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, repo: "owner/another" }), null);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, environment: "abc", session: "def" }), null);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, provider: "codex" }), null);
+    for (const invalid of ["", "owner/repo#0", "owner/repo#-1", "-team/repo#1", "owner/...#1",
+      "owner/repo#9007199254740992", "owner/repo#1\u0000", "https://github.com.evil.test/owner/repo/pull/1",
+      "https://github.com@evil.test/owner/repo/pull/1", "https://github.com/owner/repo/issues/1",
+      "https://github.com/owner/repo/pull/1extra", "owner/repo#1#2"]) {
+      assert.equal(getAgentLink("t3-code", platform, { ...options, target: invalid }), null, invalid);
+    }
+    for (const iconOnly of [true, false]) {
+      const html = renderToStaticMarkup(createElement(AgentLink, { agent: "t3-code", platform, options, iconOnly }));
+      assert.ok(html.includes(`href="${href}"`));
+      assert.ok(html.includes("data:image/svg+xml"));
+      assert.equal(html.includes(">T3 Code<"), !iconOnly);
+    }
+  }
+});
+
 test("requires opt-in before opening web links with submission or unknown behavior", () => {
   assert.equal(getAgentLink("perplexity", "web"), "https://www.perplexity.ai/");
   for (const platform of ["web", "ios"]) {

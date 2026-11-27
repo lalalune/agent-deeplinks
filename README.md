@@ -133,6 +133,8 @@ See [research/plugin-links.md](research/plugin-links.md) for all supported actio
 
 In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cursor **Origin PR** link, or Cursor **Shared transcript** link. Viewing these destinations requires the access granted by their owner. For a Cursor transcript in a desktop or mobile browser, use `shared-chat` with the share ID or the full `https://cursor.com/s/…` URL. [Cursor shared transcripts](https://cursor.com/help/ai-features/shared-transcripts)
 
+Use **T3 Code → Pull request** or pass `{ action: "pull-request", target: "owner/repo#123", prompt: "Review the changes." }` to `getAgentLink("t3-code", platform, options)`. The target can also be a GitHub pull request URL. The prompt is optional. T3 Code can open a linked thread or offer a new draft for the connected project. [T3 Code pull request link parser](https://github.com/pingdotgg/t3code/blob/v0.1.13/packages/shared/src/promptLinks.ts)
+
 ## React & shadcn/ui
 
 Compose `<AgentLink>` with your existing [shadcn/ui Button](https://ui.shadcn.com/docs/components/radix/button) via `asChild`:

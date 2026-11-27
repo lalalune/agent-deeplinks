@@ -94,6 +94,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
   { agent: "cursor", label: "Shared transcript", inputLabel: "Transcript ID or URL",
     placeholder: "https://cursor.com/s/abc123", action: "shared-chat" },
   { agent: "grok-build", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://grok.com/build/bc-…" },
+  { agent: "t3-code", label: "Pull request", inputLabel: "GitHub pull request URL or owner/repo#number",
+    placeholder: "https://github.com/owner/repo/pull/1", action: "pull-request" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -514,8 +516,11 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   iconOnly: boolean;
 }) {
   const [value, setValue] = useState("");
+  const [prompt, setPrompt] = useState("");
   const target = value.trim();
-  const options = example.action ? { action: example.action, target } : { cloudAgent: target };
+  const actionRoute = example.action && getAgentRoute(example.agent, platform, example.action);
+  const promptLimit = actionRoute ? actionRoute.promptLimit : undefined;
+  const options = example.action ? { action: example.action, target, ...(prompt && { prompt }) } : { cloudAgent: target };
   const href = target && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
   const label = `Open ${destination}`;
@@ -526,8 +531,14 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
         {example.inputLabel}
         <input value={value} onChange={(event) => setValue(event.target.value)}
           placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
-          autoComplete="off" autoCapitalize="off" spellCheck={false} />
+            autoComplete="off" autoCapitalize="off" spellCheck={false} />
       </label>
+      {promptLimit !== undefined && (
+        <label>
+          Draft prompt (optional)
+          <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} maxLength={promptLimit} />
+        </label>
+      )}
       {href ? (
         <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
           <a href={href} {...linkAttrs(href)} aria-label={label} title={label}>
