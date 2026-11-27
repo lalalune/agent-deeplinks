@@ -1,0 +1,48 @@
+{
+  "browser": "158.0.8127.18",
+  "interaction": "read-only card scroll into view",
+  "results": [
+    {
+      "label": "exact",
+      "requested": "https://antigravity.google/docs/marketplace/?plugin=firebase#browse-marketplace-plugins",
+      "actual": "https://antigravity.google/docs/marketplace/?plugin=firebase#browse-marketplace-plugins",
+      "status": 200,
+      "component": {
+        "element": "ARTICLE",
+        "id": "plugin-official-firebase",
+        "links": [
+          "antigravity://customizations/marketplaces/antigravity-plugins-official/plugins/firebase",
+          "/docs/build-with-google/#firebase-bundle"
+        ],
+        "buttons": [
+          "Copy CLI"
+        ],
+        "outline": "rgb(32, 33, 36) none 3px",
+        "boxShadow": "rgba(26, 115, 232, 0.2) 0px 0px 0px 3px",
+        "border": "1px solid rgb(26, 115, 232)",
+        "classes": "mp-card astro-xqpoigz6 is-highlighted"
+      }
+    },
+    {
+      "label": "baseline",
+      "requested": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins",
+      "actual": "https://antigravity.google/docs/marketplace/#browse-marketplace-plugins",
+      "status": 200,
+      "component": {
+        "element": "ARTICLE",
+        "id": "plugin-official-firebase",
+        "links": [
+          "antigravity://customizations/marketplaces/antigravity-plugins-official/plugins/firebase",
+          "/docs/build-with-google/#firebase-bundle"
+        ],
+        "buttons": [
+          "Copy CLI"
+        ],
+        "outline": "rgb(32, 33, 36) none 3px",
+        "boxShadow": "rgba(15, 23, 42, 0.03) 0px 1px 2px 0px",
+        "border": "1px solid rgba(32, 33, 36, 0.12)",
+        "classes": "mp-card astro-xqpoigz6"
+      }
+    }
+  ]
+}
