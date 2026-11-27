@@ -117,13 +117,19 @@ test "$("$adb" -s "$serial" shell uname -m | tr -d '\r')" = aarch64
 test "$("$adb" -s "$serial" shell getprop ro.build.version.sdk | tr -d '\r')" = 34
 guest_abi=$("$adb" -s "$serial" shell getprop ro.product.cpu.abi | tr -d '\r')
 native_bridge=$("$adb" -s "$serial" shell getprop ro.dalvik.vm.native.bridge | tr -d '\r')
+guest_abis=$("$adb" -s "$serial" shell getprop ro.product.cpu.abilist | tr -d '\r')
+app_abi=$(cat "$qa/evidence/app-abi.txt")
 test "$guest_abi" = arm64-v8a
 test -z "$native_bridge" || test "$native_bridge" = 0
 {
   printf 'guestArchitecture=aarch64\nsdk=34\nprimaryCpuAbi=%s\nbridge=%s\n' "$guest_abi" "${native_bridge:-none}"
-  "$adb" -s "$serial" shell getprop ro.product.cpu.abilist
+  printf 'supportedAbis=%s\nappAbi=%s\n' "$guest_abis" "$app_abi"
   "$adb" -s "$serial" shell id
 } | tee "$qa/evidence/android-runtime.txt"
+if [[ ",$guest_abis," != *",$app_abi,"* ]]; then
+  echo "::error::Native Android runner ABI list '$guest_abis' lacks the publisher APK split '$app_abi'."
+  exit 1
+fi
 function a { timeout 16 "$adb" -s "$serial" "$@"; }
 a shell settings put global window_animation_scale 0
 a shell settings put global transition_animation_scale 0
@@ -221,4 +227,7 @@ cat "$qa"/evidence/*-result.txt
 for variant in plain flagged; do
   grep -Eq 'Status: ok|Activity:' "$qa/evidence/grok-share-$variant-start.txt"
   test -s "$qa/evidence/grok-share-$variant-resumed.txt"
+  launched=$(awk -F': ' '$1=="Activity"{print $2;exit}' "$qa/evidence/grok-share-$variant-start.txt")
+  resumed=$(grep -Eo 'ai[.]x[.]grok/[^ }]+|org[.]chromium[.]webview_shell/[^ }]+' "$qa/evidence/grok-share-$variant-resumed.txt" | head -1 || true)
+  echo "::notice title=Android 14 Grok share $variant::Started $launched. Foreground $resumed."
 done

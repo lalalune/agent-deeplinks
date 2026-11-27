@@ -37,10 +37,20 @@ jobs:
           wait "$image_pid"
           test "$(docker image inspect --format '{{.Architecture}}' "$image")" = arm64
           cd "$qa"
-          sha256sum --check <<'HASH' | tee evidence/artifact-digests.txt
-          8314bf54209fe632fabc04373882d578e385930ac726cbc45481d20183da4629  grok.apk
-          HASH
-          unzip -q grok.apk ai.x.grok.apk config.arm64_v8a.apk config.en.apk config.mdpi.apk -d grok
+          sha256sum grok.apk | tee evidence/artifact-digests.txt
+          case "$(cut -d ' ' -f1 evidence/artifact-digests.txt)" in
+            8314bf54209fe632fabc04373882d578e385930ac726cbc45481d20183da4629)
+              native_split=config.arm64_v8a.apk
+              app_abi=arm64-v8a ;;
+            b24373aca5e42a27005f483fdcbe17a6869d20ddc667cd4a149fdec90cbb7d87)
+              native_split=config.armeabi_v7a.apk
+              app_abi=armeabi-v7a ;;
+            *)
+              echo '::error::Mirror returned a Grok artifact whose digest is outside the known set.'
+              exit 1 ;;
+          esac
+          printf '%s\n' "$app_abi" | tee evidence/app-abi.txt
+          unzip -q grok.apk ai.x.grok.apk "$native_split" config.en.apk config.mdpi.apk -d grok
           curl -fsSL --proto '=https' --max-time 20 https://grok.com/.well-known/assetlinks.json -o evidence/grok-dal.json
           verify_set() {
             local key=$1 pkg=$2 apk fingerprint
