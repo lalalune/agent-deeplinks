@@ -1,0 +1,162 @@
+{
+  "site": "https://ee029151.agent-deeplinks.pages.dev/",
+  "checkedAt": "2026-11-27T01:44:32.314Z",
+  "results": [
+    {
+      "name": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-3jV1w9cW.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "web",
+          "urls": [
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Desktop Firefox 375px",
+      "version": "159.0",
+      "asset": "/assets/index-3jV1w9cW.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "web",
+          "urls": [
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        },
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "iPhone WebKit",
+      "version": "27.2",
+      "asset": "/assets/index-3jV1w9cW.js",
+      "proof": [
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-3jV1w9cW.js",
+      "proof": [
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+            "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true,
+          "conflictingDraftRejected": true
+        }
+      ],
+      "editsStayedLocal": true
+    }
+  ],
+  "click": [
+    {
+      "style": "Icons + names",
+      "url": "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E",
+      "nativeHandoffRouteAndDecodedParameters": true,
+      "draftPreview": false
+    },
+    {
+      "style": "Icons only",
+      "url": "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E?prompt=T3%20copied-thread%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+      "nativeHandoffRouteAndDecodedParameters": true,
+      "draftPreview": true
+    }
+  ]
+}
