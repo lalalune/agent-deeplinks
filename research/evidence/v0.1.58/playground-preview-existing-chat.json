@@ -1,0 +1,132 @@
+{
+  "site": "https://3173b6f0.agent-deeplinks.pages.dev/",
+  "checkedAt": "2026-11-27T00:43:45.558Z",
+  "nativeCopiedRemoteUriBytes": 97,
+  "nativeCopiedRemoteUriSha256": "c14da1b6f333de60497a352aa7f65cb15d856485ce7f82908f29d74b92197bff",
+  "nativeRemoteReplayProof": "../codex-copied-remote-thread/native-ssh-reopen-proof.json",
+  "results": [
+    {
+      "engine": "Chromium",
+      "version": "158.0.8127.18",
+      "width": 1280,
+      "asset": "/assets/index-Sy9UV8xo.js",
+      "verified": [
+        {
+          "agent": "chatgpt",
+          "form": "UUID"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "native SSH copied URI"
+        },
+        {
+          "agent": "claude",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "codex",
+          "form": "native SSH copied URI"
+        }
+      ],
+      "malformedInputsRejected": true,
+      "bothStyles": true,
+      "desktopOnly": true,
+      "newDraftUnchanged": true,
+      "noExternalRequestOrNavigationWhileEditing": true
+    },
+    {
+      "engine": "Firefox",
+      "version": "159.0",
+      "width": 1024,
+      "asset": "/assets/index-Sy9UV8xo.js",
+      "verified": [
+        {
+          "agent": "chatgpt",
+          "form": "UUID"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "native SSH copied URI"
+        },
+        {
+          "agent": "claude",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "codex",
+          "form": "native SSH copied URI"
+        }
+      ],
+      "malformedInputsRejected": true,
+      "bothStyles": true,
+      "desktopOnly": true,
+      "newDraftUnchanged": true,
+      "noExternalRequestOrNavigationWhileEditing": true
+    },
+    {
+      "engine": "WebKit",
+      "version": "27.2",
+      "width": 375,
+      "asset": "/assets/index-Sy9UV8xo.js",
+      "verified": [
+        {
+          "agent": "chatgpt",
+          "form": "UUID"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "chatgpt",
+          "form": "native SSH copied URI"
+        },
+        {
+          "agent": "claude",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "UUID"
+        },
+        {
+          "agent": "codex",
+          "form": "local copied URI"
+        },
+        {
+          "agent": "codex",
+          "form": "native SSH copied URI"
+        }
+      ],
+      "malformedInputsRejected": true,
+      "bothStyles": true,
+      "desktopOnly": true,
+      "newDraftUnchanged": true,
+      "noExternalRequestOrNavigationWhileEditing": true
+    }
+  ]
+}
