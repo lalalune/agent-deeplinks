@@ -1,0 +1,38 @@
+{
+  "appVersion": "0.1.13",
+  "publisherCliSha256": "d83b2e1ef9557e12f340a7299646203cdcdd5ee0af3272e6922c26410cfef396",
+  "codeSigningTeam": "ARK85ZXQ4Z",
+  "promptSubmitted": false,
+  "browserOnlyLoopback": true,
+  "firstProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "browserVersion": "158.0.8127.18",
+  "connectedThreadOpened": true,
+  "copiedHostedUrl": "https://app.t3.codes/threads/59544b24-df6f-4f58-aa1a-ed92f432e05a/thread%3Aproject%3A7c4305b8-84e4-4117-888b-64dd76945e35%3A533b2c61-7cb3-49dc-ac3f-a04f4f0524d5",
+  "stockActionClipboardArgument": true,
+  "exactVisibleDraftLines": true,
+  "draftThreadPath": "/59544b24-df6f-4f58-aa1a-ed92f432e05a/thread%3Aproject%3A7c4305b8-84e4-4117-888b-64dd76945e35%3A533b2c61-7cb3-49dc-ac3f-a04f4f0524d5",
+  "finalProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "observedProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "releaseSource": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+  "clipboardCapture": "Plain text passed to the clipboard API by the stock Copy thread command in a disposable browser",
+  "draftText": "T3 copied-thread draft + & café 🧪\nLiteral %2F stays intact.",
+  "persistedDraftAfterBrowserRestartVerified": false,
+  "releasedPackage": "0.1.61",
+  "releasedPackagePreservedWebUrlAndConvertedThreeNativeTargets": true,
+  "screenshot": "copied-thread-draft.png"
+}
