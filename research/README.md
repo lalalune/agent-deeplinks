@@ -147,6 +147,8 @@ The v0.1.63 release passed all 57 package tests. The new Antigravity IDE example
 
 The v0.1.64 release passed all 57 package tests. The OpenCode Web and iOS browser forms accept a saved session ID or a copied URL from the selected server. Both shadcn/ui button styles opened the exact saved session in a new tab on the signed OpenCode 2.4.2 loopback client. Desktop Chromium, iPhone WebKit, and Pixel Chromium checked all six clicks. Each opened tab read the exact session from the server and showed its title and empty composer. The Desktop project draft button matched the previously tested OpenCode 2.4.2 cold-launch URI. The registry, GitHub, and ZIP tarballs matched, and fresh npm and ZIP installs loaded 21 SVGs. The npm signature audit passed. [Production browser evidence](evidence/v0.1.64/opencode-production-proof.json) · [Playground controls](evidence/v0.1.64/open-code-playground-controls.png) · [Opened session](evidence/v0.1.64/opencode-opened-session.png) · [Publication proof](evidence/v0.1.64/publication-proof.json)
 
+Desktop Chromium and 375px Firefox checked all 74 primary routes and 80 static action examples on the live bundle. Separate iPhone WebKit and Pixel Chromium profiles checked their default mobile views. [Production browser matrix](evidence/v0.1.64/production-matrix.json)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)
