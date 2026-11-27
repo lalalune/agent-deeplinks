@@ -135,7 +135,7 @@ In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cur
 
 Use **T3 Code → Pull request** or pass `{ action: "pull-request", target: "owner/repo#123", prompt: "Review the changes." }` to `getAgentLink("t3-code", platform, options)`. The target can also be a GitHub pull request URL. The prompt is optional. T3 Code can open a linked thread or offer a new draft for the connected project. [T3 Code pull request link parser](https://github.com/pingdotgg/t3code/blob/v0.1.13/packages/shared/src/promptLinks.ts)
 
-Use **T3 Code → Existing thread** to open a URL from T3 Code's **Copy thread** action. Pass the same URL as `session` to `getAgentLink("t3-code", platform, options)` in your app. You can add a draft through `prompt` or use the draft already in the pasted URL. Opening the thread requires the connected environment that owns it. [T3 Code's Copy thread implementation](https://github.com/pingdotgg/t3code/pull/26290)
+Use **T3 Code → Existing thread** to open a URL from T3 Code's **Copy → Thread** menu or the mobile **Copy thread** action. Pass the same URL as `session` to `getAgentLink("t3-code", platform, options)` in your app. You can add a draft through `prompt` or use the draft already in the pasted URL. Opening the thread requires the connected environment that owns it. [T3 Code's Copy thread implementation](https://github.com/pingdotgg/t3code/pull/26290)
 
 ## React & shadcn/ui
 
