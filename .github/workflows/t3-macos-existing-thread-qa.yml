@@ -1,0 +1,108 @@
+name: T3 Code 0.1.13 macOS existing thread renderer QA
+
+on:
+  push:
+    branches: [codex/t3-macos-013-hosted-profile]
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    runs-on: macos-26
+    timeout-minutes: 11
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify and register the signed official Apple Silicon app
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/t3-macos-existing-thread"
+          mkdir -p "$scratch/evidence" "$scratch/mount"
+          sw_vers > "$scratch/evidence/system.txt"
+          uname -m >> "$scratch/evidence/system.txt"
+          test "$(uname -m)" = arm64
+          cp .github/qa/t3-macos-existing-thread-qa.mjs "$scratch/check.mjs"
+          swiftc .github/qa/t3-macos-existing-thread-observe.swift -o "$scratch/observe"
+          cd "$scratch"
+          vendor=https://github.com/pingdotgg/t3code/releases/download/v0.1.13
+          curl -fsSL --proto '=https' --connect-timeout 20 --max-time 120 --max-filesize 250000000 \
+            "$vendor/T3-Code-0.1.13-arm64.dmg" -o T3-Code-0.1.13-arm64.dmg &
+          desktop_download=$!
+          curl -fsSL --proto '=https' --connect-timeout 20 --max-time 120 --max-filesize 175000000 \
+            "$vendor/t3-0.1.13-darwin-arm64.tar.gz" -o t3-0.1.13-darwin-arm64.tar.gz &
+          cli_download=$!
+          curl -fsSL --proto '=https' --max-time 30 \
+            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.66.tgz \
+            -o agent-deeplinks.tgz
+          wait "$desktop_download"
+          wait "$cli_download"
+          test "$(stat -f %z T3-Code-0.1.13-arm64.dmg)" = 237415130
+          test "$(stat -f %z t3-0.1.13-darwin-arm64.tar.gz)" = 152008568
+          printf '%s  %s\n' \
+            dfdc4e87a7e56ac11fb5c7ec3cf608db854b3e9c4f755acc75b13f266a9478fa T3-Code-0.1.13-arm64.dmg \
+            d83b2e1ef9557e12f340a7299646203cdcdd5ee0af3272e6922c26410cfef396 t3-0.1.13-darwin-arm64.tar.gz \
+            51d42aeb4932005fb89590f9779121f39f1b9a91ef941b3ea13207d6bf4aceca agent-deeplinks.tgz |
+            tee evidence/expected-sha256.txt | shasum -a 256 -c
+          tar -xzf t3-0.1.13-darwin-arm64.tar.gz
+          test -x t3-0.1.13-darwin-arm64/t3
+          npm install --ignore-scripts --no-fund --no-audit --save-exact ./agent-deeplinks.tgz
+          hdiutil attach -readonly -nobrowse -noautoopen -mountpoint "$scratch/mount" T3-Code-0.1.13-arm64.dmg
+          trap 'hdiutil detach "$scratch/mount" >/dev/null' EXIT
+          app="$scratch/T3 Code (Beta).app"
+          bundles=("$scratch/mount/"*.app)
+          test "${#bundles[@]}" = 1
+          test -d "${bundles[0]}"
+          ditto "${bundles[0]}" "$app"
+          info="$app/Contents/Info.plist"
+          test "$(plutil -extract CFBundleIdentifier raw "$info")" = com.t3tools.t3code
+          plutil -extract CFBundleShortVersionString raw "$info" | tee evidence/app-version.txt
+          grep -Fxq '0.1.13' evidence/app-version.txt
+          executable="$(plutil -extract CFBundleExecutable raw "$info")"
+          /usr/bin/lipo -archs "$app/Contents/MacOS/$executable" | tee evidence/app-architecture.txt
+          grep -Fxq arm64 evidence/app-architecture.txt
+          plutil -extract CFBundleURLTypes json -o evidence/schemes.json "$info"
+          node -e 'const f = require("node:fs"); if (!JSON.parse(f.readFileSync(process.argv[1])).some(e => e.CFBundleURLSchemes?.includes("t3code"))) process.exit(1)' evidence/schemes.json
+          codesign --verify --deep --strict "$app"
+          codesign -dv --verbose=4 "$app" 2>&1 | tee evidence/signature.txt
+          grep -Fx 'Authority=Developer ID Application: T3 Tools, Inc. (ARK85ZXQ4Z)' evidence/signature.txt
+          grep -Fx 'TeamIdentifier=ARK85ZXQ4Z' evidence/signature.txt
+          spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee evidence/gatekeeper.txt
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+      - name: Observe official app windows after stock LaunchServices dispatch
+        timeout-minutes: 7
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_ACTIONS" = true
+          scratch="$RUNNER_TEMP/t3-macos-existing-thread"
+          test "$(id -un)" = runner
+          test "$HOME" = /Users/runner
+          mkdir -m 700 "$scratch/tmp" "$scratch/t3-state" "$scratch/fixture"
+          test ! -e "$HOME/Library/Application Support/t3code-v2"
+          app="$scratch/T3 Code (Beta).app"
+          executable="$(plutil -extract CFBundleExecutable raw "$app/Contents/Info.plist")"
+          node_bin="$(command -v node)"
+          git_bin="$(command -v git)"
+          cd "$scratch"
+          env -i HOME="$HOME" USER="$(id -un)" \
+            PATH=/usr/bin:/bin:/usr/sbin:/sbin SHELL=/bin/bash \
+            TMPDIR="$TMPDIR" LANG=en_US.UTF-8 GIT_CONFIG_NOSYSTEM=1 GIT_TERMINAL_PROMPT=0 \
+            T3CODE_HOME="$scratch/t3-state" T3CODE_AUTO_BOOTSTRAP_PROJECT_FROM_CWD=false \
+            T3CODE_DISABLE_AUTO_UPDATE=true T3CODE_TELEMETRY_ENABLED=false \
+            T3_QA_CLI="$scratch/t3-0.1.13-darwin-arm64/t3" \
+            T3_QA_BUNDLE="$app" T3_QA_BINARY="$app/Contents/MacOS/$executable" T3_QA_GIT="$git_bin" "$node_bin" check.mjs "$scratch"
+      - name: Retain bounded macOS proof
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: t3-code-macos-013-hosted-existing-thread
+          path: ${{ runner.temp }}/t3-macos-existing-thread/evidence
+          if-no-files-found: warn
+          retention-days: 30
