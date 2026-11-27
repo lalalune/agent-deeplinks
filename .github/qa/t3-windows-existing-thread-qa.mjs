@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 import { setTimeout as wait } from 'node:timers/promises';
 import { getAgentLink } from 'agent-deeplinks';
-import { _electron } from 'playwright-core';
+import { chromium } from 'playwright-core';
 
 const scratch = realpathSync(process.argv[2]);
 const evidence = join(scratch, 'evidence');
@@ -23,6 +23,7 @@ let phase = 'outbound firewall and Git fixture';
 let cliServer;
 let serverExit;
 let app;
+let browser;
 let page;
 
 function run(file, args, cwd = scratch) {
@@ -95,6 +96,53 @@ function stockHandler() {
   return registration;
 }
 
+async function stopDesktop() {
+  if (browser) await browser.close().catch(() => {});
+  browser = undefined;
+  if (!app) return;
+  if (app.exitCode === null && app.signalCode === null) app.kill('SIGTERM');
+  for (let attempt = 0; attempt < 20 && app.exitCode === null && app.signalCode === null; attempt++) await wait(250);
+  assert.ok(app.exitCode !== null || app.signalCode !== null);
+  app = undefined;
+}
+
+async function startDesktop() {
+  const debugPort = 43982;
+  const debugOrigin = 'http://127.0.0.1:' + debugPort;
+  const log = openSync(join(scratch, 'private-desktop.log'), 'wx', 0o600);
+  app = spawn(desktopBinary, ['--force-renderer-accessibility', '--remote-debugging-address=127.0.0.1',
+    '--remote-debugging-port=' + debugPort], { cwd: fixture, env: process.env, stdio: ['ignore', log, log] });
+  closeSync(log);
+  app.once('error', error => { proof.launchError = error.code ?? error.name; });
+  assert.ok(app.pid, 'The stock desktop did not start');
+  for (let attempt = 0; attempt < 90 && app.exitCode === null; attempt++) {
+    try {
+      const reply = await fetch(debugOrigin + '/json/list', { signal: AbortSignal.timeout(1500) });
+      const pages = await reply.json();
+      proof.observedLocalRendererTarget = pages.some(target => target.type === 'page' && target.url.startsWith('t3code://app/'));
+      if (proof.observedLocalRendererTarget) {
+        const loopback = powerShell(String.raw`
+          $ports = @(Get-NetTCPConnection -LocalPort 43982 -State Listen -ErrorAction SilentlyContinue)
+          if ($ports.Count -gt 0 -and @($ports | Where-Object {
+            $_.OwningProcess -ne [int]$env:T3_QA_PID -or $_.LocalAddress -notin @('127.0.0.1', '::1')
+          }).Count -eq 0) { 'owned loopback' }
+        `, { T3_QA_PID: String(app.pid) });
+        assert.equal(loopback, 'owned loopback', 'Expected an owned loopback-only desktop inspector');
+        proof.rendererOwnedLoopback = true;
+        browser = await chromium.connectOverCDP(debugOrigin, { timeout: 12000 });
+        page = browser.contexts().flatMap(context => context.pages()).find(target => target.url().startsWith('t3code://app/'));
+        assert.ok(page, 'The packaged app renderer did not attach');
+        return;
+      }
+    } catch (error) { proof.rendererObservation = error.code ?? error.name; }
+    await wait(650);
+  }
+  const logPath = join(scratch, 'private-desktop.log');
+  const known = /\b(?:bootstrap resolved backend endpoint|backend ready|main window created|main window failed to load|main window render process gone|ERR_[A-Z_]+)\b/gu;
+  if (existsSync(logPath)) proof.launchSignals = [...new Set(readFileSync(logPath, 'utf8').slice(-64000).match(known) ?? [])];
+  throw new Error('The signed process did not expose its packaged app renderer');
+}
+
 function dispatch(uri) {
   const observed = JSON.parse(powerShell(String.raw`
     $ErrorActionPreference = 'Stop'
@@ -161,8 +209,7 @@ try {
   proof.cliExit = await stopServer();
 
   phase = 'launch stock desktop and complete no-agent startup';
-  app = await _electron.launch({ executablePath: desktopBinary, args: ['--disable-gpu'], env: process.env, timeout: 35000 });
-  page = await app.firstWindow({ timeout: 20000 });
+  await startDesktop();
   await page.waitForFunction(() => location.hostname === 'app' && document.body?.innerText?.trim(), undefined, { timeout: 22000 });
   const skip = page.getByRole('button', { name: 'Start without an agent', exact: true });
   if (await skip.waitFor({ timeout: 8000 }).then(() => true, () => false)) {
@@ -213,8 +260,7 @@ try {
   proof.clearedWarmDraftBeforeCold = true;
   await page.goto('t3code://app/#/', { waitUntil: 'domcontentloaded', timeout: 13000 });
   assert.equal(new URL(page.url()).hash, '#/');
-  await app.close();
-  app = undefined;
+  await stopDesktop();
   page = undefined;
   const coldPath = join(evidence, 'cold-proof.json');
   const coldUri = getAgentLink('t3-code', 'desktop', { session: copiedThreadUrl, prompt: coldMarker });
@@ -248,7 +294,7 @@ try {
   process.exitCode = 1;
 } finally {
   if (cliServer) await stopServer().catch(() => {});
-  if (app) await app.close().catch(() => {});
+  await stopDesktop().catch(() => {});
   writeFileSync(join(evidence, 'proof.json'), JSON.stringify(proof, null, 2) + '\n');
   console.log(JSON.stringify(proof));
 }
