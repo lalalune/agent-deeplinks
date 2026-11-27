@@ -2,6 +2,7 @@
 set -euo pipefail
 umask 077
 qa=$1
+phase=initialize
 image='docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2'
 network=agent-native-arm-qa-net
 bridge=agentarmqa0
@@ -38,6 +39,7 @@ close_domain_network() {
 }
 
 finish() {
+  local rc=$?
   if [[ -n "$browser_pid" ]]; then kill "$browser_pid" 2>/dev/null || true; fi
   close_domain_network
   if [[ "$container_created" == 1 ]]; then
@@ -64,12 +66,35 @@ finish() {
   fi
   if [[ "$network_created" == 1 ]]; then docker network rm "$network" >/dev/null 2>&1 || true; fi
   "$adb" kill-server >/dev/null 2>&1 || true
+  {
+    printf '### Muse Android QA\n\n- Terminal phase: %s\n- Exit code: %s\n' "$phase" "$rc"
+    for name in android-runtime.txt com.facebook.aura-version.txt org.mozilla.firefox-version.txt app-links.txt \
+      stock-android-result.txt firefox-preference.txt browser-events.jsonl native-input.txt result.txt; do
+      if [[ -s "$qa/evidence/$name" ]]; then
+        printf '\n**%s**\n\n```text\n' "$name"
+        head -16 "$qa/evidence/$name"
+        printf '\n```\n'
+      fi
+    done
+    printf '\n**Labels from the last visible checkpoint**\n\n```text\n'
+    python3 - "$qa/evidence" <<'PY'
+import pathlib, sys, xml.etree.ElementTree as ET
+files = sorted(pathlib.Path(sys.argv[1]).glob("*.xml"), key=lambda file: file.stat().st_mtime)
+if files:
+    print(files[-1].name)
+    for text in dict.fromkeys(n.get("text") or n.get("content-desc") for n in ET.parse(files[-1]).iter("node")):
+        if text:
+            print(text[:150])
+PY
+    printf '\n```\n'
+  } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
 }
 trap finish EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM
 test "$(uname -m)" = aarch64
 test "$(docker image inspect --format '{{.Architecture}}' "$image")" = arm64
+phase=start-stock-arm-android
 test -z "$(docker ps -aq --filter "name=^/${device}$")"
 "$adb" start-server >/dev/null
 test -z "$("$adb" devices | awk 'NR > 1 && NF {print $1}')"
@@ -130,6 +155,7 @@ function a { timeout 16 "$adb" -s "$serial" "$@"; }
 a shell settings put global window_animation_scale 0
 a shell settings put global transition_animation_scale 0
 a shell settings put global animator_duration_scale 0
+a shell settings put system screen_off_timeout 600000
 a shell input keyevent KEYCODE_WAKEUP
 a shell wm dismiss-keyguard || true
 app=com.facebook.aura
@@ -138,6 +164,7 @@ route=$(cat "$qa/evidence/emitted-route.txt")
 test "$route" = 'https://agent.meta.ai/chat'
 port=43777
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+phase=install-pinned-apps
 timeout 100 "$adb" -s "$serial" install --no-incremental "$qa/firefox.apk"
 a shell cmd package resolve-activity --brief -a android.intent.action.VIEW \
   -c android.intent.category.BROWSABLE -d "$route" > "$qa/evidence/before-muse-install.txt"
@@ -149,6 +176,7 @@ done
 grep -Fq 'versionName=18.0.0.8.161' "$qa/evidence/$app-version.txt"
 grep -Fq 'versionName=161.0' "$qa/evidence/$browser-version.txt"
 a shell pm path com.android.statementservice | grep -E '^package:/system(_ext)?/' > "$qa/evidence/stock-verifier.txt"
+phase=verify-publisher-domain
 {
   for target in 'applink.muse.ai 443' 'agent.meta.ai 443' 'muse.ai 443' 'www.muse.ai 443' 'connectivitycheck.gstatic.com 80' 'www.google.com 443'; do
     read -r domain tcp_port <<<"$target"
@@ -183,6 +211,34 @@ close_domain_network
 sudo iptables -C DOCKER-USER -i "$bridge" -j REJECT
 printf '%s\n' 'All forwarded guest egress denied after genuine Android App Links verification.' >> "$qa/evidence/transport-boundary.txt"
 
+function capture {
+  local label=$1
+  a exec-out screencap -p > "$qa/evidence/$label.png" || true
+  a shell uiautomator dump /data/local/tmp/owned-muse-browser.xml >/dev/null 2>&1 || return 1
+  a pull /data/local/tmp/owned-muse-browser.xml "$qa/evidence/$label.xml" >/dev/null 2>&1
+}
+function foreground {
+  a shell dumpsys activity activities | grep -m4 -E 'topResumedActivity|mResumedActivity' || true
+}
+phase=stock-current-muse-native-baseline
+a shell am force-stop "$app"
+a shell cmd package resolve-activity --brief -a android.intent.action.VIEW \
+  -c android.intent.category.BROWSABLE -d "$route" > "$qa/evidence/stock-android-resolve.txt"
+a shell am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE \
+  -d "$route" > "$qa/evidence/stock-android-start.txt" 2>&1 || true
+for attempt in {1..6}; do
+  sleep 2
+  foreground > "$qa/evidence/stock-android-foreground.txt"
+  if grep -Fq "$app/" "$qa/evidence/stock-android-foreground.txt" && capture stock-android &&
+    grep -Fqi 'Welcome to Muse' "$qa/evidence/stock-android.xml"; then break; fi
+done
+grep -Fq "$app/" "$qa/evidence/stock-android-foreground.txt"
+grep -Fqi 'Welcome to Muse' "$qa/evidence/stock-android.xml"
+grep -Eqi 'Mobile number or email|Log in' "$qa/evidence/stock-android.xml"
+printf '%s\n' 'Current Meta-signed Muse 18.0.0.8.161 launched from the stock untargeted exact displayed Android route and showed its native sign-in screen. No account used.' > "$qa/evidence/stock-android-result.txt"
+a shell am force-stop "$app"
+
+phase=start-loopback-browser-fixture
 node "$here/muse-firefox-fixture.mjs" "$qa" "$port" > "$qa/evidence/browser-events.jsonl" &
 browser_pid=$!
 for attempt in {1..20}; do
@@ -191,12 +247,6 @@ for attempt in {1..20}; do
 done
 curl -fsS --max-time 6 "http://127.0.0.1:$port/health" >/dev/null
 a reverse "tcp:$port" "tcp:$port"
-function capture {
-  local label=$1
-  a shell uiautomator dump /data/local/tmp/owned-muse-browser.xml >/dev/null 2>&1 || return 1
-  a pull /data/local/tmp/owned-muse-browser.xml "$qa/evidence/$label.xml" >/dev/null 2>&1
-  a exec-out screencap -p > "$qa/evidence/$label.png"
-}
 function tap_label {
   local checkpoint=$1 pkg=$2 label=$3
   local where
@@ -204,9 +254,6 @@ function tap_label {
   printf '%s\t%s\t%s\n' "$checkpoint" "$label" "$where" >> "$qa/evidence/native-input.txt"
   read -r x y <<<"$where"
   a shell input tap "$x" "$y"
-}
-function foreground {
-  a shell dumpsys activity activities | grep -m4 -E 'topResumedActivity|mResumedActivity' || true
 }
 function open_fixture {
   local mode=$1
@@ -216,14 +263,16 @@ function open_fixture {
     sleep 3
     capture "$mode-browser" || continue
     if grep -Fq 'Open Meta Muse' "$qa/evidence/$mode-browser.xml"; then return; fi
-    for button in 'Start browsing' 'Skip' 'Not now'; do
+    for button in 'Start browsing' 'Skip sign-in' 'Skip' 'Not now'; do
       if tap_label "$mode-browser" "$browser" "$button"; then break; fi
     done
   done
   return 1
 }
 
+phase=first-firefox-browser-load
 open_fixture icon-and-name
+phase=default-firefox-browser-tap
 if ! tap_label icon-and-name-browser "$browser" 'Open Meta Muse'; then
   exit 31
 fi
@@ -241,6 +290,7 @@ else
 fi
 
 if ! grep -Fq "$app/" "$qa/evidence/default-after-tap-foreground.txt"; then
+  phase=firefox-open-links-preference
   printf '%s\n' 'Firefox default did not dispatch the HTTPS link to the installed app. Test a documented Firefox preference in the disposable profile.' > "$qa/evidence/firefox-preference.txt"
   open_fixture icon-and-name
   capture firefox-menu-before
@@ -265,6 +315,7 @@ if ! grep -Fq "$app/" "$qa/evidence/default-after-tap-foreground.txt"; then
 fi
 
 for mode in icon-and-name icon-only; do
+  phase="browser-tap-$mode"
   a shell am force-stop "$app"
   if a shell pidof "$app" > "$qa/evidence/$mode-muse-pids-before.txt"; then
     test ! -s "$qa/evidence/$mode-muse-pids-before.txt"
@@ -288,8 +339,10 @@ for mode in icon-and-name icon-only; do
   grep -Eqi 'Mobile number or email|Log in' "$qa/evidence/$mode-native.xml"
   a shell pidof "$app" > "$qa/evidence/$mode-muse-pids-after.txt"
 done
+phase=verify-trusted-touch-events
 jq -es --arg route "$route" '
   all(["icon-and-name", "icon-only"][]; . as $mode |
     any($events[]; .type == "touch" and .mode == $mode and .href == $route and .trusted == true and .active == true))
 ' "$qa/evidence/browser-events.jsonl" --slurpfile events "$qa/evidence/browser-events.jsonl"
 printf '%s\n' 'Both touch gestures from stock Firefox opened the Meta-signed app to its native sign-in screen.' > "$qa/evidence/result.txt"
+phase=complete
