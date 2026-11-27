@@ -1,0 +1,326 @@
+{
+  "site": "https://6c4923bd.agent-deeplinks.pages.dev/",
+  "checkedAt": "2026-11-27T01:01:49.648Z",
+  "results": [
+    {
+      "name": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-D5OVrNJg.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "web",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "ios",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "android",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        }
+      ],
+      "bothStyles": true,
+      "invalidInputRejected": true,
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Desktop Firefox 375px",
+      "version": "159.0",
+      "asset": "/assets/index-D5OVrNJg.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "web",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "ios",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        },
+        {
+          "platform": "android",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        }
+      ],
+      "bothStyles": true,
+      "invalidInputRejected": true,
+      "editsStayedLocal": true
+    },
+    {
+      "name": "iPhone WebKit",
+      "version": "27.2",
+      "asset": "/assets/index-D5OVrNJg.js",
+      "proof": [
+        {
+          "platform": "ios",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        }
+      ],
+      "bothStyles": true,
+      "invalidInputRejected": true,
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-D5OVrNJg.js",
+      "proof": [
+        {
+          "platform": "android",
+          "validated": [
+            {
+              "type": "Cursor Cloud Agent",
+              "links": [
+                "https://cursor.com/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://cursor.com/t/team-qa/agents/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            },
+            {
+              "type": "Cursor Origin PR",
+              "links": [
+                "https://cursor.com/codebase/Team-02/Repo.name_v2/pull/9007199254740993"
+              ]
+            },
+            {
+              "type": "Cursor Shared transcript",
+              "links": [
+                "https://cursor.com/s/abc123",
+                "https://cursor.com/s/abc123"
+              ]
+            },
+            {
+              "type": "Grok Build Cloud Agent",
+              "links": [
+                "https://grok.com/build/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0",
+                "https://grok.com/build/t/team-qa/bc-8da7657c-0caf-49d1-8a21-81e0761b0eb0"
+              ]
+            }
+          ]
+        }
+      ],
+      "bothStyles": true,
+      "invalidInputRejected": true,
+      "editsStayedLocal": true
+    }
+  ]
+}
