@@ -442,10 +442,11 @@ const antigravityIdeOpen: ActionDefinition = {
   id: "ide-open", label: "Open a file or folder in Antigravity IDE", url: "antigravity-ide://file",
   behavior: "confirm", evidence: "verified",
   sources: ["https://antigravity.google/download?app=antigravity-ide",
-    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/macos-review.json"],
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/macos-review.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/windows-review.json"],
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Absolute local path", "/absolute/path/to/project")],
-  note: "The signed standalone Antigravity IDE opened the exact path confirmation on macOS. The Linux tarball needs a registered URL handler.",
+  note: "The standalone Antigravity IDE showed the exact local file confirmation on macOS and Windows. The Linux tarball needs a registered URL handler.",
   prepare: ({ target }, url) => {
     if (!target || unsafeCharacters.test(target)) return null;
     const drive = /^([a-z]:)[/\\]/iu.exec(target)?.[1];

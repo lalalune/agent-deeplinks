@@ -1,0 +1,87 @@
+{
+  "platform": "Microsoft Windows NT 10.0.26100.0",
+  "vendor": "https://antigravity.google/download",
+  "installer": {
+    "sha256": "0f63d94c0be212e25157125eb3757272b5aa95ea06538298631c14a3d7709197",
+    "signature": "Valid",
+    "signer": "CN=Google LLC, O=Google LLC, L=Mountain View, S=California, C=US, SERIALNUMBER=3582691, OID.2.5.4.15=Private Organization, OID.1.3.6.1.4.1.311.60.2.1.2=Delaware, OID.1.3.6.1.4.1.311.60.2.1.3=US"
+  },
+  "installedExecutable": {
+    "fromVerifiedInstaller": true,
+    "signer": null,
+    "signature": "NotSigned",
+    "version": "2.8.0",
+    "shippedGoToPosition": true,
+    "commit": "8dc5315afe097a21a6cb38dda76edc0835dfabfa",
+    "sha256": "199f7d901dcbdeccb447c54927a4adc2c8fda4617f9c6c7c5ddad97dbddbd8d1",
+    "shippedFileConfirmation": true
+  },
+  "npmVersion": "0.1.63",
+  "npmSha256": "6dea90cbe8bffcb03247c8985486cdca4e74f6b36b0adfde5fb9d2ccbef61cba",
+  "fixture": "D:\\a\\_temp\\antigravity-ide\\QA Antigravity IDE exact file opener 7812.txt",
+  "handler": "\"D:\\a\\_temp\\antigravity-ide\\installed\\Antigravity IDE.exe\" \"--open-url\" \"--\" \"%1\"",
+  "registrySnapshots": [
+    {
+      "phase": "installer-started process: 0",
+      "ownedPids": [
+        7312,
+        8280,
+        8348
+      ],
+      "keys": [
+        {
+          "path": "Registry::HKEY_CURRENT_USER\\Software\\Classes\\antigravity-ide",
+          "protocolMarker": true,
+          "command": "\"D:\\a\\_temp\\antigravity-ide\\installed\\Antigravity IDE.exe\" \"--open-url\" \"--\" \"%1\""
+        }
+      ]
+    },
+    {
+      "phase": "installer-started process: 1",
+      "ownedPids": [
+        7040,
+        7312,
+        8280,
+        8348
+      ],
+      "keys": [
+        {
+          "path": "Registry::HKEY_CLASSES_ROOT\\antigravity-ide",
+          "protocolMarker": true,
+          "command": "\"D:\\a\\_temp\\antigravity-ide\\installed\\Antigravity IDE.exe\" \"--open-url\" \"--\" \"%1\""
+        },
+        {
+          "path": "Registry::HKEY_CURRENT_USER\\Software\\Classes\\antigravity-ide",
+          "protocolMarker": true,
+          "command": "\"D:\\a\\_temp\\antigravity-ide\\installed\\Antigravity IDE.exe\" \"--open-url\" \"--\" \"%1\""
+        }
+      ]
+    }
+  ],
+  "uri": "antigravity-ide://file/D:/a/_temp/antigravity-ide/QA%20Antigravity%20IDE%20exact%20file%20opener%207812.txt",
+  "shellAccepted": true,
+  "ownedProcessesBeforeShell": 0,
+  "exactUriInReceiver": true,
+  "nativeReviewVisible": true,
+  "nativeReview": {
+    "title": "Antigravity IDE",
+    "pid": 6952,
+    "labels": [
+      "MainInstructionIcon",
+      "An external application wants to open 'D:\\a\\_temp\\antigravity-ide\\QA Antigravity IDE exact file opener 7812.txt' in Antigravity IDE. Do you want to open this file or folder?",
+      "If you did not initiate this request, it may represent an attempted attack on your system. Unless you took an explicit action to initiate this request, you should press 'No'",
+      "Allow opening local paths without asking",
+      "Yes",
+      "No",
+      "Antigravity IDE",
+      "System Menu Bar",
+      "System",
+      "Close"
+    ]
+  },
+  "clickedNativeReview": false,
+  "accountUsed": false,
+  "changedConfirmationSettings": false,
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45930257863/job/140280990491",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45930257863/artifacts/15168521748"
+}
