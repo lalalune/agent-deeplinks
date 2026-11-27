@@ -1,0 +1,32 @@
+{
+  "version": "0.1.59",
+  "tagCommit": "dd554f62941a93cfa178d3465f740a1e474f52ea",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/45920285320",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45920285238",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/45920285241",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.59",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.59/agent-deeplinks.zip",
+  "production": "https://16c2a0f8.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://a0ba95a8.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "4e68f17e5931256fb11ca9eae9c8bc904b372b7024f3ff4744fce4b0a91f0d46",
+  "githubReleaseZipSha256": "bc7060d5d7f5a3dc3c906480433b45df955347dc4e7d1a4c6b6ef6bf251a2801",
+  "productionAndZipHtmlSha256": "b7574b862f56cfc9ca03caf8233b585bdca4526562ae278040144eae3dd9fa32",
+  "productionAndZipJavaScriptSha256": "28428d776f6009e165e5d890e4624f0ed17839b55c3a59238c5dc02765442468",
+  "packageTestsPassed": 54,
+  "primaryRoutes": 74,
+  "staticActionExamples": 80,
+  "newConfigurableDestinationsAcrossPlatforms": 13,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstallByName": {
+    "version": "0.1.59",
+    "reactMajor": 19,
+    "svgExports": 21,
+    "exactOutputsOnWebIosAndAndroid": true,
+    "bothReactVariants": true
+  },
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}

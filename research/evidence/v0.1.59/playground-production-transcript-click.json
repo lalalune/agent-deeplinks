@@ -1,0 +1,20 @@
+{
+  "site": "https://deeplinks.fun/",
+  "checkedAt": "2026-11-27T01:04:52.531Z",
+  "version": "158.0.8127.18",
+  "probe": "Cursor's published documentation placeholder",
+  "observations": [
+    {
+      "style": "Icons + names",
+      "linkDestination": "https://cursor.com/s/abc123",
+      "pageTitle": "Shared Chat",
+      "renderedUnavailableScreen": true
+    },
+    {
+      "style": "Icons only",
+      "linkDestination": "https://cursor.com/s/abc123",
+      "pageTitle": "Shared Chat",
+      "renderedUnavailableScreen": true
+    }
+  ]
+}
