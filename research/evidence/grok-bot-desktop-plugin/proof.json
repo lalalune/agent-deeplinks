@@ -31,7 +31,7 @@
     "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084557081/job/140790972482",
     "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084557081/artifacts/15238452099",
     "artifactSha256": "43762de49b4aea96ccee386601fa77fd5676f55349f6ac607c70b4e2b25b4f6c",
-    "jobConclusion": "failure, warm reuse assertion after cold evidence was captured"
+    "jobConclusion": "failure, the warm trace assertion expected the final binary path instead of the installed wrapper path; in-app warm delivery remained unverified"
   },
   "android14Diagnostic": {
     "guest": "Android 14 (API 34) native ARM64 redroid",
