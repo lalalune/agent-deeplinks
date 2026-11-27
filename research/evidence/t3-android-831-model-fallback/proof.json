@@ -1,0 +1,86 @@
+{
+  "build": 831,
+  "version": "2.4.0",
+  "promptSubmitted": false,
+  "coldDispatches": {
+    "requestedModel": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    },
+    "promptOnly": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    }
+  },
+  "registeredProjectTitle": "T3 Native Target 74F2",
+  "packageVersion": "0.1.58",
+  "expectedProject": "T3 Native Target 74F2",
+  "initialProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "pairingFormOpenedByStockRoute": false,
+  "stockLocalPairing": true,
+  "requestedModel": {
+    "uri": "t3code://new?prompt=T3%20Android%20model%20fallback%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2&provider=codex&model=android-qa-missing-model-831",
+    "visibleNote": "The requested model is not available, so your default is used.",
+    "exactEditableUnsentDraft": "T3 Android model fallback QA + & literal %2F café 🧪",
+    "draftProjectBinding": {
+      "exactPersistedDraft": true,
+      "pairedEnvironmentIdMatches": true,
+      "registeredProjectIdMatches": true
+    }
+  },
+  "promptOnly": {
+    "uri": "t3code://new?prompt=T3%20Android%20prompt-only%20control%20%2B%20%26%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2",
+    "visibleNote": null,
+    "exactEditableUnsentDraft": "T3 Android prompt-only control + & %2F café 🧪",
+    "draftProjectBinding": {
+      "exactPersistedDraft": true,
+      "pairedEnvironmentIdMatches": true,
+      "registeredProjectIdMatches": true
+    }
+  },
+  "finalProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45919902327/job/140247901509",
+  "workflowCommit": "74b3311cdee663073f8503fb8bdb19e1b65b218c",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45919902327/artifacts/15164216938",
+  "runtime": {
+    "Android": "15",
+    "api": 35,
+    "abi": "arm64-v8a",
+    "host": "Hosted ReDroid on ARM64 Linux",
+    "launch": "Untargeted Android ACTION_VIEW plus BROWSABLE"
+  },
+  "distribution": {
+    "release": "https://github.com/pingdotgg/t3code/releases/tag/android-beta-831",
+    "channel": "Publisher mirror of Google Play closed testing",
+    "package": "com.t3tools.t3code",
+    "apkSha256": "821e7e841349df4a294969d417dcd16956d11b6253e2064802d44374e91e692a",
+    "signerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6",
+    "assetLinks": "https://app.t3.codes/.well-known/assetlinks.json",
+    "googleSourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d",
+    "verifier": "Android Build Tools 36.0.0 verified APK Signature Scheme v3 and the Google SourceStamp at API 35"
+  },
+  "server": {
+    "release": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+    "cliSha256": "c553c17db07030d032808989427db5022bf04027ebcec2218c69fb1a5fa1377f",
+    "network": "Loopback-only T3 CLI with adb reverse for local pairing and builds sourced on the runner",
+    "availableModels": 0
+  },
+  "screenshots": {
+    "model-fallback.png": "444bfde524e1a93fef5fd411e64da2d83cd9bd50ee45840badceadfe15dad97e",
+    "editable-draft.png": "c3508c2fbf3009fbe6942b46144fde48463cc59f6dec37bce9a37bb306746c7f",
+    "prompt-only-control.png": "94454fdb5d406eb4440b6b595eb765fb68b4ee77eb134de1bfdf8cb24bddcb9f"
+  },
+  "scope": "The check verifies the unavailable-model notice and exact unsent draft. The scratch server had no selectable model. Public Play installation and selecting an available model remain unverified."
+}
