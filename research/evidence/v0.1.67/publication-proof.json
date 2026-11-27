@@ -1,0 +1,26 @@
+{
+  "version": "0.1.67",
+  "tagCommit": "82b2b36a90cc7006c73a8dec576bcc270503e7d0",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083232657",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083232543",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083232520",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.67",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.67/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://8c36eb9d.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://d626090f.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "357a79383be1d4944871946d5d1aa98d007958fba5f804b3ad020e0ed6a60f13",
+  "githubReleaseZipSha256": "cc843a56ce42f479ea1a8793a49aa66d52ecbde5852b6aacee05de073bb6e219",
+  "productionAndZipHtmlSha256": "e71e74267bcca45feb6b3eef5d8c4696fe61ce1b4b45d4d1c2beaa078cb6b406",
+  "productionAndZipJavaScriptSha256": "3564f29d5f6d7dd8772f7270e9b4c15eab36e50c477ee0859699b27776f3a25a",
+  "bundle": "/assets/index-Cl36NF8P.js",
+  "packageTestsPassed": 57,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstalls": [
+    {"source": "public npm registry by package name and direct tarball", "reactMajor": 19, "svgExports": 21, "desktopToolDrafts": 3},
+    {"source": "tarball extracted from the GitHub release ZIP", "reactMajor": 18, "svgExports": 21, "desktopToolDrafts": 3}
+  ],
+  "bothReactButtonStyles": true,
+  "signatureAudit": {"invalid": [], "missing": []}
+}
