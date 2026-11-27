@@ -60,7 +60,36 @@
       "Android"
     ],
     "macCompatibilityListed": false,
-    "storeAppInstalledOrExecuted": false
+    "storeAppInstalledOrExecuted": false,
+    "associationVerification": {
+      "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914324120/job/140229787010",
+      "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45914324120/artifacts/15161139779",
+      "workflowHead": "681a6125c0a735be68d86717ba8462598b46f219",
+      "platform": "macOS 26.7.2 (25G332)",
+      "tool": "/usr/bin/swcutil verify",
+      "packageVersion": "0.1.55",
+      "productionAppIdentifier": "ARK85ZXQ4Z.com.t3tools.t3code",
+      "configuredDomain": "app.t3.codes",
+      "sourceAppConfiguration": "https://github.com/pingdotgg/t3code/blob/7deb51b5503c172eb3abddc6f0efec701e685cd4/apps/mobile/app.config.ts",
+      "domainOriginAssociation": "https://app.t3.codes/.well-known/apple-app-site-association",
+      "appleCdnAssociation": "https://app-site-association.cdn-apple.com/a/v1/app.t3.codes",
+      "originAndAppleCdnExactSha256": "13aa375093c768ea5710facdebf41aefb2a91ab894e8a39f0cbbf61c4d8cfd68",
+      "matches": {
+        "plain": {
+          "url": "https://app.t3.codes/threads/a013fa63-bc44-44de-8ac4-8599aa7cad7e/thread%3Aproject%3A3714e7eb-5bf5-4459-a932-511c84f39fa3%3A442dd9db-8e55-4785-919e-cf5c6c826573",
+          "productionAppMatches": true
+        },
+        "draft": {
+          "url": "https://app.t3.codes/threads/a013fa63-bc44-44de-8ac4-8599aa7cad7e/thread%3Aproject%3A3714e7eb-5bf5-4459-a932-511c84f39fa3%3A442dd9db-8e55-4785-919e-cf5c6c826573?prompt=T3%20iOS%20association%20QA%20%2B%20%26%20caf%C3%A9%20%E2%98%83",
+          "productionAppMatches": true
+        },
+        "newPrompt": {
+          "url": "https://app.t3.codes/new?prompt=T3%20iOS%20association%20QA%20%2B%20%26%20caf%C3%A9%20%E2%98%83",
+          "productionAppMatches": false
+        }
+      },
+      "storeAppInstalledOrExecuted": false
+    }
   },
   "deviceAvailability": {
     "physicalIosDevicesInCoreDevice": 2,
