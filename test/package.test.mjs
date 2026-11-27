@@ -282,6 +282,38 @@ test("builds T3 Code links to a thread with exact scoped ID encoding", () => {
   }
 });
 
+test("accepts copied T3 Code thread links on web and native platforms", () => {
+  const hosted = "https://app.t3.codes/threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E";
+  const native = "t3code://threads/env%2E1/thread%3Adelegated%2Fmcp%253A1%2E";
+  const draft = `?prompt=${encodeURIComponent(special)}`;
+  for (const platform of ["web", "desktop", "ios", "android"]) {
+    const expected = platform === "web" ? hosted : native;
+    for (const session of [hosted, native]) {
+      assert.equal(getAgentLink("t3-code", platform, { session }), expected);
+      assert.equal(getAgentLink("t3-code", platform, { session: session + "/" }), expected);
+      assert.equal(getAgentLink("t3-code", platform, { session, prompt: special }), expected + draft);
+      assert.equal(getAgentLink("t3-code", platform, { session: session + draft }), expected + draft);
+      assert.equal(getAgentLink("t3-code", platform, { session: session + "?prompt=a+b%2Bc" }),
+        expected + "?prompt=a%20b%2Bc");
+      assert.equal(getAgentLink("t3-code", platform, { session: session + draft, prompt: special }), null);
+    }
+    for (const invalid of [
+      hosted + "#fragment", hosted + "?token=secret", hosted + "?prompt=x&prompt=y",
+      hosted + "?prompt=%ZZ", hosted + "?prompt=" + "x".repeat(8001),
+      hosted + "/extra", hosted + "\n", "https://app.t3.codes.evil.test/threads/e/t",
+      "https://guest@app.t3.codes/threads/e/t", "https://app.t3.codes/threads/%2E./t",
+      "https://app.t3.codes/threads/e/%00", "t3code://threads/e/%ZZ", "t3code://threads/e",
+    ]) {
+      assert.equal(getAgentLink("t3-code", platform, { session: invalid }), null, invalid);
+    }
+    const spaces = platform === "web" ? "https://app.t3.codes/threads/%20e%20/%20t%20" : "t3code://threads/%20e%20/%20t%20";
+    assert.equal(getAgentLink("t3-code", platform, { session: spaces }), spaces);
+    assert.equal(getAgentLink("t3-code", platform, { environment: " env.1 ", session: " thread:delegated/mcp%3A1. " }), expected);
+    assert.equal(getAgentLink("t3-code", platform, { session: hosted, server: "https://t3.example/" }), null);
+    assert.equal(getAgentLink("t3-code", platform, { session: hosted, repo: "example/workspace" }), null);
+  }
+});
+
 test("opens a GitHub pull request in T3 Code with an optional draft", () => {
   const target = "https://github.com/lalalune/agent-deeplinks/pull/1";
   const options = { action: "pull-request", target };

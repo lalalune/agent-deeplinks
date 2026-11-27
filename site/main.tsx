@@ -85,6 +85,7 @@ interface DestinationExample {
   inputLabel: string;
   placeholder: string;
   action?: AgentActionId;
+  field?: "session";
 }
 
 const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
@@ -96,6 +97,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
   { agent: "grok-build", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://grok.com/build/bc-…" },
   { agent: "t3-code", label: "Pull request", inputLabel: "GitHub pull request URL or owner/repo#number",
     placeholder: "https://github.com/owner/repo/pull/1", action: "pull-request" },
+  { agent: "t3-code", label: "Existing thread", inputLabel: "Copied T3 Code thread link",
+    placeholder: "https://app.t3.codes/threads/environment/thread", field: "session" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -518,9 +521,10 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const [value, setValue] = useState("");
   const [prompt, setPrompt] = useState("");
   const target = value.trim();
-  const actionRoute = example.action && getAgentRoute(example.agent, platform, example.action);
-  const promptLimit = actionRoute ? actionRoute.promptLimit : undefined;
-  const options = example.action ? { action: example.action, target, ...(prompt && { prompt }) } : { cloudAgent: target };
+  const promptLimit = (example.action || example.field === "session")
+    ? getAgentRoute(example.agent, platform, example.action)?.promptLimit : undefined;
+  const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
+  const options = { ...destinationOptions, ...(prompt && { prompt }) };
   const href = target && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
   const label = `Open ${destination}`;
@@ -546,7 +550,9 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
             {!iconOnly && <span className="agent-name">{label}</span>}
           </a>
         </Button>
-      ) : target && <p role="status">Enter a valid {example.inputLabel}.</p>}
+      ) : target && <p role="status">
+        {example.field === "session" ? "Check the thread link and supply at most one draft prompt." : `Enter a valid ${example.inputLabel}.`}
+      </p>}
     </div>
   );
 }
@@ -756,7 +762,7 @@ function App() {
   const actionExamples = examplesByPlatform[activePlatform];
   const destinationExamples = DESTINATION_EXAMPLES.filter((example) =>
     example.action ? Boolean(getAgentRoute(example.agent, activePlatform, example.action))
-      : getAgentRoute(example.agent, activePlatform)?.fields?.cloudAgent !== undefined,
+      : getAgentRoute(example.agent, activePlatform)?.fields?.[example.field ?? "cloudAgent"] !== undefined,
   );
   const destinationExample = destination?.platform === activePlatform ? destination.example : undefined;
   const setupTile = setup?.platform === activePlatform ? visibleTiles.find((tile) => tile.id === setup.agent) : undefined;

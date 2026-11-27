@@ -28,6 +28,7 @@ const hiddenPathCharacters = /[\p{Cc}\p{Cf}]/u;
 const invalidSessionId = /[\\/\u0000]|\.\./u;
 const openCodeAndroidSessionUrl = /^opencode:\/\/session\/([A-Za-z0-9_-]+)\?server=[0-9a-f]{12}$/u;
 const copiedCodexThreadUrl = /^codex:\/\/threads\/([a-fA-F\d-]+)(?:\?hostId=([A-Za-z\d._*%\-]+))?$/u;
+const copiedT3ThreadUrl = /^(?:https:\/\/app\.t3\.codes\/threads|t3code:\/\/threads)\/([^\s/?#\\]+)\/([^\s/?#\\]+)\/?(?:\?prompt=([^\s&#]*))?$/u;
 const opaqueCodexHostId = /^(?:[a-zA-Z0-9._:~!*'()-]|%[a-fA-F0-9]{2})+$/u;
 const sshHostPattern = /^(?:[A-Za-z0-9._][A-Za-z0-9._-]{0,63}@)?([A-Za-z0-9.:_][A-Za-z0-9.:_-]{0,252})$/u;
 const sshFolderCharacters = /^[\p{L}\p{N}\p{M}\p{P} +<=>^`|~$]+$/u;
@@ -119,12 +120,25 @@ function getOpenClawBrowserTarget(address: string, sessionAddress: string | unde
   return `${session.origin}${session.pathname}${fromGallery ? galleryQuery : ""}`;
 }
 
-function encodeT3ThreadSegment(value: string | undefined): string | null {
-  const id = value?.trim();
-  if (!id || id === "." || id === ".." || hiddenPathCharacters.test(id)) return null;
+function encodeT3ThreadSegment(id: string | undefined): string | null {
+  if (!id?.trim() || id === "." || id === ".." || hiddenPathCharacters.test(id)) return null;
   try {
     return encodeURIComponent(id).replace(/[.!~*'()]/gu,
       (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`);
+  } catch {
+    return null;
+  }
+}
+
+function parseCopiedT3Thread(value: string) {
+  const [, environment, thread, prompt] = copiedT3ThreadUrl.exec(value) ?? [];
+  if (!environment || !thread || hiddenPathCharacters.test(value)) return null;
+  try {
+    return {
+      environment: decodeURIComponent(environment),
+      thread: decodeURIComponent(thread),
+      prompt: prompt === undefined ? undefined : decodeURIComponent(prompt.replace(/\+/gu, " ")),
+    };
   } catch {
     return null;
   }
@@ -313,11 +327,15 @@ export function getAgentLink(
     return `https://chatgpt.com${taskPath}${platform === "web" && browserOnly ? "#no_universal_links" : ""}`;
   }
   if (agent === "t3-code" && (fields.environment || fields.session)) {
-    const environment = encodeT3ThreadSegment(fields.environment);
-    const thread = encodeT3ThreadSegment(fields.session);
+    const copied = !fields.environment && fields.session ? parseCopiedT3Thread(fields.session) : null;
+    const environment = encodeT3ThreadSegment(copied?.environment ?? fields.environment?.trim());
+    const thread = encodeT3ThreadSegment(copied?.thread ?? fields.session?.trim());
     if (!environment || !thread || fields.server || fields.repo || fields.provider || fields.model) return null;
+    if (copied?.prompt !== undefined && fields.prompt !== undefined) return null;
+    const prompt = copied?.prompt ?? fields.prompt;
+    if (route.promptLimit !== undefined && (prompt?.length ?? 0) > route.promptLimit) return null;
     const base = platform === "web" ? "https://app.t3.codes/threads" : "t3code://threads";
-    const draft = fields.prompt?.trim() ? `?prompt=${encodeLinkValue(fields.prompt)}` : "";
+    const draft = prompt?.trim() ? `?prompt=${encodeLinkValue(prompt)}` : "";
     return `${base}/${environment}/${thread}${draft}`;
   }
   if (openCodeAndroid) {
