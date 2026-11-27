@@ -27,10 +27,13 @@ function run(command, args) {
 function applications() {
   return readdirSync("/proc").filter(pid => /^\d+$/u.test(pid)).flatMap(pid => {
     try {
-      if (readlinkSync(`/proc/${pid}/exe`) !== executable) return [];
-      if (!readFileSync(`/proc/${pid}/environ`, "utf8").split("\0").includes(`HOME=${process.env.HOME}`)) return [];
       const argv = readFileSync(`/proc/${pid}/cmdline`, "utf8").split("\0").filter(Boolean);
-      return argv.some(arg => arg.startsWith("--type=")) ? [] : [{ pid: Number(pid), argv }];
+      if (!argv.length || argv.some(arg => arg.startsWith("--type="))) return [];
+      const path = (() => {
+        try { return readlinkSync(`/proc/${pid}/exe`); } catch { return null; }
+      })();
+      if (argv[0] !== executable && argv[0] !== "/usr/bin/grok-bot" && path !== executable) return [];
+      return [{ pid: Number(pid), argv, kernelExecutable: path }];
     } catch {
       return [];
     }
