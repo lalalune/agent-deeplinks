@@ -1,0 +1,32 @@
+name: T3 Code Windows existing thread QA
+
+on:
+  push:
+    branches: [codex/t3-windows-013-thread-runtime]
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify signed T3 v0.1.13 and dispatch npm v0.1.66 links through Windows Shell
+        shell: pwsh
+        run: ./.github/qa/t3-windows-existing-thread-qa.ps1
+      - name: Retain bounded signed-client evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: t3-code-windows-013-existing-thread
+          path: ${{ runner.temp }}/t3-windows-existing-thread/evidence
+          if-no-files-found: warn
+          retention-days: 30
