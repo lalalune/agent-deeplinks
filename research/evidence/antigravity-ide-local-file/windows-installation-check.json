@@ -1,0 +1,12 @@
+{
+  "platform": "Windows x64",
+  "ideVersion": "2.8.0",
+  "installerSignature": "Valid Google LLC Authenticode",
+  "installerReportedSuccess": true,
+  "installerRequestedLaunchAsOriginalUser": true,
+  "handlerLookup": "HKEY_CLASSES_ROOT\\antigravity-ide",
+  "handlerPresentAtFirstPostInstallLookup": false,
+  "nativeUrlDispatched": false,
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45929198241/job/140277610396",
+  "installerLog": "https://github.com/lalalune/agent-deeplinks/actions/runs/45929198241/artifacts/15167468762"
+}

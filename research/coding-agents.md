@@ -43,6 +43,8 @@ The current Linux x64 tarball contains the IDE's local-path handler. External UR
 
 A fresh macOS follow-up approved the exact file once in the native confirmation. The IDE then displayed **Welcome to Antigravity IDE** with **Get Started**. File contents and cursor position still need a check in an initialized client. [First-run proof](evidence/antigravity-ide-local-file/macos-first-run.json) · [IDE welcome screen](evidence/antigravity-ide-local-file/macos-first-run.png)
 
+The signed Windows installer succeeded and requested a first launch. The immediate registry lookup found the `antigravity-ide` handler absent. Windows dispatch still needs a check after the program starts and registers its protocol. [Installation check](evidence/antigravity-ide-local-file/windows-installation-check.json)
+
 In the public Marketplace, the exact npm v0.1.62 Web plugin link highlighted the official Firebase card in Chrome 158. The ordinary catalog load left the card in its default style. The card exposes the Firebase detail link for Antigravity App. [Live Marketplace](https://antigravity.google/docs/marketplace/?plugin=firebase#browse-marketplace-plugins) · [Browser proof](evidence/antigravity-marketplace-browse/selected-firebase-proof.json)
 
 - Desktop launch: `antigravity://`. Local Antigravity 2.34.0 declares the scheme in its macOS `Info.plist`. `NSWorkspace` resolved it to `/Applications/Antigravity.app`. After `open -g 'antigravity://'`, the already-running Antigravity process became frontmost. No prompt parameter was supplied.
