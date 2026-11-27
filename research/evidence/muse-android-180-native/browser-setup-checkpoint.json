@@ -1,0 +1,22 @@
+{
+  "observedDate": "2026-11-27",
+  "package": "agent-deeplinks@0.1.67",
+  "exactAndroidLink": "https://agent.meta.ai/chat",
+  "platform": "ARM64 Android 15",
+  "museVersion": "18.0.0.8.161",
+  "stockNativeSignInBaselinePassed": true,
+  "browser": {
+    "package": "org.mozilla.firefox",
+    "version": "161.0",
+    "apkSha256": "47572915a37e1b45fa92aa8bf16de57127f962ee014aade02af570ece9ef6967",
+    "certificateSha256": "a78b62a5165b4494b2fead9e76a280d22d937fee6251aece599446b2ea319b04",
+    "fixtureFetched": true,
+    "userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:161.0) Gecko/161.0 Firefox/161.0",
+    "lastVisibleCheckpoint": "Welcome to Firefox screen with Terms of Use and Continue",
+    "termsAccepted": false,
+    "linkTapped": false
+  },
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084748615/job/140791585060",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084748615/artifacts/15238807872",
+  "artifactSha256": "40edaef4b982927b8614b8717b28d8fae2c87def567936339594d7de4652d60c"
+}
