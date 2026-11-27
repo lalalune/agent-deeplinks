@@ -85,7 +85,8 @@ interface DestinationExample {
   inputLabel: string;
   placeholder: string;
   action?: AgentActionId;
-  field?: "session";
+  field?: "session" | "directory";
+  platform?: ActivePlatform;
 }
 
 const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
@@ -101,6 +102,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://app.t3.codes/threads/environment/thread", field: "session" },
   { agent: "antigravity", label: "IDE file or folder", inputLabel: "Absolute local path",
     placeholder: "/absolute/path/to/project", action: "ide-open" },
+  { agent: "opencode", label: "project draft", inputLabel: "Absolute local folder",
+    placeholder: "/absolute/path/to/project", field: "directory", platform: "desktop" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -486,14 +489,19 @@ function AgentLogo({ agent }: { agent: AgentId }) {
 
 function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }) {
   const [value, setValue] = useState("");
+  const [session, setSession] = useState("");
   if (!tile.setupField) return null;
   const isDirectory = tile.setupField === "directory";
+  const acceptsSession = tile.id === "opencode" && tile.setupField === "server";
   const label = isDirectory ? "Local folder"
     : tile.id === "opencode" ? "OpenCode server origin"
       : tile.id === "hermes" ? "Hermes Web Access address" : "Gateway address";
   const example = isDirectory ? "/absolute/path/to/project"
     : tile.id === "opencode" ? "https://opencode.example.com" : "https://agent.example.com";
-  const href = getAgentLink(tile.id, tile.platform, { [tile.setupField]: isDirectory ? value : value.trim() });
+  const options = { [tile.setupField]: isDirectory ? value : value.trim() };
+  const sessionLink = acceptsSession ? session.trim() : "";
+  const href = getAgentLink(tile.id, tile.platform, { ...options, ...(sessionLink && { session: sessionLink }) });
+  const needsSessionCorrection = sessionLink && !href && getAgentLink(tile.id, tile.platform, options);
 
   return (
     <div role="region" aria-label={`Configure ${tile.name} link`} className="link-setup">
@@ -508,6 +516,14 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
           spellCheck={false}
         />
       </label>
+      {acceptsSession && (
+        <label>
+          Session ID or copied link (optional)
+          <input value={session} onChange={(event) => setSession(event.target.value)}
+            placeholder="ses_… or a link from this server" autoComplete="off" autoCapitalize="off" spellCheck={false}
+            aria-invalid={Boolean(needsSessionCorrection)} />
+        </label>
+      )}
       {href ? (
         <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
           <a href={href} {...linkAttrs(href)} aria-label={`Open ${tile.name}`} title={tile.name}>
@@ -515,7 +531,10 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
             {!iconOnly && <span className="agent-name">Open {tile.name}</span>}
           </a>
         </Button>
-      ) : value.trim() && <p role="status">Enter {isDirectory ? "an absolute folder path" : "a valid server address"}.</p>}
+      ) : value.trim() && <p role="status">
+        {needsSessionCorrection ? "Enter a session ID or copied link from this server."
+          : isDirectory ? "Enter an absolute folder path." : "Enter a valid server address."}
+      </p>}
     </div>
   );
 }
@@ -571,7 +590,8 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const [value, setValue] = useState("");
   const [prompt, setPrompt] = useState("");
   const isIdePath = example.action === "ide-open";
-  const target = isIdePath ? value : value.trim();
+  const isLocalDirectory = example.field === "directory";
+  const target = isIdePath || isLocalDirectory ? value : value.trim();
   const promptLimit = (example.action || example.field === "session")
     ? getAgentRoute(example.agent, platform, example.action)?.promptLimit : undefined;
   const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
@@ -588,7 +608,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
           placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
             autoComplete="off" autoCapitalize="off" spellCheck={false} />
       </label>
-      {promptLimit !== undefined && (
+      {(promptLimit !== undefined || isLocalDirectory) && (
         <label>
           Draft prompt (optional)
           <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} maxLength={promptLimit} />
@@ -603,7 +623,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
         </Button>
       ) : target && <p role="status">
         {example.field === "session" ? "Check the thread link and supply at most one draft prompt."
-          : isIdePath ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
+          : isIdePath || isLocalDirectory ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
       </p>}
     </div>
   );
@@ -812,10 +832,11 @@ function App() {
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
   const actionExamples = examplesByPlatform[activePlatform];
-  const destinationExamples = DESTINATION_EXAMPLES.filter((example) =>
-    example.action ? Boolean(getAgentRoute(example.agent, activePlatform, example.action))
-      : getAgentRoute(example.agent, activePlatform)?.fields?.[example.field ?? "cloudAgent"] !== undefined,
-  );
+  const destinationExamples = DESTINATION_EXAMPLES.filter((example) => {
+    if (example.platform && example.platform !== activePlatform) return false;
+    return example.action ? Boolean(getAgentRoute(example.agent, activePlatform, example.action))
+      : getAgentRoute(example.agent, activePlatform)?.fields?.[example.field ?? "cloudAgent"] !== undefined;
+  });
   const destinationExample = destination?.platform === activePlatform ? destination.example : undefined;
   const setupTile = setup?.platform === activePlatform ? visibleTiles.find((tile) => tile.id === setup.agent) : undefined;
   const agentButtonClass = iconOnly ? "agent-btn agent-btn-icon" : "agent-btn";

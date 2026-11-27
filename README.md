@@ -105,6 +105,22 @@ getAgentLink("antigravity", "desktop", {
 
 Choose **Configure OpenClaw** in the Web or Android playground and enter your Gateway address. Sign in to the Gateway in the same tab, then go back and paste a session link copied from OpenClaw. You can add an unsent draft to a Chat or Dashboard session. Use Focus and Beam links with an empty draft. [OpenClaw URL guide](https://docs.openclaw.ai/web/urls) · [Live playground](https://deeplinks.fun/)
 
+### OpenCode browser sessions and desktop drafts
+
+On **Web** or **Mobile → iOS**, choose **Configure OpenCode**. Enter your OpenCode 2.x server origin and paste a session ID or copy the session's address from your browser. Sign in to that server in the browser where you open the link. On **Desktop**, choose **OpenCode → project draft** to open a local folder and optionally prefill an unsent prompt. [OpenCode Web guide](https://opencode.ai/docs/cli/web/) · [Live playground](https://deeplinks.fun/)
+
+```ts
+getAgentLink("opencode", "web", {
+  server: "https://code.example.com",
+  session: "ses_example",
+})
+
+getAgentLink("opencode", "desktop", {
+  directory: "/absolute/path/to/project",
+  prompt: "Review this project",
+})
+```
+
 ### OpenCode on Android
 
 Pair a server in OpenCode first. Use the Android app's **Copy Session ID** action to open a saved session on the active server. If your integration already has the full Android AppSearch URI, pass it as `session` to preserve the saved server. For a blank draft in a specific project on the active server, pass its `id` from that server's `GET /api/project` response as `project` with `mode: "new"`. [OpenCode API](https://opencode.ai/docs/api#project.list) · [Android link research](research/coding-agents.md#opencode) · [Live playground](https://deeplinks.fun/)

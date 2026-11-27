@@ -936,7 +936,7 @@ const catalog = {
         ],
         fields: { directory: "", server: "", session: "" },
         required: ["server"],
-        note: "Enter the OpenCode server origin. A session ID opens a saved OpenCode 2.x session in a browser connected to that server. The optional 1.x project directory applies when the session ID is blank.",
+        note: "Enter the OpenCode server origin. A session ID or copied browser URL from the same server opens a saved OpenCode 2.x session. The optional 1.x project directory applies when the session is blank.",
       },
       desktop: {
         url: "opencode://new-session",
@@ -962,7 +962,7 @@ const catalog = {
         sources: ["https://opencode.ai/docs/cli/web/", "https://opencode.ai/mobile", `${openCodeDesktopTag}/packages/app/src/shell/routes/session.ts`],
         fields: { server: "", session: "" },
         required: ["server"],
-        note: "Opens OpenCode in a browser. Add a session ID to open a saved OpenCode 2.x session after authenticating with the server.",
+        note: "Opens OpenCode in a browser. Add a session ID or copied URL from the same server to open a saved OpenCode 2.x session after authenticating.",
       },
       android: {
         url: "opencode://",

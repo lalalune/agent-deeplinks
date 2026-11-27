@@ -280,7 +280,7 @@ export function getAgentLink(
   if (fields.model && !fields.provider) return null;
   if (fields.mode && !route.modes?.includes(fields.mode)) return null;
   if (fields.branch && (!fields.repo || hiddenPathCharacters.test(fields.branch))) return null;
-  if (!codexDesktopSession && !openClawBrowser && !openCodeAndroid && agent !== "t3-code" &&
+  if (!codexDesktopSession && !openClawBrowser && agent !== "opencode" && agent !== "t3-code" &&
     fields.session && invalidSessionId.test(fields.session)) return null;
   if (fields.workspace) {
     const workspace = parseWorkspaceUri(fields.workspace);
@@ -365,8 +365,10 @@ export function getAgentLink(
       const origin = getOpenCodeOrigin(server);
       if (!origin) return null;
       if (fields.session) {
-        if (fields.directory || !isOpenCodeSessionId(fields.session)) return null;
-        return `${origin}/server/${encodeBase64Url(origin)}/session/${fields.session}`;
+        const prefix = `${origin}/server/${encodeBase64Url(origin)}/session/`;
+        const session = fields.session.startsWith(prefix) ? fields.session.slice(prefix.length) : fields.session;
+        if (fields.directory || !isOpenCodeSessionId(session)) return null;
+        return prefix + session;
       }
       baseUrl = fields.directory ? `${origin}/${encodeBase64Url(fields.directory)}/session` : origin;
     } else if (agent === "t3-code") {

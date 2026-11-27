@@ -176,6 +176,7 @@ test("opens an exact OpenCode 2.x session in desktop and iPhone browsers", () =>
   const expected = `${server}/server/aHR0cHM6Ly9jb2RlLmV4YW1wbGUudGVzdDo4NDQz/session/${session}`;
   for (const platform of ["web", "ios"]) {
     assert.equal(getAgentLink("opencode", platform, { server: `${server}/`, session }), expected);
+    assert.equal(getAgentLink("opencode", platform, { server: `${server}/`, session: expected }), expected);
     assert.equal(getAgentLink("opencode", platform, { server }), server);
     assert.equal(getAgentLink("opencode", platform, { server: "http://localhost:4096", session }),
       `http://localhost:4096/server/aHR0cDovL2xvY2FsaG9zdDo0MDk2/session/${session}`);
@@ -183,14 +184,24 @@ test("opens an exact OpenCode 2.x session in desktop and iPhone browsers", () =>
     for (const invalidServer of ["https://user:password@code.example.test", "https://code.example.test/project", "http://code.example.test"]) {
       assert.equal(getAgentLink("opencode", platform, { server: invalidServer, session }), null);
     }
-    for (const invalidSession of ["ses_bad/path", "ses_bad?query", " ses_fixture-42", "chat_example"]) {
+    for (const invalidSession of [
+      "ses_bad/path", "ses_bad?query", " ses_fixture-42", "chat_example",
+      expected.replace("code.example.test", "another.example.test"),
+      expected.replace("/server/", "/other/../server/"),
+      expected.replace("/server/aHR0cHM6", "/server/Zm9yZWln"),
+      expected.replace("https://", "https://guest@"),
+      expected.replace(session, "ses_a%2Fb"),
+      expected + "/extra", expected + "?token=secret", expected + "#fragment",
+    ]) {
       assert.equal(getAgentLink("opencode", platform, { server, session: invalidSession }), null);
     }
     assert.equal(getAgentLink("opencode", platform, { server, session, prompt: special }), null);
   }
   assert.equal(getAgentLink("opencode", "web", { server, session, directory: "/scratch/project" }), null);
+  assert.equal(getAgentLink("opencode", "web", { server, session: expected, directory: "/scratch/project" }), null);
   assert.equal(getAgentLink("opencode", "desktop", { session }), null);
   assert.equal(getAgentLink("opencode", "android", { session }), `opencode://session/${session}`);
+  assert.equal(getAgentLink("opencode", "android", { session: expected }), null);
 });
 
 test("every catalog route builds a parseable URL with its required fields", () => {
