@@ -1,0 +1,75 @@
+name: Publisher-signed Muse via Firefox Android
+on:
+  push:
+    branches: [codex/muse-android-browser]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Verify published releases and exact Muse route
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          qa="$RUNNER_TEMP/muse-android"
+          mkdir -p "$qa/evidence"
+          test "$(uname -m)" = aarch64
+          printf '%s\n' "$(uname -m)" "$(uname -r)" > "$qa/evidence/host.txt"
+          cd "$qa"
+          curl -fsSL --proto '=https' --connect-timeout 20 --retry 1 --max-time 140 --max-filesize 146000000 \
+            'https://archive.mozilla.org/pub/fenix/releases/161.0/android/fenix-161.0-android-arm64-v8a/fenix-161.0.multi.android-arm64-v8a.apk' -o firefox.apk &
+          firefox_pid=$!
+          curl -fsSL --proto '=https' --connect-timeout 20 --retry 1 --max-time 140 --max-filesize 110000000 \
+            'https://d.apkpure.net/b/APK/com.facebook.aura?version=latest' -o muse.apk &
+          muse_pid=$!
+          image='docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2'
+          timeout 240 docker pull --platform linux/arm64 "$image" > evidence/image-pull.txt 2>&1 &
+          image_pid=$!
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends adb apksigner dnsmasq-base
+          sudo modprobe binder_linux devices=binder,hwbinder,vndbinder
+          for kernel in iptable_filter ip6table_filter iptable_raw ip6table_raw iptable_mangle ip6table_mangle iptable_nat ip6table_nat; do sudo modprobe "$kernel"; done
+          wait "$firefox_pid"
+          wait "$muse_pid"
+          wait "$image_pid"
+          sha256sum -c <<'HASH' | tee evidence/artifact-digests.txt
+          47572915a37e1b45fa92aa8bf16de57127f962ee014aade02af570ece9ef6967  firefox.apk
+          076b644e92248b41c77b192422e5c73025642ff3acd2df1008c1f36348e78354  muse.apk
+          HASH
+          curl -fsSL --proto '=https' --max-time 20 https://agent.meta.ai/.well-known/assetlinks.json -o evidence/muse-dal.json
+          for app in firefox muse; do
+            apksigner verify --min-sdk-version 35 --max-sdk-version 35 --print-certs "$app.apk" > "evidence/$app-signers.txt"
+          done
+          grep -Fx 'Signer #1 certificate SHA-256 digest: a78b62a5165b4494b2fead9e76a280d22d937fee6251aece599446b2ea319b04' evidence/firefox-signers.txt
+          fingerprint=$(awk '/Signer #1 certificate SHA-256 digest:/{print $NF;exit}' evidence/muse-signers.txt)
+          test "$fingerprint" = a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99
+          jq -r '.[]|select(.target.package_name=="com.facebook.aura")|.target.sha256_cert_fingerprints[]|gsub(":";"")|ascii_downcase' evidence/muse-dal.json | grep -Fx "$fingerprint"
+          curl -fsSL --proto '=https' --max-time 25 https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.67.tgz -o package.tgz
+          test "sha512-$(openssl dgst -sha512 -binary package.tgz | openssl base64 -A)" = "sha512-xz0RoBn5ikOFRMkYW55bUJSfBahkVHbeJF5xOi7lkqRzqoXwBTF7x1hz0qMmtLWId9zMiONyHaJY9GL7MLH0yQ=="
+          tar -xzf package.tgz
+          node --input-type=module - <<'JS' > evidence/emitted-route.txt
+          import {getAgentLink} from './package/dist/index.js';
+          import {strict as assert} from 'node:assert';
+          const route=getAgentLink('meta-muse','android');
+          assert.equal(route,'https://agent.meta.ai/chat');
+          console.log(route);
+          JS
+      - name: Try the exact Muse link from a live Firefox Android touch
+        run: bash .github/qa/muse-firefox-android.sh "$RUNNER_TEMP/muse-android"
+      - name: Retain bounded evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: muse-native-android-browser-proof
+          path: ${{ runner.temp }}/muse-android/evidence/
+          if-no-files-found: warn
+          retention-days: 21
