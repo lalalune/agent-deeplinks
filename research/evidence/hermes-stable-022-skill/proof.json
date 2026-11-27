@@ -1,0 +1,46 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45921629804",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45921629804/artifacts/15164686794",
+  "testedPackage": "agent-deeplinks@0.1.59",
+  "testedPackageIntegrity": "sha512-QJR3Xn4kAyY21j2C3vW+Kj/xM37xyeTwewi478utwSstx8T0T8jP8sxa6uBMwFKmJBzJ2dw/EzrJ3bzAZwO0Ug==",
+  "app": {
+    "stableUpdater": "https://hermes-assets.nousresearch.com/releases/darwin/stable/stable-mac.yml",
+    "dmg": "https://hermes-assets.nousresearch.com/releases/tag/rc.3-v0.22.0/HermesBundled-0.22.0-mac-arm64.dmg",
+    "publisherDmgSize": 1555570514,
+    "publisherSha512Base64": "AoSIZ9q9f1K3eW65/NculpeOa3VmaZUIyDFXvHVb8qG5msI4iFDDL4ZH8X+nyZFU+u8CtBfL31kD4ZqBN56ewQ==",
+    "bundleIdentifier": "com.nousresearch.hermes-bundled",
+    "version": "0.22.0",
+    "signingTeam": "763K57MW7Z",
+    "deepBundleSignature": "Deep bundle signature valid",
+    "gatekeeperSource": "source=Notarized Developer ID"
+  },
+  "host": [
+    "ProductName:\t\tmacOS",
+    "ProductVersion:\t\t26.7.2",
+    "BuildVersion:\t\t25G332",
+    "arm64"
+  ],
+  "exactHref": "hermes://skill/install?identifier=official%2Fsecurity%2F1password",
+  "launchServices": "Default macOS dispatch selected the official Hermes Agent bundle.",
+  "registeredBundlePath": "/Users/runner/work/_temp/hermes-stable/mount/Hermes Agent.app",
+  "delivery": [
+    "2026-11-27 01:19:08,027 [hermes] [deeplink] registered hermes:// handler",
+    "2026-11-27 01:19:45,425 [hermes] [deeplink] delivered skill/install"
+  ],
+  "visibleReview": [
+    "Install “1password”?",
+    "This skill will be available in new sessions. Only install sources you trust.",
+    "Source",
+    "official/security/1password",
+    "Install to",
+    "This computer · default",
+    "Cancel",
+    "Install",
+    "Close"
+  ],
+  "cancelControlHitTested": true,
+  "reviewControlsClicked": false,
+  "numberOfInstalledSkillPathMatches": 0,
+  "accountUsed": false,
+  "screenshot": "skill-review.png"
+}
