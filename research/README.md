@@ -172,7 +172,7 @@ The v0.1.56 release passed all 53 package tests. The production playground rende
 
 ### Remaining native checks
 
-- macOS resolved the exact Antigravity prompt URI to the signed app. Google’s receiver staged the exact text in a controlled test. The installed Home composer still needs a signed-in check. [Antigravity draft evidence](coding-agents.md#google-antigravity)
+- Stock Chrome cold-launched signed Antigravity 2.35.2 from the exact Playground draft and Marketplace links. Google’s receiver staged the exact draft text in a controlled test. The installed Home composer and Marketplace tab still need signed-in checks. [Browser-to-app evidence](evidence/antigravity-2352-chrome-cold/proof.json) · [Antigravity research](coding-agents.md#google-antigravity)
 - Cursor Origin pull requests and Grok Build Cloud Agents preserved their target through browser sign-in. Signed-in destination views and installed mobile delivery remain open. [Cursor Origin evidence](evidence/cursor-origin-pull-request/proof.json) · [Grok Build evidence](other-agents.md#grok-build)
 - Existing synced ChatGPT and Claude conversations still need signed-in native checks. [Existing chat research](openai-anthropic.md)
 - Apple's production association matcher confirmed the package's Cursor and Kimi iOS handoff URLs. It also confirmed the separate Grok Bot plugin Universal Link. Grok Bot's HTTPS prompt URL uses a browser handoff. The remaining native checks require iOS Store installations. [Apple matcher output](https://github.com/lalalune/agent-deeplinks/actions/runs/45493929967/artifacts/14966133706)

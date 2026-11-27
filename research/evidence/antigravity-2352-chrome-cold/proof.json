@@ -1,0 +1,75 @@
+{
+  "checkedAt": "2026-11-27",
+  "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/45915849783/job/140234747901",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45915849783/artifacts/15161873523",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/blob/dddfee352cbb5249e65f6b46b87c74ca69efedd2/.github/workflows/antigravity-browser-cold-qa.yml",
+  "playground": "https://deeplinks.fun/",
+  "npmVersion": "0.1.56",
+  "host": {
+    "architecture": "arm64",
+    "os": "macOS 26.7.2",
+    "build": "25G332",
+    "chrome": "158.0.8127.37"
+  },
+  "app": {
+    "version": "2.35.2",
+    "bundleId": "com.google.antigravity",
+    "signingTeam": "EQHXZ8M8AV",
+    "strictCodeSignatureVerified": true,
+    "gatekeeperSource": "Notarized Developer ID",
+    "officialDownloadPage": "https://antigravity.google/download",
+    "diskImage": "https://storage.googleapis.com/antigravity-public/antigravity-hub/2.35.2-4585983447007232/darwin-arm/Antigravity.dmg",
+    "diskImageBytes": 242102864,
+    "diskImageSha256": "33b2123f12dee526b2d2d6bd7fe622ff328e697f51ece8c606ccdffe1aadd038"
+  },
+  "routes": {
+    "draft": {
+      "uri": "antigravity://open?prompt=tell%20me%20about%20deeplinks.fun",
+      "productionLinkMatchesPackage": true,
+      "browserActivationTrusted": true,
+      "browserUserActivationActive": true,
+      "oneTimeChromeOpenConfirmed": true,
+      "osResolverMatchesInstalledApp": true,
+      "appProcessAbsentBeforeClick": true,
+      "launched": {
+        "path": "/Applications/Antigravity.app",
+        "pid": "7236"
+      },
+      "signedOutWelcomeVisible": true,
+      "appLogContainsExactUri": false,
+      "screenshots": [
+        "draft-chrome-confirmation.png",
+        "draft-native-welcome.png"
+      ]
+    },
+    "marketplace": {
+      "uri": "antigravity://customizations/marketplaces",
+      "productionLinkMatchesPackage": true,
+      "browserActivationTrusted": true,
+      "browserUserActivationActive": true,
+      "oneTimeChromeOpenConfirmed": true,
+      "osResolverMatchesInstalledApp": true,
+      "appProcessAbsentBeforeClick": true,
+      "launched": {
+        "pid": "7696",
+        "path": "/Applications/Antigravity.app"
+      },
+      "signedOutWelcomeVisible": true,
+      "appLogContainsExactUri": false,
+      "screenshots": [
+        "marketplace-chrome-confirmation.png",
+        "marketplace-native-welcome.png"
+      ]
+    }
+  },
+  "screenshotSha256": {
+    "draft-chrome-confirmation.png": "83f9d3b400f671d14f0a78a85259d16a89fbd483796ef68565440aba0a1094f7",
+    "draft-native-welcome.png": "247a49af509711c69d714be5b5240b585ee1500688f83463156b5200db0903ac",
+    "marketplace-chrome-confirmation.png": "4f3c4a4274c12760b7ffa5671f389b480635e402c65057816dea88a7a6b3b142",
+    "marketplace-native-welcome.png": "14a027bd340e138e0af9bbc71bf26e440f927b3e3a68cadde4e24b2bbd57e9ea"
+  },
+  "accountUsed": false,
+  "promptSubmitted": false,
+  "permanentBrowserPermissionSelected": false,
+  "scope": "Observed browser-to-app launch and signed-out welcome. Signed-in draft contents and Marketplace rendering remain pending."
+}
