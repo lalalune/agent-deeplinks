@@ -1,0 +1,126 @@
+{
+  "site": "https://97523267.agent-deeplinks.pages.dev/",
+  "checkedAt": "2026-11-27T01:25:42.653Z",
+  "results": [
+    {
+      "name": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-C_USyzEz.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "web",
+          "urls": [
+            "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Desktop Firefox 375px",
+      "version": "159.0",
+      "asset": "/assets/index-C_USyzEz.js",
+      "proof": [
+        {
+          "platform": "desktop",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "web",
+          "urls": [
+            "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        },
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "iPhone WebKit",
+      "version": "27.2",
+      "asset": "/assets/index-C_USyzEz.js",
+      "proof": [
+        {
+          "platform": "ios",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        }
+      ],
+      "editsStayedLocal": true
+    },
+    {
+      "name": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "asset": "/assets/index-C_USyzEz.js",
+      "proof": [
+        {
+          "platform": "android",
+          "urls": [
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1",
+            "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact."
+          ],
+          "bothStyles": true
+        }
+      ],
+      "editsStayedLocal": true
+    }
+  ],
+  "click": {
+    "url": "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+    "exactRequestSummary": true,
+    "exactDraftText": true,
+    "nativeHandoffRouteAndDecodedParameters": true,
+    "connectedBrowserOptionVisible": false,
+    "downloadVisible": true
+  }
+}
