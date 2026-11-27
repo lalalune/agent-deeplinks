@@ -543,6 +543,74 @@ function OpenCodeSessionLinks({ iconOnly }: { iconOnly: boolean }) {
   );
 }
 
+function ClaudeCodeWorkspaceLink({ iconOnly }: { iconOnly: boolean }) {
+  const [destination, setDestination] = useState<"folder" | "ssh">("folder");
+  const [folder, setFolder] = useState("");
+  const [sshHost, setSshHost] = useState("");
+  const [sshPort, setSshPort] = useState("");
+  const [sshFolder, setSshFolder] = useState("");
+  const [prompt, setPrompt] = useState(LIVE_PROMPT);
+  const ssh = destination === "ssh";
+  const hasTarget = ssh ? Boolean(sshHost) : Boolean(folder);
+  const options = ssh ? { sshHost, sshPort, sshFolder } : { folder };
+  const href = hasTarget && getAgentLink("claude-code", "desktop", { ...options, prompt });
+
+  return (
+    <div role="region" aria-label="Claude Code Desktop workspace link" className="workspace-setup">
+      <div className="view-toggle" role="group" aria-label="Workspace destination">
+        <button type="button" className="view-option" aria-pressed={!ssh} onClick={() => setDestination("folder")}>
+          Local folder
+        </button>
+        <button type="button" className="view-option" aria-pressed={ssh} onClick={() => setDestination("ssh")}>
+          SSH
+        </button>
+      </div>
+      <div className="link-setup">
+        {ssh ? (
+          <>
+            <label>
+              SSH host
+              <input value={sshHost} onChange={(event) => setSshHost(event.target.value)}
+                placeholder="user@host" autoComplete="off" spellCheck={false} />
+            </label>
+            <label>
+              SSH port (optional)
+              <input value={sshPort} onChange={(event) => setSshPort(event.target.value)}
+                placeholder="22" inputMode="numeric" autoComplete="off" />
+            </label>
+            <label>
+              Remote folder (optional)
+              <input value={sshFolder} onChange={(event) => setSshFolder(event.target.value)}
+                placeholder="~/project" autoComplete="off" spellCheck={false} />
+            </label>
+          </>
+        ) : (
+          <label>
+            Absolute local folder
+            <input value={folder} onChange={(event) => setFolder(event.target.value)}
+              placeholder="/path/to/project" autoComplete="off" spellCheck={false} />
+          </label>
+        )}
+        <label>
+          Draft prompt (optional)
+          <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} />
+        </label>
+        {href ? (
+          <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+            <a href={href} aria-label="Open Claude Code workspace" title="Open Claude Code workspace">
+              <AgentLogo agent="claude-code" />
+              {!iconOnly && <span className="agent-name">Open workspace</span>}
+            </a>
+          </Button>
+        ) : (hasTarget || (ssh && (sshPort || sshFolder))) && (
+          <p role="status">{ssh ? "Check the SSH host and any port or folder you entered." : "Enter an absolute local folder."}</p>
+        )}
+      </div>
+      <p className="session-setup-note">Claude Code asks you to confirm the destination. The prompt stays unsent.</p>
+    </div>
+  );
+}
+
 function HighlightedSnippet() {
   return (
     <pre>
@@ -583,6 +651,7 @@ function App() {
   const [iconOnly, setIconOnly] = useState(false);
   const [setup, setSetup] = useState<{ agent: AgentId; platform: ActivePlatform }>();
   const [showOpenCodeSessions, setShowOpenCodeSessions] = useState(false);
+  const [showClaudeWorkspace, setShowClaudeWorkspace] = useState(false);
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
@@ -711,6 +780,23 @@ function App() {
                   </a>
                 </Button>
               ))}
+              {activePlatform === "desktop" && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className={agentButtonClass}
+                  aria-label="Configure Claude Code workspace link"
+                  aria-expanded={showClaudeWorkspace}
+                  title="Configure Claude Code workspace link"
+                  onClick={() => setShowClaudeWorkspace((visible) => !visible)}
+                >
+                  <AgentLogo agent="claude-code" />
+                  {!iconOnly && <span className="action-btn-text">
+                    <span className="agent-name">Claude Code</span>
+                    <span className="action-btn-kind">Workspace link</span>
+                  </span>}
+                </Button>
+              )}
               {activePlatform === "android" && (
                 <Button
                   type="button"
@@ -729,6 +815,7 @@ function App() {
                 </Button>
               )}
             </div>
+            {activePlatform === "desktop" && showClaudeWorkspace && <ClaudeCodeWorkspaceLink iconOnly={iconOnly} />}
             {activePlatform === "android" && showOpenCodeSessions && <OpenCodeSessionLinks iconOnly={iconOnly} />}
           </section>
         )}

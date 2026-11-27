@@ -314,13 +314,26 @@ pre {
   font-size: 13px;
 }
 
-.link-setup input {
+.link-setup input,
+.link-setup textarea {
   min-width: 0;
   padding: 9px 10px;
   border: 1px solid var(--color-line-hover);
   border-radius: 8px;
   background: var(--color-surface);
   color: var(--color-foreground);
+}
+
+.link-setup textarea {
+  resize: vertical;
+}
+
+.workspace-setup {
+  margin-top: 16px;
+}
+
+.workspace-setup .view-toggle {
+  width: fit-content;
 }
 
 .link-setup p,
