@@ -127,6 +127,9 @@ The v0.1.54 package passed 51 tests. The production playground showed all 74 des
 
 The v0.1.55 release passed 53 package tests. Desktop Chromium checked all 74 primary routes and 79 action examples in the production playground. Desktop Chromium, Pixel Chromium, and Firefox verified the exact OpenCode Android links in both shadcn/ui styles. The checks covered a bare session ID, a saved-server link, a project ID with Unicode and reserved characters, and rejection of a raw server address. The live Cloudflare demo matched the ZIP demo. The npm, GitHub, and ZIP tarballs matched byte for byte. A fresh React 19 installation passed the npm signature audit. [Production](https://39d00246.agent-deeplinks.pages.dev/) · [Browser proof](evidence/opencode-android-0811/playground-production-proof.json) · [Publication proof](evidence/opencode-android-0811/publication-proof.json) · [Android session controls](evidence/opencode-android-0811/playground-session-controls.png)
 
+
+The v0.1.56 candidate passed all 53 package tests. The Cloudflare preview rendered all 74 primary routes and 83 action examples. Chromium and WebKit checked both button styles for the Android Claude app, shared chat, and Google Play links and for Antigravity Marketplace on desktop and web. [Candidate](https://ac400c66.agent-deeplinks.pages.dev/) · [Exact feature URLs](evidence/v0.1.56/playground-preview-features.json) · [Browser matrix](evidence/v0.1.56/playground-preview-matrix.json)
+
 ## Native device checks
 
 - OpenClaw 2026.11.10 opened one Beam transcript from the exact named, bare-ID, and stale-title links in desktop Chromium, Pixel Chromium, and iPhone WebKit. Fresh tabs showed Gateway sign-in instead of the transcript. [Browser proof](evidence/openclaw-beam-browser/proof.json)
