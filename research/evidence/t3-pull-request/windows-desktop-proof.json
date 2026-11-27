@@ -1,0 +1,71 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45924090424",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45924090424/artifacts/15165289127",
+  "testedRelease": "agent-deeplinks@0.1.60",
+  "windows": "Microsoft Windows Server 2025 Datacenter",
+  "publisherInstaller": "https://github.com/pingdotgg/t3code/releases/download/v0.1.13/T3-Code-0.1.13-x64.exe",
+  "installerSHA256": "244f6992aade889b9fae763d8bc41d194992d8f89f70d9a3fdbbfab15ba68594",
+  "installerSignature": {
+    "status": "Valid",
+    "subject": "CN=T3 Tools Inc, O=T3 Tools Inc, L=San Fransisco, S=California, C=US"
+  },
+  "desktop": {
+    "signature": {
+      "status": "Valid",
+      "subject": "CN=T3 Tools Inc, O=T3 Tools Inc, L=San Fransisco, S=California, C=US"
+    },
+    "productVersion": "0.1.13.0"
+  },
+  "npmIntegrity": "sha512-EIXD/VX+oDx6RVf9eEHOk2QzSfvnlDCSNf9cKwlrqcD7kPjf1FB0dwAz4p3PhmN0kFub3WyYwTlkuuLDesBgYA==",
+  "scratchProjectRegistration": "[01:43:21.174] INFO (#29): Running database migrations\n[01:43:21.527] INFO (#29): Migrations ran successfully {\n  migrations: [\n    '1_OrchestrationEvents',\n    '2_OrchestrationCommandReceipts',\n    '3_CheckpointDiffBlobs',\n    '4_ProviderSessionRuntime',\n    '5_Projections',\n    '6_ProjectionThreadSessionRuntimeModeColumns',\n    '7_ProjectionThreadMessageAttachments',\n    '8_ProjectionThreadActivitySequence',\n    '9_ProviderSessionRuntimeMode',\n    '10_ProjectionThreadsRuntimeMode',\n    '11_OrchestrationThreadCreatedRuntimeMode',\n    '12_ProjectionThreadsInteractionMode',\n    '13_ProjectionThreadProposedPlans',\n    '14_ProjectionThreadProposedPlanImplementation',\n    '15_ProjectionTurnsSourceProposedPlan',\n    '16_CanonicalizeModelSelections',\n    '17_ProjectionThreadsArchivedAt',\n    '18_ProjectionThreadsArchivedAtIndex',\n    '19_ProjectionSnapshotLookupIndexes',\n    '20_AuthAccessManagement',\n    '21_AuthSessionClientMetadata',\n    '22_AuthSessionLastConnectedAt',\n    '23_ProjectionThreadShellSummary',\n    '24_BackfillProjectionThreadShellSummary',\n    '25_CleanupInvalidProjectionPendingApprovals',\n    '26_CanonicalizeModelSelectionOptions',\n    '27_ProviderSessionRuntimeInstanceId',\n    '28_ProjectionThreadSessionInstanceId',\n    '29_ProjectionThreadDetailOrderingIndexes',\n    '30_ProjectionThreadShellArchiveIndexes',\n    '31_AuthAuthorizationScopes',\n    '32_AuthPairingProofKeyThumbprint',\n    '33_ProjectionThreadsSettled',\n    '34_ProjectionThreadsSnoozed',\n    '35_ProjectionThreadTitleRegeneration',\n    '36_ProjectionThreadsPinned',\n    '37_ProjectionTurnsKeysetIndex',\n    '38_ProjectionThreadsPinOrderKey',\n    '39_ProjectionProjectsDefaultThreadEnvMode',\n    '40_ProjectionProjectFaviconPath',\n    '41_AuthSessionClientConnection',\n    '42_ProjectionThreadLinkedPullRequest',\n    '43_ProjectionThreadsUnsettledAt',\n    '44_ClearAutomaticProjectModelDefaults',\n    '45_ProjectionProjectsAutoPull',\n    '46_RepairAutomaticSettlementTimestamps',\n    '47_ProjectionProjectIcon',\n    '48_ProjectionThreadBranchPullRequest',\n    '49_ProjectionThreadsActiveOrderKey',\n    '50_ProjectionThreadPullRequests',\n    '51_ProjectionThreadMessageContext',\n    '52_ProjectionThreadTitleState',\n    '53_PullRequestFilesViewed',\n    '54_ProjectionThreadsAutoSettleDisabledAt',\n    '55_OrchestrationV2',\n    '56_RemoveRedundantProjectionIndexes',\n    '57_ScheduledTaskWebhooks',\n    '58_WebhookRelayDeliveries',\n    '59_McpAppModelContext',\n    '60_ThreadSnapshotWindowIndexes',\n    '61_PullRequestReviewGuides',\n    '62_ThreadFailureLookupIndex',\n    '63_DropUnusedV1Projections',\n    '64_CanonicalizeThreadPullRequestLinks',\n    '65_CodexUsageNativeTurnIndex',\n    '66_RepairClientSettlementTimestamps',\n    '67_WebhookDedupe',\n    '68_ShellStopRequestIndex',\n    '69_ThreadMessageSearch',\n    '70_PeerLinks',\n    '71_PeerLinkFence',\n    '72_WaitingLinkRequestIndex',\n    '73_ActiveTurnItemIndexes',\n    '74_ExcludeAttachmentPlaceholdersFromSearch',\n    '75_SubagentDeliveryState',\n    '76_ProjectionProjectsPinArchive',\n    '77_RepairBooleanSettledOverride',\n    '78_DropOrchestrationEventCorrelationIndex',\n    '79_DelegatedRecoveryIndexes',\n    '80_ScheduledTaskThreadMode',\n    '81_ProjectionMessageSearchText',\n    '82_TurnItemConversationIndex',\n    '83_CommandReadIndexes',\n    '84_LastExecutedRunIndex',\n    '85_TurnItemCounts',\n    '86_QueuedTurnInputIndex',\n    '87_ProjectionProjectsCustomTitle',\n    '88_TurnItemTypeStatusIndex',\n    '89_ShellThreadReadIndexes',\n    '90_AuthConnectDevices',\n    '91_AuthConnectDeniedRequests',\n    '92_QueuedTurnInputIndexJsonValid',\n    '93_ProviderTurnAttemptIndex',\n    '94_TurnItemMessageOrdinalIndex',\n    '95_TurnItemInlineWorkOutput',\n    '96_RepairStaleTitleRegeneration',\n    '97_IssueTrackerBindings',\n    '98_ActiveShellIndexIndexes',\n    '99_BackgroundRecoveryIndexes',\n    '100_TurnStartReadIndexes',\n    ... 19 more items\n  ]\n}\nAdded project 678acb7e-f72f-4bf7-bec6-c203a11cd50a (fixture) at D:\\a\\_temp\\t3-windows-pr-review\\fixture.",
+  "stockProtocolRegistration": "\"D:\\a\\_temp\\t3-windows-pr-review\\installed\\T3 Code (Beta).exe\" \"%1\"",
+  "cases": {
+    "registered": {
+      "shell": {
+        "pid": 8824,
+        "input": "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20Windows%20PR%20review%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+        "command": "\"D:\\a\\_temp\\t3-windows-pr-review\\installed\\T3 Code (Beta).exe\" \"t3code://new/?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20Windows%20PR%20review%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.\""
+      },
+      "ownerWindow": {
+        "title": "T3 Code (Beta)",
+        "handle": 393696,
+        "pid": 8108
+      },
+      "visibleReview": [
+        "Check out lalalune/agent-deeplinks#1?",
+        "This puts the pull request's code in a new worktree and runs your project's setup script on it.",
+        "Check out"
+      ],
+      "screenshot": "windows-registered-checkout-review.png"
+    },
+    "missing": {
+      "shell": {
+        "pid": 2388,
+        "input": "t3code://new?pr=https%3A%2F%2Fgithub.com%2Fpingdotgg%2Ft3code%2Fpull%2F26290&prompt=T3%20Windows%20PR%20review%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+        "command": "\"D:\\a\\_temp\\t3-windows-pr-review\\installed\\T3 Code (Beta).exe\" \"t3code://new/?pr=https%3A%2F%2Fgithub.com%2Fpingdotgg%2Ft3code%2Fpull%2F26290&prompt=T3%20Windows%20PR%20review%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.\""
+      },
+      "ownerWindow": {
+        "handle": 393696,
+        "title": "T3 Code (Beta)",
+        "pid": 8108
+      },
+      "visibleReview": [
+        "You don't have pingdotgg/t3code",
+        "Clone it to work on it here, or start without a project.",
+        "Clone pingdotgg/t3code",
+        "Use without project"
+      ],
+      "screenshot": "windows-unregistered-clone-review.png"
+    }
+  },
+  "gitHeadAndWorktreeListUnchanged": true,
+  "databaseCountsBeforeAndAfter": {
+    "projection_projects": 1,
+    "orchestration_v2_projection_threads": 0,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "accountUsed": false,
+  "checkoutCloneOrPromptSubmitted": false
+}
