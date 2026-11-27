@@ -1,0 +1,69 @@
+name: Claude Code VS Code loopback draft QA
+on:
+  push:
+    branches: [codex/qa-claude-vscode-loopback]
+permissions:
+  contents: read
+jobs:
+  vscode-draft:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Install stock VS Code and the official signed extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/claude-vscode-loopback"
+          mkdir -p "$qa"/{evidence,extensions,config/Code/User,data,cache,state,runtime,claude,fixture}
+          chmod 700 "$qa/runtime"
+          curl -fsS --proto '=https' --connect-timeout 15 --max-time 30 https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > "$qa/ms-keyring.gpg"
+          sudo install -m 0644 "$qa/ms-keyring.gpg" /usr/share/keyrings/claude-vscode-qa.gpg
+          printf '%s\n' 'deb [arch=amd64 signed-by=/usr/share/keyrings/claude-vscode-qa.gpg] https://packages.microsoft.com/repos/code stable main' | sudo tee /etc/apt/sources.list.d/claude-vscode-qa.list
+          sudo apt-get update -o Acquire::Retries=2
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends code xvfb xauth dbus-x11 openbox imagemagick strace tesseract-ocr xdotool xclip
+          dpkg-query -W code | tee "$qa/evidence/vscode-version.txt"
+          apt-cache policy code > "$qa/evidence/apt-provenance.txt"
+          npm install --ignore-scripts --no-fund --no-audit --save-exact --prefix "$qa" agent-deeplinks@0.1.65 playwright-core@1.58.2
+          export XDG_CONFIG_HOME="$qa/config" XDG_DATA_HOME="$qa/data" XDG_CACHE_HOME="$qa/cache" XDG_STATE_HOME="$qa/state"
+          echo '{"extensions.verifySignature":true,"extensions.autoUpdate":false,"telemetry.telemetryLevel":"off"}' > "$XDG_CONFIG_HOME/Code/User/settings.json"
+          timeout 100 code --extensions-dir "$qa/extensions" --install-extension anthropic.claude-code@2.1.331 | tee "$qa/evidence/install.txt"
+          code --extensions-dir "$qa/extensions" --list-extensions --show-versions | tee "$qa/evidence/extensions.txt"
+          grep -iFx anthropic.claude-code@2.1.331 "$qa/evidence/extensions.txt"
+      - name: Dispatch exact v0.1.65 URL and observe the native Claude Code editor
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/claude-vscode-loopback"
+          mapfile -t handlers < <(grep -lFx 'MimeType=x-scheme-handler/vscode;' /usr/share/applications/*.desktop)
+          test "${#handlers[@]}" = 1
+          grep -Fx 'Exec=/usr/share/code/code --open-url %U' "${handlers[0]}"
+          cp "${handlers[0]}" "$qa/evidence/"
+          sudo unshare --net -- bash -e -c '
+            ip link set lo up
+            test "$(ip -o link show | wc -l)" -eq 1
+            exec runuser -u "$1" -- env -i PATH="$2:/usr/local/bin:/usr/bin:/bin" LANG=C.UTF-8 \
+              QA_HOME="$3" QA_VSCODE_HANDLER="$4" XDG_CONFIG_HOME="$3/config" XDG_DATA_HOME="$3/data" \
+              XDG_CACHE_HOME="$3/cache" XDG_STATE_HOME="$3/state" XDG_RUNTIME_DIR="$3/runtime" \
+              XDG_CURRENT_DESKTOP=X-Generic CLAUDE_CONFIG_DIR="$3/claude" BROWSER=false \
+              xvfb-run -a --server-args="-screen 0 1440x1000x24" dbus-run-session -- bash -e -c '\''
+                openbox > "$QA_HOME/private-openbox.log" 2>&1 &
+                manager=$!
+                trap "kill $manager 2>/dev/null || true" EXIT
+                node .github/qa/claude-code-vscode-loopback.mjs
+              '\''
+          ' claude-vscode-qa "$(id -un)" "$(dirname "$(command -v node)")" "$qa" "${handlers[0]##*/}"
+      - name: Retain bounded runtime proof
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: claude-code-vscode-loopback-draft
+          path: ${{ runner.temp }}/claude-vscode-loopback/evidence
+          if-no-files-found: warn
+          retention-days: 30
