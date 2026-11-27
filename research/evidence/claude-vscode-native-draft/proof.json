@@ -1,0 +1,45 @@
+{
+  "library": "agent-deeplinks@0.1.66",
+  "extension": "anthropic.claude-code@2.1.332",
+  "marker": "Claude Code VS Code unsent + & café ☃ %2F",
+  "uri": "vscode://anthropic.claude-code/open?prompt=Claude%2520Code%2520VS%2520Code%2520unsent%2520%252B%2520%2526%2520caf%25C3%25A9%2520%25E2%2598%2583%2520%25252F",
+  "exactNestedEncoding": true,
+  "profile": "disposable",
+  "noAccount": true,
+  "draftSubmitted": false,
+  "gatewayRequests": [],
+  "gatewayWriteAttempts": 0,
+  "onboardingActions": [
+    "Continue without Signing In",
+    "Get Started"
+  ],
+  "documentedExtensionSettings": [
+    "claudeCode.disableLoginPrompt",
+    "claudeCode.environmentVariables"
+  ],
+  "stockHandler": "com.microsoft.VSCode.UrlHandler.desktop",
+  "vscodeFixtureTrusted": true,
+  "baselineTitle": "Claude native draft QA baseline.txt - fixture - Visual Studio Code",
+  "xdgOpenStatus": 0,
+  "exactStockHandlerArgument": true,
+  "confirmedOnce": true,
+  "claudeFolderTrusted": true,
+  "editor": {
+    "value": "Claude Code VS Code unsent + & café ☃ %2F",
+    "role": "textbox",
+    "tag": "DIV",
+    "editable": true,
+    "label": "Message input",
+    "method": "visible editable in live extension renderer"
+  },
+  "claudeTrustDialogDismissed": true,
+  "result": "exact visible unsent draft",
+  "extensionActivationLogged": true,
+  "platform": "Ubuntu 24.04 x64",
+  "vscodePackage": "1.148.0-1795526052",
+  "vscodeDebSha256": "da33c10565e17b83f93508a365222f31bba116ab5c9e7bef7f562783943fd513",
+  "workflowHead": "fb917ce86bf70d2100bbecf6015dc46edc7e4255",
+  "workflowRun": "https://github.com/lalalune/agent-deeplinks/actions/runs/46082919831/job/140785806579",
+  "workflowArtifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46082919831/artifacts/15237599599",
+  "composerScreenshotSha256": "25c690910e606f5a5051960c7ead220b872899d0c953625c574977b8bd69aa90"
+}
