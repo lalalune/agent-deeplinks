@@ -220,6 +220,9 @@ function capture {
 function foreground {
   a shell dumpsys activity activities | grep -m4 -E 'topResumedActivity|mResumedActivity' || true
 }
+function has_label {
+  python3 "$here/muse-firefox-label.py" "$qa/evidence/$1.xml" "$2" "$3" --exists
+}
 phase=stock-current-muse-native-baseline
 a shell am force-stop "$app"
 a shell cmd package resolve-activity --brief -a android.intent.action.VIEW \
@@ -230,10 +233,10 @@ for attempt in {1..6}; do
   sleep 2
   foreground > "$qa/evidence/stock-android-foreground.txt"
   if grep -Fq "$app/" "$qa/evidence/stock-android-foreground.txt" && capture stock-android &&
-    grep -Fqi 'Welcome to Muse' "$qa/evidence/stock-android.xml"; then break; fi
+    has_label stock-android "$app" 'Welcome to Muse'; then break; fi
 done
 grep -Fq "$app/" "$qa/evidence/stock-android-foreground.txt"
-grep -Fqi 'Welcome to Muse' "$qa/evidence/stock-android.xml"
+has_label stock-android "$app" 'Welcome to Muse'
 grep -Eqi 'Mobile number or email|Log in' "$qa/evidence/stock-android.xml"
 printf '%s\n' 'Current Meta-signed Muse 18.0.0.8.161 launched from the stock untargeted exact displayed Android route and showed its native sign-in screen. No account used.' > "$qa/evidence/stock-android-result.txt"
 a shell am force-stop "$app"
@@ -328,14 +331,14 @@ for mode in icon-and-name icon-only; do
     sleep 3
     foreground > "$qa/evidence/$mode-after-foreground.txt"
     if grep -Fq "$app/" "$qa/evidence/$mode-after-foreground.txt"; then
-      if capture "$mode-native" && grep -Fqi 'Welcome to Muse' "$qa/evidence/$mode-native.xml"; then break; fi
+      if capture "$mode-native" && has_label "$mode-native" "$app" 'Welcome to Muse'; then break; fi
     else
       capture "$mode-browser-after" || continue
       if tap_label "$mode-browser-after" "$browser" 'Open'; then continue; fi
     fi
   done
   grep -Fq "$app/" "$qa/evidence/$mode-after-foreground.txt"
-  grep -Fqi 'Welcome to Muse' "$qa/evidence/$mode-native.xml"
+  has_label "$mode-native" "$app" 'Welcome to Muse'
   grep -Eqi 'Mobile number or email|Log in' "$qa/evidence/$mode-native.xml"
   a shell pidof "$app" > "$qa/evidence/$mode-muse-pids-after.txt"
 done
