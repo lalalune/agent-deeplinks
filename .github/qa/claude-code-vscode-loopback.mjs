@@ -19,9 +19,9 @@ assert.equal(uriOnce, encodeURIComponent(marker));
 assert.equal(decodeURIComponent(uriOnce), marker);
 assert.deepEqual(readdirSync(fixture), []);
 
-const record = { library: 'agent-deeplinks@0.1.65', extension: 'anthropic.claude-code@2.1.331', marker, uri,
+const record = { library: 'agent-deeplinks@0.1.66', extension: 'anthropic.claude-code@2.1.332', marker, uri,
   exactNestedEncoding: true, profile: 'disposable', noAccount: true, draftSubmitted: false,
-  gatewayRequests: [], gatewayWriteAttempts: 0 };
+  gatewayRequests: [], gatewayWriteAttempts: 0, onboardingActions: [] };
 const gateway = createServer((request, response) => {
   const path = new URL(request.url, 'http://127.0.0.1').pathname;
   const read = request.method === 'GET' || request.method === 'HEAD';
@@ -62,7 +62,11 @@ assert.equal(run('xdg-mime', ['default', expectedHandler, scheme]).status, 0);
 assert.equal(run('xdg-mime', ['query', 'default', scheme]).stdout.trim(), expectedHandler);
 record.stockHandler = expectedHandler;
 const port = 39347;
-const editor = spawn('code', ['--new-window', '--extensions-dir', join(qa, 'extensions'), '--remote-debugging-address=127.0.0.1', `--remote-debugging-port=${port}`, fixture], { stdio: 'ignore', detached: true });
+const seedName = 'Claude native draft QA baseline.txt';
+const seed = join(qa, seedName);
+writeFileSync(seed, 'Stock editor baseline before protocol dispatch.\n', { flag: 'wx', mode: 0o600 });
+const editor = spawn('code', ['--new-window', '--disable-gpu', '--extensions-dir', join(qa, 'extensions'),
+  '--remote-debugging-address=127.0.0.1', `--remote-debugging-port=${port}`, fixture, seed], { stdio: 'ignore', detached: true });
 const endpoint = `http://127.0.0.1:${port}`;
 let browser;
 let page;
@@ -120,19 +124,47 @@ async function matchEditor() {
   return null;
 }
 
+async function prepareWorkbench() {
+  const onboarding = page.locator('.onboarding-a-btn');
+  if (await onboarding.first().isVisible()) {
+    for (const label of ['Continue without Signing In', 'Get Started']) {
+      const action = onboarding.filter({ hasText: new RegExp(`^${label}$`) });
+      if (await action.isVisible()) {
+        await action.click({ timeout: 3500 });
+        record.onboardingActions.push(label);
+        return false;
+      }
+    }
+    return false;
+  }
+  const trust = page.locator('.monaco-dialog-box').filter({ hasText: 'Do you trust the authors' });
+  const trustButton = trust.getByRole('button', { name: 'Yes, I trust the authors', exact: true });
+  if (await trustButton.isVisible()) {
+    const text = await trust.innerText({ timeout: 3500 });
+    assert(text.includes(fixture) || text.includes('fixture'), 'VS Code trust dialog lacked the disposable fixture');
+    assert.deepEqual(readdirSync(fixture), []);
+    await trustButton.click({ timeout: 3500 });
+    record.vscodeFixtureTrusted = true;
+    return false;
+  }
+  const workbench = page.locator('.monaco-workbench');
+  const editorTab = workbench.getByText(seedName, { exact: true }).first();
+  if (await editorTab.isVisible() && !(await page.locator('.monaco-dialog-box').first().isVisible())) {
+    record.baselineTitle = await page.title();
+    return true;
+  }
+  return false;
+}
+
 try {
   assert(await until(async () => (await fetch(endpoint + '/json/version', { signal: AbortSignal.timeout(1000) }).catch(() => null))?.ok, 30));
   browser = await chromium.connectOverCDP(endpoint, { timeout: 6000 });
   page = await until(() => browser.contexts().flatMap(context => context.pages()).find(candidate => candidate.url().includes('workbench')), 25);
   assert(page, 'Native workbench CDP page did not appear');
   await page.locator('.monaco-workbench').waitFor({ timeout: 18000 });
-  const nativeTrust = page.getByRole('button', { name: 'Yes, I trust the authors', exact: true });
-  if (await nativeTrust.isVisible()) {
-    const visibleText = await page.locator('body').innerText();
-    assert(visibleText.includes('fixture') || page.url().includes(encodeURIComponent(fixture)), 'VS Code trust dialog lacked the disposable fixture');
-    await nativeTrust.click();
-    record.vscodeFixtureTrusted = true;
-  }
+  await delay(3500);
+  assert(await until(prepareWorkbench, 28), 'Normal stock workbench did not finish onboarding');
+  screenshot('stock-workbench-ready.png');
 
   const trace = outputFile('xdg-open-execve.txt');
   const dispatch = run('strace', ['-f', '-e', 'trace=execve', '-s', '650', '-o', trace, 'xdg-open', uri], { timeout: 13000 });
@@ -140,22 +172,15 @@ try {
   record.exactStockHandlerArgument = readFileSync(trace, 'utf8').split('\n').some(line => line.includes('execve("/usr/share/code/code"') && line.includes('"--open-url"') && line.includes(`"${uri}"`));
   assert(record.exactStockHandlerArgument, 'The stock VS Code launch argument did not preserve the exact URI');
 
-  const dialog = page.locator('.monaco-dialog-box');
-  await until(async () => {
-    if (await dialog.isVisible() && /Claude Code|anthropic[.]claude-code/i.test(await dialog.innerText())) {
-      const open = dialog.getByText('Open', { exact: true });
-      if (await open.isVisible()) {
-        screenshot('uri-confirmation.png');
-        await open.click();
-        record.confirmedOnce = true;
-        return true;
-      }
-    }
-    return (await page.locator('iframe.webview').count()) > 0;
-  }, 22);
-
-  const deadline = Date.now() + 50000;
+  const uriDialog = page.locator('.monaco-dialog-box').filter({hasText: /Claude Code|anthropic[.]claude-code/i});
+  const deadline = Date.now() + 75000;
   do {
+    const open = uriDialog.getByText('Open', { exact: true });
+    if (!record.confirmedOnce && await open.isVisible()) {
+      screenshot('uri-confirmation.png');
+      await open.click({ timeout: 3500 });
+      record.confirmedOnce = true;
+    }
     record.editor = await matchEditor();
     if (record.editor) break;
     if (!record.claudeFolderTrusted) {
@@ -164,8 +189,6 @@ try {
         assert(screen.text.includes(fixture), 'Claude Code trust dialog did not name the exact empty disposable fixture');
         assert(clickOcr(screen.words, 'Trust folder'), 'The exact Claude Code trust action was unavailable');
         record.claudeFolderTrusted = true;
-      } else if (screen.text.includes('Welcome to VS Code')) {
-        clickOcr(screen.words, 'Continue without Signing In');
       }
     }
     await delay(850);
@@ -189,6 +212,9 @@ try {
   assert.equal(record.gatewayWriteAttempts, 0, 'The loopback fixture saw a non-read request');
   record.result = 'exact visible unsent draft';
 } catch (error) {
+  if (page) {
+    record.lastWorkbench = await page.locator('body').innerText({ timeout: 3000 }).then(value => value.slice(0, 1800), () => null);
+  }
   screenshot('final-qa-window.png');
   record.error = error.message.split('\n')[0];
   process.exitCode = 1;
