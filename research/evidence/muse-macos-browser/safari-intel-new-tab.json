@@ -1,0 +1,76 @@
+{
+  "stage": "complete",
+  "packageVersion": "0.1.57",
+  "exactNpmURL": "https://agent.meta.ai/chat",
+  "safariVersion": "26.6",
+  "museInstallation": "/Users/runner/Applications/Muse.app",
+  "museVersion": "13.1",
+  "variants": {
+    "new-tab": {
+      "fixture": {
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "marker": "Open Meta Muse in Safari"
+      },
+      "before": {
+        "frontmost": {
+          "bundleId": "com.apple.Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "pid": 21876
+        },
+        "frontmostOwnedVisibleWindows": [
+          {
+            "frame": "{{298, 41}, {1324, 940}}",
+            "id": 121
+          }
+        ],
+        "muse": []
+      },
+      "beforeOCR": "# Satari\nFile Edit View History\nBookmarks\nWindow Help\nMuse handoff fixture\nOpen Meta Muse in Safari\n127.0.0.1\nFri Nov 27 12:47 AM\n0 + G",
+      "safariUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Safari/605.1.15",
+      "pointer": {
+        "applied": {
+          "x": 531.9999942666668,
+          "y": 260.0000004
+        },
+        "safari": {
+          "bundleId": "com.apple.Safari",
+          "path": "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app",
+          "pid": 21876
+        }
+      },
+      "activation": {
+        "name": "new-tab",
+        "href": "https://agent.meta.ai/chat",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "trusted": true,
+        "active": true
+      },
+      "after": {
+        "frontmost": {
+          "bundleId": "com.meta.endo",
+          "path": "/Users/runner/Applications/Muse.app",
+          "pid": 22155
+        },
+        "frontmostOwnedVisibleWindows": [
+          {
+            "frame": "{{360, 111}, {1200, 800}}",
+            "id": 131
+          }
+        ],
+        "muse": [
+          {
+            "bundleId": "com.meta.endo",
+            "path": "/Users/runner/Applications/Muse.app",
+            "pid": 22155
+          }
+        ]
+      },
+      "afterOCR": "Muse\nEdit\nVIeW\nWindow\nHelp\nFrI Nov 2/ 12.4/AM\n127.0.0.1\nN\netv",
+      "nativeWindowOCR": "m\nWelcome to Muse\nLog in\n0 Meta",
+      "result": "Safari cold-launched the signed Muse app and showed its sign-in surface"
+    }
+  },
+  "consentOrAccountSubmitted": false
+}
