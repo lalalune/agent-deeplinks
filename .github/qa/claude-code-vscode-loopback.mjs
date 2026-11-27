@@ -201,14 +201,19 @@ try {
       await open.click({ timeout: 3500 });
       record.confirmedOnce = true;
     }
-    record.editor = await matchEditor();
-    if (record.editor) break;
-    if (!record.claudeFolderTrusted) {
-      const screen = readOcr('visible-checkpoint.png');
-      if (screen.text.includes('Trust this folder in Claude Code?')) {
-        assert(screen.text.includes(fixture), 'Claude Code trust dialog did not name the exact empty disposable fixture');
-        assert(clickOcr(screen.words, 'Trust folder'), 'The exact Claude Code trust action was unavailable');
-        record.claudeFolderTrusted = true;
+    const screen = readOcr('visible-checkpoint.png');
+    const claudeTrustVisible = screen.text.includes('Trust this folder in Claude Code?');
+    if (claudeTrustVisible && !record.claudeFolderTrusted) {
+      assert(screen.text.includes(fixture), 'Claude Code trust dialog did not name the exact empty disposable fixture');
+      assert.deepEqual(readdirSync(fixture), []);
+      screenshot('claude-folder-trust.png');
+      assert(clickOcr(screen.words, 'Trust folder'), 'The exact Claude Code trust action was unavailable');
+      record.claudeFolderTrusted = true;
+    } else if (record.claudeFolderTrusted && !claudeTrustVisible) {
+      record.editor = await matchEditor();
+      if (record.editor) {
+        record.claudeTrustDialogDismissed = true;
+        break;
       }
     }
     await delay(850);
@@ -220,14 +225,19 @@ try {
     record.nativeFrameCount = page.frames().length;
     // If a webview is inaccessible to CDP, copy only from a confidently located
     // composer line. Focus and select are the only keyboard actions in this fallback.
-    if (clickOcr(lastScreen.words, 'Claude Code VS Code unsent')) {
+    if (record.claudeFolderTrusted && !lastScreen.text.includes('Trust this folder in Claude Code?') &&
+        clickOcr(lastScreen.words, 'Claude Code VS Code unsent')) {
       run('xdotool', ['key', '--clearmodifiers', 'ctrl+a', 'ctrl+c']);
       await delay(200);
       const copied = run('xclip', ['-selection', 'clipboard', '-o']).stdout;
-      if (copied === marker) record.editor = { value: copied, editable: true, method: 'native X11 copy from the focused composer' };
+      if (copied === marker) {
+        record.editor = { value: copied, editable: true, method: 'native X11 copy from the focused composer' };
+        record.claudeTrustDialogDismissed = true;
+      }
     }
   }
   if (record.editor) screenshot('exact-unsent-composer.png');
+  assert(record.claudeTrustDialogDismissed, 'The native Claude Code folder trust dialog was not cleared');
   assert(record.editor?.editable && [marker, marker + '\n'].includes(record.editor.value), 'Exact visible editable draft not observed');
   assert.equal(record.gatewayWriteAttempts, 0, 'The loopback fixture saw a non-read request');
   record.result = 'exact visible unsent draft';
