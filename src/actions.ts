@@ -816,6 +816,11 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       sources: ["https://claude.ai/.well-known/apple-app-site-association", sharedChatAppleChecks],
       note: "Apple’s production association matches the clean share URL. Opening a shared snapshot in the installed iPhone app still needs a device check.",
     })],
+    android: [sharedChat({
+      url: claudeSharedChat, evidence: "source",
+      sources: [claudeShareDocs, "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/claude-android-26112419/proof.json"],
+      note: "The verified Claude App Link opened the signed Android app to sign-in. Viewing the shared snapshot in the app still needs a check.",
+    })],
   },
   zcode: { web: [zcodeSharedChat], ios: [zcodeSharedChat], android: [zcodeSharedChat] },
   kimi: { web: [kimiSharedChat], ios: [kimiSharedChat], android: [kimiSharedChat] },

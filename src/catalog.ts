@@ -76,6 +76,8 @@ const claudeDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45539037898/artifacts/14987968227",
 ] as const;
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
+const claudeAndroidAssociation = "https://claude.ai/.well-known/assetlinks.json";
+const claudeAndroidChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/claude-android-26112419/proof.json";
 const claudeVsCodeDocs = "https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools";
 const codexDocs = "https://learn.chatgpt.com/docs/reference/commands";
 const codexRemoteThreadSource = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/codex-copied-remote-thread/proof.json";
@@ -535,11 +537,11 @@ const catalog = {
         note: "Associated iOS URL for a new chat. Native prompt handling needs a device test.",
       },
       android: {
-        url: "https://play.google.com/store/apps/details?id=com.anthropic.claude",
+        url: "https://claude.ai/new",
         behavior: "handoff",
-        evidence: "documented",
-        sources: ["https://support.claude.com/en/articles/9612887-install-claude-for-android"],
-        note: "Opens Claude’s official Google Play listing. Native chat routing is unverified.",
+        evidence: "verified",
+        sources: [claudeAndroidAssociation, claudeAndroidChecks],
+        note: "The signed Android app opened to sign-in through the verified Claude App Link. The browser fallback also reached Claude sign-in.",
       },
     },
   },
@@ -566,7 +568,11 @@ const catalog = {
         note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Windows and Ubuntu received the exact link, including Windows ARM64. Claude asks for confirmation before using a local folder or SSH target. SSH fields require Desktop v2.110.0 or later.",
       },
       ios: claudeCodeMobileRoute,
-      android: claudeCodeMobileRoute,
+      android: {
+        ...claudeCodeMobileRoute,
+        sources: [claudeMobileDocs, claudeAndroidChecks],
+        note: "Requires Claude Code access. The signed Android app opened draft and cloud-session links to sign-in. Signed-in composer and session behavior still need a check.",
+      },
       cli: {
         url: "claude-cli://open",
         behavior: "draft",

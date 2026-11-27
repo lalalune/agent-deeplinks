@@ -315,7 +315,9 @@ test("requires opt-in before opening web links with submission or unknown behavi
   assert.equal(getAgentRoute("meta-muse", "android").behavior, "launch");
   assert.equal(getAgentRoute("meta-muse", "android").evidence, "verified");
   assert.equal(getAgentLink("meta-muse", "android", { prompt: special, allowExperimental: true }), null);
-  assert.equal(getAgentLink("claude", "android"), "https://play.google.com/store/apps/details?id=com.anthropic.claude");
+  assert.equal(getAgentLink("claude", "android"), "https://claude.ai/new");
+  assert.equal(getAgentRoute("claude", "android").behavior, "handoff");
+  assert.equal(getAgentLink("claude", "android", { prompt: special, allowExperimental: true }), null);
   for (const platform of ["ios", "android"]) {
     assert.equal(getAgentLink("codex", platform), "https://chatgpt.com/app/codex");
     assert.equal(getAgentLink("codex", platform, { prompt: special }), null);
@@ -1042,8 +1044,7 @@ test("opens shared chat snapshots with platform-specific browser exclusions", ()
     ["claude", "claude.ai", "#no_universal_links"],
   ]) {
     const url = `https://${host}/share/${id}`;
-    const variants = [["web", url + exclusion], ["ios", url]];
-    if (agent === "chatgpt") variants.push(["android", url]);
+    const variants = [["web", url + exclusion], ["ios", url], ["android", url]];
     for (const [platform, href] of variants) {
       const options = { action: "shared-chat", target: `${url}/?ref=tracking#discard` };
       assert.equal(getAgentLink(agent, platform, options), href);
@@ -1226,7 +1227,8 @@ test("opens a Cursor Origin pull request on web, iOS, and Android", () => {
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");
-  assert.equal(getAgentRoute("claude", "android", "shared-chat"), null);
+  assert.deepEqual(getAgentActions("claude", "android").map(({ id }) => id), ["shared-chat"]);
+  assert.equal(getAgentLink("claude", "android"), "https://claude.ai/new");
   assert.deepEqual(getAgentActions("does-not-exist", "web"), []);
   assert.equal(getAgentRoute("chatgpt", "android", "app"), null);
   assert.equal(getAgentRoute("chatgpt", "web").url, "https://chatgpt.com/");

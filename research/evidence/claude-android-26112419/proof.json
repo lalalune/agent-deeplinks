@@ -1,0 +1,105 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45913811151",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45913811151/artifacts/15160414704",
+  "head": "8a0ca28a17670fb758b294d46d241eb19c63b3cf",
+  "publishedLinkGenerator": "agent-deeplinks@0.1.55",
+  "target": "ARM64 Android 15 (API 35), no ABI translation",
+  "package": "com.anthropic.claude",
+  "version": "1.261124.19",
+  "build": 26112419,
+  "distribution": {
+    "playListing": "https://play.google.com/store/apps/details?id=com.anthropic.claude",
+    "artifactSource": "Unchanged Android APK splits acquired through a versioned public mirror",
+    "variantMinSdk": 32,
+    "variantTargetSdk": 37,
+    "apkSha256": {
+      "com.anthropic.claude-26112419.apk": "a4b543e6c137dd599dfc512fde9642fdac0c47906c764420c59fe803a06b2a75",
+      "com.anthropic.claude-26112419-config.arm64_v8a.apk": "6a2dd574e3d78184163007e6987ca4203854c1ecaed52ca89b09ff055d038353",
+      "com.anthropic.claude-26112419-config.xxhdpi.apk": "31dfc4014b35900976781c472d1921838c2fe7e20091a341a589c69e21553c8f"
+    },
+    "signingVerification": "APK Signature Scheme v3",
+    "signerSha256": "305a1e8a432e5ec0c612b2465359c3b88e3c95d6253599ac6088562b818b64a0",
+    "sourceStampVerification": "Android SDK Build-Tools 36.0.0 verified all three source stamps on locally downloaded files with the same pinned digests",
+    "hostedSourceStampObservation": "The runner's earlier apksigner reports the same source-stamp certificate and does not recognize stamp attribute 0xe43c5946",
+    "sourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d",
+    "publisherAssociation": "https://claude.ai/.well-known/assetlinks.json"
+  },
+  "verifiedAppLinkOwner": {
+    "host": "claude.ai",
+    "owner": "com.anthropic.claude",
+    "verifiedBy": "Android StatementService"
+  },
+  "routes": {
+    "claude-new-https": {
+      "url": "https://claude.ai/new",
+      "beforeInstallHandler": "browser",
+      "packageResolveActivity": "android/com.android.internal.app.ResolverActivity",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    },
+    "claude-share-https": {
+      "url": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00",
+      "beforeInstallHandler": "browser",
+      "packageResolveActivity": "android/com.android.internal.app.ResolverActivity",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    },
+    "code-draft-native": {
+      "url": "claude://code/new?q=Claude%20Code%20Android%20QA%20%26%20caf%C3%A9%20%2B%2042&mode=plan",
+      "beforeInstallHandler": "no activity",
+      "packageResolveActivity": "com.anthropic.claude/.deeplink.SecretLinksInClaudeTask",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    },
+    "code-draft-https": {
+      "url": "https://claude.ai/code/new?q=Claude%20Code%20Android%20QA%20%26%20caf%C3%A9%20%2B%2042&mode=plan",
+      "beforeInstallHandler": "browser",
+      "packageResolveActivity": "android/com.android.internal.app.ResolverActivity",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    },
+    "code-session-native": {
+      "url": "claude://code/session_QAandroid00000000001",
+      "beforeInstallHandler": "no activity",
+      "packageResolveActivity": "com.anthropic.claude/.deeplink.SecretLinksInClaudeTask",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    },
+    "code-session-https": {
+      "url": "https://claude.ai/code/session_QAandroid00000000001",
+      "beforeInstallHandler": "browser",
+      "packageResolveActivity": "android/com.android.internal.app.ResolverActivity",
+      "untargetedColdLaunch": "com.anthropic.claude/.mainactivity.MainActivity",
+      "visibleScreen": "Claude sign-in"
+    }
+  },
+  "browserFallback": {
+    "profile": "fresh Pixel 7 Chromium profile",
+    "url": "https://claude.ai/new",
+    "httpStatus": 200,
+    "finalUrl": "https://claude.ai/login?from=logout&reauth=1&returnTo=%2Fnew%3F",
+    "visibleScreen": "Claude web sign-in"
+  },
+  "publicShareSource": "https://c88c.org/sp26/assets/slides/16-Inheritance.pdf",
+  "screenshot": "claude-native-sign-in.png",
+  "appAccountActions": 0,
+  "appSendActions": 0,
+  "scope": "Native dispatch and browser fallback. Signed-in destinations remain pending.",
+  "candidateBuildMatchesAllSixNativeUrls": true,
+  "playground": {
+    "engine": "Chromium 158.0.8127.18",
+    "profiles": [
+      "desktop Android selector",
+      "Pixel 7 mobile"
+    ],
+    "buttonStyles": [
+      "Icons + names",
+      "Icons only"
+    ],
+    "exactLinks": {
+      "Open Claude": "https://claude.ai/new",
+      "Claude: Shared chat": "https://claude.ai/share/7b6b317b-bea4-4fa4-8463-d9265ad80a00"
+    },
+    "pageErrors": 0
+  }
+}

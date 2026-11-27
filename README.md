@@ -59,6 +59,8 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 - Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
 - Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
 
+On Android, Claude's default link opens the installed app through its HTTPS App Link. Use the `shared-chat` action for a public Claude share. The official installer is available on [Google Play](https://play.google.com/store/apps/details?id=com.anthropic.claude).
+
 ### OpenCode on Android
 
 Pair a server in OpenCode first. Use the Android app's **Copy Session ID** action to open a saved session on the active server. If your integration already has the full Android AppSearch URI, pass it as `session` to preserve the saved server. For a blank draft in a specific project on the active server, pass its `id` from that server's `GET /api/project` response as `project` with `mode: "new"`. [OpenCode API](https://opencode.ai/docs/api#project.list) · [Android link research](research/coding-agents.md#opencode) · [Live playground](https://deeplinks.fun/)

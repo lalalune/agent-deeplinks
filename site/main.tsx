@@ -161,7 +161,7 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     },
     "shared-chat": {
       label: "Shared chat",
-      options: () => ({ target: "12345678-1234-4234-9234-123456789abc" }),
+      options: () => ({ target: "7b6b317b-bea4-4fa4-8463-d9265ad80a00" }),
     },
   },
   cursor: {
