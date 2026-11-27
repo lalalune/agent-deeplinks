@@ -1,0 +1,69 @@
+{
+  "result": "pass",
+  "promptSubmitted": false,
+  "cloneClicked": false,
+  "packageVersion": "0.1.63",
+  "appVersion": "2.3.0",
+  "appBuild": "1",
+  "sourceCommit": "67c442a17e6e5d6c9f768714820cecb5f15d4f9b",
+  "appExecutableSha256": "33b9961e6446d2d527ddc666124a480a1794c0b2e49a033c187a231e705c1448",
+  "iosVersion": "26.4",
+  "iosRuntimeBuild": "23E244",
+  "buildType": "Release from upstream source for iOS Simulator",
+  "matchedUri": "t3code://new?pr=https%3A%2F%2Fgithub.com%2Fpingdotgg%2Ft3code%2Fpull%2F26290&prompt=iOS%20matched%20T3%20PR%20draft%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F",
+  "publicPullRequest": "https://github.com/pingdotgg/t3code/pull/26290",
+  "publicGitHubRead": {
+    "anonymous": true,
+    "number": 26290,
+    "state": "closed",
+    "head": "t3code/shared/thread-deep-links",
+    "base": "main"
+  },
+  "registeredProjectRepository": "pingdotgg/t3code",
+  "loopbackOnlyScratchBackend": true,
+  "separateGitHubCliConfig": true,
+  "telemetryDisabledForScratchServer": true,
+  "serverExecutableSha256": "6f9e8b91e1b9d306951009359aee652796146064d023d1bb55e1afdf6facf79f",
+  "serverVersion": "0.1.13-nightly.20261125.5258",
+  "initialProjection": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "matchedPullRequestColdLaunch": {
+    "previousProcessExited": true,
+    "newProcess": true
+  },
+  "pullRequestUnavailableNotice": false,
+  "nativeReviewLabels": [
+    "Prompt from a link",
+    "This prompt came from a link. Read it before you send.",
+    "OK"
+  ],
+  "draftState": {
+    "exactDraft": true,
+    "exactRegisteredProject": true,
+    "exactPairedEnvironment": true,
+    "exactPrompt": "iOS matched T3 PR draft + & café ☃ %2F",
+    "keptPublicPRReference": true,
+    "keptPublishedHeadBranch": true
+  },
+  "visiblePRTitle": false,
+  "afterProjection": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "scratchGitUnchanged": true,
+  "scratchWorktreeCount": 1,
+  "onlyPromptNoticeAcknowledged": true,
+  "nativeLocalPairing": true,
+  "identicalLinkPackageVersion": "0.1.62",
+  "screenshotComposerLabels": [
+    "New thread",
+    "New worktree",
+    "From PR #26290"
+  ]
+}
