@@ -1,0 +1,63 @@
+{
+  "result": "pass",
+  "promptSubmitted": false,
+  "cloneClicked": false,
+  "packageVersion": "0.1.55",
+  "appVersion": "2.3.0",
+  "appBuild": "1",
+  "sourceCommit": "67c442a17e6e5d6c9f768714820cecb5f15d4f9b",
+  "appExecutableSha256": "33b9961e6446d2d527ddc666124a480a1794c0b2e49a033c187a231e705c1448",
+  "iosVersion": "26.4",
+  "iosRuntimeBuild": "23E244",
+  "buildType": "Release from upstream source for iOS Simulator",
+  "matchedUri": "t3code://new?prompt=iOS%20isolated%20T3%20repository%20QA%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F&repo=agent-link-fixture%2Fios-repo-link-84a7",
+  "unmatchedUri": "t3code://new?prompt=iOS%20isolated%20T3%20repository%20QA%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F&repo=agent-link-fixture%2Fios-unregistered-84a7",
+  "loopbackListenerAndScratchHome": true,
+  "telemetryDisabledForScratchServer": true,
+  "serverExecutableSha256": "6f9e8b91e1b9d306951009359aee652796146064d023d1bb55e1afdf6facf79f",
+  "serverVersion": "0.1.13-nightly.20261125.5258",
+  "stockLocalPairing": true,
+  "initialProjection": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "registeredRepositoryColdLaunch": {
+    "previousProcessExited": true,
+    "newProcess": true
+  },
+  "exactNativeDraft": "iOS isolated T3 repository QA + & café ☃ %2F",
+  "projectTitleVisible": false,
+  "draftBinding": {
+    "exactDraft": true,
+    "exactRegisteredProject": true,
+    "exactPairedEnvironment": true
+  },
+  "unregisteredRepositoryColdLaunch": {
+    "previousProcessExited": true,
+    "newProcess": true
+  },
+  "missingRepositoryChoices": [
+    "Cancel",
+    "Clone",
+    "Use without project"
+  ],
+  "finalProjection": {
+    "threads": 1,
+    "runs": 0,
+    "providerSessions": 0,
+    "providerTurns": 0
+  },
+  "publishedPackageEquivalence": {
+    "packageVersion": "0.1.56",
+    "bothColdUrisMatch": true
+  },
+  "draftSource": "Exact editable composer accessibility value and app-owned persisted draft in the disposable simulator",
+  "appStoreBuildInstalled": false,
+  "screenshots": {
+    "registered-project-prompt-review.png": "2e4ce234f1aa2c37768d39e86cc1e288e127f1b75d4af2a11bb752c5aa856e7f",
+    "unregistered-project-review.png": "b4e0a01148653fda451cff21a526e2117409e06c07dea5166ee3e90fa639554a"
+  },
+  "disposableSimulatorsShutDown": true
+}
