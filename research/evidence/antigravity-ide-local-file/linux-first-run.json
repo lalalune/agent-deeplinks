@@ -1,0 +1,25 @@
+{
+  "result": "native-review-accepted-welcome-observed",
+  "platform": "Ubuntu 24.04 x64",
+  "appVersion": "2.8.0",
+  "npmVersion": "0.1.64",
+  "uri": "antigravity-ide://file/home/runner/work/_temp/antigravity-ide-linux/QA%20exact%20IDE%20file%20opener%207812.txt",
+  "fixture": "/home/runner/work/_temp/antigravity-ide-linux/QA exact IDE file opener 7812.txt",
+  "nativeExactFileReview": true,
+  "dialogFocusedOwnedProcess": true,
+  "oneTimeConsentClicked": true,
+  "changedConfirmationSettings": false,
+  "accountUsed": false,
+  "termsAccepted": false,
+  "visibleAfterConsent": [
+    "Welcome to Antigravity IDE",
+    "Get Started"
+  ],
+  "verification": "The automated review matched the synthetic path and clicked Yes in the owned foreground dialog. The welcome UI and Get Started button were visually verified in the screenshot.",
+  "displayedFixture": false,
+  "onboardingStarted": false,
+  "screenshot": "linux-first-run.png",
+  "screenshotSha256": "23d1e1705a59f328df6167c3352eaf691af0316b4a5618102b5913e3e5282010",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45932921611/job/140289437097",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45932921611/artifacts/15169196779"
+}
