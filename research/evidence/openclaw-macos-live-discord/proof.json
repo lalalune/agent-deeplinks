@@ -45,5 +45,13 @@
   "catalogControlsSelected": false,
   "catalogInstallAudit": "No plugin install registrations or extensions directory.",
   "screenshot": "discord-window.png",
-  "jobOutcome": "The XCTest assertion filtered the action buttons by label, while their names appeared as title in the AX dump. The archived app window shows both controls."
+  "jobOutcome": "The XCTest assertion filtered the action buttons by label, while their names appeared as title in the AX dump. The archived app window shows both controls.",
+  "passingRetry": {
+    "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/45926192038",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45926192038/artifacts/15165964798",
+    "head": "1c2bc28ba10421b4b73385759da62ac16de74692",
+    "conclusion": "success",
+    "visibleReviewAssertion": "OPENCLAW_DISCORD_REVIEW title=Discord installVisible=true askVisible=true catalogControlsSelected=false",
+    "noCatalogInstallAuditPassed": true
+  }
 }
