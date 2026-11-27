@@ -1,0 +1,72 @@
+name: Grok Bot native Slack plugin handoff
+on:
+  push:
+    branches: [codex/grok-plugin-linux-native-qa]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify publisher package and production URI provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          qa="$RUNNER_TEMP/grok-bot-plugin-desktop"
+          mkdir -p "$qa/evidence" "$qa/npm"
+          vendor='https://downloads.cursor.com'
+          rev=bfb372966cec77c6ec2750957965f2a2268da17d
+          deb_url="$vendor/grokbot/stable/$rev/linux/x64/grok-bot_1.3.0_amd64.deb"
+          apt_index=main/binary-amd64/Packages
+          vendor_hash=87b046b6e4126c3eb466df59135b59c8efbb5f9f10e0de548f0d65ec8ac55528
+          fingerprint=380FF4BCDC34A4BD92A3565342A1772E62E492D6
+          export GNUPGHOME="$qa/gnupg"
+          mkdir -m 700 "$GNUPGHOME"
+          fetch() { curl -fsSL --proto '=https' --max-time 95 --max-filesize "$3" "$1" -o "$2"; }
+          fetch https://api2.cursor.sh/updates/api/download/stable/linux-x64/sand "$qa/evidence/feed.json" 65536
+          jq -e --arg commit "$rev" --arg url "$deb_url" '.version == "1.3.0" and .commitSha == $commit and .debUrl == $url' "$qa/evidence/feed.json"
+          fetch "$vendor/keys/anysphere.asc" "$qa/anysphere.asc" 65536
+          test "$(gpg --batch --with-colons --show-keys "$qa/anysphere.asc" | awk -F: '$1=="fpr" {print $10}')" = "$fingerprint"
+          gpg --batch --dearmor --output "$qa/vendor.gpg" "$qa/anysphere.asc"
+          fetch "$vendor/aptrepo/dists/grok-bot/InRelease" "$qa/InRelease" 65536
+          gpgv --keyring "$qa/vendor.gpg" --output "$qa/Release" "$qa/InRelease" 2>&1 | tee "$qa/evidence/gpgv.txt"
+          fetch "$vendor/aptrepo/dists/grok-bot/$apt_index" "$qa/evidence/Packages" 65536
+          index_hash="$(awk -v index="$apt_index" '$0=="SHA256:"{inside=1;next} inside && $3==index{print $1;exit}' "$qa/Release")"
+          printf '%s  %s\n' "$index_hash" "$qa/evidence/Packages" | sha256sum --check
+          grep -Fx "SHA256: $vendor_hash" "$qa/evidence/Packages"
+          deb="$qa/grok-bot_1.3.0_amd64.deb"
+          fetch "$deb_url" "$deb" 125000000
+          printf '%s  %s\n' "$vendor_hash" "$deb" | sha256sum --check | tee "$qa/evidence/sha256.txt"
+          test "$(dpkg-deb -f "$deb" Version)" = 1.3.0
+          test "$(dpkg-deb -f "$deb" Package)" = grok-bot
+          test "$(dpkg-deb -f "$deb" Architecture)" = amd64
+          sudo apt-get update -o Acquire::Retries=2
+          sudo apt-get install -y --no-install-recommends xvfb xauth dbus-x11 openbox wmctrl scrot desktop-file-utils xdg-utils tesseract-ocr strace "$deb"
+          grep -E '^(Name|Exec|MimeType)=' /usr/share/applications/grok-bot.desktop > "$qa/evidence/desktop-entry.txt"
+          dpkg-query -W grok-bot > "$qa/evidence/installed-version.txt"
+          lsb_release -d > "$qa/evidence/system.txt"
+          fetch https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.67.tgz "$qa/npm/release.tgz" 300000
+          tarball_hash="$(openssl dgst -sha512 -binary "$qa/npm/release.tgz" | openssl base64 -A)"
+          test "$tarball_hash" = 'xz0RoBn5ikOFRMkYW55bUJSfBahkVHbeJF5xOi7lkqRzqoXwBTF7x1hz0qMmtLWId9zMiONyHaJY9GL7MLH0yQ=='
+          tar -xzf "$qa/npm/release.tgz" -C "$qa/npm" -- package/package.json package/dist
+          fetch https://x.ai/bot/plugin/674 "$qa/slack.html" 1200000
+          grep -Fq 'grokbot://app/v1/plugin/add?id=674' "$qa/slack.html"
+      - name: Deliver the exact Slack link to the stock desktop app
+        run: bash .github/qa/grok-bot-plugin-desktop.sh
+      - name: Upload bounded native evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: grok-plugin-desktop-evidence
+          path: ${{ runner.temp }}/grok-bot-plugin-desktop/evidence
+          if-no-files-found: error
+          retention-days: 14
