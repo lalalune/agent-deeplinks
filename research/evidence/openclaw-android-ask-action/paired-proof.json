@@ -1,0 +1,53 @@
+{
+  "apkVersion": "2026.8.2",
+  "gatewayVersion": "2026.8.2",
+  "isolatedArmAndroid": true,
+  "action": "ai.openclaw.app.action.ASK_OPENCLAW",
+  "extra": "prompt",
+  "nativeExplicitOnly": true,
+  "gatewayReady": true,
+  "androidOperatorApproved": false,
+  "nodeApproved": true,
+  "modelConnections": 0,
+  "draftSubmitted": false,
+  "visibleExactComposer": true,
+  "noBrowserDashboardHandler": true,
+  "coldExplicitDelivered": true,
+  "coldVisibleWelcome": true,
+  "exactDisposableCredentialEntered": true,
+  "visibleNodeGate": true,
+  "pendingRoles": [
+    "node"
+  ],
+  "nativeGatewayPaired": true,
+  "pendingNodeCapabilityCount": 1,
+  "nodeCapabilityApproved": true,
+  "optionalPermissionControlsUntouched": true,
+  "visibleChatBaseline": true,
+  "warmExplicitDelivered": true,
+  "visibleWarmExactComposer": true,
+  "appStoppedBeforeColdAction": true,
+  "pairedColdExplicitDelivered": true,
+  "exactColdComposer": "OpenClaw Android native draft QA + & %2F café ☃ [cold]",
+  "exactWarmComposer": "OpenClaw Android native draft QA + & %2F café ☃ [warm]",
+  "stage": "Exact unsent text in the native Chat editor",
+  "hostedTest": {
+    "run": 45933000327,
+    "job": 140289686988,
+    "sourceCommit": "018853b0b96f8745af47181e928af565d8c9f8d2",
+    "androidVersion": 15,
+    "architecture": "arm64-v8a"
+  },
+  "publisherArtifact": {
+    "distribution": "publisher-signed standalone APK",
+    "build": 2026080201,
+    "sha256": "e5e528488d50bd2a0fd1813ab4260ecbb5973de8c1b6936f39eeb0ba4e648e19",
+    "signerSha256": "80dbc62315ea216dd6e8a7060735a866ddc464a48ed50fef29ff0550468b9a63"
+  },
+  "screenshotLabels": [
+    "Chat",
+    "Ready",
+    "Ready when you are",
+    "Fixture guard"
+  ]
+}
