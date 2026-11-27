@@ -1,0 +1,86 @@
+{
+  "build": 831,
+  "version": "2.4.0",
+  "promptSubmitted": false,
+  "coldDispatches": {
+    "matchedPullRequest": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    }
+  },
+  "registeredProjectTitle": "T3 Native Target 74F2",
+  "packageVersion": "0.1.60",
+  "target": "https://github.com/lalalune/agent-deeplinks/pull/1",
+  "exactUri": "t3code://new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20Android%20PR%20%231%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA",
+  "marker": "T3 Android PR #1 QA + & literal %2F café 🧪",
+  "initialProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "pairingFormOpenedByStockRoute": false,
+  "stockLocalPairing": true,
+  "reviewLabels": [
+    "Prompt from a link",
+    "This prompt came from a link. Read it before you send.",
+    "OK"
+  ],
+  "matchedPullRequest": {
+    "publicMetadata": {
+      "headBranch": "codex/npm-publishing",
+      "headSha": "583e7d566593ded4090f28fd4bfd140d2efccdcc",
+      "merged": true,
+      "number": 1,
+      "state": "closed",
+      "title": "Configure npm trusted publishing",
+      "url": "https://github.com/lalalune/agent-deeplinks/pull/1"
+    },
+    "exactEditableUnsentDraft": "T3 Android PR #1 QA + & literal %2F café 🧪",
+    "workspaceSelection": {
+      "mode": "worktree",
+      "branch": "codex/npm-publishing",
+      "worktreePath": null,
+      "startFromOrigin": false,
+      "pullRequestReference": "https://github.com/lalalune/agent-deeplinks/pull/1"
+    },
+    "pairedEnvironmentAndProjectMatched": true,
+    "separatePullRequestBadgeVerified": false
+  },
+  "registeredProjectUnchanged": true,
+  "finalProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45923838254/job/140260514642",
+  "workflowCommit": "7f6a48ba0f6679ecfbb410362173fb87ba5588e3",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45923838254/artifacts/15164738710",
+  "npmTarballSha256": "09ea218e23ad95410f733b42c735c938a8e7be1c91548e0a04fd60e3560657cb",
+  "android": {
+    "version": "15",
+    "api": 35,
+    "abi": "arm64-v8a",
+    "runtime": "Hosted ReDroid",
+    "dispatch": "Untargeted Android ACTION_VIEW with BROWSABLE"
+  },
+  "distribution": {
+    "release": "https://github.com/pingdotgg/t3code/releases/tag/android-beta-831",
+    "apkSha256": "821e7e841349df4a294969d417dcd16956d11b6253e2064802d44374e91e692a",
+    "apkSignerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6",
+    "googleSourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d"
+  },
+  "git": {
+    "scratchStatusRefsWorktreesObjectsConfigAndFetchMarkersMatched": true,
+    "beforeSha256": "c7b803867a7ad05fee040213cf7aabd24936019b5a483ee8feeaca9812653bef",
+    "afterSha256": "c7b803867a7ad05fee040213cf7aabd24936019b5a483ee8feeaca9812653bef"
+  },
+  "githubRead": "Scoped GitHub Actions credential with contents and pull requests read access. The scratch T3 server could reach loopback and the GitHub API.",
+  "screenshot": {
+    "file": "android-matched-draft.png",
+    "sha256": "4c41afd3ff3638ecff0c41d7064e1df411926fbaa5e18e3e1859d518c01542f5"
+  },
+  "scope": "The model-free composer showed New thread and the exact editable prompt. The app-owned draft held the PR metadata. The archived job matched PR #1 in the prompt when checking visible context, so the screenshot and accessibility output leave a separate PR badge unverified."
+}
