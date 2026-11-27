@@ -1,0 +1,209 @@
+{
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083733329/job/140788410205",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083733329/artifacts/15238586447",
+  "artifactSha256": "2358f91fe8fb8b0da39e456270c041d0fd38e13587ef2ea61e63ae4bc5785d1c",
+  "headSha": "ad83263e81a227dceb8bbaea0372d7b3667566e1",
+  "os": "macOS 26.7.2 (25G332), ARM64",
+  "nativeDispatch": "Untargeted stock LaunchServices cold start via open -u. Diagnostic arguments bound a renderer observer to the new process on loopback.",
+  "signedArtifact": {
+    "teamIdentifier": "ARK85ZXQ4Z",
+    "gatekeeper": "Notarized Developer ID",
+    "desktopDmgSha256": "dfdc4e87a7e56ac11fb5c7ec3cf608db854b3e9c4f755acc75b13f266a9478fa",
+    "cliArchiveSha256": "d83b2e1ef9557e12f340a7299646203cdcdd5ee0af3272e6922c26410cfef396",
+    "npmArchiveSha256": "357a79383be1d4944871946d5d1aa98d007958fba5f804b3ad020e0ed6a60f13"
+  },
+  "nativeScreenshotSha256": "c03ef5b65b5c9669872ac8e2572bf483597a7078fe74192652a7408a70588289",
+  "runtime": {
+    "release": "agent-deeplinks@0.1.67",
+    "t3": "0.1.13 macOS arm64",
+    "desktopBinary": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app/Contents/MacOS/T3 Code (Beta)",
+    "accountUsed": false,
+    "osHome": "disposable GitHub-hosted runner",
+    "providerSubmission": false,
+    "modelCliPresent": false,
+    "seedObservation": "ERR_SQLITE_ERROR",
+    "seedThreadCount": 1,
+    "seedProjectCount": 1,
+    "seed": {
+      "environmentId": "8085d91e-6eba-4913-a459-4f627384f350",
+      "threadId": "thread:project:061b5b2b-762f-4df0-bdaa-c15bf96d1c64:4bdba8da-0107-43da-a3d8-d538f2374e9e",
+      "counts": {
+        "threads": 1,
+        "runs": 0,
+        "provider_sessions": 0,
+        "provider_turns": 0
+      },
+      "projectIsDisposableGit": true
+    },
+    "cliStopped": {
+      "code": 130,
+      "signal": null
+    },
+    "runningBundle": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app",
+    "firstLaunchViaBundleExecutable": true,
+    "nativeScope": {
+      "pid": 3173,
+      "blank": "t3code://threads/8085d91e-6eba-4913-a459-4f627384f350/thread%3Aproject%3A061b5b2b-762f-4df0-bdaa-c15bf96d1c64%3A4bdba8da-0107-43da-a3d8-d538f2374e9e",
+      "draft": "t3code://threads/8085d91e-6eba-4913-a459-4f627384f350/thread%3Aproject%3A061b5b2b-762f-4df0-bdaa-c15bf96d1c64%3A4bdba8da-0107-43da-a3d8-d538f2374e9e?prompt=T3%20Mac%200.1.13%20cold%20saved-thread%20draft%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83",
+      "marker": "T3 Mac 0.1.13 cold saved-thread draft + & %2F café ☃"
+    },
+    "observerError": "Error",
+    "observerOwnerLoopback": true,
+    "rendererTargets": [
+      {
+        "type": "page",
+        "protocol": "t3code:",
+        "expectedHost": true
+      }
+    ],
+    "rendererDiagnostics": [],
+    "startupRenderer": {
+      "packaged": true,
+      "root": false,
+      "draftRoute": true,
+      "observedRoute": "/draft/977a6ba4-33c4-4986-b4df-e0318db66c74",
+      "matchesThread": false,
+      "hasRetainedPromptQuery": false,
+      "title": "T3 Code (Beta)",
+      "visibleHeading": true,
+      "hasText": true,
+      "visiblePanels": true,
+      "logoOnly": false,
+      "editableExact": false,
+      "observedEditorValue": null,
+      "sawLinkNotice": false,
+      "skipAgent": null
+    },
+    "startupFrame": {
+      "ownedWindowId": 34,
+      "windowTitle": "T3 Code (Beta)",
+      "rendererFrame": true
+    },
+    "bundledRootBootstrap": {
+      "used": true,
+      "error": null
+    },
+    "offTarget": {
+      "packaged": true,
+      "root": false,
+      "draftRoute": true,
+      "observedRoute": "/draft/977a6ba4-33c4-4986-b4df-e0318db66c74",
+      "matchesThread": false,
+      "hasRetainedPromptQuery": false,
+      "title": "T3 Code (Beta)",
+      "visibleHeading": true,
+      "hasText": true,
+      "visiblePanels": true,
+      "logoOnly": false,
+      "editableExact": true,
+      "observedEditorValue": "",
+      "sawLinkNotice": false,
+      "skipAgent": null
+    },
+    "offTargetFrame": {
+      "ownedWindowId": 34,
+      "windowTitle": "T3 Code (Beta)",
+      "rendererFrame": true
+    },
+    "stockBlankDispatchAccepted": true,
+    "blank": {
+      "packaged": true,
+      "root": false,
+      "draftRoute": false,
+      "observedRoute": "/8085d91e-6eba-4913-a459-4f627384f350/thread%3Aproject%3A061b5b2b-762f-4df0-bdaa-c15bf96d1c64%3A4bdba8da-0107-43da-a3d8-d538f2374e9e",
+      "matchesThread": true,
+      "hasRetainedPromptQuery": false,
+      "title": "T3 Code (Beta)",
+      "visibleHeading": true,
+      "hasText": true,
+      "visiblePanels": true,
+      "logoOnly": false,
+      "editableExact": true,
+      "observedEditorValue": "",
+      "sawLinkNotice": false,
+      "skipAgent": null
+    },
+    "blankFrame": {
+      "ownedWindowId": 34,
+      "windowTitle": "fixture / New thread",
+      "rendererFrame": true
+    },
+    "beforeColdOffTarget": {
+      "packaged": true,
+      "root": false,
+      "draftRoute": true,
+      "observedRoute": "/draft/977a6ba4-33c4-4986-b4df-e0318db66c74",
+      "matchesThread": false,
+      "hasRetainedPromptQuery": false,
+      "title": "fixture / New thread",
+      "visibleHeading": true,
+      "hasText": true,
+      "visiblePanels": true,
+      "logoOnly": false,
+      "editableExact": true,
+      "observedEditorValue": "",
+      "sawLinkNotice": false,
+      "skipAgent": null
+    },
+    "coldBefore": {
+      "warmPid": 3173,
+      "signedAppProcessCount": 0,
+      "previousPidNoLongerRegistered": true
+    },
+    "coldDispatch": {
+      "uri": "t3code://threads/8085d91e-6eba-4913-a459-4f627384f350/thread%3Aproject%3A061b5b2b-762f-4df0-bdaa-c15bf96d1c64%3A4bdba8da-0107-43da-a3d8-d538f2374e9e?prompt=T3%20Mac%200.1.13%20cold%20saved-thread%20draft%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83",
+      "selectedBundle": "/Users/runner/work/_temp/t3-macos-existing-thread/T3 Code (Beta).app",
+      "appSelection": "system default via LaunchServices",
+      "openAccepted": true,
+      "newPid": 4074,
+      "newProcessOwnedBundle": true
+    },
+    "draft": {
+      "packaged": true,
+      "root": false,
+      "draftRoute": false,
+      "observedRoute": "/8085d91e-6eba-4913-a459-4f627384f350/thread%3Aproject%3A061b5b2b-762f-4df0-bdaa-c15bf96d1c64%3A4bdba8da-0107-43da-a3d8-d538f2374e9e",
+      "matchesThread": true,
+      "hasRetainedPromptQuery": false,
+      "title": "fixture / New thread",
+      "visibleHeading": true,
+      "hasText": true,
+      "visiblePanels": true,
+      "logoOnly": false,
+      "editableExact": true,
+      "observedEditorValue": "T3 Mac 0.1.13 cold saved-thread draft + & %2F café ☃",
+      "sawLinkNotice": true,
+      "skipAgent": null
+    },
+    "draftFrame": {
+      "ownedWindowId": 49,
+      "windowTitle": "fixture / New thread",
+      "rendererFrame": true
+    },
+    "result": "cold-native-existing-thread-draft-visible",
+    "rendererBoot": {
+      "history": true,
+      "records": [
+        {
+          "surface": "main",
+          "event": "created"
+        },
+        {
+          "surface": "main",
+          "event": "dom-ready"
+        }
+      ],
+      "processSignals": [
+        "bootstrap resolved backend endpoint",
+        "main window created",
+        "backend ready"
+      ]
+    },
+    "zeroProviderAudit": {
+      "threads": 1,
+      "runs": 0,
+      "provider_sessions": 0,
+      "provider_turns": 0
+    }
+  }
+}
