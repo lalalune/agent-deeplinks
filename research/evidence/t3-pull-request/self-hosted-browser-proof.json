@@ -1,0 +1,40 @@
+{
+  "appVersion": "0.1.13",
+  "isolatedServerOrigin": "http://127.0.0.1:49738",
+  "publisherCliSha256": "d83b2e1ef9557e12f340a7299646203cdcdd5ee0af3272e6922c26410cfef396",
+  "codeSigningTeam": "ARK85ZXQ4Z",
+  "knownHosted": "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+  "missingHosted": "https://app.t3.codes/new?pr=https%3A%2F%2Fgithub.com%2Fpingdotgg%2Ft3code%2Fpull%2F26290",
+  "noCheckoutOrCloneConfirmed": true,
+  "promptSubmitted": false,
+  "browserVersion": "158.0.8127.18",
+  "stockPairedAndRegisteredProject": true,
+  "registration": "Official t3 project add command against its scratch data directory",
+  "matchOutcome": {
+    "requestedPathAndQuery": "/new?pr=https%3A%2F%2Fgithub.com%2Flalalune%2Fagent-deeplinks%2Fpull%2F1&prompt=T3%20PR%20review%20draft%20%2B%20%26%20caf%C3%A9%20%F0%9F%A7%AA%0ALiteral%20%252F%20stays%20intact.",
+    "exactReview": true,
+    "checkoutAvailable": true
+  },
+  "missingOutcome": {
+    "requestedPathAndQuery": "/new?pr=https%3A%2F%2Fgithub.com%2Fpingdotgg%2Ft3code%2Fpull%2F26290",
+    "cloneChoice": true,
+    "scratchChoice": true
+  },
+  "gitHeadAndWorktreesUnchanged": true,
+  "databaseCounts": {
+    "provider_session_runtime": 0,
+    "projection_projects": 1,
+    "projection_threads": 0,
+    "orchestration_v2_projection_threads": 0,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "macOSVersion": "26.2",
+  "t3Release": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+  "cliArtifact": "t3-0.1.13-darwin-arm64.tar.gz",
+  "screenshots": [
+    "registered-checkout-review.png",
+    "missing-project-review.png"
+  ]
+}
