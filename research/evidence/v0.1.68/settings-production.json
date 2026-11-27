@@ -1,0 +1,318 @@
+{
+  "site": "https://deeplinks.fun/",
+  "scope": "Trusted browser clicks intercepted at the custom-scheme anchor. Native LaunchServices is tested separately.",
+  "profiles": [
+    {
+      "name": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DwqomeWc.js",
+      "exact": [
+        {
+          "iconOnly": false,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": false,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": false,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        },
+        {
+          "iconOnly": true,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": true,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": true,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        }
+      ],
+      "desktopOnly": true
+    },
+    {
+      "name": "desktop-firefox",
+      "browser": "159.0",
+      "bundle": "/assets/index-DwqomeWc.js",
+      "exact": [
+        {
+          "iconOnly": false,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": false,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": false,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        },
+        {
+          "iconOnly": true,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": true,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": true,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        }
+      ],
+      "desktopOnly": true
+    },
+    {
+      "name": "iphone-webkit",
+      "browser": "27.2",
+      "bundle": "/assets/index-DwqomeWc.js",
+      "exact": [
+        {
+          "iconOnly": false,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": false,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": false,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        },
+        {
+          "iconOnly": true,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": true,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": true,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        }
+      ],
+      "desktopOnly": true
+    },
+    {
+      "name": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DwqomeWc.js",
+      "exact": [
+        {
+          "iconOnly": false,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": false,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": false,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": false,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        },
+        {
+          "iconOnly": true,
+          "target": "",
+          "href": "codex://settings"
+        },
+        {
+          "iconOnly": true,
+          "target": "browser-use",
+          "href": "codex://settings/browser-use"
+        },
+        {
+          "iconOnly": true,
+          "target": "computer-use/google-chrome",
+          "href": "codex://settings/computer-use/google-chrome"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections",
+          "href": "codex://settings/connections"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/computer",
+          "href": "codex://settings/connections/computer"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/devices",
+          "href": "codex://settings/connections/devices"
+        },
+        {
+          "iconOnly": true,
+          "target": "connections/ssh",
+          "href": "codex://settings/connections/ssh"
+        }
+      ],
+      "desktopOnly": true
+    }
+  ]
+}

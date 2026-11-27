@@ -1,0 +1,26 @@
+{
+  "version": "0.1.68",
+  "tagCommit": "3c303fd7ca7092a5efc775b5646a04e2534b9499",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084584146",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084584289",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084584302",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.68",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.68/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://44e441d8.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://3440a361.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8",
+  "githubReleaseZipSha256": "5486205d05188c0f600f2119aa49acaf134ad0459bee70dfb5eb493e0e421ed8",
+  "productionAndZipHtmlSha256": "843d141cd7815834ecfe16b5899e5b6b9dc4769e2886ccd955206c564da84c05",
+  "productionAndZipJavaScriptSha256": "62ebd5a88bf62b2193a541e989010431b23251bd65b981341cffb767d7b7623d",
+  "bundle": "/assets/index-DwqomeWc.js",
+  "packageTestsPassed": 57,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstalls": [
+    {"source": "public npm registry by package name and direct tarball", "reactMajor": 19, "svgExports": 21, "codexSettingsTargets": 7},
+    {"source": "tarball extracted from the GitHub release ZIP", "reactMajor": 18, "svgExports": 21, "codexSettingsTargets": 7}
+  ],
+  "bothReactButtonStyles": true,
+  "signatureAudit": {"invalid": [], "missing": []}
+}
