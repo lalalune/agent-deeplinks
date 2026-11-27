@@ -95,6 +95,18 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://cursor.com/codebase/acme/rocket/pull/1", action: "pull-request" },
   { agent: "cursor", label: "Shared transcript", inputLabel: "Transcript ID or URL",
     placeholder: "https://cursor.com/s/abc123", action: "shared-chat" },
+  { agent: "chatgpt", label: "Shared chat", inputLabel: "ChatGPT share link or ID",
+    placeholder: "https://chatgpt.com/share/…", action: "shared-chat" },
+  { agent: "codex", label: "Shared chat", inputLabel: "Codex share link or ID",
+    placeholder: "https://chatgpt.com/s/cx_…", action: "shared-chat" },
+  { agent: "claude", label: "Shared chat", inputLabel: "Claude share link or ID",
+    placeholder: "https://claude.ai/share/…", action: "shared-chat" },
+  { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
+    placeholder: "https://grok.com/share/…", action: "shared-chat" },
+  { agent: "kimi", label: "Shared chat", inputLabel: "Kimi share link or ID",
+    placeholder: "https://www.kimi.ai/share/…", action: "shared-chat" },
+  { agent: "zcode", label: "Shared chat", inputLabel: "ZCode share link or code",
+    placeholder: "https://zcode.z.ai/share/…", action: "shared-chat" },
   { agent: "grok-build", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://grok.com/build/bc-…" },
   { agent: "t3-code", label: "Pull request", inputLabel: "GitHub pull request URL or owner/repo#number",
     placeholder: "https://github.com/owner/repo/pull/1", action: "pull-request" },
@@ -141,10 +153,6 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
       label: "Custom GPT",
       options: () => ({ target: "g-1234-sample" }),
     },
-    "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "12345678-1234-4234-9234-123456789abc" }),
-    },
   },
   codex: {
     plugin: {
@@ -171,10 +179,6 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
       label: "Scheduled",
       options: () => ({}),
     },
-    "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "cx_00000000000080008000000000000000" }),
-    },
   },
   claude: {
     install: {
@@ -192,10 +196,6 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     "plugin-install": {
       label: "Cowork plugin",
       options: () => ({ target: "slack", marketplace: "anthropics/knowledge-work-plugins" }),
-    },
-    "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "7b6b317b-bea4-4fa4-8463-d9265ad80a00" }),
     },
   },
   cursor: {
@@ -229,12 +229,6 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     project: {
       label: "Shared project",
       options: () => ({ target: "https://www.perplexity.ai/collections/sample-Project.Id" }),
-    },
-  },
-  grok: {
-    "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5" }),
     },
   },
   "grok-bot": {
@@ -312,14 +306,8 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
   },
   kimi: {
     "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0" }),
-    },
-  },
-  zcode: {
-    "shared-chat": {
-      label: "Shared chat",
-      options: () => ({ target: "https://zcode.z.ai/share/example-share-code" }),
+      label: "Public chat example",
+      options: () => ({ target: "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0" }),
     },
   },
 };

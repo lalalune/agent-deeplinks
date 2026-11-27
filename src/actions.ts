@@ -443,10 +443,11 @@ const antigravityIdeOpen: ActionDefinition = {
   behavior: "confirm", evidence: "verified",
   sources: ["https://antigravity.google/download?app=antigravity-ide",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/macos-review.json",
-    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/windows-review.json"],
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/windows-review.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/antigravity-ide-local-file/linux-review.json"],
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Absolute local path", "/absolute/path/to/project")],
-  note: "The standalone Antigravity IDE showed the exact local file confirmation on macOS and Windows. The Linux tarball needs a registered URL handler.",
+  note: "The standalone Antigravity IDE showed the exact local file confirmation on macOS, Windows, and Ubuntu. The Linux tarball test required registering its URL handler.",
   prepare: ({ target }, url) => {
     if (!target || unsafeCharacters.test(target)) return null;
     const drive = /^([a-z]:)[/\\]/iu.exec(target)?.[1];
@@ -727,12 +728,12 @@ const kimiSharedChat: ActionDefinition = {
   id: "shared-chat", label: "Open shared conversation", url: "https://www.kimi.ai/share/",
   behavior: "launch", evidence: "verified",
   sources: [
-    "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0",
+    "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/kimi-public-share/proof.json",
     "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/kimi-android-stock-share/proof.json",
   ],
   fields: { target: "" }, required: ["target"],
-  inputs: [input("target", "Conversation share link or ID", "https://www.kimi.ai/share/d1qvs6d96bk3t9j9ble0")],
+  inputs: [input("target", "Conversation share link or ID", "https://www.kimi.com/share/d1qvs6d96bk3t9j9ble0")],
   note: "Opens a public Kimi share in the browser. Pasted links keep the original regional website and language when supplied.",
   prepare: ({ target }, url) => {
     if (!target || unsafeCharacters.test(target)) return null;
