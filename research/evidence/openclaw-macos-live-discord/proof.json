@@ -1,0 +1,49 @@
+{
+  "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/45925753344",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45925753344/artifacts/15166720924",
+  "libraryRelease": "0.1.61",
+  "href": "openclaw://plugins/install?name=%40openclaw%2Fdiscord",
+  "publisherZip": "https://github.com/openclaw/openclaw/releases/download/v2026.11.10/OpenClaw-2026.11.10-arm64.zip",
+  "publisherSha256": "4bfa2c99a1516323149c8fbd2e5429d08cb9db210fb66844a904f6f11f7d1afa",
+  "signingTeam": "FWJYW4S8P8",
+  "deepStrictSignatureVerified": true,
+  "gatekeeper": "Notarized Developer ID",
+  "host": "Apple Silicon macOS 26.7.2 (25G332)",
+  "nativeStatusPriorToDispatch": {
+    "app": {
+      "version": "2026.11.10",
+      "profile": "dlcatalogremoteqa"
+    },
+    "primary": {
+      "mode": "remote",
+      "transport": "direct",
+      "url": "ws://127.0.0.1:49172",
+      "connection": {
+        "gatewayVersion": "2026.11.10",
+        "state": "connected"
+      }
+    }
+  },
+  "loopbackGatewayAuth": "none",
+  "publicClawHubMetadata": {
+    "name": "@openclaw/discord",
+    "owner": "openclaw",
+    "release": "2026.11.10"
+  },
+  "catalogResponseSource": "Live public ClawHub, with no registry substitution or cached response fixture.",
+  "dispatch": "OPENCLAW_DISCORD_DEFAULT_DISPATCH openclaw://plugins/install?name=%40openclaw%2Fdiscord signedBundle=/Users/runner/Applications/OpenClaw.app",
+  "visuallyConfirmed": [
+    "Discord",
+    "OpenClaw verified publisher",
+    "@openclaw",
+    "Install",
+    "Ask OpenClaw",
+    "Transcripts capability",
+    "discord skill",
+    "Clean security audit"
+  ],
+  "catalogControlsSelected": false,
+  "catalogInstallAudit": "No plugin install registrations or extensions directory.",
+  "screenshot": "discord-window.png",
+  "jobOutcome": "The XCTest assertion filtered the action buttons by label, while their names appeared as title in the AX dump. The archived app window shows both controls."
+}
