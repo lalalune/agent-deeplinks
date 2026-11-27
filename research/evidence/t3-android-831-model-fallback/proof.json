@@ -82,5 +82,6 @@
     "editable-draft.png": "c3508c2fbf3009fbe6942b46144fde48463cc59f6dec37bce9a37bb306746c7f",
     "prompt-only-control.png": "94454fdb5d406eb4440b6b595eb765fb68b4ee77eb134de1bfdf8cb24bddcb9f"
   },
-  "scope": "The check verifies the unavailable-model notice and exact unsent draft. The scratch server had no selectable model. Public Play installation and selecting an available model remain unverified."
+  "availableModelFollowUp": "../t3-android-831-local-model/proof.json",
+  "scope": "This run used a scratch server with no selectable model to verify the unavailable-model notice and exact unsent draft. The publisher's beta mirror supplied the installed APK."
 }

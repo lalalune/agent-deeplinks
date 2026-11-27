@@ -1,0 +1,118 @@
+{
+  "build": 831,
+  "version": "2.4.0",
+  "promptSubmitted": false,
+  "coldDispatches": {
+    "promptOnly": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    },
+    "requestedModel": {
+      "appStoppedBeforeDispatch": true,
+      "androidLaunchState": "COLD",
+      "newAppProcess": true
+    }
+  },
+  "registeredProjectTitle": "T3 Native Target 74F2",
+  "packageVersion": "0.1.58",
+  "expectedProject": "T3 Native Target 74F2",
+  "initialProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "pairingFormOpenedByStockRoute": false,
+  "stockLocalPairing": true,
+  "promptOnly": {
+    "uri": "t3code://new?prompt=T3%20Android%20prompt-only%20control%20%2B%20%26%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2",
+    "visibleNote": null,
+    "visibleRequestedModelName": false,
+    "exactEditableUnsentDraft": "T3 Android prompt-only control + & %2F café 🧪",
+    "draftProjectBinding": {
+      "exactPersistedDraft": true,
+      "pairedEnvironmentIdMatches": true,
+      "registeredProjectIdMatches": true
+    },
+    "persistedSelection": null
+  },
+  "requestedModel": {
+    "uri": "t3code://new?prompt=T3%20Android%20local%20model%20QA%20%2B%20%26%20literal%20%252F%20caf%C3%A9%20%F0%9F%A7%AA&repo=agent-link-fixture%2Fmobile-repo-link-74f2&provider=opencode&model=localqa%2Fsmollm2-135m-q4",
+    "visibleNote": null,
+    "visibleRequestedModelName": true,
+    "exactEditableUnsentDraft": "T3 Android local model QA + & literal %2F café 🧪",
+    "draftProjectBinding": {
+      "exactPersistedDraft": true,
+      "pairedEnvironmentIdMatches": true,
+      "registeredProjectIdMatches": true
+    },
+    "persistedSelection": {
+      "instanceId": "opencode",
+      "model": "localqa/smollm2-135m-q4"
+    }
+  },
+  "finalProjection": {
+    "orchestration_v2_projection_threads": 1,
+    "orchestration_v2_projection_runs": 0,
+    "orchestration_v2_projection_provider_sessions": 0,
+    "orchestration_v2_projection_provider_turns": 0
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45920987225/job/140251442473",
+  "workflowCommit": "890d3c1d3aa12341002bc0ca99449bf62243083d",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45920987225/artifacts/15164438566",
+  "publishedLinkComparison": {
+    "packageVersion": "0.1.59",
+    "packageSha256": "4e68f17e5931256fb11ca9eae9c8bc904b372b7024f3ff4744fce4b0a91f0d46",
+    "exactUrlMatchForBothCases": true
+  },
+  "runtime": {
+    "Android": "15",
+    "api": 35,
+    "abi": "arm64-v8a",
+    "host": "Hosted ReDroid on ARM64 Linux",
+    "launch": "Untargeted Android ACTION_VIEW plus BROWSABLE"
+  },
+  "distribution": {
+    "release": "https://github.com/pingdotgg/t3code/releases/tag/android-beta-831",
+    "channel": "Publisher mirror of Google Play closed testing",
+    "apkSha256": "821e7e841349df4a294969d417dcd16956d11b6253e2064802d44374e91e692a",
+    "signerSha256": "b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6",
+    "assetLinks": "https://app.t3.codes/.well-known/assetlinks.json",
+    "googleSourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d"
+  },
+  "localServices": {
+    "t3": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+    "openCode": "https://github.com/anomalyco/opencode/releases/tag/v2.4.2",
+    "openCodeSha256": "bf8d18dde87224629341ff398e76c7c17216b9b406affc728b6c1a5c136abf93",
+    "llamaCpp": "https://github.com/ggml-org/llama.cpp/releases/tag/b12800",
+    "llamaCppSha256": "abde2a522aafcdffe7722b23781e0c585525d6fceeb54472620c45e9f3e70258",
+    "gguf": "https://huggingface.co/bartowski/SmolLM2-135M-Instruct-GGUF/blob/09816acd5d99df7be770d85ea30822623dab342c/SmolLM2-135M-Instruct-Q4_K_M.gguf",
+    "ggufSha256": "2e8040ceae7815abe0dcb3540b9995eaa1fa0d2ca9e797d0a635ae4433c68c2d",
+    "servedModel": "smollm2-135m-q4",
+    "modelReady": true,
+    "catalogGet": {
+      "providerID": "localqa",
+      "id": "smollm2-135m-q4",
+      "name": "SmolLM2 135M QA"
+    },
+    "networkPolicy": "All three services restricted to loopback. Android guest forwarded egress denied. Disposable local T3 pairing and OpenCode Basic credentials.",
+    "beforeInference": {
+      "promptTokens": 0,
+      "predictedTokens": 0,
+      "processing": 0,
+      "deferred": 0
+    },
+    "afterInference": {
+      "promptTokens": 0,
+      "predictedTokens": 0,
+      "processing": 0,
+      "deferred": 0
+    }
+  },
+  "screenshots": {
+    "prompt-review.png": "65e0abdfcc740bc57fdb44834cf6531f0df352744b22549ccffe25cc7596d01c",
+    "selected-model-draft.png": "8c6323afddbd8b1dd542358c75d5e9ac0db3d1001e58bc85678340d0923c10e4"
+  },
+  "scope": "Exact native model selection and editable draft on the publisher beta. The test ended before prompt submission."
+}
