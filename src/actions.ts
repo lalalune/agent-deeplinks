@@ -788,8 +788,11 @@ const codexNavigationChecks = [
 
 const codexSettings: ActionDefinition = {
   id: "settings", label: "Open Settings", url: "codex://settings",
-  behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#settings`, ...codexNavigationChecks],
-  note: "The signed Mac app opened General, Browser, and Connections. The Linux preview opened General Settings.",
+  behavior: "launch", evidence: "verified", sources: [
+    `${desktopPlugins}#settings`, ...codexNavigationChecks,
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/codex-settings-sections/proof.json",
+  ],
+  note: "The signed Mac app showed General, Browser, Google Chrome, and SSH connection settings. In its signed-out profile the two device-control links stayed on Connections. The Linux preview opened General Settings.",
   fields: { target: "" }, required: [],
   inputs: [{ field: "target", label: "Settings section", choices: codexSettingsSections }],
   prepare: ({ target }, url) => !target ? url : codexSettingsSections.some(({ value }) => value === target) ? `${url}/${target}` : null,

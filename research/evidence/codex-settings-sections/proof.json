@@ -1,0 +1,133 @@
+{
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083857455/job/140788782789",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46083857455/artifacts/15238646838",
+  "workflowCommit": "93948fcf04265a1c0bf18241440684a4a3d6b178",
+  "appVersion": "26.1120.50957",
+  "macOS": "15.8.2",
+  "arch": "arm64",
+  "appDeveloperTeam": "2DC432GLL2",
+  "appDownloadSha256": "00db5b0c41e91d6d8c257a7ddfff15bfe2b1e56f1119b54079821b144e86a5a3",
+  "packageVersion": "0.1.47",
+  "accountUsed": false,
+  "stockAppLaunch": true,
+  "providerRequests": 0,
+  "turnsBefore": 0,
+  "turnsAfter": 0,
+  "settingsControlsTouched": false,
+  "destinations": [
+    {
+      "uri": "codex://settings",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": true,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "General",
+        "Set your app language and other preferences",
+        "Permissions",
+        "Default permissions",
+        "By default, ChatGPT can read and edit files in its workspace. It can ask for",
+        "additional access when needed",
+        "Full access"
+      ],
+      "screenshotInArtifact": "settings.png"
+    },
+    {
+      "uri": "codex://settings/browser-use",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": true,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Browser",
+        "Manage your Browser Use preferences and site access.",
+        "Browser",
+        "-7 Let ChatGPT control the built-in browse",
+        "General",
+        "Web URL and link open destination",
+        "Local URL open destination"
+      ],
+      "screenshotInArtifact": "browser-use.png"
+    },
+    {
+      "uri": "codex://settings/computer-use/google-chrome",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": true,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Computer use",
+        "Google Chrome",
+        "Google Chrome",
+        "• Not installed",
+        "Reinstall extension",
+        "Remove extension",
+        "Browser permissions"
+      ],
+      "screenshotInArtifact": "google-chrome.png"
+    },
+    {
+      "uri": "codex://settings/connections",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": true,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Connections",
+        "SSH connections from this Mac",
+        "Connect to a remote device through SSH connection",
+        "Add"
+      ],
+      "screenshotInArtifact": "connections.png"
+    },
+    {
+      "uri": "codex://settings/connections/computer",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": false,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Connections",
+        "SSH connections from this Mac",
+        "Connect to a remote device through SSH connection",
+        "Add"
+      ],
+      "screenshotInArtifact": "connection-computer.png"
+    },
+    {
+      "uri": "codex://settings/connections/devices",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": false,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Connections",
+        "SSH connections from this Mac",
+        "Connect to a remote device through SSH connection",
+        "Add"
+      ],
+      "screenshotInArtifact": "connection-devices.png"
+    },
+    {
+      "uri": "codex://settings/connections/ssh",
+      "exactStockDispatch": true,
+      "matchingSectionVisible": true,
+      "windowTitle": "Settings",
+      "pid": 2417,
+      "windowId": 29,
+      "contentOCR": [
+        "Connections",
+        "SSH connections from this Mac",
+        "Connect to a remote device through SSH connection",
+        "Add"
+      ],
+      "screenshotInArtifact": "connection-ssh.png"
+    }
+  ]
+}

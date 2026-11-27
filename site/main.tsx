@@ -119,7 +119,7 @@ interface DestinationExample {
   agent: AgentId;
   label: string;
   inputLabel: string;
-  placeholder: string;
+  placeholder?: string;
   action?: AgentActionId;
   field?: "session" | "directory";
   platform?: ActivePlatform;
@@ -135,6 +135,7 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://chatgpt.com/share/…", action: "shared-chat" },
   { agent: "codex", label: "Shared chat", inputLabel: "Codex share link or ID",
     placeholder: "https://chatgpt.com/s/cx_…", action: "shared-chat" },
+  { agent: "codex", label: "Settings section", inputLabel: "Settings section", action: "settings" },
   { agent: "claude", label: "Shared chat", inputLabel: "Claude share link or ID",
     placeholder: "https://claude.ai/share/…", action: "shared-chat" },
   { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
@@ -616,11 +617,13 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const isIdePath = example.action === "ide-open";
   const isLocalDirectory = example.field === "directory";
   const target = isIdePath || isLocalDirectory ? value : value.trim();
-  const promptLimit = (example.action || example.field === "session")
-    ? getAgentRoute(example.agent, platform, example.action)?.promptLimit : undefined;
+  const actionRoute = example.action ? getAgentRoute(example.agent, platform, example.action) : null;
+  const choices = actionRoute?.inputs.find(({ field }) => field === "target")?.choices;
+  const promptLimit = example.field === "session"
+    ? getAgentRoute(example.agent, platform)?.promptLimit : actionRoute?.promptLimit;
   const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
   const options = { ...destinationOptions, ...(prompt && { prompt }) };
-  const href = target && getAgentLink(example.agent, platform, options);
+  const href = (target || choices) && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
   const label = `Open ${destination}`;
 
@@ -628,9 +631,17 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
     <div role="region" aria-label={`${destination} link`} className="link-setup">
       <label>
         {example.inputLabel}
-        <input value={value} onChange={(event) => setValue(event.target.value)}
-          placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
-            autoComplete="off" autoCapitalize="off" spellCheck={false} />
+        {choices ? (
+          <select value={value} onChange={(event) => setValue(event.target.value)}>
+            {choices.map(({ value: choiceValue, label: choiceLabel }) => (
+              <option key={choiceValue} value={choiceValue}>{choiceLabel}</option>
+            ))}
+          </select>
+        ) : (
+          <input value={value} onChange={(event) => setValue(event.target.value)}
+            placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
+              autoComplete="off" autoCapitalize="off" spellCheck={false} />
+        )}
       </label>
       {(promptLimit !== undefined || isLocalDirectory) && (
         <label>

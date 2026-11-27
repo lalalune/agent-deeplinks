@@ -315,6 +315,7 @@ pre {
 }
 
 .link-setup input,
+.link-setup select,
 .link-setup textarea {
   min-width: 0;
   padding: 9px 10px;

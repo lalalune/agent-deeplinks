@@ -903,8 +903,9 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45549179939/artifacts/14992138379",
           "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-windows-013-saved-thread/proof.json",
           "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-macos-013-saved-thread/proof.json",
+          "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-macos-013-saved-thread/cold-proof.json",
         ],
-        note: "New drafts passed on macOS, Ubuntu, and Windows. Signed T3 Code 0.1.13 reopened the exact saved thread with and without a draft on warm macOS and Windows launches, and preserved the draft on cold Windows launch. Existing-thread links also passed on Ubuntu.",
+        note: "New drafts passed on macOS, Ubuntu, and Windows. Signed T3 Code 0.1.13 reopened the exact saved thread with and without a draft on warm macOS and Windows launches, and preserved the draft on cold launches on both platforms. Existing-thread links also passed on Ubuntu.",
       },
       ios: {
         ...t3Route,

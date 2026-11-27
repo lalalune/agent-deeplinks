@@ -105,6 +105,18 @@ getAgentLink("github-copilot", "vscode", {
 })
 ```
 
+### Open Codex Desktop settings
+
+Choose **Codex → Settings section** under Desktop in the playground. Select General, Browser, Google Chrome, or a connections destination. Pass the same settings section as `target` to build the link in your app. [Codex settings links](https://learn.chatgpt.com/docs/reference/commands#settings)
+
+```ts
+getAgentLink("codex", "desktop", { action: "settings" })
+getAgentLink("codex", "desktop", {
+  action: "settings",
+  target: "connections/ssh",
+})
+```
+
 ### Open a local file in Antigravity IDE
 
 Choose **Antigravity → IDE file or folder** under Desktop in the playground. Enter the absolute path to a file, folder, or workspace on this computer. The standalone IDE may ask for confirmation before opening it. [Google Antigravity downloads](https://antigravity.google/download?app=antigravity-ide)
