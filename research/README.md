@@ -164,6 +164,7 @@ The v0.1.57 release passed all 53 package tests. The production playground rende
 - OpenCode 0.7.0’s archived Play-signed APKs passed Android 15 ARM64 native pairing on two scratch servers. The v0.1.56 session link switched from server B to the exact idle session on A. The project route opened the blank composer in the selected project. Both databases remained free of messages and accounts. [Production signing and runtime proof](evidence/opencode-android-070-play/proof.json)
 
 - A live Playground click in stock Chrome cold-launched the signed Kimi Work 3.2.29 app on Apple Silicon. The native Work and Projects sidebar and sign-in form were visible. [Native browser handoff proof](evidence/kimi-work-browser-handoff-329/proof.json)
+- The Google Play-stamped Kimi 3.1.8 Android app cold-opened the exact v0.1.57 launch and draft URLs and a Remote Control candidate. All three reached the native Google Play-required dialog. [Android dispatch and signing proof](evidence/kimi-android-318-play/proof.json)
 
 - T3 Code 2.3.0 cold-launched on an iOS 26.4 simulator into an exact unsent draft for a registered repository. A second cold link for an unknown repository displayed **Cancel**, **Clone**, and **Use without project**. Both links match the published v0.1.56 package. [Native simulator proof](evidence/t3-ios-cold-repository-draft/proof.json)
 

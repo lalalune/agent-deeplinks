@@ -1,0 +1,81 @@
+{
+  "library": {
+    "version": "0.1.57",
+    "tarballSha256": "ad275d2e2cb99663f9b62b8d64fe974454378b936110fca9a665bc99437b0969"
+  },
+  "run": {
+    "commit": "3e1afce5ce46b81505072adc32a1f9bc700e5a5b",
+    "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/45918264683/job/140242593868",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45918264683/artifacts/15163208124",
+    "lastLaunchAt": "2026-11-27T00:43:48Z"
+  },
+  "app": {
+    "package": "com.moonshot.kimichat",
+    "version": "3.1.8",
+    "versionCode": 388,
+    "playListing": "https://play.google.com/store/apps/details?id=com.moonshot.kimichat",
+    "mirrorArchive": "https://d.apkpure.net/b/XAPK/com.moonshot.kimichat?versionCode=388",
+    "mirrorArchiveSha256": "7be763895fdd29ddc245161165de7f4bf8427efc876746da78df5525349b6173",
+    "splitSha256": {
+      "com.moonshot.kimichat.apk": "bdb677a53400cd6d9f9f70bd538106bcc7f3cb122234df30d80ea5979297574d",
+      "config.arm64_v8a.apk": "786eb7532fe15fad070fac81e15ce6b53fac1f15d8187aa3db85b8d73d405911",
+      "config.hdpi.apk": "ebef10726d0ef8c6ab1cc56a5e2c7b360c94469b6d5475e25bcbbf24d2b896b4"
+    },
+    "association": "https://kimi.onelink.me/.well-known/assetlinks.json",
+    "apkSignerSha256": "ffe237c0e032ca5d2ee217d685edf253382ac7c54316b5b7b7b099e40dbbec3b",
+    "verifiedSourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d",
+    "signature": "Build Tools 36.0.0 apksigner verified v3.1 and the Google SourceStamp for all three APKs at Android API 35"
+  },
+  "runtime": {
+    "system": "ReDroid Android 15 API 35 on hosted ARM64 Linux",
+    "abi": "arm64-v8a",
+    "nativeTranslation": false,
+    "stockDomainVerification": "kimi.onelink.me: verified",
+    "dispatch": "Untargeted ACTION_VIEW plus BROWSABLE after force-stop and absent PID for every link",
+    "network": "Loopback-only ADB. Guest egress denied during app launch. OneLink and Android connectivity traffic admitted for stock domain verification only.",
+    "nativeDialog": {
+      "title": "Something went wrong",
+      "mentions": "Check that Google Play is enabled on your device",
+      "screenshot": "google-play-required.png",
+      "sameScreenshotForAllCases": true,
+      "screenshotSha256": "d58570dc3460cdd56a025647e43e85330f3c0e0e5639b1c6de869a2ec7c3b4ab"
+    },
+    "consentActions": 0,
+    "accountActions": 0,
+    "promptSubmissions": 0
+  },
+  "cases": [
+    {
+      "origin": "getAgentLink('kimi', 'android')",
+      "url": "https://kimi.onelink.me/BZg1/",
+      "beforeInstall": "System browser only",
+      "installedCandidates": [
+        "com.moonshot.kimichat/.MainActivity",
+        "org.chromium.webview_shell/.WebViewBrowserActivity"
+      ],
+      "launchState": "COLD",
+      "foreground": "com.moonshot.kimichat/.MainActivity",
+      "pid": 2011
+    },
+    {
+      "origin": "getAgentLink('kimi', 'android', { prompt, allowExperimental: true })",
+      "url": "kimi://page/chat?prompt=Kimi%20Android%20QA%20%26%20caf%C3%A9%20%2B%20%252F&create_new=true&auto_send=false",
+      "prompt": "Kimi Android QA & café + %2F",
+      "beforeInstall": "No activities found",
+      "resolvedActivity": "com.moonshot.kimichat/.route.ExternalLinkActivity",
+      "launchState": "COLD",
+      "foreground": "com.moonshot.kimichat/.MainActivity",
+      "pid": 2205
+    },
+    {
+      "origin": "Uncatalogued Kimi Work Remote Control candidate",
+      "url": "kimi://action/open_remote_control",
+      "beforeInstall": "No activities found",
+      "resolvedActivity": "com.moonshot.kimichat/.route.ExternalLinkActivity",
+      "launchState": "COLD",
+      "foreground": "com.moonshot.kimichat/.MainActivity",
+      "pid": 2376
+    }
+  ],
+  "scope": "Native dispatch for the installed, Google Play-stamped split set. Google Play delivery, draft prefill, and the feature-enabled Remote Control destination remain open."
+}
