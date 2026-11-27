@@ -1,0 +1,54 @@
+{
+  "appVersion": "0.1.13",
+  "publisherCliSha256": "d83b2e1ef9557e12f340a7299646203cdcdd5ee0af3272e6922c26410cfef396",
+  "codeSigningTeam": "ARK85ZXQ4Z",
+  "promptSubmitted": false,
+  "browserOnlyLoopback": true,
+  "packageVersion": "0.1.62",
+  "releaseSource": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+  "firstProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "threadTitle": "New thread",
+  "browserVersion": "158.0.8127.18",
+  "connectedThreadOpened": true,
+  "copiedHostedUrl": "https://app.t3.codes/threads/6f23206f-bf3a-48ec-ad46-61a57279faab/thread%3Aproject%3A39852ea7-a9bc-47f5-82ff-efa280ce43fb%3A30982bb2-0ffa-4b4f-ada0-cf429ee7ef57",
+  "stockActionClipboardArgument": true,
+  "initialDraft": {
+    "exactEditableText": true,
+    "text": "T3 draft survives restart + & café 🧪\nLiteral %2F stays intact.",
+    "detectedInLocalStorage": true
+  },
+  "browserRestart": {
+    "requestedWithoutPrompt": true,
+    "exactThread": true,
+    "exactDraftRetained": true,
+    "renderedPath": "/6f23206f-bf3a-48ec-ad46-61a57279faab/thread%3Aproject%3A39852ea7-a9bc-47f5-82ff-efa280ce43fb%3A30982bb2-0ffa-4b4f-ada0-cf429ee7ef57"
+  },
+  "browserAndServerRestart": {
+    "requestedWithoutPrompt": true,
+    "exactThread": true,
+    "exactDraftRetained": true,
+    "renderedPath": "/6f23206f-bf3a-48ec-ad46-61a57279faab/thread%3Aproject%3A39852ea7-a9bc-47f5-82ff-efa280ce43fb%3A30982bb2-0ffa-4b4f-ada0-cf429ee7ef57",
+    "newServerProcess": true,
+    "sameEnvironment": true
+  },
+  "finalProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "observedProjection": {
+    "threads": 1,
+    "runs": 0,
+    "provider_sessions": 0,
+    "provider_turns": 0
+  },
+  "operatingSystem": "macOS 26.2 arm64",
+  "sameDisposableChromiumProfile": true,
+  "screenshot": "draft-after-restart.png"
+}
