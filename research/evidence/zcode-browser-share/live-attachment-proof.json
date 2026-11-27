@@ -1,0 +1,132 @@
+{
+  "checkedAtUtc": "2026-11-27T02:22:12+00:00",
+  "package": "agent-deeplinks@0.1.62 from the public npm registry",
+  "action": "getAgentLink(\"zcode\", platform, { action: \"shared-chat\", target: publicShare })",
+  "publicAuthorSource": "https://www.locdd.com/t/topic/112498/12",
+  "scope": "Fresh signed-out browser contexts, read-only network requests, and no native import or HTML execution.",
+  "manifest": {
+    "accessMode": "public_readonly",
+    "name": "pelican-bicycle.html",
+    "mimeType": "text/html",
+    "byteCount": 19216,
+    "sha256": "2f6a829f43e8b4d023003d140b4680482547cfdefaec943bf8fa6657568fb2f8"
+  },
+  "separateArtifactResponseProbe": {
+    "status": 200,
+    "origin": "https://zcode-user-share-bj.oss-cn-beijing.aliyuncs.com",
+    "contentType": "text/html",
+    "contentDisposition": "attachment; filename=pelican-bicycle.html",
+    "matchesManifestSize": true,
+    "matchesManifestSha256": true
+  },
+  "checks": [
+    {
+      "platform": "web",
+      "profile": "desktop 1280x900",
+      "engine": "chromium",
+      "browserVersion": "158.0.8127.37",
+      "playwrightVersion": "1.65.1",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "initialCookies": 0,
+      "documentStatus": 200,
+      "title": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+      "visibleArtifactName": "pelican-bicycle.html",
+      "activatedAccessibleButton": "下载文件",
+      "servedArtifact": {
+        "suggestedFilename": "pelican-bicycle.html",
+        "byteCount": 19216,
+        "sha256": "2f6a829f43e8b4d023003d140b4680482547cfdefaec943bf8fa6657568fb2f8",
+        "mimeTypeFromPreview": "text/html",
+        "matchesPreviewSize": true,
+        "matchesPreviewSha256": true,
+        "downloadScheme": "https"
+      },
+      "observedResponses": [
+        {
+          "role": "preview",
+          "method": "GET",
+          "status": 200,
+          "origin": "https://zcode.z.ai",
+          "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview"
+        }
+      ],
+      "blockedNonReadRequests": [],
+      "blockedOtherNavigations": [],
+      "remainingTabs": 1,
+      "artifactExecuted": false
+    },
+    {
+      "platform": "android",
+      "profile": "Pixel 7",
+      "engine": "chromium",
+      "browserVersion": "158.0.8127.37",
+      "playwrightVersion": "1.65.1",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "initialCookies": 0,
+      "documentStatus": 200,
+      "title": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+      "visibleArtifactName": "pelican-bicycle.html",
+      "activatedAccessibleButton": "下载文件",
+      "servedArtifact": {
+        "suggestedFilename": "pelican-bicycle.html",
+        "byteCount": 19216,
+        "sha256": "2f6a829f43e8b4d023003d140b4680482547cfdefaec943bf8fa6657568fb2f8",
+        "mimeTypeFromPreview": "text/html",
+        "matchesPreviewSize": true,
+        "matchesPreviewSha256": true,
+        "downloadScheme": "https"
+      },
+      "observedResponses": [
+        {
+          "role": "preview",
+          "method": "GET",
+          "status": 200,
+          "origin": "https://zcode.z.ai",
+          "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview"
+        }
+      ],
+      "blockedNonReadRequests": [],
+      "blockedOtherNavigations": [],
+      "remainingTabs": 1,
+      "artifactExecuted": false
+    },
+    {
+      "platform": "ios",
+      "profile": "iPhone 15 Pro",
+      "engine": "webkit",
+      "browserVersion": "27.2",
+      "playwrightVersion": "1.65.1",
+      "requested": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "final": "https://zcode.z.ai/cn/share/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R",
+      "initialCookies": 0,
+      "documentStatus": 200,
+      "title": "SVG 鹈鹕骑自行车动画 · ZCode 会话分享",
+      "visibleArtifactName": "pelican-bicycle.html",
+      "activatedAccessibleButton": "下载文件",
+      "servedArtifact": {
+        "suggestedFilename": "pelican-bicycle.html",
+        "byteCount": 19216,
+        "sha256": "2f6a829f43e8b4d023003d140b4680482547cfdefaec943bf8fa6657568fb2f8",
+        "mimeTypeFromPreview": "text/html",
+        "matchesPreviewSize": true,
+        "matchesPreviewSha256": true,
+        "downloadScheme": "https"
+      },
+      "observedResponses": [
+        {
+          "role": "preview",
+          "method": "GET",
+          "status": 200,
+          "origin": "https://zcode.z.ai",
+          "path": "/api/v1/shares/UEhYbVA_POhX8xTDufm2M9UE5ojfNR2R/preview"
+        }
+      ],
+      "blockedNonReadRequests": [],
+      "blockedOtherNavigations": [],
+      "remainingTabs": 2,
+      "artifactExecuted": false
+    }
+  ]
+}
