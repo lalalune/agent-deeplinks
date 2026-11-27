@@ -1,0 +1,33 @@
+{
+  "observedDate": "2026-11-27",
+  "scope": "Public signed-out distribution, Apple-hosted association metadata, and iPhone user-agent HTTP fallback. No application binary was installed or opened.",
+  "package": "agent-deeplinks@0.1.67",
+  "packageTarballSha256": "357a79383be1d4944871946d5d1aa98d007958fba5f804b3ad020e0ed6a60f13",
+  "exactIOSLink": "https://applink.muse.ai/",
+  "appleStore": {
+    "listing": "https://apps.apple.com/us/app/muse-from-meta/id6760173601",
+    "lookup": "https://itunes.apple.com/lookup?id=6760173601&country=us",
+    "storeId": 6760173601,
+    "publisher": "Meta Platforms, Inc.",
+    "productionBundleId": "com.facebook.hatch",
+    "version": "17.0",
+    "releaseDate": "2026-11-25T16:55:28Z",
+    "minimumIOS": "18.0",
+    "platformsListed": ["iPhone", "iPad", "Apple Watch"]
+  },
+  "appleAssociation": {
+    "source": "https://app-site-association.cdn-apple.com/a/v1/applink.muse.ai",
+    "productionAppIds": ["T84QZS65DQ.com.facebook.hatch", "3NW3KR6Q88.com.facebook.hatch"],
+    "components": [{"/": "/*"}]
+  },
+  "iPhoneSafariUserAgent": {
+    "status": 302,
+    "location": "https://apps.apple.com/app/id6760173601"
+  },
+  "distribution": {
+    "metaDownloadPage": "https://ai.meta.com/muse/download",
+    "publicMobileRelease": "App Store",
+    "appleInstallRequirements": "https://support.apple.com/guide/iphone/get-apps-iphc90580097/ios",
+    "appleSimulatorInstallBoundary": "https://developer.apple.com/library/archive/documentation/IDEs/Conceptual/iOS_Simulator_Guide/InteractingwiththeiOSSimulator/InteractingwiththeiOSSimulator.html"
+  }
+}
