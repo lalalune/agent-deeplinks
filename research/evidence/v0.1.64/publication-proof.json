@@ -1,0 +1,32 @@
+{
+  "version": "0.1.64",
+  "tagCommit": "806e5159369ecb054fe0d7d1f95b553f4d6017fc",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/45930908499",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45930909344",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/45930909443",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.64",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.64/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://5624ae40.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://41c9a481.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "41d5829426ad02c24a1871764f328d4d46522c2c1447a26b25e860aa941779c6",
+  "githubReleaseZipSha256": "cd3cc097685e1b48a94623fe8745d8e70db0d83c103f590abad16b53461f91fd",
+  "productionAndZipHtmlSha256": "e0fa10c558cb5dc9daef14de8d89630b0f6e93c1ddef1f40dea1220f23731093",
+  "productionAndZipJavaScriptSha256": "edacc294ad049ec26fd264d1d7d91e6855bd217a3cedeb58893e665fa50b748a",
+  "bundle": "/assets/index-C53nX29V.js",
+  "packageTestsPassed": 57,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstallByName": {
+    "version": "0.1.64",
+    "svgExports": 21,
+    "copiedOpencodeBrowserSessions": true,
+    "bothReactVariants": true,
+    "exactWindowsReviewUri": "antigravity-ide://file/D:/a/_temp/antigravity-ide/QA%20Antigravity%20IDE%20exact%20file%20opener%207812.txt"
+  },
+  "freshInstallFromZip": true,
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}

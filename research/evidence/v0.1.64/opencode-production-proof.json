@@ -1,0 +1,176 @@
+{
+  "site": "https://deeplinks.fun/",
+  "version": "opencode v2.4.2",
+  "origin": "http://127.0.0.1:55097",
+  "auth": "Stock OpenCode Use password browser form",
+  "providerOrExternalAccount": false,
+  "browser": [
+    {
+      "name": "desktop-chromium",
+      "platform": "web",
+      "loopbackRequests": [
+        "GET /api/info",
+        "GET /api/session",
+        "GET /api/session/active",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/message",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/inbox",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/permission",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/form"
+      ],
+      "denied": [
+        [
+          "GET",
+          "https://static.cloudflareinsights.com",
+          "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092"
+        ],
+        [
+          "GET",
+          "https://fonts.googleapis.com",
+          "/css2"
+        ]
+      ],
+      "clicks": [
+        {
+          "iconOnly": false,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        },
+        {
+          "iconOnly": true,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        }
+      ],
+      "browserVersion": "158.0.8127.18",
+      "signedInThroughApp": true,
+      "copiedAddressFromStockSession": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+      "siteScript": "/assets/index-C53nX29V.js",
+      "rejectedDifferentOriginAndScope": true,
+      "nativeDraftHref": "opencode://new-session?prompt=OpenCode%202.4.2%20cold%20draft%20QA%20%2B%20%26%20caf%C3%A9&directory=%2FUsers%2Frunner%2Fwork%2F_temp%2Fopencode-macos-cold%2FCold%20project%20%2B%20%26%20caf%C3%A9",
+      "nativeDraftBothStyles": true,
+      "loopbackEndpointCount": 196
+    },
+    {
+      "name": "iphone-webkit",
+      "platform": "ios",
+      "loopbackRequests": [
+        "GET /api/info",
+        "GET /api/session",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+        "GET /api/session/active",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/message",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/inbox",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/permission",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/form"
+      ],
+      "denied": [
+        [
+          "GET",
+          "https://static.cloudflareinsights.com",
+          "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092"
+        ],
+        [
+          "GET",
+          "https://fonts.googleapis.com",
+          "/css2"
+        ]
+      ],
+      "clicks": [
+        {
+          "iconOnly": false,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        },
+        {
+          "iconOnly": true,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        }
+      ],
+      "browserVersion": "27.2",
+      "signedInThroughApp": true,
+      "copiedAddressFromStockSession": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+      "siteScript": "/assets/index-C53nX29V.js",
+      "rejectedDifferentOriginAndScope": true,
+      "loopbackEndpointCount": 198
+    },
+    {
+      "name": "pixel-chromium",
+      "platform": "web",
+      "loopbackRequests": [
+        "GET /api/info",
+        "GET /api/session",
+        "GET /api/session/active",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/message",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/inbox",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/permission",
+        "GET /api/session/ses_de5125d9bffeMzIHWLJM5mZI2x/form"
+      ],
+      "denied": [
+        [
+          "GET",
+          "https://static.cloudflareinsights.com",
+          "/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092"
+        ],
+        [
+          "GET",
+          "https://fonts.googleapis.com",
+          "/css2"
+        ]
+      ],
+      "clicks": [
+        {
+          "iconOnly": false,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        },
+        {
+          "iconOnly": true,
+          "url": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+          "stockTitleVisible": true,
+          "authenticatedExactSessionApi": true,
+          "emptyComposer": true,
+          "newWindow": true
+        }
+      ],
+      "browserVersion": "158.0.8127.18",
+      "signedInThroughApp": true,
+      "copiedAddressFromStockSession": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x",
+      "siteScript": "/assets/index-C53nX29V.js",
+      "rejectedDifferentOriginAndScope": true,
+      "loopbackEndpointCount": 197
+    }
+  ],
+  "fixture": {
+    "id": "ses_de5125d9bffeMzIHWLJM5mZI2x",
+    "label": "OpenCode existing web session QA 8EC",
+    "route": "http://127.0.0.1:55097/server/aHR0cDovLzEyNy4wLjAuMTo1NTA5Nw/session/ses_de5125d9bffeMzIHWLJM5mZI2x"
+  },
+  "exactCoreOutput": true,
+  "database": {
+    "sessions": 1,
+    "messages": 0,
+    "providerAccounts": 0
+  },
+  "publishedFixture": "OpenCode 2.4.2 signed macOS arm64 CLI",
+  "officialFixtureArchiveSha256": "d5a8c9fb4b121ebd531d9369d7ba6ce8af91c9d4d51d6685dbb4e0c7224fa5f3",
+  "observedRead": "Successful GET for the exact session from each opened tab",
+  "nativeDraftRuntime": "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/opencode-macos-242-cold/proof.json"
+}
