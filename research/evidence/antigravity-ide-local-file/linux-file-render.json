@@ -1,0 +1,43 @@
+{
+  "result": "verified-native-file-render",
+  "platform": "Ubuntu 24.04 x64",
+  "appVersion": "2.8.0",
+  "appCommit": "8dc5315afe097a21a6cb38dda76edc0835dfabfa",
+  "vendorArchiveSha256": "7baa36baab285cb46101af958b8f7be6305458db9a44d8b3d0938d61f38597d7",
+  "npmVersion": "0.1.65",
+  "npmSha256": "2334eaadb774ee9314e80c5a6cdbe46228d601989944b68b08079a10fea70fac",
+  "exactUri": "antigravity-ide://file/home/runner/work/_temp/antigravity-ide-linux/QA%20exact%20IDE%20file%20opener%207812.txt",
+  "fixture": "/home/runner/work/_temp/antigravity-ide-linux/QA exact IDE file opener 7812.txt",
+  "receiver": {
+    "pid": 3520,
+    "argv": [
+      "/home/runner/work/_temp/antigravity-ide-linux/app/antigravity-ide/antigravity-ide",
+      "--disable-gpu",
+      "--remote-debugging-address=127.0.0.1",
+      "--remote-debugging-port=9337",
+      "--open-url",
+      "--",
+      "antigravity-ide://file/home/runner/work/_temp/antigravity-ide-linux/QA%20exact%20IDE%20file%20opener%207812.txt"
+    ]
+  },
+  "oneTimeConsentClicked": true,
+  "normalWelcomeAction": "Get Started",
+  "rendererAsset": "resources/app/out/vs/code/electron-browser/workbench/workbench.html",
+  "fileTextPresentUnderWelcomeOverlay": true,
+  "welcomeOverlayDismissed": true,
+  "editorTitle": "Antigravity IDE - QA exact IDE file opener 7812.txt",
+  "visibleFileText": "Agent Deeplinks native Linux file fixture 7812",
+  "verifiedVisually": true,
+  "mode": "Restricted Mode",
+  "accountUsed": false,
+  "signedInClicked": false,
+  "termsAccepted": false,
+  "trustGranted": false,
+  "preferencesOpened": false,
+  "changedConfirmationSettings": false,
+  "isolatedAppNotice": "Stock IDE displayed an automatic terminal auto-execution default migration notice in its disposable profile.",
+  "screenshot": "linux-file-render.png",
+  "screenshotSha256": "34ec053bd2f4cb9e801354009b41747484a769e7d25c52ca0f61e410dc230848",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934191546/job/140293504050",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45934191546/artifacts/15169578512"
+}
