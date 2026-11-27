@@ -1,0 +1,34 @@
+{
+  "version": "0.1.58",
+  "tagCommit": "b3ab539e41155a8fc29ff545b77e5efcf2e64b06",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/45918451845",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45918452344",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/45918452385",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.58",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.58/agent-deeplinks.zip",
+  "production": "https://a1cb6ec9.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://933ac5f7.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "e1bf2215d6bbf1b2fa3f00930b2d08aa21c49b1d5f11348807a15ad30c66c582",
+  "githubReleaseZipSha256": "a45c604d6eba347985388225568bc8c961901e705fe3d5cac62aa6695f9e96d1",
+  "productionAndZipHtmlSha256": "6a81f2d9e103a99594e40443b64de0f273f7538aef3fcade527c35d7acfcfbd0",
+  "productionAndZipJavaScriptSha256": "faf19270853cb2cd6a684fa7aa91cc5c735a62f6ea330f54a45d118401bf7d54",
+  "packageTestsPassed": 53,
+  "primaryRoutes": 74,
+  "staticActionExamples": 83,
+  "configurableDesktopExistingChats": 3,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstallByName": {
+    "version": "0.1.58",
+    "react": 19,
+    "renderer": "React renderToStaticMarkup",
+    "svgExports": 21,
+    "localAndRemoteCopiedLinks": true,
+    "bothReactVariants": true,
+    "fixtureHash": "c14da1b6f333de60497a352aa7f65cb15d856485ce7f82908f29d74b92197bff"
+  },
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}
