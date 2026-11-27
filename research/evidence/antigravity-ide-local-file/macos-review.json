@@ -1,0 +1,52 @@
+{
+  "result": "verified-routing",
+  "npmVersionForAppRoutes": "0.1.62",
+  "routes": {
+    "draft": "antigravity://open?prompt=Verify%20coinstalled%20Google%20apps",
+    "marketplace": "antigravity://customizations/marketplaces",
+    "ideFile": "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt"
+  },
+  "coinstalledStage": {
+    "stage": "both signed apps installed",
+    "result": {
+      "draft": {
+        "allPaths": [
+          "/Applications/Antigravity.app",
+          "/Users/runner/work/_temp/antigravity-dual/staging/app/Antigravity.app"
+        ],
+        "defaultPath": "/Applications/Antigravity.app",
+        "url": "antigravity://open?prompt=Verify%20coinstalled%20Google%20apps"
+      },
+      "marketplace": {
+        "allPaths": [
+          "/Applications/Antigravity.app",
+          "/Users/runner/work/_temp/antigravity-dual/staging/app/Antigravity.app"
+        ],
+        "defaultPath": "/Applications/Antigravity.app",
+        "url": "antigravity://customizations/marketplaces"
+      },
+      "ideFile": {
+        "allPaths": [
+          "/Applications/Antigravity IDE.app",
+          "/Users/runner/work/_temp/antigravity-dual/staging/ide/Antigravity IDE.app"
+        ],
+        "defaultPath": "/Applications/Antigravity IDE.app",
+        "url": "antigravity-ide://file/Users/runner/work/_temp/antigravity-dual/QA%20exact%20file%20opener.txt"
+      }
+    }
+  },
+  "accountUsed": false,
+  "acceptedTerms": false,
+  "changedAppSettings": false,
+  "submittedPrompt": false,
+  "versions": {
+    "app": "2.35.2",
+    "ide": "2.8.0"
+  },
+  "ideSigner": "Google LLC, Notarized Developer ID, team EQHXZ8M8AV",
+  "nativeExactFileReviewVisible": true,
+  "reviewChoiceLeftOpen": true,
+  "screenshot": "macos-review.png",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45927757241/job/140273020346",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45927757241/artifacts/15167801174"
+}
