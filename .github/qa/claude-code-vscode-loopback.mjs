@@ -22,12 +22,15 @@ assert.deepEqual(readdirSync(fixture), []);
 const record = { library: 'agent-deeplinks@0.1.66', extension: 'anthropic.claude-code@2.1.332', marker, uri,
   exactNestedEncoding: true, profile: 'disposable', noAccount: true, draftSubmitted: false,
   gatewayRequests: [], gatewayWriteAttempts: 0, onboardingActions: [] };
+const gatewayToken = 'disposable-loopback-model-list-only';
 const gateway = createServer((request, response) => {
   const path = new URL(request.url, 'http://127.0.0.1').pathname;
   const read = request.method === 'GET' || request.method === 'HEAD';
   if (!read) record.gatewayWriteAttempts++;
   const modelList = read && path === '/v1/models';
-  record.gatewayRequests.push({ method: request.method, route: modelList ? '/v1/models' : '(other)', status: modelList ? 200 : read ? 404 : 405 });
+  const authorized = request.headers.authorization === `Bearer ${gatewayToken}`;
+  record.gatewayRequests.push({ method: request.method, route: modelList ? '/v1/models' : '(other)',
+    status: modelList ? 200 : read ? 404 : 405, authorized });
   response.writeHead(modelList ? 200 : read ? 404 : 405, { 'content-type': 'application/json' });
   if (modelList) {
     response.end(JSON.stringify({ data: [{ type: 'model', id: 'claude-sonnet-4-6', display_name: 'Claude Sonnet 4.6 QA', created_at: '2026-02-17T00:00:00Z' }], has_more: false, first_id: 'claude-sonnet-4-6', last_id: 'claude-sonnet-4-6' }));
@@ -36,7 +39,7 @@ const gateway = createServer((request, response) => {
 await new Promise((resolve, reject) => { gateway.once('error', reject); gateway.listen(0, '127.0.0.1', resolve); });
 const gatewayEnv = {
   ANTHROPIC_BASE_URL: `http://127.0.0.1:${gateway.address().port}`,
-  ANTHROPIC_AUTH_TOKEN: 'disposable-loopback-model-list-only',
+  ANTHROPIC_AUTH_TOKEN: gatewayToken,
   ANTHROPIC_MODEL: 'claude-sonnet-4-6',
   CLAUDE_CONFIG_DIR: join(qa, 'claude'),
   CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: '1',
@@ -109,10 +112,12 @@ async function matchEditor() {
     let result;
     try {
       result = await frame.evaluate(expected => {
-        const candidates = document.querySelectorAll('textarea, input, [contenteditable="true"], [role="textbox"]');
+        const candidates = document.querySelectorAll('textarea, input, [contenteditable]:not([contenteditable="false"]), [role="textbox"]');
         for (const box of candidates) {
           const nodeText = box.value ?? box.innerText ?? box.textContent;
-          if ((nodeText === expected || nodeText === expected + '\n') && box.getClientRects().length && !box.disabled && !box.readOnly && box.getAttribute('aria-disabled') !== 'true') {
+          const style = getComputedStyle(box);
+          if ((nodeText === expected || nodeText === expected + '\n') && box.getClientRects().length &&
+              style.visibility === 'visible' && !box.disabled && !box.readOnly && box.getAttribute('aria-disabled') !== 'true') {
             return { value: nodeText, role: box.getAttribute('role'), tag: box.tagName, editable: box.isContentEditable || box.matches('textarea,input'), label: box.getAttribute('aria-label') };
           }
         }
@@ -125,10 +130,10 @@ async function matchEditor() {
 }
 
 async function prepareWorkbench() {
-  const onboarding = page.locator('.onboarding-a-btn');
-  if (await onboarding.first().isVisible()) {
+  const onboarding = page.locator('.onboarding-a-overlay');
+  if (await onboarding.isVisible()) {
     for (const label of ['Continue without Signing In', 'Get Started']) {
-      const action = onboarding.filter({ hasText: new RegExp(`^${label}$`) });
+      const action = onboarding.getByRole('button', { name: label, exact: true });
       if (await action.isVisible()) {
         await action.click({ timeout: 3500 });
         record.onboardingActions.push(label);
@@ -147,8 +152,22 @@ async function prepareWorkbench() {
     record.vscodeFixtureTrusted = true;
     return false;
   }
+  const restricted = page.locator('.monaco-banner').filter({ hasText: 'Restricted Mode is intended for safe code browsing' });
+  const manageTrust = restricted.getByText('Manage', { exact: true });
+  if (!record.vscodeFixtureTrusted && await manageTrust.isVisible()) {
+    assert((await page.title()).includes(' - fixture - '), 'Unexpected workspace in the Workspace Trust window');
+    assert.deepEqual(readdirSync(fixture), []);
+    await manageTrust.click({ timeout: 3500 });
+    const workspaceTrust = page.locator('.workspace-trust-editor');
+    const trustFolder = workspaceTrust.getByRole('button', { name: 'Trust', exact: true });
+    if (await trustFolder.isVisible()) {
+      await trustFolder.click({ timeout: 3500 });
+      record.vscodeFixtureTrusted = true;
+    }
+    return false;
+  }
   const workbench = page.locator('.monaco-workbench');
-  const editorTab = workbench.getByText(seedName, { exact: true }).first();
+  const editorTab = workbench.locator('.tabs-container [role="tab"]').filter({ hasText: seedName });
   if (await editorTab.isVisible() && !(await page.locator('.monaco-dialog-box').first().isVisible())) {
     record.baselineTitle = await page.title();
     return true;
@@ -163,7 +182,7 @@ try {
   assert(page, 'Native workbench CDP page did not appear');
   await page.locator('.monaco-workbench').waitFor({ timeout: 18000 });
   await delay(3500);
-  assert(await until(prepareWorkbench, 28), 'Normal stock workbench did not finish onboarding');
+  assert(await until(prepareWorkbench, 35), 'Normal stock workbench did not finish onboarding');
   screenshot('stock-workbench-ready.png');
 
   const trace = outputFile('xdg-open-execve.txt');
