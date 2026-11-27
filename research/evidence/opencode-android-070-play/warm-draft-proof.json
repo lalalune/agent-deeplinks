@@ -1,0 +1,56 @@
+{
+  "certificate": "0aafd2181b878d49e25fb9cf6b2b4f291b51fefbc971db890fabab1f422d268c",
+  "client": "OpenCode 0.7.0 (178) Play-signed ARM64 split APKs",
+  "server": "Isolated OpenCode 2.4.2 server with two scratch projects",
+  "pairs": {
+    "A": {
+      "endpoint": "172.18.0.1:38457",
+      "confirmed": true
+    }
+  },
+  "routes": {
+    "initial-draft": {
+      "url": "opencode://new-session?project=5d71d423c729552760c001a4bb9e2f05d5585f64",
+      "destinationVisible": true
+    }
+  },
+  "packageVersion": "0.1.61",
+  "retarget": {
+    "exactUri": "opencode://new-session?project=a4f44beec7925bbfe979e622c16e9df0ac2d95c3",
+    "oldProject": "OpenCode A Target",
+    "newProject": "OpenCode A Default",
+    "projectChanged": true,
+    "sameAppProcess": true,
+    "draftBefore": "OpenCode Play draft preservation 070",
+    "draftAfter": "OpenCode Play draft preservation 070",
+    "draftRetained": true,
+    "launchState": "UNKNOWN",
+    "promptSubmitted": false
+  },
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45925321658/job/140265168077",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45925321658/artifacts/15166556086",
+  "workflowCommit": "d4578f8ae840c0baa1088b6bbe2298a6994b8665",
+  "npmSha256": "260ce4deef7972696f83835a9e7f8cc747dacccbec94d09b874a65e33b776234",
+  "runtime": {
+    "android": "15",
+    "api": 35,
+    "abi": "arm64-v8a",
+    "host": "Hosted ReDroid",
+    "launch": "Untargeted ACTION_VIEW with BROWSABLE and same process ID"
+  },
+  "signing": {
+    "xapkSha256": "3b167ffe001f0421a0966323bfbfa6dedd77a6bdfea35fe4e6fb20755d76ee54",
+    "googleSourceStampSha256": "3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d",
+    "packageProvenance": "proof.json"
+  },
+  "finalServerCounts": {
+    "session_v2": 2,
+    "session_message": 0,
+    "account": 0
+  },
+  "screenshot": {
+    "file": "retargeted-draft.png",
+    "sha256": "43bfad948362960ca370e65f83176e45c3b9734da6cf86ee3eed6a6943e0daa5"
+  },
+  "scope": "Typed text survived the project switch in the archived Play-stamped build. Android delivered the intent to the current activity and reported UNKNOWN launch state. The app PID stayed the same. Current Play delivery remains open."
+}
