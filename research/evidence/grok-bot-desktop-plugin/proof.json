@@ -1,0 +1,53 @@
+{
+  "release": "agent-deeplinks@0.1.67",
+  "desktop": {
+    "runtime": "Ubuntu 24.04 amd64",
+    "app": "Grok Bot 1.3.0",
+    "publisherAptSigner": "380FF4BCDC34A4BD92A3565342A1772E62E492D6",
+    "debSha256": "87b046b6e4126c3eb466df59135b59c8efbb5f9f10e0de548f0d65ec8ac55528",
+    "publisherListing": "https://x.ai/bot/plugin/674",
+    "exactListingNativeUri": "grokbot://app/v1/plugin/add?id=674",
+    "stockXdgHandler": "grok-bot.desktop",
+    "coldExit": {
+      "status": 0,
+      "signal": null
+    },
+    "coldReceiver": {
+      "pid": 3517,
+      "argv": [
+        "/opt/Grok Bot/grok-bot -- grokbot://app/v1/plugin/add?id=674"
+      ],
+      "kernelExecutable": "/opt/Grok Bot/grok-bot"
+    },
+    "coldWindowProcessMatched": true,
+    "visibleCheckpoint": "Grok Bot with Sign in",
+    "screenshot": "cold-sign-in.png",
+    "screenshotSha256": "21b853d8f6788fc61ef094bff48792e8f62b0515480a611e78207afb9f973682",
+    "accountUsed": false,
+    "pluginControlActivated": false,
+    "messageSent": false,
+    "warmLauncherTrace": "3857  execve(\"/usr/lib/x86_64-linux-gnu/glib-2.0/gio-launch-desktop\", [\"/usr/lib/x86_64-linux-gnu/glib-2.0/gio-launch-desktop\", \"/usr/bin/grok-bot\", \"--\", \"grokbot://app/v1/plugin/add?id=674\"]",
+    "warmInAppHandlingVerified": false,
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084557081/job/140790972482",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084557081/artifacts/15238452099",
+    "artifactSha256": "43762de49b4aea96ccee386601fa77fd5676f55349f6ac607c70b4e2b25b4f6c",
+    "jobConclusion": "failure, warm reuse assertion after cold evidence was captured"
+  },
+  "android14Diagnostic": {
+    "guest": "Android 14 (API 34) native ARM64 redroid",
+    "apk": "ai.x.grok 1.2.60-release.01",
+    "abi": "armeabi-v7a (native supported ABI, no native bridge)",
+    "apkSignerMatchedLiveGrokDal": true,
+    "apkBundleSha256": "b24373aca5e42a27005f483fdcbe17a6869d20ddc667cd4a149fdec90cbb7d87",
+    "grokDomainVerification": "none after stock re-verification",
+    "exactReleaseLinks": {
+      "version": "0.1.67",
+      "native": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+      "browser": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true"
+    },
+    "dispatchesPerformed": 0,
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084448209/job/140790616920",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084448209/artifacts/15237714845",
+    "artifactSha256": "4ee0aa531fc177563f7cd1753db8f1fb571c0f0d9b5619f106c515c31fd0826a"
+  }
+}
