@@ -1198,6 +1198,34 @@ test("builds Cursor command and rule reviews with the hosted length limit", () =
   }
 });
 
+test("opens a read-only Cursor shared transcript on web, iOS, and Android", () => {
+  const url = "https://cursor.com/s/abc123";
+  const options = { action: "shared-chat", target: url };
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("cursor", platform, options), url);
+    assert.equal(getAgentLink("cursor", platform, { ...options, target: "abc123" }), url);
+    assert.equal(getAgentLink("cursor", platform, { ...options, target: url + "/?ref=fixture#ignored" }), url);
+    assert.equal(getAgentRoute("cursor", platform, options.action).evidence, "documented");
+    assert.equal(getAgentRoute("cursor", platform, options.action).behavior, "launch");
+    assert.equal(getAgentLink("cursor", platform, { ...options, prompt: special }), null);
+    for (const target of [
+      "", "https://cursor.com/s/", "http://cursor.com/s/abc123", "https://cursor.com.evil.test/s/abc123",
+      "https://cursor.com@evil.test/s/abc123", "https://guest@cursor.com/s/abc123", url + "/other",
+      "https://cursor.com/s/a%2Fb", "https://cursor.com/s/a%0Ab", "https://cursor.com/agents/abc123",
+      "../abc123", "a".repeat(129),
+    ]) {
+      assert.equal(getAgentLink("cursor", platform, { ...options, target }), null, target);
+    }
+    for (const iconOnly of [true, false]) {
+      const html = renderToStaticMarkup(createElement(AgentLink, { agent: "cursor", platform, options, iconOnly }));
+      assert.ok(html.includes(`href="${url}"`));
+      assert.ok(html.includes("data:image/svg+xml"));
+      assert.equal(html.includes(">Cursor<"), !iconOnly);
+    }
+  }
+  assert.equal(getAgentLink("cursor", "desktop", options), null);
+});
+
 test("opens a Cursor Origin pull request on web, iOS, and Android", () => {
   const target = "https://cursor.com/codebase/acme/rocket/pull/1";
   const options = { action: "pull-request", target };

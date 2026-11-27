@@ -615,6 +615,11 @@ const codexSharedChat = sharedChat({
   note: "Opens the read-only Codex snapshot in the browser. A working share link and its original access permissions are required to view the content.",
 }, "", { id: /^cx_[a-f0-9]{32}$/u, example: "cx_00000000000080008000000000000000" });
 const claudeSharedChat = "https://claude.ai/share/";
+const cursorSharedChat = sharedChat({
+  url: "https://cursor.com/s/", evidence: "documented",
+  sources: ["https://cursor.com/help/ai-features/shared-transcripts"],
+  note: "Opens a read-only Cursor transcript in the browser. Access depends on how its author shared it.",
+}, "", { id: /^[a-z0-9][a-z0-9_-]{0,127}$/iu, example: "abc123" });
 const claudeAndroidInstall: ActionDefinition = {
   id: "install", label: "Get Claude on Google Play",
   url: "https://play.google.com/store/apps/details?id=com.anthropic.claude",
@@ -790,10 +795,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [...grokMobileActions, grokBotMarketplace],
   },
   cursor: {
-    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web")],
+    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web"), cursorSharedChat],
     desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm"), cursorCustomization("command", "desktop"), cursorCustomization("rule", "desktop")],
-    ios: [cursorPullRequest("ios")],
-    android: [cursorPullRequest("android")],
+    ios: [cursorPullRequest("ios"), cursorSharedChat],
+    android: [cursorPullRequest("android"), cursorSharedChat],
   },
   antigravity: {
     web: [antigravityWebMarketplace, antigravityWebPlugin, antigravityRemoteSession],

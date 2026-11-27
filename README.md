@@ -131,6 +131,8 @@ const pluginChatUrl = getAgentLink("codex", "desktop", {
 
 See [research/plugin-links.md](research/plugin-links.md) for all supported action IDs, parameters, and provider requirements.
 
+In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cursor **Origin PR** link, or Cursor **Shared transcript** link. Viewing these destinations requires the access granted by their owner. For a Cursor transcript in a desktop or mobile browser, use `shared-chat` with the share ID or the full `https://cursor.com/s/…` URL. [Cursor shared transcripts](https://cursor.com/help/ai-features/shared-transcripts)
+
 ## React & shadcn/ui
 
 Compose `<AgentLink>` with your existing [shadcn/ui Button](https://ui.shadcn.com/docs/components/radix/button) via `asChild`:

@@ -79,6 +79,23 @@ interface ActionExampleSpec {
   options: (platform: ActivePlatform) => Omit<LinkOptions, "action">;
 }
 
+interface DestinationExample {
+  agent: AgentId;
+  label: string;
+  inputLabel: string;
+  placeholder: string;
+  action?: AgentActionId;
+}
+
+const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
+  { agent: "cursor", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://cursor.com/agents/bc-…" },
+  { agent: "cursor", label: "Origin PR", inputLabel: "Origin pull request URL",
+    placeholder: "https://cursor.com/codebase/acme/rocket/pull/1", action: "pull-request" },
+  { agent: "cursor", label: "Shared transcript", inputLabel: "Transcript ID or URL",
+    placeholder: "https://cursor.com/s/abc123", action: "shared-chat" },
+  { agent: "grok-build", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://grok.com/build/bc-…" },
+];
+
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
   chatgpt: {
     app: {
@@ -190,10 +207,6 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     rule: {
       label: "Rule",
       options: () => ({ target: "review-rule", content: "Keep deeplinks verified and minimal." }),
-    },
-    "pull-request": {
-      label: "Origin PR",
-      options: () => ({ target: "https://cursor.com/codebase/acme/rocket/pull/1" }),
     },
   },
   gemini: {
@@ -495,6 +508,38 @@ function LinkSetup({ tile, iconOnly }: { tile: ResolvedTile; iconOnly: boolean }
   );
 }
 
+function DestinationLinkSetup({ example, platform, iconOnly }: {
+  example: DestinationExample;
+  platform: ActivePlatform;
+  iconOnly: boolean;
+}) {
+  const [value, setValue] = useState("");
+  const target = value.trim();
+  const options = example.action ? { action: example.action, target } : { cloudAgent: target };
+  const href = target && getAgentLink(example.agent, platform, options);
+  const destination = `${agents[example.agent].name} ${example.label}`;
+  const label = `Open ${destination}`;
+
+  return (
+    <div role="region" aria-label={`${destination} link`} className="link-setup">
+      <label>
+        {example.inputLabel}
+        <input value={value} onChange={(event) => setValue(event.target.value)}
+          placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
+          autoComplete="off" autoCapitalize="off" spellCheck={false} />
+      </label>
+      {href ? (
+        <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
+          <a href={href} {...linkAttrs(href)} aria-label={label} title={label}>
+            <AgentLogo agent={example.agent} />
+            {!iconOnly && <span className="agent-name">{label}</span>}
+          </a>
+        </Button>
+      ) : target && <p role="status">Enter a valid {example.inputLabel}.</p>}
+    </div>
+  );
+}
+
 function ExistingDesktopChatLink({ agent, iconOnly }: { agent: DesktopChatAgent; iconOnly: boolean }) {
   const [value, setValue] = useState("");
   const name = agents[agent].name;
@@ -693,10 +738,16 @@ function App() {
   const [showOpenCodeSessions, setShowOpenCodeSessions] = useState(false);
   const [showClaudeWorkspace, setShowClaudeWorkspace] = useState(false);
   const [desktopChatAgent, setDesktopChatAgent] = useState<DesktopChatAgent>();
+  const [destination, setDestination] = useState<{ example: DestinationExample; platform: ActivePlatform }>();
 
   const activePlatform: ActivePlatform = activeTab === "mobile" ? mobileOs : activeTab;
   const visibleTiles = tilesByPlatform[activePlatform];
   const actionExamples = examplesByPlatform[activePlatform];
+  const destinationExamples = DESTINATION_EXAMPLES.filter((example) =>
+    example.action ? Boolean(getAgentRoute(example.agent, activePlatform, example.action))
+      : getAgentRoute(example.agent, activePlatform)?.fields?.cloudAgent !== undefined,
+  );
+  const destinationExample = destination?.platform === activePlatform ? destination.example : undefined;
   const setupTile = setup?.platform === activePlatform ? visibleTiles.find((tile) => tile.id === setup.agent) : undefined;
   const agentButtonClass = iconOnly ? "agent-btn agent-btn-icon" : "agent-btn";
 
@@ -821,6 +872,21 @@ function App() {
                   </a>
                 </Button>
               ))}
+              {destinationExamples.map((example) => {
+                const name = agents[example.agent].name;
+                const label = `Configure ${name} ${example.label}`;
+                return (
+                  <Button key={label} type="button" variant="ghost" className={agentButtonClass}
+                    aria-label={label} aria-expanded={destinationExample === example} title={label}
+                    onClick={() => setDestination(destinationExample === example ? undefined : { example, platform: activePlatform })}>
+                    <AgentLogo agent={example.agent} />
+                    {!iconOnly && <span className="action-btn-text">
+                      <span className="agent-name">{name}</span>
+                      <span className="action-btn-kind">{example.label}</span>
+                    </span>}
+                  </Button>
+                );
+              })}
               {activePlatform === "desktop" && DESKTOP_CHAT_AGENTS.map((agent) => {
                 const name = agents[agent].name;
                 const label = `Configure existing ${name} chat link`;
@@ -871,6 +937,10 @@ function App() {
                 </Button>
               )}
             </div>
+            {destinationExample && (
+              <DestinationLinkSetup key={`${activePlatform}-${destinationExample.agent}-${destinationExample.label}`}
+                example={destinationExample} platform={activePlatform} iconOnly={iconOnly} />
+            )}
             {activePlatform === "desktop" && desktopChatAgent && (
               <ExistingDesktopChatLink key={desktopChatAgent} agent={desktopChatAgent} iconOnly={iconOnly} />
             )}

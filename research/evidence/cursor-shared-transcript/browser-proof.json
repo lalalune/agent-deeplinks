@@ -1,0 +1,32 @@
+{
+  "probe": "Published documentation placeholder, with no active transcript",
+  "sources": [
+    "https://cursor.com/help/ai-features/shared-transcripts"
+  ],
+  "profiles": [
+    {
+      "profile": "Desktop Chromium",
+      "version": "158.0.8127.18",
+      "url": "https://cursor.com/s/abc123",
+      "status": 200,
+      "pageTitle": "Shared Chat",
+      "unavailableScreen": true
+    },
+    {
+      "profile": "iPhone WebKit",
+      "version": "27.2",
+      "url": "https://cursor.com/s/abc123",
+      "status": 200,
+      "pageTitle": "Shared Chat",
+      "unavailableScreen": true
+    },
+    {
+      "profile": "Pixel Chromium",
+      "version": "158.0.8127.18",
+      "url": "https://cursor.com/s/abc123",
+      "status": 200,
+      "pageTitle": "Shared Chat",
+      "unavailableScreen": true
+    }
+  ]
+}
