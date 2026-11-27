@@ -1,0 +1,37 @@
+{
+  "observedDate": "2026-11-27",
+  "scope": "An untargeted stock Android browsable ACTION_VIEW from a stopped signed app to native sign-in. The Firefox tap phase was not reached in this run.",
+  "package": "agent-deeplinks@0.1.67",
+  "exactLink": "https://agent.meta.ai/chat",
+  "android": {
+    "sdk": 35,
+    "architecture": "aarch64",
+    "primaryAbi": "arm64-v8a",
+    "nativeBridge": false,
+    "runtime": "GitHub-hosted Ubuntu ARM64 and pinned ReDroid Android 15 container",
+    "resolverBeforeMuseInstall": "org.chromium.webview_shell/.WebViewBrowserActivity",
+    "resolverAfterMuseInstall": "android/com.android.internal.app.ResolverActivity",
+    "verifiedHosts": ["agent.meta.ai", "applink.muse.ai", "muse.ai", "www.muse.ai"],
+    "verificationService": "/system/priv-app/StatementService/StatementService.apk",
+    "entireForwardedEgressDeniedBeforeDispatch": true
+  },
+  "muse": {
+    "package": "com.facebook.aura",
+    "versionName": "18.0.0.8.161",
+    "versionCode": 1062301896,
+    "apkSha256": "076b644e92248b41c77b192422e5c73025642ff3acd2df1008c1f36348e78354",
+    "certificateSha256": "a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99",
+    "certificateMatchesMetaAssociation": "https://agent.meta.ai/.well-known/assetlinks.json",
+    "activityStarted": "com.facebook.aura/.main.AuraMainActivity",
+    "activityWaitReported": "timeout",
+    "activityForeground": "com.facebook.aura/.main.AuraMainActivity",
+    "visibleLabels": ["Welcome to Muse", "Mobile number or email", "Continue"],
+    "screenshotSha256": "37fa9e324974e1a0f5b96e36c2809a741d8b3d3fb7d888b6fe149b28c6815886"
+  },
+  "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084448944/job/140790618939",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46084448944/artifacts/15238058560",
+  "artifactSha256": "3b6c8db3eef4203d5a5422209e62824c589b4becf400c6453d242184d315eebd",
+  "resultQualification": "The run's plain-text assertion did not normalize the nonbreaking space in the accessibility heading. The matching foreground activity, app-owned accessibility nodes, and visible screenshot establish the sign-in checkpoint.",
+  "sent": false,
+  "signedIn": false
+}
