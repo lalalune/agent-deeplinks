@@ -36,5 +36,31 @@
     "browserConfirmation": "browser-confirmation.png",
     "nativeWindow": "native-logged-out.png"
   },
-  "loopbackUnicodeFollowup": "The trusted click opened the one-time Chrome confirmation. Both the fixture anchor and confirmation button read Open Cursor, so the observer left the modal untouched and no app launch was observed."
+  "loopbackUnicodeFirstAttempt": "The trusted click opened the one-time Chrome confirmation. Both the fixture anchor and confirmation button read Open Cursor, so the observer left the modal untouched and no app launch was observed.",
+  "loopbackUnicodeFollowup": {
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/45917133822",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/45917133822/artifacts/15162742566",
+    "diagnosticHead": "0bd90c46e31e9aff724712dba480c16eafe43176",
+    "passed": true,
+    "libraryVersion": "0.1.56",
+    "prompt": "Review the synthetic example.\nKeep café + & ☃ and literal %2F.",
+    "uri": "cursor://anysphere.cursor-deeplink/prompt?text=Review%2520the%2520synthetic%2520example.%250AKeep%2520caf%25C3%25A9%2520%252B%2520%2526%2520%25E2%2598%2583%2520and%2520literal%2520%25252F.",
+    "trustedActivation": {
+      "trusted": true,
+      "active": true,
+      "href": "cursor://anysphere.cursor-deeplink/prompt?text=Review%2520the%2520synthetic%2520example.%250AKeep%2520caf%25C3%25A9%2520%252B%2520%2526%2520%25E2%2598%2583%2520and%2520literal%2520%25252F."
+    },
+    "installedVersion": "3.32.4",
+    "chromeVersion": "158.0.8127.37",
+    "nativeWindow": "signed-out",
+    "nativeWindowLabels": [
+      "CURSOR",
+      "Log In",
+      "Sign Up"
+    ],
+    "accountUsed": false,
+    "promptSubmitted": false,
+    "permanentBrowserPermissionSelected": false,
+    "scope": "Exact browser URL and cold native dispatch. Signed-in prompt rendering was outside the run."
+  }
 }
