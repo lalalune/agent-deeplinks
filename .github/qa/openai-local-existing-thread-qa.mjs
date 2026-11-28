@@ -214,7 +214,7 @@ try {
     const test = { name, expectedRoot, marker: "Codex QA " + name + " + & café ☃\nUnsaved second line.", options };
     const url = getAgentLink("codex", "desktop", { prompt: test.marker, ...options });
     const params = [["prompt", test.marker], ...Object.entries(options)];
-    assert.equal(url, "codex://threads/new?" + params.map(([key, value]) => key + "=" + encodeURIComponent(value)).join("&"));
+    assert.equal(url, "codex://new?" + params.map(([key, value]) => key + "=" + encodeURIComponent(value)).join("&"));
     const result = { ...test, url, dispatch: dispatch(url), gatewayRequestsBefore: proof.gatewayRequests.length };
     proof.newDrafts[name] = result;
     const visibleDraft = state => state.editorDocuments.some(editor => editor.value === test.marker) && !state.hasTrustDialog;
