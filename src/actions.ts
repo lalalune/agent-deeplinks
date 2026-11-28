@@ -4,7 +4,7 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
-  | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open";
+  | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
 
@@ -848,6 +848,16 @@ const codexSettings: ActionDefinition = {
   prepare: ({ target }, url) => !target ? url : codexSettingsSections.some(({ value }) => value === target) ? `${url}/${target}` : null,
 };
 
+const sshConfigAlias = /^(?!-)[\p{L}\p{N}_.:-]+$/u;
+const codexAddSshHost: ActionDefinition = {
+  id: "add-ssh-host", label: "Add SSH host", url: "codex://settings/connections/ssh/add",
+  behavior: "configure", evidence: "documented", sources: [`${desktopPlugins}#settings`],
+  note: "Adds a named host from your SSH config to Codex with automatic connection disabled and opens SSH settings.",
+  fields: { target: "name" }, required: ["target"],
+  inputs: [input("target", "SSH host alias", "build-box")],
+  prepare: ({ target }, url) => target && sshConfigAlias.test(target) ? url : null,
+};
+
 const codexSkills: ActionDefinition = {
   id: "skills", label: "Open Skills", url: "codex://skills",
   behavior: "launch", evidence: "verified", sources: [`${desktopPlugins}#skills`, ...codexNavigationChecks],
@@ -864,7 +874,7 @@ const codexAutomations: ActionDefinition = {
   prepare: (_fields, url) => url,
 };
 
-const codexDesktopActions = [codexPlugin, codexInstall, codexPluginChat, codexSettings, codexSkills, codexAutomations];
+const codexDesktopActions = [codexPlugin, codexInstall, codexPluginChat, codexSettings, codexAddSshHost, codexSkills, codexAutomations];
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
   chatgpt: {
     web: [chatgptApp(chatgptPlugins, false), chatgptPlugin, chatgptPluginInstall, chatgptPluginChat, customGpt,

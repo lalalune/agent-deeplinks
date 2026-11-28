@@ -138,6 +138,12 @@ getAgentLink("codex", "desktop", {
 })
 ```
 
+Choose **Codex → Add SSH host** to add an existing alias from `~/.ssh/config` to Codex. The link opens SSH settings and adds the host with automatic connection disabled. [Codex SSH links](https://learn.chatgpt.com/docs/app/commands#settings)
+
+```ts
+getAgentLink("codex", "desktop", { action: "add-ssh-host", target: "build-box" })
+```
+
 ### Open a local file in Antigravity IDE
 
 Choose **Antigravity → IDE file or folder** under Desktop in the playground. Enter the absolute path to a file, folder, or workspace on this computer. The standalone IDE may ask for confirmation before opening it. [Google Antigravity downloads](https://antigravity.google/download?app=antigravity-ide)

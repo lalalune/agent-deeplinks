@@ -128,6 +128,8 @@ interface DestinationExample {
   agent: AgentId;
   label: string;
   inputLabel: string;
+  linkLabel?: string;
+  note?: string;
   placeholder?: string;
   action?: AgentActionId;
   field?: "session" | "directory" | "task";
@@ -147,6 +149,9 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
   { agent: "codex", label: "Cloud task", inputLabel: "Cloud task ID or URL",
     placeholder: "task_… or https://chatgpt.com/codex/tasks/…", field: "task" },
   { agent: "codex", label: "Settings section", inputLabel: "Settings section", action: "settings" },
+  { agent: "codex", label: "Add SSH host", inputLabel: "SSH host alias", placeholder: "build-box",
+    action: "add-ssh-host", linkLabel: "Add SSH host to Codex",
+    note: "Use an alias from your SSH config. Codex adds it with automatic connection disabled." },
   { agent: "claude", label: "Shared chat", inputLabel: "Claude share link or ID",
     placeholder: "https://claude.ai/share/…", action: "shared-chat" },
   { agent: "claude-code", label: "Cloud session", inputLabel: "Cloud session ID",
@@ -167,7 +172,7 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
   { agent: "opencode", label: "project draft", inputLabel: "Absolute local folder",
     placeholder: "/absolute/path/to/project", field: "directory", platform: "desktop" },
   { agent: "opencode", label: "server pairing", inputLabel: "OpenCode CLI or Copy/Share pairing URL",
-    placeholder: "opencode-ios://pair?…", action: "server-pair", platform: "android" },
+    placeholder: "opencode-ios://pair?…", action: "server-pair", platform: "android", linkLabel: "Review OpenCode pairing" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -643,7 +648,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const options = { ...destinationOptions, ...(prompt && { prompt }), ...(browserOnly && { browserOnly }) };
   const href = (target || choices) && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
-  const label = isPairing ? "Review OpenCode pairing" : `Open ${destination}`;
+  const label = example.linkLabel ?? `Open ${destination}`;
 
   return (
     <div role="region" aria-label={`${destination} link`} className="link-setup">
@@ -679,6 +684,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
         {example.agent === "t3-code" && example.field === "session" ? "Check the thread link and supply at most one draft prompt."
           : isIdePath || isLocalDirectory ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
       </p>}
+      {example.note && <p className="session-setup-note">{example.note}</p>}
     </div>
   );
 }

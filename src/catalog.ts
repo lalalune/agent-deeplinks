@@ -18,7 +18,7 @@ export const platformNames: Readonly<Record<Platform, string>> = {
 
 export type Evidence = "documented" | "source" | "observed" | "verified";
 
-export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "send" | "unknown";
+export type LinkBehavior = "draft" | "launch" | "handoff" | "confirm" | "configure" | "send" | "unknown";
 
 export type LinkField =
   | "prompt" | "cwd" | "repo" | "path" | "originUrl" | "directory"

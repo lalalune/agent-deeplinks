@@ -1277,6 +1277,31 @@ test("opens Codex and ChatGPT desktop pages without changing their settings", ()
   }
 });
 
+test("adds a configured SSH host using a separate desktop action", () => {
+  const action = "add-ssh-host";
+  for (const agent of ["codex", "chatgpt"]) {
+    const route = getAgentRoute(agent, "desktop", action);
+    assert.equal(route.behavior, "configure");
+    assert.deepEqual(route.required, ["target"]);
+    for (const target of ["Build.qa-01", "_lab", "café", "::1"]) {
+      const options = { action, target };
+      const href = `codex://settings/connections/ssh/add?name=${encodeURIComponent(target)}`;
+      assert.equal(getAgentLink(agent, "desktop", options), href);
+      for (const iconOnly of [false, true]) {
+        const markup = renderToStaticMarkup(createElement(AgentLink, { agent, platform: "desktop", options, iconOnly }));
+        assert.ok(markup.includes(`href="${href}"`));
+      }
+    }
+    for (const target of [undefined, "", "build box", "-F", "?", "*", "git@server", "server&autoConnect=true", "a%2Fb", "server\nHost other"]) {
+      assert.equal(getAgentLink(agent, "desktop", { action, target }), null);
+    }
+    for (const platform of ["web", "ios", "android", "cli", "vscode"]) {
+      assert.equal(getAgentLink(agent, platform, { action, target: "build-box" }), null);
+    }
+    assert.equal(getAgentLink(agent, "desktop", { action, target: "build-box", prompt: special }), null);
+  }
+});
+
 test("builds Cursor command and rule reviews with the hosted length limit", () => {
   const target = "Review-Tests_1.md";
   const content = "# Review café ☃\nKeep literal + % and &.";
