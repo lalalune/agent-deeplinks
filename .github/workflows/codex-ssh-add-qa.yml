@@ -1,0 +1,103 @@
+name: Codex Mac stock SSH config host link QA
+
+on:
+  push:
+    branches: [codex/codex-ssh-add-qa]
+
+permissions:
+  contents: read
+
+jobs:
+  signed:
+    runs-on: macos-15
+    timeout-minutes: 11
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Validate the OpenAI Apple Silicon download and release helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(uname -m)" = arm64
+          scratch="$RUNNER_TEMP/chatgpt-macos-navigation"
+          mkdir -p "$scratch/evidence" "$scratch/mount"
+          sw_vers > "$scratch/evidence/system.txt"
+          cp .github/qa/chatgpt-macos-local-thread-qa.mjs "$scratch/check.mjs"
+          cp .github/qa/chatgpt-macos-known-work-preference.png "$scratch/known-work-preference.png"
+          cp .github/qa/chatgpt-macos-known-task-offer.png "$scratch/known-task-offer.png"
+          cp .github/qa/chatgpt-macos-known-skip-confirmation.png "$scratch/known-skip-confirmation.png"
+          cp .github/qa/chatgpt-macos-known-codex-baseline.png "$scratch/known-codex-baseline.png"
+          swiftc .github/qa/chatgpt-macos-local-thread-observe.swift -o "$scratch/observe"
+          cd "$scratch"
+          printf '%s  %s\n' \
+            3c976a27d2d20fed1154f77848f272590bd4a4755e22861c7c4ae4fe51c09c57 known-work-preference.png \
+            5a757d7494ed7defc04edec33750bdbdbd3df9f5c424f76985c0e2a9455caace known-task-offer.png \
+            7e62dce0c2dadc98f5dbe3bd31c817d7122af3fd0f2a8c38c81b890698a9e8cc known-skip-confirmation.png \
+            94bf9c9d4d39347f41a42f9d80e91b7ead03c9ee9a6735c7bc9e30ccf5343989 known-codex-baseline.png | shasum -a 256 -c
+          curl -fsSL --proto '=https' --connect-timeout 20 --max-time 125 --max-filesize 920000000 \
+            https://persistent.oaistatic.com/codex-app-prod/Codex.dmg -o official.dmg
+          shasum -a 256 official.dmg | tee evidence/dmg-sha256.txt
+          curl -fsSL --proto '=https' --max-time 30 \
+            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.70.tgz -o agent-deeplinks.tgz
+          printf '%s  %s\n' e2527dc68e3a1fdf83b186562a912e8512365ea8dfa2d1b0e0fcb66dcbca0e1e agent-deeplinks.tgz | shasum -a 256 -c
+          npm install --ignore-scripts --no-fund --no-audit --save-exact ./agent-deeplinks.tgz
+          hdiutil attach -readonly -nobrowse -noautoopen -mountpoint "$scratch/mount" official.dmg
+          trap 'hdiutil detach "$scratch/mount" >/dev/null' EXIT
+          source="$(find "$scratch/mount" -name '*.app' -maxdepth 1 -type d | head -1)"
+          test -n "$source"
+          app="$scratch/ChatGPT.app"
+          ditto "$source" "$app"
+          info="$app/Contents/Info.plist"
+          test "$(plutil -extract CFBundleIdentifier raw "$info")" = com.openai.codex
+          plutil -extract CFBundleShortVersionString raw "$info" | tee evidence/app-version.txt
+          plutil -extract CFBundleURLTypes json -o evidence/schemes.json "$info"
+          node -e 'const fs = require("node:fs"); if (!JSON.parse(fs.readFileSync(process.argv[1])).some(x => x.CFBundleURLSchemes?.includes("codex"))) process.exit(1)' evidence/schemes.json
+          codesign --verify --deep --strict "$app"
+          codesign -dv --verbose=4 "$app" 2>&1 | tee evidence/codesign.txt
+          grep -Fx 'TeamIdentifier=2DC432GLL2' evidence/codesign.txt
+          spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee evidence/gatekeeper.txt
+          cli="$app/Contents/Resources/codex"
+          if [[ ! -x "$cli" ]]; then
+            cli="$(find "$app/Contents/Resources" -name codex -type f | head -1)"
+          fi
+          test -n "$cli"
+          test -x "$cli"
+          /usr/bin/file "$cli" | grep -F 'arm64' | tee evidence/bundled-cli-architecture.txt
+          printf '%s' "$cli" > "$scratch/cli-path.txt"
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+      - name: Observe documented SSH host addition and missing alias links in the signed native Codex workspace
+        timeout-minutes: 6
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/chatgpt-macos-navigation"
+          node_bin="$(command -v node)"
+          cli="$(cat "$scratch/cli-path.txt")"
+          cd "$scratch"
+          env -i GITHUB_ACTIONS=true GITHUB_STEP_SUMMARY="$GITHUB_STEP_SUMMARY" LANG=en_US.UTF-8 PATH=/usr/bin:/bin:/usr/sbin:/sbin \
+            "$node_bin" check.mjs "$scratch" "$scratch/ChatGPT.app" "$cli"
+      - name: Retain bounded native evidence
+        id: first_upload
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 2
+        uses: actions/upload-artifact@v6
+        with:
+          name: openai-signed-macos-ssh-add
+          path: ${{ runner.temp }}/chatgpt-macos-navigation/evidence
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Retry native evidence upload after transport failure
+        if: always() && steps.first_upload.outcome == 'failure'
+        timeout-minutes: 2
+        uses: actions/upload-artifact@v6
+        with:
+          name: openai-signed-macos-ssh-add-retry
+          path: ${{ runner.temp }}/chatgpt-macos-navigation/evidence
+          if-no-files-found: warn
+          retention-days: 30
