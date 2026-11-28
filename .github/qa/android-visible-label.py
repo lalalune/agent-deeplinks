@@ -4,12 +4,17 @@ import xml.etree.ElementTree as ET
 
 path, package, name, *flags = sys.argv[1:]
 root = ET.parse(path).getroot()
-normalize = lambda value: " ".join(value.split()).casefold()
+def normalize(value):
+    return " ".join(value.split()).casefold()
+
+
 points = set()
 for node in root.iter("node"):
     if node.get("package") != package or node.get("enabled") != "true":
         continue
     if normalize(name) not in {normalize(node.get("text", "")), normalize(node.get("content-desc", ""))}:
+        continue
+    if flags != ["--exists"] and node.get("clickable") != "true":
         continue
     match = re.fullmatch(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", node.get("bounds", ""))
     if not match:
