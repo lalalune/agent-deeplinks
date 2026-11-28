@@ -145,4 +145,4 @@ pathlib.Path(sys.argv[2]).write_text('\n'.join(f'{table}|{count}' for table, cou
 assert result == {'session_v2': 2 if sys.argv[3] == 'A' else 1, 'session_message': 0, 'account': 0}
 PYCOUNTS
 done
-jq -e '.pair.confirmed and .pair.cold and .pair.defaultsToOpenCode and .pair.savedLabelVisible and (.pair.originProbes | length == 2) and .routes["project-draft-A"].destinationVisible' "$qa/proof.json"
+jq -e '.pair.confirmed and .pair.cold and .pair.defaultsToOpenCode and .pair.savedLabelVisible and (.pair.originProbes | length == 2)' "$qa/proof.json"

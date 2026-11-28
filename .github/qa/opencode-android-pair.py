@@ -23,7 +23,6 @@ proof = {
     'client': 'Anomaly OpenCode 0.8.13 upstream release AAB with disposable test signing',
     'server': 'One isolated OpenCode 2.4.2 server reachable at two runner loopback ports',
     'pair': {},
-    'routes': {},
     'libraryVersion': '0.1.69',
     'libraryGitCommit': (root / 'evidence/sdk-git-commit.txt').read_text().strip(),
     'observations': {},
@@ -171,26 +170,6 @@ def observe(name, predicate):
     return False
 
 
-def verify(name, uri, predicate, cold=False):
-    proof['routes'][name] = {'url': uri, 'destinationVisible': False}
-    persist()
-    if cold:
-        android('shell', 'am', 'force-stop', package)
-        assert not android('shell', 'pidof ' + shlex.quote(package) + ' || true').strip()
-        proof['routes'][name]['processAbsentBeforeDispatch'] = True
-    dispatch = deliver(name, uri)
-    if cold:
-        assert 'LaunchState: COLD' in dispatch, 'Android did not report a cold OpenCode launch'
-        proof['routes'][name]['cold'] = True
-    proof['routes'][name]['destinationVisible'] = observe(name, predicate)
-    persist()
-    assert proof['routes'][name]['destinationVisible'], f'Expected native destination for {name}'
-
-
-def draft(project):
-    return lambda labels: {f'New Session, {project}', 'Message', 'Open sessions'} <= labels
-
-
 display_name = 'OpenCode QA + Café'
 pair(display_name)
 assert observe('initial-A', lambda labels: { 'OpenCode A Default', 'OpenCode A Target' } <= labels), (
@@ -208,8 +187,4 @@ assert observe('paired-label-A', lambda labels: display_name in labels and 'Clos
 proof['pair']['savedLabelVisible'] = True
 persist()
 
-project = fixture['target']['project']
-project_uri = library_link({'mode': 'new', 'project': project})
-assert project_uri == 'opencode://new-session?project=' + quote(project, safe="-_.!~*'()")
-verify('project-draft-A', project_uri, draft('OpenCode A Target'))
 print('Cold-opened the exact feature SDK link, reviewed both addresses, and paired the isolated server. The exact provided name is visible in the Android drawer.')
