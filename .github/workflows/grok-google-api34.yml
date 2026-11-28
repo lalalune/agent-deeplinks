@@ -1,0 +1,93 @@
+name: Grok App Links on Google APIs Android 14
+on:
+  push:
+    branches: [codex/grok-stock-google-api34]
+permissions:
+  contents: read
+jobs:
+  google-api34:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 17
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Prepare isolated emulator and fetch signed publisher package
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/android-agent-links"
+          mkdir -p "$qa"/{evidence,grok}
+          test -c /dev/kvm
+          sudo chmod a+rw /dev/kvm
+          sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          image='system-images;android-34;google_apis;x86_64'
+          curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 130 --max-filesize 150000000 \
+            'https://d.apkpure.net/b/APK/ai.x.grok?version=latest' -o "$qa/grok.apk" &
+          download=$!
+          "$sdkmanager" "$image" >"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
+          grep -E '^Pkg\.(Desc|Revision|Path)=|^AndroidVersion\.ApiLevel=|^SystemImage\.Abi=|^SystemImage\.TagId=' \
+            "$ANDROID_HOME/system-images/android-34/google_apis/x86_64/source.properties" > "$qa/evidence/system-image.txt"
+          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n grok-qa -k "$image" -f
+          wait "$download"
+          cd "$qa"
+          sha256sum grok.apk | tee evidence/artifact-digests.txt
+          case "$(cut -d ' ' -f1 evidence/artifact-digests.txt)" in
+            8314bf54209fe632fabc04373882d578e385930ac726cbc45481d20183da4629)
+              native_split=config.arm64_v8a.apk
+              app_abi=arm64-v8a ;;
+            b24373aca5e42a27005f483fdcbe17a6869d20ddc667cd4a149fdec90cbb7d87)
+              native_split=config.armeabi_v7a.apk
+              app_abi=armeabi-v7a ;;
+            *)
+              echo '::error::Mirror returned a Grok artifact whose digest is outside the known set.'
+              exit 1 ;;
+          esac
+          printf '%s\n' "$app_abi" > evidence/app-abi.txt
+          unzip -q grok.apk ai.x.grok.apk "$native_split" config.en.apk config.mdpi.apk -d grok
+          curl -fsSL --proto '=https' --max-time 20 https://grok.com/.well-known/assetlinks.json -o evidence/grok-dal.json
+          apksigner=$(find "$ANDROID_HOME/build-tools" -path '*/apksigner' | sort -V | tail -1)
+          for apk in grok/*.apk; do
+            fingerprint="$("$apksigner" verify --min-sdk-version 34 --max-sdk-version 34 --print-certs "$apk" | awk '/Signer #1 certificate SHA-256 digest:/{print $NF;exit}')"
+            test "$fingerprint" = 521bf5ce7c981faba4ebd86d23f778885537cad021bc107d8915d005e99f4a12
+            jq -r '.[]|select(.target.package_name=="ai.x.grok" and (.relation | index("delegate_permission/common.handle_all_urls")))|.target.sha256_cert_fingerprints[]|gsub(":";"")|ascii_downcase' evidence/grok-dal.json | grep -Fx "$fingerprint"
+            printf '%s %s\n' "$apk" "$fingerprint" >> evidence/verified-signers.txt
+          done
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Generate both exact published v0.1.68 Grok share links
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/android-agent-links"
+          curl -fsSL --proto '=https' --max-time 15 --max-filesize 300000 https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz -o "$qa/release.tgz"
+          checksum=$(openssl dgst -sha512 -binary "$qa/release.tgz" | openssl base64 -A)
+          test "$checksum" = 'Lxhk9I7aU8/+x6yh0awbxoSJf66yD5p+5m+5dOltfC+TgbqqhkQ0UWCF7Guuntxhgxb0uPemcmYwYpBXIOwOAA=='
+          tar -xzf "$qa/release.tgz" -C "$qa" -- package/package.json package/dist
+          node --input-type=module - "$qa" <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFileSync, writeFileSync } from 'node:fs';
+          import { pathToFileURL } from 'node:url';
+          const qa = process.argv[2];
+          const version = JSON.parse(readFileSync(qa + '/package/package.json', 'utf8')).version;
+          assert.equal(version, '0.1.68');
+          const { getAgentLink } = await import(pathToFileURL(qa + '/package/dist/index.js'));
+          const publicShare = 'https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5';
+          const options = { action: 'shared-chat', target: publicShare };
+          const native = getAgentLink('grok', 'android', options);
+          const browser = getAgentLink('grok', 'web', options);
+          assert.equal(native, publicShare);
+          assert.equal(browser, publicShare + '?stay_in_browser=true');
+          writeFileSync(qa + '/evidence/published-links.json', JSON.stringify({ version, native, browser }, null, 2));
+          JS
+      - name: Check stock App Links and cold launch both published URLs
+        run: bash .github/qa/grok-google-api34.sh "$RUNNER_TEMP/android-agent-links"
+      - name: Upload bounded public-route evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: grok-google-api34
+          path: ${{ runner.temp }}/android-agent-links/evidence/
+          if-no-files-found: warn
+          retention-days: 14
