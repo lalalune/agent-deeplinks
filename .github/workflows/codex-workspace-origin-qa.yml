@@ -1,0 +1,83 @@
+name: Stock Codex Linux workspace remote matching QA
+
+on:
+  push:
+    branches: [codex/codex-workspace-origin-qa]
+
+permissions:
+  contents: read
+
+jobs:
+  stock-uri:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify and install the signed-repository preview
+        run: |
+          scratch="$RUNNER_TEMP/chatgpt-linux-qa"
+          evidence="$scratch/evidence"
+          deb="$scratch/chatgpt_26.1120.50957_amd64.deb"
+          mkdir -p "$evidence"
+          base='https://persistent.oaistatic.com/codex-app-prod/linux/deb'
+          ua='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'
+          curl --fail --location --retry 1 --max-time 135 --max-filesize 503000000 --user-agent "$ua" --output "$deb" "$base/pool/main/c/chatgpt/chatgpt_26.1120.50957_amd64.deb"
+          printf '%s  %s\n' e8ab38df96d6070fd5d4582a606490637728243bb529e9edae19b3f0a6e664d2 "$deb" | sha256sum --check
+          test "$(stat -c '%s' "$deb")" = 501426562
+          test "$(dpkg-deb --field "$deb" Version)" = 26.1120.50957
+          curl --fail --max-time 18 --max-filesize 100000 --user-agent "$ua" --output "$evidence/InRelease" "$base/dists/stable/InRelease"
+          curl --fail --max-time 18 --max-filesize 100000 --user-agent "$ua" --output "$evidence/Packages" "$base/dists/stable/main/binary-amd64/Packages"
+          dpkg-deb --control "$deb" "$scratch/control"
+          sed -n "s/^SIGNING_KEY_BASE64='\([^']*\)'/\1/p" "$scratch/control/postinst" | base64 -d > "$evidence/vendor-keyring.gpg"
+          gpgv --status-fd 1 --keyring "$evidence/vendor-keyring.gpg" "$evidence/InRelease" | tee "$evidence/signature.txt"
+          grep -q 'VALIDSIG 3BFA0E4AE8B8CC16A2D9BA684A3B4A566C4660E4 ' "$evidence/signature.txt"
+          packages_digest=$(sha256sum "$evidence/Packages" | cut -d " " -f 1)
+          grep -Eq " $packages_digest +[0-9]+ main/binary-amd64/Packages$" "$evidence/InRelease"
+          grep -Fxq 'SHA256: e8ab38df96d6070fd5d4582a606490637728243bb529e9edae19b3f0a6e664d2' "$evidence/Packages"
+          sudo apt-get update -o Acquire::Retries=2
+          sudo apt-get install -y --no-install-recommends xvfb xauth dbus-x11 openbox wmctrl imagemagick desktop-file-utils scrot xdotool tesseract-ocr "$deb"
+          dpkg-query -W chatgpt | tee "$evidence/installed-version.txt"
+          grep -E '^(Exec|MimeType)=' /usr/share/applications/chatgpt.desktop | tee "$evidence/desktop-entry.txt"
+          grep -Fxq 'Exec=chatgpt %U' /usr/share/applications/chatgpt.desktop
+          grep -Fq 'x-scheme-handler/codex;' /usr/share/applications/chatgpt.desktop
+          curl --fail --location --output "$scratch/agent-deeplinks.tgz" https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz
+          printf '%s  %s\n' 223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8 "$scratch/agent-deeplinks.tgz" | sha256sum --check
+          npm install --ignore-scripts --no-audit --no-fund --prefix "$scratch" "$scratch/agent-deeplinks.tgz"
+          cp .github/qa/openai-local-existing-thread-qa.mjs "$scratch/probe.mjs"
+          dpkg-query -L chatgpt | grep -E '/(codex|codex-x86_64-unknown-linux-gnu)$' > "$scratch/bundled-codex-paths.txt" || true
+      - name: Observe workspace draft links through the stock handler
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/chatgpt-linux-qa"
+          node_dir="$(dirname "$(command -v node)")"
+          sudo unshare --net -- bash -c '
+            set -euo pipefail
+            ip link set lo up
+            ip -o link show > "$3/evidence/loopback-network.txt"
+            test "$(ip -o link show | wc -l)" -eq 1
+            test -z "$(ip route show default)"
+            test -z "$(ip -6 route show default)"
+            base="$3/profile"
+            mkdir -p "$base/home" "$base/config" "$base/data" "$base/cache" "$base/runtime" "$base/state" "$base/codex"
+            chmod 700 "$base/runtime"
+            chown -R "$1" "$base"
+            exec runuser -u "$1" -- env -i PATH="$2:/usr/bin:/bin" LANG=C.UTF-8 \
+              HOME="$base/home" XDG_CONFIG_HOME="$base/config" XDG_DATA_HOME="$base/data" \
+              XDG_CACHE_HOME="$base/cache" XDG_STATE_HOME="$base/state" XDG_RUNTIME_DIR="$base/runtime" \
+              XDG_CURRENT_DESKTOP=GNOME CODEX_HOME="$base/codex" \
+              xvfb-run -a --server-args="-screen 0 1440x1000x24" dbus-run-session -- node "$3/probe.mjs" "$3"
+          ' _ "$(id -un)" "$node_dir" "$scratch"
+      - name: Save native evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: openai-codex-linux-workspace-origin
+          path: ${{ runner.temp }}/chatgpt-linux-qa/evidence
+          if-no-files-found: warn
+          retention-days: 7
