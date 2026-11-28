@@ -52,7 +52,7 @@ jobs:
           jarsigner -verify "$aab" | grep -F 'jar is unsigned'
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 3
+          fetch-depth: 6
           persist-credentials: false
       - uses: actions/setup-node@v5
         with:
