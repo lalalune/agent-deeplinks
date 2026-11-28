@@ -1,0 +1,143 @@
+{
+  "certificate": "07d3d23ca3ad78e95d57b5c8491b6b03106fc38234112032de508bec17c78d7f",
+  "client": "Anomaly OpenCode 0.8.13 upstream release AAB with disposable test signing",
+  "server": "Two isolated OpenCode 2.4.2 servers",
+  "pairs": {
+    "A": {
+      "endpoint": "10.0.2.2:52485",
+      "confirmed": true,
+      "uri": "opencode-ios://pair?code=[redacted]&url=http%3A%2F%2F10.0.2.2%3A52485",
+      "defaultsToOpenCode": true,
+      "restrictedPackageForParsingOnly": false,
+      "currentSdkAcceptsInput": false
+    },
+    "B": {
+      "endpoint": "10.0.2.2:38305",
+      "confirmed": true,
+      "uri": "https://opencode.ai/pair#[redacted]",
+      "defaultsToOpenCode": false,
+      "restrictedPackageForParsingOnly": true,
+      "currentSdkAcceptsInput": false
+    }
+  },
+  "routes": {
+    "scoped-A": {
+      "url": "opencode://session/ses_de0855f13ffeU9d8G6rl5nuEak?server=0e130b2e4e78",
+      "destinationVisible": true,
+      "processAbsentBeforeDispatch": true,
+      "cold": true
+    },
+    "project-draft-A": {
+      "url": "opencode://new-session?project=ba7c497d48ca56788a4c955ebdc56bcfe876a8d9",
+      "destinationVisible": true
+    }
+  },
+  "libraryVersion": "0.1.68",
+  "observations": {
+    "initial-A": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Give me a quick tour of the code",
+      "Message",
+      "New Session, OpenCode A Target",
+      "Open sessions",
+      "OpenCode A Default",
+      "OpenCode A Target",
+      "Send message",
+      "Try Asking",
+      "What changed here recently?",
+      "What does this project do?"
+    ],
+    "initial-B": [
+      "Close session list",
+      "New Session",
+      "OpenCode B Default idle session",
+      "Recents",
+      "Search sessions",
+      "Server 2 \u00b7 38305",
+      "Settings"
+    ],
+    "existing-B": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode B Default idle session, OpenCode B Default",
+      "Send message",
+      "Start the session below"
+    ],
+    "scoped-A": [
+      "Add attachment",
+      "Dictate message",
+      "Message",
+      "More",
+      "No messages yet",
+      "Open sessions",
+      "OpenCode A Default idle session, OpenCode A Default",
+      "Send message",
+      "Start the session below"
+    ],
+    "project-draft-A": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Message",
+      "New Session, OpenCode A Target",
+      "Open sessions",
+      "OpenCode A Default",
+      "OpenCode A Target",
+      "Send message"
+    ]
+  },
+  "browserRoute": {
+    "url": "http://127.0.0.1:52485/server/aHR0cDovLzEyNy4wLjAuMTo1MjQ4NQ/session/ses_de0855f13ffeU9d8G6rl5nuEak",
+    "sameSavedSessionId": true,
+    "openCodeAbsentFromResolver": true,
+    "emulatorReverseToSameLoopbackServer": true,
+    "cleartextNonLoopbackAddressRejected": true,
+    "resolverOutput": [
+      "1 activities found:",
+      "  Activity #0:",
+      "    priority=0 preferredOrder=0 match=0x208000 specificIndex=-1 isDefault=true",
+      "    org.chromium.webview_shell/.WebViewBrowserActivity"
+    ]
+  },
+  "provenance": {
+    "version": "0.8.13",
+    "versionCode": 1037,
+    "platform": "Android 16 x86_64 emulator",
+    "upstreamTag": "https://github.com/anomalyco/opencode-android/releases/tag/v0.8.13",
+    "upstreamJobArtifact": "https://github.com/anomalyco/opencode-android/actions/runs/46046587761/artifacts/15222268492",
+    "upstreamZipSha256": "3251e425df185392e4738794b69adb8e98bc74dfc707898e96f95ab8d02e32f8",
+    "upstreamUnsignedAabSha256": "503513afb4215ec057589c86d17a69c80c3546d9a18aa6ff008268931bb09ed5",
+    "disposableTestApkSha256": "cbc92e94fe6d2ad7d8955a8c9c464afd0e4ed660ff28cb2cab45115f79275049",
+    "npmTarballSha256": "/home/runner/work/_temp/opencode-android-qa/library.tgz:",
+    "testJob": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086116070/job/140795957667",
+    "testArtifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086116070/artifacts/15239077786",
+    "testArtifactSha256": "c84cbba8f976a1c2a94c1d83b619a1d4a758695239df6c0bf67e30cb715411f8"
+  },
+  "publicAssociation": {
+    "pairPageHttpStatus": 404,
+    "assetlinksHttpStatus": 404,
+    "androidDomainVerification": "none"
+  },
+  "databaseCounts": {
+    "A": {
+      "session_v2": 2,
+      "session_message": 0,
+      "account": 0
+    },
+    "B": {
+      "session_v2": 1,
+      "session_message": 0,
+      "account": 0
+    }
+  }
+}
