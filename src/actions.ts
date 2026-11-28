@@ -725,14 +725,15 @@ const grokSharedChat = "https://grok.com/share/";
 
 const zcodeLocalWeb: ActionDefinition = {
   id: "local-web", label: "Open local Web workspace", url: "http://127.0.0.1:3030/",
-  behavior: "launch", evidence: "source",
+  behavior: "launch", evidence: "verified",
   sources: [
     "https://github.com/zai-org/ZCode/blob/v4.0.0/README.en.md#zcode-cli-distribution",
     "https://github.com/zai-org/ZCode/blob/v4.0.0/scripts/zcode-distribution/runner.mjs",
+    "https://github.com/lalalune/agent-deeplinks/tree/main/research/evidence/zcode-local-web",
   ],
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Local ZCode Web URL", "http://127.0.0.1:3030/")],
-  note: "Run zcode --web and use the loopback URL printed in its terminal. The launcher can choose a different port for each launch.",
+  note: "Run zcode --web and use the loopback URL printed in its terminal. The exact link opened the ZCode 4.0.0 sign-in screen on Ubuntu and macOS.",
   prepare: ({ target }) => {
     if (!target || unsafeCharacters.test(target)) return null;
     const value = target.trim();

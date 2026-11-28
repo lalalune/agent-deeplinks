@@ -66,5 +66,6 @@
   "signatureAudit": {
     "invalid": [],
     "missing": []
-  }
+  },
+  "hostedCiConclusion": "success"
 }
