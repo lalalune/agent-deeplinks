@@ -1,0 +1,104 @@
+name: OpenCode Android 0.8.13 cold saved-server and browser routing QA
+
+on:
+  push:
+    branches: [codex/opencode-android-0813-route-triangle]
+    paths: [.github/workflows/opencode-android-session-qa.yml, .github/qa/opencode-android-*]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  release-runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - name: Check hosted Android hardware acceleration
+        shell: bash
+        run: |
+          uname -m
+          test -c /dev/kvm
+          stat --format='KVM inode %F, group %G, permissions %a' /dev/kvm
+          sudo /usr/bin/python3 - <<'PYKVM'
+          import fcntl
+          with open('/dev/kvm', 'rb') as device:
+              version = fcntl.ioctl(device, 0xAE00, 0)
+          print('KVM_GET_API_VERSION:', version)
+          assert version == 12
+          PYKVM
+      - name: Verify the exact upstream release artifact with runner-scoped access
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          artifact="$RUNNER_TEMP/upstream-opencode-release-15222268492.zip"
+          endpoint='https://api.github.com/repos/anomalyco/opencode-android/actions/artifacts/15222268492/zip'
+          status=$(curl --silent --show-error --location --proto '=https' \
+            --connect-timeout 12 --max-time 90 --max-filesize 65000000 \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'Accept: application/vnd.github+json' \
+            --output "$artifact" --write-out '%{http_code}' "$endpoint")
+          printf 'Official upstream artifact ZIP endpoint HTTP %s\n' "$status"
+          if [[ "$status" != 200 ]]; then
+            jq -r '.message // "No GitHub JSON error"' "$artifact" || true
+            exit 1
+          fi
+          printf '%s  %s\n' 3251e425df185392e4738794b69adb8e98bc74dfc707898e96f95ab8d02e32f8 "$artifact" | sha256sum --check
+          aab="$RUNNER_TEMP/opencode-android-0.8.13.aab"
+          unzip -p "$artifact" opencode-android.aab > "$aab"
+          sha256sum "$aab"
+          jarsigner -verify "$aab" | grep -F 'jar is unsigned'
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Prepare stock Android SDK and verified Linux server
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/opencode-android-qa"
+          mkdir -p "$qa/evidence" "$qa/cli"
+          mkdir -p "$qa/library"
+          curl -fsS --proto '=https' --max-time 25 --max-filesize 300000 \
+            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz -o "$qa/library.tgz"
+          printf '%s  %s\n' 223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8 "$qa/library.tgz" \
+            | sha256sum --check | tee "$qa/evidence/npm-digest.txt"
+          tar -xzf "$qa/library.tgz" -C "$qa/library"
+          test "$(node -p 'require(process.argv[1]).version' "$qa/library/package/package.json")" = 0.1.68
+          sdk="$qa/sdk"
+          curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 120 --max-filesize 210000000 \
+            https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip -o "$qa/android-command-line-tools.zip"
+          printf '%s  %s\n' 4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583 "$qa/android-command-line-tools.zip" | sha256sum --check | tee "$qa/evidence/android-cmdline-tools-digest.txt"
+          unzip -q "$qa/android-command-line-tools.zip" -d "$qa/cmdline-unpacked"
+          mkdir -p "$sdk/cmdline-tools"
+          mv "$qa/cmdline-unpacked/cmdline-tools" "$sdk/cmdline-tools/latest"
+          manager="$sdk/cmdline-tools/latest/bin/sdkmanager"
+          printf 'ANDROID_SDK_ROOT=%s\nANDROID_HOME=%s\n' "$sdk" "$sdk" >> "$GITHUB_ENV"
+          printf '%s\n' "$sdk/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          sudo chown "$(id -un):kvm" /dev/kvm
+          set +o pipefail
+          yes | "$manager" --sdk_root="$sdk" --licenses > "$qa/sdk-license.log"
+          set -o pipefail
+          "$manager" --sdk_root="$sdk" 'emulator' 'platform-tools' 'build-tools;36.0.0' 'system-images;android-36;default;x86_64' > "$qa/evidence/sdk-install.log" 2>&1
+          "$sdk/emulator/emulator" -accel-check | tee "$qa/evidence/kvm.txt"
+          curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 100 --max-filesize 135000000 \
+            https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-linux-x64.tar.gz -o "$qa/opencode-linux-x64.tar.gz"
+          printf '%s  %s\n' 452912288f934d1771bd5bd0d8611ba3a6adc3db3ac3333c37facf373770ba66 "$qa/opencode-linux-x64.tar.gz" | sha256sum --check | tee "$qa/evidence/cli-digest.txt"
+          tar -xzf "$qa/opencode-linux-x64.tar.gz" -C "$qa/cli"
+          curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 75 --max-filesize 35000000 \
+            https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar -o "$qa/bundletool.jar"
+          printf '%s  %s\n' a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29 "$qa/bundletool.jar" | sha256sum --check | tee "$qa/evidence/bundletool-digest.txt"
+      - name: Verify native cold saved-server routing and the browser resolver boundary
+        shell: bash
+        run: bash .github/qa/opencode-android-hosted.sh "$RUNNER_TEMP/opencode-android-qa" "$RUNNER_TEMP/opencode-android-0.8.13.aab"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: opencode-android-0.8.13-cold-scoped-evidence
+          path: ${{ runner.temp }}/opencode-android-qa/evidence/
+          if-no-files-found: ignore
+          retention-days: 30
