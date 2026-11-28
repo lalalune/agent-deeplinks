@@ -73,6 +73,9 @@ const grokShareChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/r
 const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
 const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
 const openCodePairingUrl = /^([A-Za-z]+:\/\/[^/@\\?#]+)\/auth\/connect\/([A-Za-z0-9_-]+)$/u;
+const openCodePairingCode = /^[A-Za-z0-9_-]+$/u;
+const openCodeNativePairingUrl = /^opencode(?:-ios)?:\/\/pair\?([^#]+)$/iu;
+const openCodePairingOrigin = /^https?:\/\/[^/@\\?#%\s]+\/?$/iu;
 const clawHubPackageName = /^(?:@[a-z0-9][a-z0-9._-]*\/)?[a-z0-9][a-z0-9._-]*$/u;
 const openClawCatalogSources = [
   "https://github.com/openclaw/openclaw/blob/v2026.11.10/apps/linux/src-tauri/src/deep_links.rs",
@@ -755,19 +758,65 @@ const kimiSharedChat: ActionDefinition = {
 };
 
 function openCodePairing(route: Pick<ActionDefinition, "url" | "label" | "behavior" | "evidence" | "sources" | "note">): ActionDefinition {
+  const android = route.url === "opencode://pair";
   return {
     ...route,
     id: "server-pair", fields: { target: "" }, required: ["target"],
-    inputs: [input("target", "OpenCode pairing URL", "https://code.example.com/auth/connect/example_code")],
+    inputs: [input("target", android ? "OpenCode CLI or Copy/Share pairing URL" : "OpenCode pairing URL",
+      "https://code.example.com/auth/connect/example_code")],
     prepare: ({ target }, url) => {
       if (!target || unsafeCharacters.test(target)) return null;
-      const [, address, code] = openCodePairingUrl.exec(target.trim()) ?? [];
+      const value = target.trim();
+      const nativeQuery = android && openCodeNativePairingUrl.exec(value)?.[1];
+      if (nativeQuery) return normalizeOpenCodeNativePairing(url, nativeQuery);
+      const [, address, code] = openCodePairingUrl.exec(value) ?? [];
       const server = address && parseUrl(address);
       if (!code || !server || !["https:", "http:"].includes(server.protocol) || server.port === "0") return null;
       return url.startsWith("https:") ? `${server.origin}/auth/connect/${code}`
         : `${url}?code=${code}&url=${encodeURIComponent(server.origin)}`;
     },
   };
+}
+
+function normalizeOpenCodeNativePairing(url: string, query: string): string | null {
+  let code: string | undefined;
+  let name: string | undefined;
+  const origins: string[] = [];
+  try {
+    for (const item of query.split("&")) {
+      const separator = item.indexOf("=");
+      if (separator < 1) return null;
+      const key = decodeURIComponent(item.slice(0, separator)).toLowerCase();
+      // The native query parser preserves literal plus signs.
+      const value = decodeURIComponent(item.slice(separator + 1));
+      if (unsafeCharacters.test(value)) return null;
+      switch (key) {
+        case "code":
+          if (code !== undefined || !openCodePairingCode.test(value)) return null;
+          code = value;
+          break;
+        case "url": {
+          if (!openCodePairingOrigin.test(value)) return null;
+          const server = parseUrl(value);
+          if (!server || server.port === "0") return null;
+          origins.push(value);
+          break;
+        }
+        case "name":
+          if (name !== undefined) return null;
+          name = value.trim();
+          break;
+        default:
+          return null;
+      }
+    }
+  } catch {
+    return null;
+  }
+  if (!code || origins.length === 0) return null;
+  const endpoints = origins.map((origin) => `url=${encodeURIComponent(origin)}`);
+  const queryItems = [`code=${code}`, ...endpoints, ...(name ? [`name=${encodeURIComponent(name)}`] : [])];
+  return `${url}?${queryItems.join("&")}`;
 }
 
 const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokBotTemplate.mobile];
@@ -903,9 +952,11 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     android: [openCodePairing({
       url: "opencode://pair", label: "Pair with a server", behavior: "confirm", evidence: "verified",
       sources: [openCodePairSource, openCodePairDocs,
+        "https://github.com/anomalyco/opencode-android/blob/v0.8.13/feature/session/src/main/kotlin/ai/opencode/feature/session/SessionFeatureBrowser.kt#L351-L365",
+        "https://github.com/lalalune/agent-deeplinks/actions/runs/46086116070/artifacts/15239077786",
         "https://github.com/lalalune/agent-deeplinks/actions/runs/45679936147/artifacts/15054890187",
         "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/opencode-android-070-play/proof.json"],
-      note: "Opens native pairing review for the server. Play-signed 0.7.0 and test-signed 0.8.11 each paired two isolated servers.",
+      note: "Opens native pairing review from a CLI link or a link copied or shared from OpenCode. Pairing codes are single-use.",
     })],
   },
   claude: {

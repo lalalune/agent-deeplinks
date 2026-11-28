@@ -57,9 +57,11 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 - `getAgentLink(agent, platform, options)` returns a URL string, or `null` if the route is unavailable, inputs are invalid, or an opt-in is required.
 - Platforms: `"web" | "desktop" | "ios" | "android" | "cli" | "vscode"`.
 - Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
-- Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
+- Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI and in-app Copy/Share pairing URLs to `opencode://pair`.
 
 On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
+
+In the Android playground, choose **OpenCode → Server pairing** and enter a link from `opencode pair` or from OpenCode's **Copy/Share** action. The playground keeps the one-time code in the form until you close it or change platforms. OpenCode shows a confirmation before pairing.
 
 ### Existing desktop chats
 
