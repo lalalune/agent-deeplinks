@@ -25,7 +25,7 @@ jobs:
           curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 130 --max-filesize 150000000 \
             'https://d.apkpure.net/b/APK/ai.x.grok?version=latest' -o "$qa/grok.apk" &
           download=$!
-          "$sdkmanager" "$image" >"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
+          "$sdkmanager" "$image" emulator platform-tools >"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
           grep -E '^Pkg\.(Desc|Revision|Path)=|^AndroidVersion\.ApiLevel=|^SystemImage\.Abi=|^SystemImage\.TagId=' \
             "$ANDROID_HOME/system-images/android-34/google_apis/x86_64/source.properties" > "$qa/evidence/system-image.txt"
           printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n grok-qa -k "$image" -f

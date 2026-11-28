@@ -6,7 +6,7 @@ adb="$ANDROID_HOME/platform-tools/adb"
 emulator="$ANDROID_HOME/emulator/emulator"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
 pkg=ai.x.grok
-"$emulator" -version > "$qa/evidence/emulator-version.txt"
+"$emulator" -version > "$qa/evidence/emulator-version.txt" 2>&1 || { cat "$qa/evidence/emulator-version.txt"; exit 1; }
 "$emulator" -avd grok-qa -port 5556 -no-window -no-snapshot -no-audio -no-boot-anim \
   -gpu swiftshader_indirect -accel on > "$qa/emulator.log" 2>&1 &
 emulator_pid=$!
