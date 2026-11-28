@@ -268,8 +268,9 @@ const catalog = {
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460026095/job/138679769952",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45460380555/job/138681026834",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45489023213/artifacts/14966850011",
+          "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/cursor-cloud-agent-macos/proof.json",
         ],
-        note: "Cursor 3.31.15 opened Create chat with prompt in the running classic editor on macOS, Ubuntu, and Windows. All three renderers showed the exact multiline Unicode prompt. Cursor documents a separate desktop link for an existing Cloud Agent.",
+        note: "Cursor 3.31.15 showed the exact draft in the classic editor on macOS, Ubuntu, and Windows. The playground’s existing Cloud Agent button cold-opened signed Cursor 3.32.10 on Apple Silicon to sign-in. Opening a Cloud Agent requires access to it.",
       },
       ios: {
         url: cursorCloud,
