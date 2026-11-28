@@ -1,0 +1,52 @@
+{
+  "stage": "passed",
+  "libraryVersion": "0.1.71",
+  "site": "https://deeplinks.fun/",
+  "uri": "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-3fa04ccf-ab79-409b-9152-98c0accb9031",
+  "syntheticID": "bc-3fa04ccf-ab79-409b-9152-98c0accb9031",
+  "installedBundleId": "com.todesktop.230313mzl4w4u92",
+  "installedVersion": "3.32.10",
+  "installedBuild": "3.32.10",
+  "chromeVersion": "158.0.8127.37",
+  "accountUsed": false,
+  "chatSubmitted": false,
+  "permanentBrowserPermissionSelected": false,
+  "osResolverMatchesInstalledApp": true,
+  "button": {
+    "url": "https://deeplinks.fun/",
+    "href": "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-3fa04ccf-ab79-409b-9152-98c0accb9031",
+    "text": "Open Cursor Cloud Agent",
+    "x": 505.0703125,
+    "y": 297.125,
+    "width": 226.140625,
+    "height": 44
+  },
+  "trustedActivation": {
+    "trusted": true,
+    "active": true,
+    "href": "cursor://anysphere.cursor-deeplink/background-agent?bcId=bc-3fa04ccf-ab79-409b-9152-98c0accb9031"
+  },
+  "appObservations": [
+    {
+      "attempt": 1,
+      "known": [
+        {
+          "path": "/Users/runner/Applications/Cursor.app",
+          "pid": "3805"
+        }
+      ],
+      "matching": [
+        {
+          "pid": "3805",
+          "path": "/Users/runner/Applications/Cursor.app"
+        }
+      ]
+    }
+  ],
+  "browserConfirmation": "Clicked Chrome’s one-time Cursor button at (692.9655172413793, 272.5517238804598)",
+  "launched": {
+    "path": "/Users/runner/Applications/Cursor.app",
+    "pid": "3805"
+  },
+  "nativeWindow": "signed-out"
+}
