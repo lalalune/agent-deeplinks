@@ -57,9 +57,11 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 - `getAgentLink(agent, platform, options)` returns a URL string, or `null` if the route is unavailable, inputs are invalid, or an opt-in is required.
 - Platforms: `"web" | "desktop" | "ios" | "android" | "cli" | "vscode"`.
 - Opt-in flags: pass `allowExperimental: true` for unconfirmed prompt routes (`claude`, `gemini`, `grok`, `meta-ai`, `kimi` Android) and `allowSend: true` for routes that auto-submit (`perplexity`).
-- Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI pairing URLs to `opencode://pair`.
+- Helpers: `browserOnly: true` appends `#no_universal_links` on supported web routes; `getHermesSkillLink("official/security/1password")` builds Hermes Desktop skill installs; `getOpenCodeAndroidPairingLink(url)` converts OpenCode CLI and in-app Copy/Share pairing URLs to `opencode://pair`.
 
 On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
+
+In the Android playground, choose **OpenCode → Server pairing** and enter a link from `opencode pair` or from OpenCode's **Copy/Share** action. The playground keeps the one-time code in the form until you close it or change platforms. OpenCode shows a confirmation before pairing.
 
 ### Existing desktop chats
 
@@ -69,6 +71,27 @@ Choose **Existing chat** for Claude, ChatGPT, or Codex in the desktop playground
 const chatId = "12345678-1234-4234-9234-123456789abc"
 getAgentLink("claude", "desktop", { session: chatId })
 getAgentLink("codex", "desktop", { session: `codex://threads/${chatId}` })
+```
+
+### Open an existing cloud task or session
+
+Choose **Codex → Cloud task** or **Claude Code → Cloud session** on Web, iOS, or Android. Use the Codex task ID or URL, or the Claude Code session ID. Sign in to the account that can access the task or session. On Web, the playground requests that the link stay in the browser. [Codex cloud](https://chatgpt.com/codex) · [Claude mobile deep links](https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link)
+
+```ts
+getAgentLink("codex", "web", { task: "task_example", browserOnly: true })
+getAgentLink("claude-code", "ios", { session: "cse_example" })
+```
+
+### Open a Codex Desktop workspace draft
+
+Choose **Codex → Workspace draft** under Desktop. Enter an absolute local workspace path, a Git remote URL to match against existing workspaces, or both. Codex checks the existing local path first. The draft stays unsent. [Codex Desktop chat links](https://learn.chatgpt.com/docs/reference/commands#chats)
+
+```ts
+getAgentLink("codex", "desktop", {
+  path: "/absolute/path/to/project",
+  originUrl: "git@github.com:owner/project.git",
+  prompt: "Review this workspace.",
+})
 ```
 
 ### Claude Code desktop workspaces

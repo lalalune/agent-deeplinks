@@ -33,11 +33,11 @@ const TABS: readonly { id: TabId; label: string }[] = [
 const DESKTOP_CHAT_AGENTS = ["chatgpt", "claude", "codex"] as const;
 type DesktopChatAgent = (typeof DESKTOP_CHAT_AGENTS)[number];
 
-type DesktopToolField = "cwd" | "repo" | "session" | "workspace";
+type DesktopToolField = "cwd" | "repo" | "session" | "workspace" | "path" | "originUrl";
 
 interface DesktopToolExample {
-  agent: "claude-code" | "github-copilot";
-  platform: "cli" | "vscode";
+  agent: "claude-code" | "github-copilot" | "codex";
+  platform: "cli" | "vscode" | "desktop";
   label: string;
   name: string;
   fields: readonly { key: DesktopToolField; label: string; placeholder: string }[];
@@ -66,6 +66,15 @@ const DESKTOP_TOOL_EXAMPLES: readonly DesktopToolExample[] = [
     fields: [{ key: "workspace", label: "Workspace folder URI (optional)", placeholder: "file:///absolute/path/to/project" }],
     note: "Opens a draft in the VS Code Agents window.",
     invalidInput: "Enter a file or VS Code Remote folder URI.",
+  },
+  {
+    agent: "codex", platform: "desktop", label: "Workspace draft", name: "Codex workspace draft",
+    fields: [
+      { key: "path", label: "Absolute workspace folder (optional)", placeholder: "/absolute/path/to/project" },
+      { key: "originUrl", label: "Git remote URL (optional)", placeholder: "https://github.com/owner/repo.git" },
+    ],
+    note: "Codex checks the local folder first. If that folder is unavailable, it looks for a workspace with the Git remote.",
+    invalidInput: "Enter an absolute local workspace folder.",
   },
 ];
 
@@ -121,7 +130,7 @@ interface DestinationExample {
   inputLabel: string;
   placeholder?: string;
   action?: AgentActionId;
-  field?: "session" | "directory";
+  field?: "session" | "directory" | "task";
   platform?: ActivePlatform;
 }
 
@@ -135,9 +144,13 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://chatgpt.com/share/…", action: "shared-chat" },
   { agent: "codex", label: "Shared chat", inputLabel: "Codex share link or ID",
     placeholder: "https://chatgpt.com/s/cx_…", action: "shared-chat" },
+  { agent: "codex", label: "Cloud task", inputLabel: "Cloud task ID or URL",
+    placeholder: "task_… or https://chatgpt.com/codex/tasks/…", field: "task" },
   { agent: "codex", label: "Settings section", inputLabel: "Settings section", action: "settings" },
   { agent: "claude", label: "Shared chat", inputLabel: "Claude share link or ID",
     placeholder: "https://claude.ai/share/…", action: "shared-chat" },
+  { agent: "claude-code", label: "Cloud session", inputLabel: "Cloud session ID",
+    placeholder: "session_… or cse_…", field: "session" },
   { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
     placeholder: "https://grok.com/share/…", action: "shared-chat" },
   { agent: "kimi", label: "Shared chat", inputLabel: "Kimi share link or ID",
@@ -153,6 +166,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "/absolute/path/to/project", action: "ide-open" },
   { agent: "opencode", label: "project draft", inputLabel: "Absolute local folder",
     placeholder: "/absolute/path/to/project", field: "directory", platform: "desktop" },
+  { agent: "opencode", label: "server pairing", inputLabel: "OpenCode CLI or Copy/Share pairing URL",
+    placeholder: "opencode-ios://pair?…", action: "server-pair", platform: "android" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -338,7 +353,7 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
   opencode: {
     "server-pair": {
       label: "Pair server",
-      options: () => ({ target: "https://code.example.com/auth/connect/example_code" }),
+      options: (platform) => platform === "android" ? {} : { target: "https://code.example.com/auth/connect/example_code" },
     },
   },
   kimi: {
@@ -616,16 +631,19 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const [prompt, setPrompt] = useState("");
   const isIdePath = example.action === "ide-open";
   const isLocalDirectory = example.field === "directory";
+  const isPairing = example.action === "server-pair";
   const target = isIdePath || isLocalDirectory ? value : value.trim();
   const actionRoute = example.action ? getAgentRoute(example.agent, platform, example.action) : null;
   const choices = actionRoute?.inputs.find(({ field }) => field === "target")?.choices;
+  const route = getAgentRoute(example.agent, platform);
   const promptLimit = example.field === "session"
-    ? getAgentRoute(example.agent, platform)?.promptLimit : actionRoute?.promptLimit;
+    ? route?.promptLimit : actionRoute?.promptLimit;
   const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
-  const options = { ...destinationOptions, ...(prompt && { prompt }) };
+  const browserOnly = platform === "web" && (example.field === "task" || Boolean(route?.browserOnlyFragment));
+  const options = { ...destinationOptions, ...(prompt && { prompt }), ...(browserOnly && { browserOnly }) };
   const href = (target || choices) && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
-  const label = `Open ${destination}`;
+  const label = isPairing ? "Review OpenCode pairing" : `Open ${destination}`;
 
   return (
     <div role="region" aria-label={`${destination} link`} className="link-setup">
@@ -638,9 +656,9 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
             ))}
           </select>
         ) : (
-          <input value={value} onChange={(event) => setValue(event.target.value)}
+          <input type={isPairing ? "password" : "text"} value={value} onChange={(event) => setValue(event.target.value)}
             placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
-              autoComplete="off" autoCapitalize="off" spellCheck={false} />
+            autoComplete="off" autoCapitalize="off" spellCheck={false} />
         )}
       </label>
       {(promptLimit !== undefined || isLocalDirectory) && (
@@ -651,13 +669,14 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
       )}
       {href ? (
         <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
-          <a href={href} {...linkAttrs(href)} aria-label={label} title={label}>
+          <a href={href} {...linkAttrs(href)} referrerPolicy={isPairing ? "no-referrer" : undefined}
+            aria-label={label} title={label}>
             <AgentLogo agent={example.agent} />
             {!iconOnly && <span className="agent-name">{label}</span>}
           </a>
         </Button>
       ) : target && <p role="status">
-        {example.field === "session" ? "Check the thread link and supply at most one draft prompt."
+        {example.agent === "t3-code" && example.field === "session" ? "Check the thread link and supply at most one draft prompt."
           : isIdePath || isLocalDirectory ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
       </p>}
     </div>

@@ -48,6 +48,34 @@ test("opens an OpenCode pairing review from an issued connect link", () => {
   }
 });
 
+test("preserves all server addresses from OpenCode Android Copy/Share pairing links", () => {
+  const source = "opencode-ios://pair?code=qa_Code-123&url=https://remote.example.com" +
+    "&url=http://192.168.0.20:4096&url=http://[fd12::2]:4096/&name=QA%20Lab%20%2B%20Caf%C3%A9";
+  const options = { action: "server-pair", target: source };
+  const href = getOpenCodeAndroidPairingLink(source);
+  assert.equal(href, "opencode://pair?code=qa_Code-123&url=https%3A%2F%2Fremote.example.com" +
+    "&url=http%3A%2F%2F192.168.0.20%3A4096&url=http%3A%2F%2F%5Bfd12%3A%3A2%5D%3A4096%2F&name=QA%20Lab%20%2B%20Caf%C3%A9");
+  assert.equal(getOpenCodeAndroidPairingLink(href), href);
+  assert.equal(getAgentLink("opencode", "android", options), href);
+  assert.equal(getAgentLink("opencode", "ios", options), null);
+  assert.equal(getAgentLink("opencode", "web", options), null);
+
+  const origin = "https://example.com";
+  const base = `opencode-ios://pair?code=example_Code&url=${origin}`;
+  for (const suffix of [
+    "&Code=other", "&name=&Name=duplicate", "&token=private", "&unknown=value",
+    "&url=", "&url=https://name:pass@example.net", "&url=https://example.net:0",
+    "&url=https://example.net:65536", "&url=https://example.net/extra/..",
+    "&url=https://example.net%3F", "&url=https://example.net%23",
+    "&url=file:///tmp", "&name=%", "&name=%0A", "&name=%E2%80%8B",
+  ]) {
+    assert.equal(getOpenCodeAndroidPairingLink(base + suffix), null, suffix);
+  }
+  assert.equal(getOpenCodeAndroidPairingLink("opencode-ios://pair?code=abc"), null);
+  assert.equal(getOpenCodeAndroidPairingLink("opencode-ios://pair?code=bad%2Fcode&url=" + origin), null);
+  assert.equal(getOpenCodeAndroidPairingLink("https://opencode.ai/pair#eyJjb2RlIjoiYWJjIn0"), null);
+});
+
 test("encodes and round trips special characters without changing the route", () => {
   const href = getAgentLink("codex", "desktop", { prompt: special });
   assert.equal(href, `codex://new?prompt=${encodeURIComponent(special)}`);

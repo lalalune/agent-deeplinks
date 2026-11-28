@@ -391,7 +391,7 @@ export function getHermesSkillLink(identifier: string): string | null {
   return getAgentLink("hermes", "desktop", { action: "skill-install", target: identifier });
 }
 
-/** Convert an OpenCode CLI pairing URL to the Android app's native pairing review. */
+/** Convert an OpenCode CLI or Copy/Share URL to the Android app's native pairing review. */
 export function getOpenCodeAndroidPairingLink(pairingUrl: string): string | null {
   return getAgentLink("opencode", "android", { action: "server-pair", target: pairingUrl });
 }
