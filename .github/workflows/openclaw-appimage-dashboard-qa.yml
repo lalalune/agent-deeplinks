@@ -1,0 +1,88 @@
+name: OpenClaw Linux 2026.11.10 Dashboard with disposable pairing
+
+on:
+  push:
+    branches: [codex/openclaw-appimage-1110-dashboard]
+
+permissions:
+  contents: read
+
+jobs:
+  stock-appimage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 26.1.0
+      - name: Verify the official AppImage and use the released link helper
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/openclaw-stock-appimage"
+          mkdir -p "$scratch/evidence" "$scratch/package"
+          curl -fsSL --proto '=https' --max-time 20 --max-filesize 300000 \
+            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.70.tgz -o "$scratch/package/library.tgz"
+          (
+            cd "$scratch/package"
+            printf '%s  %s\n' 11eb7acac8d3b07c7f72046e6125d5162a57306c library.tgz | sha1sum -c
+            actual=$(node -p '"sha512-" + require("node:crypto").createHash("sha512").update(require("node:fs").readFileSync("library.tgz")).digest("base64")')
+            test "$actual" = 'sha512-p0S/ZCOW5x+LpTer4DYmStOoIgOX/eKcmI1mmpQRPiNPPEIZr2EYIMBKUzQnTa9RtK5wQbIAvOwAk2yyLSXd1w=='
+            printf '%s\n' "$actual" > "$scratch/evidence/library-integrity.txt"
+            tar -xzf library.tgz
+            test "$(node -p 'require("./package/package.json").version')" = 0.1.70
+            node --input-type=module -e 'import {getAgentLink} from "./package/dist/index.js"; const url = getAgentLink("openclaw","desktop"); if (url !== "openclaw://dashboard") process.exit(1); console.log(url)' > "$scratch/evidence/requested.txt"
+          )
+          cd "$scratch"
+          app=OpenClaw-2026.11.10-amd64.AppImage
+          base=https://github.com/openclaw/openclaw/releases/download/v2026.11.10
+          curl -fsSL --proto '=https' --connect-timeout 20 --max-time 150 --max-filesize 510000000 "$base/$app" -o "$app"
+          curl -fsSL --proto '=https' --max-time 18 --max-filesize 1000 "$base/SHA256SUMS.linux-app.txt" -o checksums.txt
+          test "$(stat -c %s "$app")" = 498661880
+          grep -Fx "6d02754208e8f80b731d5320143d43a206fffe54a453e8f4eaa5b3bccfceeb02  ./$app" checksums.txt | sha256sum -c | tee evidence/vendor-hash.txt
+          chmod 755 "$app"
+          lsb_release -ds | tee evidence/os.txt
+          sudo apt-get update -o Acquire::Retries=2 -qq
+          sudo apt-get install -y --no-install-recommends at-spi2-core dbus-x11 desktop-file-utils iproute2 jq libfuse2t64 libglib2.0-bin libgtk-3-0t64 libwebkit2gtk-4.1-0 libayatana-appindicator3-1 openbox scrot x11-utils xauth xdg-utils xdotool xvfb gnome-keyring tesseract-ocr python3-pyatspi
+      - name: Verify and install the stock CLI
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/openclaw-stock-appimage"
+          mkdir "$scratch/cli"
+          cd "$scratch/cli"
+          tarball='https://registry.npmjs.org/openclaw/-/openclaw-2026.11.10.tgz'
+          curl -fsSL --proto '=https' --retry 1 --max-time 90 --max-filesize 120000000 "$tarball" -o openclaw-2026.11.10.tgz
+          expected='sha512-/FKDjxY1ZdUSXHx1a9b4EUpPRZywM3uv4181g22XImJfp/5+h+fFUZ7B7HthNrdYzq//05zH0Yf7mefzIlWFaQ=='
+          actual=$(node -e 'const fs=require("node:fs"),crypto=require("node:crypto");console.log("sha512-"+crypto.createHash("sha512").update(fs.readFileSync("openclaw-2026.11.10.tgz")).digest("base64"))')
+          test "$actual" = "$expected"
+          jq -n --arg url "$tarball" --arg digest "$actual" '{url:$url,integrity:$digest}' > "$scratch/evidence/cli-integrity.json"
+          timeout 250 npm install --no-audit --no-fund --ignore-scripts --fetch-retries=1 --fetch-timeout=25000 ./openclaw-2026.11.10.tgz
+      - name: Open an actual connected Dashboard through the stock handler
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/openclaw-stock-appimage"
+          mkdir -m 700 "$scratch/home" "$scratch/config" "$scratch/data" "$scratch/cache" "$scratch/state" "$scratch/runtime" "$scratch/tmp" "$scratch/project"
+          node_path=$(dirname "$(command -v node)")
+          test -c /dev/fuse
+          sudo unshare --net --fork bash -euc '
+            ip link set lo up
+            test "$(ip -o link show | wc -l)" -eq 1
+            ip -j link show > "$2/evidence/links.json"
+            exec runuser -u "$1" -- env -i PATH="$3:$2/cli/node_modules/.bin:/usr/bin:/bin" HOME="$2/home" LANG=C.UTF-8 TMPDIR="$2/tmp" \
+              XDG_CONFIG_HOME="$2/config" XDG_DATA_HOME="$2/data" XDG_CACHE_HOME="$2/cache" \
+              XDG_STATE_HOME="$2/state" XDG_RUNTIME_DIR="$2/runtime" XDG_CURRENT_DESKTOP=GNOME \
+              XDG_DATA_DIRS=/usr/local/share:/usr/share BROWSER=false GTK_MODULES=atk-bridge \
+              xvfb-run -a --server-args="-screen 0 1600x1120x24" dbus-run-session -- \
+              node .github/qa/openclaw-appimage-connected.mjs "$2"
+          ' qa "$(id -un)" "$scratch" "$node_path"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: openclaw-1110-appimage-dashboard-v170
+          path: ${{ runner.temp }}/openclaw-stock-appimage/evidence/
+          retention-days: 14
