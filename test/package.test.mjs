@@ -1266,6 +1266,31 @@ test("opens current and legacy Cursor Canvas shares in a browser", () => {
   assert.equal(getAgentLink("cursor", "desktop", { action, target: id }), null);
 });
 
+test("opens Grok Imagine posts by ID or copied share link", () => {
+  const action = "imagine-post";
+  const id = "8d29841d-c4d9-4029-88e0-341a1c7dc019";
+  const url = `https://grok.com/imagine/post/${id}`;
+  const href = url + "?stay_in_browser=true";
+  for (const target of [id, url, url + "/?source=grok_copy_link&platform=ios#discard"]) {
+    assert.equal(getAgentLink("grok", "web", { action, target }), href);
+  }
+  for (const target of [
+    "", "imagine", `https://grok.com/share/${id}`, `https://grok.com.example/imagine/post/${id}`,
+    `https://other.example@grok.com/imagine/post/${id}`, `http://grok.com/imagine/post/${id}`,
+    `https://grok.com:8443/imagine/post/${id}`, url + "%2F", url + "/image", url + "\n",
+  ]) {
+    assert.equal(getAgentLink("grok", "web", { action, target }), null, target);
+  }
+  assert.equal(getAgentLink("grok", "web", { action, target: id, prompt: special }), null);
+  for (const platform of ["desktop", "ios", "android"]) {
+    assert.equal(getAgentLink("grok", platform, { action, target: id }), null);
+  }
+  for (const iconOnly of [true, false]) {
+    const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "grok", platform: "web", options: { action, target: id }, iconOnly }));
+    assert.ok(markup.includes(`href="${href}"`));
+  }
+});
+
 test("opens the exact loopback URL printed by ZCode Web", () => {
   const action = "local-web";
   for (const [target, href] of [

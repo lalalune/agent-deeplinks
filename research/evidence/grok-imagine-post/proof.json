@@ -1,0 +1,247 @@
+{
+  "verifiedAtUtc": "2026-11-28T02:49:14.003Z",
+  "baseCommit": "90fa4a8870b82b9e777044ddfce73c095d64bb50",
+  "testedBuild": "Local package and production site build with the imagine-post action",
+  "builtActionsSha256": "32052a276922ce7b1f459033c4094d2f30e8a6549394f14daac2be962246f014",
+  "builtPlaygroundBundles": {
+    "index-DmFS_2ci.js": "b75073acb84c4ae19c543ed5e450d456b4f362653d8f1d0aa9e69bfa80221d18"
+  },
+  "action": "imagine-post",
+  "copied": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?source=grok_copy_link&platform=ios",
+  "canonical": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+  "generated": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+  "publicFixtureListing": "https://techdevnotes.com/blog/grok-imagine#share-links",
+  "imageDescription": "Two cats in front of the Eiffel Tower",
+  "networkPolicy": "Fresh browser contexts. Allow GET, HEAD, and OPTIONS to first-party Grok/xAI hosts and local Playground only. Block service workers, WebSockets, and writes.",
+  "browsers": [
+    {
+      "profile": "desktop-chromium",
+      "engineVersion": "158.0.8127.18",
+      "platform": "web",
+      "generated": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+      "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+      "title": "Imagine - Grok",
+      "imageNaturalWidth": 832,
+      "imageNaturalHeight": 1248,
+      "visibleEditInChat": true,
+      "appOfferDismissed": false,
+      "freshCookies": true,
+      "navigations": [
+        [
+          "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+          200
+        ]
+      ],
+      "publicReads": [
+        "https://assets.grok.com/users/<publisher>/8d29841d-c4d9-4029-88e0-341a1c7dc019/content 200",
+        "https://grok.com/rest/assets/8d29841d-c4d9-4029-88e0-341a1c7dc019 200"
+      ],
+      "blockedWrites": [
+        "POST /_data/v1/exp/exposures",
+        "POST /api/auth/oauth/id-token/nonce",
+        "POST /api/log_metric",
+        "POST /cdn-cgi/",
+        "POST /monitoring"
+      ],
+      "blockedVendorWebSockets": 0,
+      "screenshot": "desktop-chromium.jpg",
+      "screenshotSha256": "b324b4cbe87e18d314919361c85427a599211bf30d640f679cb1fdcf4c2c7d16"
+    },
+    {
+      "profile": "android-pixel-9",
+      "engineVersion": "158.0.8127.18",
+      "platform": "web",
+      "generated": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+      "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+      "title": "Imagine - Grok",
+      "imageNaturalWidth": 832,
+      "imageNaturalHeight": 1248,
+      "visibleEditInChat": true,
+      "appOfferDismissed": true,
+      "freshCookies": true,
+      "navigations": [
+        [
+          "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+          200
+        ]
+      ],
+      "publicReads": [
+        "https://assets.grok.com/users/<publisher>/8d29841d-c4d9-4029-88e0-341a1c7dc019/content 200",
+        "https://grok.com/rest/assets/8d29841d-c4d9-4029-88e0-341a1c7dc019 200"
+      ],
+      "blockedWrites": [
+        "POST /_data/v1/exp/exposures",
+        "POST /api/auth/oauth/id-token/nonce",
+        "POST /api/log_metric",
+        "POST /cdn-cgi/",
+        "POST /monitoring"
+      ],
+      "blockedVendorWebSockets": 0,
+      "screenshot": "android-pixel-9.jpg",
+      "screenshotSha256": "5cb26397774850d87ee46f7ef0203ae5b136213ad62c18b4562a50dc36b67e61"
+    },
+    {
+      "profile": "iphone-15",
+      "engineVersion": "27.2",
+      "platform": "web",
+      "generated": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+      "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+      "title": "Imagine - Grok",
+      "imageNaturalWidth": 832,
+      "imageNaturalHeight": 1248,
+      "visibleEditInChat": true,
+      "appOfferDismissed": true,
+      "freshCookies": true,
+      "navigations": [
+        [
+          "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+          200
+        ]
+      ],
+      "publicReads": [
+        "https://assets.grok.com/users/<publisher>/8d29841d-c4d9-4029-88e0-341a1c7dc019/content 200",
+        "https://grok.com/rest/assets/8d29841d-c4d9-4029-88e0-341a1c7dc019 200"
+      ],
+      "blockedWrites": [
+        "POST /_data/v1/exp/exposures",
+        "POST /api/auth/oauth/id-token/nonce",
+        "POST /api/log_metric",
+        "POST /cdn-cgi/",
+        "POST /monitoring"
+      ],
+      "blockedVendorWebSockets": 0,
+      "screenshot": "iphone-15.jpg",
+      "screenshotSha256": "4bee4feef17fabd24308b9fc23e3027c22c77d1de5d322c046160d023c6803fd"
+    }
+  ],
+  "playground": {
+    "signedOut": true,
+    "loopbackBuild": true,
+    "engineVersion": "158.0.8127.18",
+    "generated": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+    "buttons": [
+      {
+        "style": "Icons + names",
+        "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+        "title": "Imagine - Grok",
+        "imageNaturalWidth": 832,
+        "imageNaturalHeight": 1248,
+        "visibleEditInChat": true,
+        "appOfferDismissed": false
+      },
+      {
+        "style": "Icons only",
+        "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+        "title": "Imagine - Grok",
+        "imageNaturalWidth": 832,
+        "imageNaturalHeight": 1248,
+        "visibleEditInChat": true,
+        "appOfferDismissed": false
+      }
+    ],
+    "rejectedOffDomainInput": true,
+    "noNativeButton": true,
+    "screenshot": "playground-configured.jpg",
+    "screenshotSha256": "bd456f3b91bfcc60a4002440ccaa12f91efef815dd052f51dc5ea8c99faace95",
+    "freshCookies": true,
+    "navigations": [
+      [
+        "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+        200
+      ],
+      [
+        "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+        200
+      ]
+    ],
+    "publicReads": [
+      "https://assets.grok.com/users/<publisher>/8d29841d-c4d9-4029-88e0-341a1c7dc019/content 200",
+      "https://grok.com/rest/assets/8d29841d-c4d9-4029-88e0-341a1c7dc019 200"
+    ],
+    "blockedWrites": [
+      "POST /_data/v1/exp/exposures",
+      "POST /api/auth/oauth/id-token/nonce",
+      "POST /cdn-cgi/",
+      "POST /monitoring"
+    ],
+    "blockedVendorWebSockets": 0
+  },
+  "workspaceComparison": [
+    {
+      "profile": "ordinary",
+      "input": "https://grok.com/?stay_in_browser=true",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-desktop",
+      "input": "https://grok.com/imagine?stay_in_browser=true",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-pixel",
+      "input": "https://grok.com/imagine?stay_in_browser=true",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-iphone",
+      "input": "https://grok.com/imagine?stay_in_browser=true",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-desktop",
+      "input": "https://grok.com/imagine",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-pixel",
+      "input": "https://grok.com/imagine",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    },
+    {
+      "profile": "imagine-iphone",
+      "input": "https://grok.com/imagine",
+      "final": "https://grok.com/",
+      "title": "Grok",
+      "ordinaryComposer": true
+    }
+  ],
+  "associations": {
+    "apple": {
+      "url": "https://grok.com/.well-known/apple-app-site-association",
+      "sha256": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2",
+      "appId": "N66CZ3Y3BX.ai.x.GrokApp",
+      "matchedRule": {
+        "/": "/*",
+        "?": {
+          "stay_in_browser": "true"
+        },
+        "exclude": true
+      }
+    },
+    "android": {
+      "url": "https://grok.com/.well-known/assetlinks.json",
+      "sha256": "c75e075e4cec9ad9643e5c8ba1cf7bc7e94ebc615fbf4abdd8ca03627c8ad5e5",
+      "package": "ai.x.grok",
+      "matchedDynamicRule": {
+        "/": "/*",
+        "?": {
+          "stay_in_browser": "true"
+        },
+        "exclude": true
+      }
+    }
+  },
+  "boundary": "Browser-emulated handsets. Image viewing only. Native app handling and Edit in chat are untested."
+}

@@ -5,7 +5,7 @@ export type AgentActionId =
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
   | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open"
-  | "cowork" | "add-environment" | "local-web" | "shared-canvas";
+  | "cowork" | "add-environment" | "local-web" | "shared-canvas" | "imagine-post";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
@@ -744,6 +744,23 @@ const claudeAndroidInstall: ActionDefinition = {
   prepare: (_fields, url) => url,
 };
 const grokSharedChat = "https://grok.com/share/";
+const grokImaginePost: ActionDefinition = {
+  id: "imagine-post", label: "Open shared Grok Imagine post", url: "https://grok.com/imagine/post/",
+  behavior: "launch", evidence: "verified",
+  sources: [
+    "https://x.ai/grok",
+    "https://grok.com/.well-known/apple-app-site-association",
+    "https://grok.com/.well-known/assetlinks.json",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-imagine-post/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Grok Imagine post link or ID", "https://grok.com/imagine/post/…")],
+  note: "Opens the original public Imagine post. Grok may ask mobile browser visitors whether to open its app.",
+  prepare: ({ target }, url) => {
+    const id = readId(target, uuidShareFormat.id, url);
+    return id ? `${url}${id}?stay_in_browser=true` : null;
+  },
+};
 
 const zcodeLocalWeb: ActionDefinition = {
   id: "local-web", label: "Open local Web workspace", url: "http://127.0.0.1:3030/",
@@ -991,7 +1008,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     web: [sharedChat({
       url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks, grokShareAndroid14Checks],
       note: "The public conversation rendered in signed-out desktop and iPhone browsers. With Grok installed, the browser flag kept the link in the tested Android 15 browser. The tested Android 14 build still opened Grok.",
-    }, "?stay_in_browser=true", grokShareFormat)],
+    }, "?stay_in_browser=true", grokShareFormat), grokImaginePost],
     ios: [sharedChat({
       url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/apple-app-site-association", "https://github.com/lalalune/agent-deeplinks/actions/runs/45693328012/artifacts/15057684811"],
       note: "The clean share link matches Grok’s production Universal Link. In-app conversation rendering still needs a device check.",

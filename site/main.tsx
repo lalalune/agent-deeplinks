@@ -172,6 +172,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "session_… or cse_…", field: "session" },
   { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
     placeholder: "https://grok.com/share/…", action: "shared-chat" },
+  { agent: "grok", label: "Imagine post", inputLabel: "Grok Imagine post link or ID",
+    placeholder: "https://grok.com/imagine/post/…", action: "imagine-post" },
   { agent: "grok-bot", label: "Public Page", inputLabel: "Public Grok Bot Page link",
     placeholder: "https://bot-team-kanban-example-2ncd.pages.grok.bot/", action: "bot-page" },
   { agent: "kimi", label: "Shared chat", inputLabel: "Kimi share link or ID",
@@ -304,6 +306,12 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     project: {
       label: "Shared project",
       options: () => ({ target: "https://www.perplexity.ai/collections/sample-Project.Id" }),
+    },
+  },
+  grok: {
+    "imagine-post": {
+      label: "Public Imagine post",
+      options: () => ({ target: "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019" }),
     },
   },
   "grok-bot": {
