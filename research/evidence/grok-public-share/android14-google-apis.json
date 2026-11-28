@@ -1,0 +1,80 @@
+{
+  "verifiedDateUtc": "2026-11-28",
+  "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086846186/job/140798303466",
+  "diagnosticHead": "d6ed161659ed173223aa9960fe5e19f8052c804d",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086846186/artifacts/15238959705",
+  "artifactSha256": "dcf50447fc1ec45a8bb2398c1443ae92bde0cd92222680aca8860ec470d492ec",
+  "testedRelease": {
+    "version": "0.1.68",
+    "npmIntegrity": "sha512-Lxhk9I7aU8/+x6yh0awbxoSJf66yD5p+5m+5dOltfC+TgbqqhkQ0UWCF7Guuntxhgxb0uPemcmYwYpBXIOwOAA=="
+  },
+  "environment": {
+    "systemImage": "system-images;android-34;google_apis;x86_64",
+    "systemImageRevision": 14,
+    "emulatorVersion": "37.3.10.0",
+    "sdk": 34,
+    "buildFingerprint": "google/sdk_gphone64_x86_64/emu64xa:14/UE1A.230829.050/12077443:userdebug/dev-keys",
+    "nativeBridge": "libndk_translation.so",
+    "guestAbis": [
+      "x86_64",
+      "arm64-v8a"
+    ]
+  },
+  "installedApp": {
+    "package": "ai.x.grok",
+    "versionName": "1.2.60-release.00",
+    "versionCode": 11260200,
+    "primaryCpuAbi": "arm64-v8a",
+    "publicMirrorListing": "https://androidpot.net/apps/ai.x.grok/download/11260200",
+    "bundleSha256": "aa51410e0cdca08ec13f669258767aff5e317bb9ad8b2db94b3132eb33714a2e",
+    "signerSha256": "521bf5ce7c981faba4ebd86d23f778885537cad021bc107d8915d005e99f4a12",
+    "signedSplits": [
+      "ai.x.grok.apk",
+      "config.arm64_v8a.apk",
+      "config.en.apk",
+      "config.xxhdpi.apk"
+    ]
+  },
+  "stockDomainVerification": {
+    "url": "https://grok.com/.well-known/assetlinks.json",
+    "documentSha256": "c75e075e4cec9ad9643e5c8ba1cf7bc7e94ebc615fbf4abdd8ca03627c8ad5e5",
+    "grok.comBefore": "none",
+    "grok.comAfter": "verified",
+    "verifiedOwners": [
+      "ai.x.grok"
+    ],
+    "userSelectedDomains": [],
+    "preinstallDefaultActivity": "com.android.chrome/com.google.android.apps.chrome.IntentDispatcher"
+  },
+  "boundary": "Fresh signed-out Google APIs emulator. Both untargeted launches reached the signed app’s unmodified Google Play license screen. The shared conversation did not render. No credentials or submit controls were used.",
+  "untargetedBrowsableViewLaunches": [
+    {
+      "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5",
+      "resolveActivityProbe": "android/com.android.internal.app.ResolverActivity",
+      "stockCandidates": [
+        "ai.x.grok/.main.GrokActivity",
+        "com.android.chrome/com.google.android.apps.chrome.IntentDispatcher"
+      ],
+      "launchState": "COLD",
+      "startedActivity": "ai.x.grok/.main.GrokActivity",
+      "foregroundActivity": "ai.x.grok/com.pairip.licensecheck.LicenseActivity",
+      "visibleText": "Check that Google Play is enabled on your device and that you're using an up-to-date version before opening the app. If the problem persists try reinstalling the app.",
+      "screenshot": "android14-native-license.png",
+      "screenshotSha256": "02b8a728da8444f11a0674ef56c206e1202ce2603c7a3ac8c3ac31a06c2bc6d3"
+    },
+    {
+      "url": "https://grok.com/share/bGVnYWN5_b5ff0ac4-5283-424e-b722-b42379c923f5?stay_in_browser=true",
+      "resolveActivityProbe": "android/com.android.internal.app.ResolverActivity",
+      "stockCandidates": [
+        "ai.x.grok/.main.GrokActivity",
+        "com.android.chrome/com.google.android.apps.chrome.IntentDispatcher"
+      ],
+      "launchState": "COLD",
+      "startedActivity": "ai.x.grok/.main.GrokActivity",
+      "foregroundActivity": "ai.x.grok/com.pairip.licensecheck.LicenseActivity",
+      "visibleText": "Check that Google Play is enabled on your device and that you're using an up-to-date version before opening the app. If the problem persists try reinstalling the app.",
+      "screenshot": "android14-browser-flag-license.png",
+      "screenshotSha256": "3b6b54036910143ad7fa87651db72643879ff74ba66dd8ba3b8a5df24186fbea"
+    }
+  ]
+}
