@@ -485,8 +485,9 @@ const catalog = {
           "https://agent.meta.ai/.well-known/apple-app-site-association",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45480862958/job/138753307658",
           "https://github.com/lalalune/agent-deeplinks/actions/runs/45483440516/artifacts/14962696263",
+          "https://github.com/lalalune/agent-deeplinks/actions/runs/46088161345/artifacts/15240301456",
         ],
-        note: "Ordinary macOS URL opening selected Muse 13.1 after its first launch and domain approval. A click in stock Chrome 157 reached the Muse website and its sign-in page.",
+        note: "Stock Safari on Apple Silicon cold-opened signed Muse 14.1 to its native sign-in page. Ordinary macOS URL opening also selected the installed app. A click in stock Chrome 157 reached the website sign-in page.",
       },
       ios: {
         url: "https://applink.muse.ai/",
