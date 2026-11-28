@@ -1,0 +1,26 @@
+{
+  "observedDate": "2026-11-27",
+  "package": "agent-deeplinks@0.1.68",
+  "emittedLink": "https://agent.meta.ai/chat",
+  "browser": "System-installed Chromium WebView Browser Tester 1.0, WebView 128.0.6613.88",
+  "platform": "Stock pinned ReDroid ARM64 Android 15",
+  "browserBeforeEach": "org.chromium.webview_shell/.WebViewBrowserActivity",
+  "museVersion": "18.0.0.8.161",
+  "museCertificateSha256": "a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99",
+  "verifiedAndroidHosts": ["agent.meta.ai", "applink.muse.ai", "muse.ai", "www.muse.ai"],
+  "fixture": "Local page reproduces the Playground's two icon styles with the published Muse SVG and original anchor attributes. The same-tab link is a control.",
+  "checks": [
+    {"mode": "icon-and-name", "target": "_blank", "tap": [186, 306], "exactTrustedActiveTouch": true, "musePidBefore": null, "musePidAfter": 2205, "nativeSignIn": true, "chooser": false},
+    {"mode": "icon-only", "target": "_blank", "tap": [91, 306], "exactTrustedActiveTouch": true, "musePidBefore": null, "musePidAfter": 2593, "nativeSignIn": true, "chooser": false},
+    {"mode": "same-tab-control", "target": "", "tap": [186, 306], "exactTrustedActiveTouch": true, "musePidBefore": null, "musePidAfter": 2976, "nativeSignIn": true, "chooser": false}
+  ],
+  "museAfterEach": "com.facebook.aura/.main.AuraMainActivity",
+  "visibleSignInHeading": "Welcome to Muse",
+  "signedIn": false,
+  "sent": false,
+  "browserNamedButtonScreenshotSha256": "926ddc95a8cf7ff18cffeaff58e02e6023eaef447a0e71956be8d6fa1d6515f2",
+  "museAfterNamedButtonScreenshotSha256": "5f7d466fb4f0b6c44cd61e8068baddfbf33ff76ca53627448609d8d50cee6b30",
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46085872783/job/140795172267",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46085872783/artifacts/15238568766",
+  "retrievedArchiveSha256": "a5272e59a8c9e810174d0104f0e8c2fe7b47eb1082e4c15c54997013f0f11939"
+}
