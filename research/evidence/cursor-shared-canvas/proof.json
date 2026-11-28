@@ -21,5 +21,93 @@
     "scriptSha256": "1d8dfc175b04bad86689e65c19788f741c64e9a0cb3bdf57bd860e2ac3efaed5",
     "observation": "The renderer defines ShareCanvasResponse with fields share_id and share_url. The route shape is independently established by the vendor redirect."
   },
-  "boundary": "A synthetic ID cannot prove Canvas contents or authorized membership. The tested Canvas viewer is distinct from the shared transcript route."
+  "boundary": "A synthetic ID cannot prove Canvas contents or authorized membership. The tested Canvas viewer is distinct from the shared transcript route.",
+  "browsers": [
+    {
+      "profile": "Chromium",
+      "browser": "158.0.8127.18",
+      "cases": [
+        {
+          "target": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 403,
+          "visible": "Browser security verification"
+        },
+        {
+          "target": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 403,
+          "visible": "Browser security verification"
+        }
+      ]
+    },
+    {
+      "profile": "Firefox",
+      "browser": "159.0",
+      "cases": [
+        {
+          "target": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        },
+        {
+          "target": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browser": "27.2",
+      "cases": [
+        {
+          "target": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        },
+        {
+          "target": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "browser": "158.0.8127.18",
+      "cases": [
+        {
+          "target": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        },
+        {
+          "target": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "finalStatus": 200,
+          "visible": "Sign in"
+        }
+      ]
+    }
+  ],
+  "browserMethod": "Fresh signed-out contexts. Only read-method network traffic was allowed. Authentication and Canvas controls were left untouched.",
+  "appleAssociation": {
+    "source": "https://cursor.com/.well-known/apple-app-site-association",
+    "sha256": "9a346045e8cd7dc0666db068a4e187f2cdf05efc107280b93b969576fe1f1d6e",
+    "observedPathsClaimCanvas": false
+  }
 }
