@@ -1,0 +1,98 @@
+{
+  "url": "http://127.0.0.1:48874/",
+  "scope": "Trusted browser clicks intercepted before navigating to loopback.",
+  "result": [
+    {
+      "profile": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "links": [
+        {
+          "iconOnly": false,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": false,
+          "href": "http://[::1]:52168/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://[::1]:52168/"
+        }
+      ]
+    },
+    {
+      "profile": "narrow-firefox",
+      "browser": "159.0",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "links": [
+        {
+          "iconOnly": false,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": false,
+          "href": "http://[::1]:52168/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://[::1]:52168/"
+        }
+      ]
+    },
+    {
+      "profile": "iphone-webkit",
+      "browser": "27.2",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "links": [
+        {
+          "iconOnly": false,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": false,
+          "href": "http://[::1]:52168/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://[::1]:52168/"
+        }
+      ]
+    },
+    {
+      "profile": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "links": [
+        {
+          "iconOnly": false,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": false,
+          "href": "http://[::1]:52168/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://127.0.0.1:32300/"
+        },
+        {
+          "iconOnly": true,
+          "href": "http://[::1]:52168/"
+        }
+      ]
+    }
+  ]
+}

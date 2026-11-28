@@ -950,9 +950,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       sources: [appSpec, "https://github.com/openai/mcp-extensions/issues/56"],
       note: "Opens the global app entrypoint in ChatGPT for iOS 1.2026.307 or newer. Leave marketplace blank for plugins published to ChatGPT.",
     }, sharedChat({
-      url: chatgptSharedChat, evidence: "source",
-      sources: ["https://chatgpt.com/.well-known/apple-app-site-association", sharedChatAppleChecks],
-      note: "Apple’s production association matches the clean share URL. Opening a shared conversation in the installed iPhone app still needs a device check.",
+      url: chatgptSharedChat, evidence: "verified",
+      sources: ["https://chatgpt.com/.well-known/apple-app-site-association", sharedChatAppleChecks,
+        "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/openai-claude-physical-ios/proof.json"],
+      note: "The exact public share opened its matching transcript in ChatGPT 1.2026.321 after a Safari tap on a physical iPhone.",
     })],
     android: [sharedChat({
       url: chatgptSharedChat, evidence: "source",

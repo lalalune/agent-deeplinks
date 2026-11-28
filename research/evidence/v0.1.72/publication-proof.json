@@ -31,5 +31,14 @@
     "svgExports": 21,
     "bothButtonStyles": true,
     "newActionsVerified": 3
+  },
+  "extractedZipBrowserTargets": {
+    "coworkAndT3": 28,
+    "zcode": 16
+  },
+  "freshPublicGitHubTarballInstall": {
+    "version": "0.1.72",
+    "t3AddEnvironmentResolved": true,
+    "claudeSvgLoaded": true
   }
 }

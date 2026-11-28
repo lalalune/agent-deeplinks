@@ -75,6 +75,7 @@ const claudeDesktopChecks = [
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45460279575/job/138680666686",
   "https://github.com/lalalune/agent-deeplinks/actions/runs/45539037898/artifacts/14987968227",
 ] as const;
+const physicalIosOpenAiClaudeChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/openai-claude-physical-ios/proof.json";
 const claudeMobileDocs = "https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link";
 const claudeAndroidAssociation = "https://claude.ai/.well-known/assetlinks.json";
 const claudeAndroidChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/claude-android-26112419/proof.json";
@@ -539,9 +540,9 @@ const catalog = {
       ios: {
         url: "https://claude.ai/new",
         behavior: "launch",
-        evidence: "source",
-        sources: [claudeIosAssociation],
-        note: "Associated iOS URL for a new chat. Native prompt handling needs a device test.",
+        evidence: "verified",
+        sources: [claudeIosAssociation, physicalIosOpenAiClaudeChecks],
+        note: "On a physical iPhone, a Safari tap opened native Claude at its acknowledgment screen. The new-chat composer and prompt handling still need a check.",
       },
       android: {
         url: "https://claude.ai/new",
@@ -574,7 +575,11 @@ const catalog = {
         fields: { prompt: "q", folder: "folder", sshHost: "ssh_host", sshPort: "ssh_port", sshFolder: "ssh_folder" },
         note: "Prefill verified in Claude Desktop’s Code tab in 6.28899.6 on macOS. Windows and Ubuntu received the exact link, including Windows ARM64. Claude asks for confirmation before using a local folder or SSH target. SSH fields require Desktop v2.110.0 or later.",
       },
-      ios: claudeCodeMobileRoute,
+      ios: {
+        ...claudeCodeMobileRoute,
+        sources: [claudeMobileDocs, physicalIosOpenAiClaudeChecks],
+        note: "On a physical iPhone, the draft link reached Claude’s acknowledgment screen after Safari’s Open confirmation. Draft rendering and cloud-session access still need a check.",
+      },
       android: {
         ...claudeCodeMobileRoute,
         sources: [claudeMobileDocs, claudeAndroidChecks],
@@ -646,9 +651,9 @@ const catalog = {
       ios: {
         url: "https://chatgpt.com/#native",
         behavior: "launch",
-        evidence: "source",
-        sources: ["https://chatgpt.com/.well-known/apple-app-site-association"],
-        note: "An iOS Universal Link for a blank ChatGPT conversation. The iPhone browser fallback rendered signed-out ChatGPT.",
+        evidence: "verified",
+        sources: [chatgptIosAssociation, physicalIosOpenAiClaudeChecks],
+        note: "On a physical iPhone, Safari stayed on ChatGPT’s web page on the first attempt. Repeated same-tab and new-tab taps opened the native home composer.",
       },
       android: {
         url: "https://chatgpt.com/open-app",
@@ -686,10 +691,10 @@ const catalog = {
       ios: {
         url: codexMobile,
         behavior: "handoff",
-        evidence: "source",
-        sources: [chatgptIosAssociation, codexMobile, codexCloudTaskSource],
+        evidence: "verified",
+        sources: [chatgptIosAssociation, codexMobile, codexCloudTaskSource, physicalIosOpenAiClaudeChecks],
         fields: { task: "" },
-        note: "Blank links open ChatGPT’s wrapped Codex handoff with an App Store fallback. A task ID or URL opens the associated task path. Installed task navigation still needs a device check.",
+        note: "The blank link opened the native Ask Codex composer on a physical iPhone. The browser fallback reaches the App Store. Existing cloud task navigation still needs a device check.",
       },
       android: {
         url: codexMobile,
