@@ -1,0 +1,54 @@
+{
+  "version": "2026.11.10",
+  "libraryVersion": "0.1.70",
+  "libraryUri": "openclaw://dashboard",
+  "networkInterfaces": [
+    "lo"
+  ],
+  "gatewayReady": {
+    "http": 200,
+    "ready": true
+  },
+  "setup": {
+    "visibleNativeWindow": "4194307",
+    "ownerPid": 4434,
+    "connectionMethod": "Native wizard, On another computer with a Direct Gateway URL and masked token",
+    "gatewayOrigin": "http://127.0.0.1:40041",
+    "stockTokenAdmissions": [
+      {
+        "client": "openclaw-linux",
+        "mode": "ui",
+        "role": "operator",
+        "auth": "token"
+      },
+      {
+        "client": "openclaw-linux",
+        "mode": "ui",
+        "role": "operator",
+        "auth": "token"
+      }
+    ]
+  },
+  "modelRequests": 0,
+  "scope": {
+    "installedAppImageRegisteredDefaultHandler": true,
+    "authenticatedNativeOperatorObserved": true,
+    "connectedDashboardVisuallyConfirmed": false,
+    "exactProtocolDispatched": false,
+    "nativeJobOutcome": "Failed the 120-second initial connected Dashboard visual predicate. It stopped before warm or cold URI dispatch."
+  },
+  "provenance": {
+    "os": "Ubuntu 24.04.5 LTS",
+    "publisherAppImageRelease": "https://github.com/openclaw/openclaw/releases/tag/v2026.11.10",
+    "publisherAppImageSha256": "6d02754208e8f80b731d5320143d43a206fffe54a453e8f4eaa5b3bccfceeb02",
+    "cli": {
+      "url": "https://registry.npmjs.org/openclaw/-/openclaw-2026.11.10.tgz",
+      "integrity": "sha512-/FKDjxY1ZdUSXHx1a9b4EUpPRZywM3uv4181g22XImJfp/5+h+fFUZ7B7HthNrdYzq//05zH0Yf7mefzIlWFaQ=="
+    },
+    "libraryRegistryIntegrity": "sha512-p0S/ZCOW5x+LpTer4DYmStOoIgOX/eKcmI1mmpQRPiNPPEIZr2EYIMBKUzQnTa9RtK5wQbIAvOwAk2yyLSXd1w==",
+    "defaultHandler": "Name=OpenClaw\nExec=\"/home/runner/work/_temp/openclaw-stock-appimage/OpenClaw-2026.11.10-amd64.AppImage\" %u\nMimeType=x-scheme-handler/openclaw",
+    "testJob": "https://github.com/lalalune/agent-deeplinks/actions/runs/46089090882/job/140805541980",
+    "testArtifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46089090882/artifacts/15240876262",
+    "testArtifactSha256": "9896bb05667fe2b18b50c6125bba959f009efcc9256310e61fe19d6a26e0d0ac"
+  }
+}
