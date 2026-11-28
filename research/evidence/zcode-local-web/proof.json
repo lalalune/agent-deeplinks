@@ -23,5 +23,91 @@
     "iconOnly": true,
     "iconAndName": true,
     "rejectedNonLoopbackUrl": true
+  },
+  "macOSRuntime": {
+    "printedUrl": "http://127.0.0.1:50973/",
+    "packageHref": "http://127.0.0.1:50973/",
+    "finalUrl": "http://127.0.0.1:50973/",
+    "browserOrigin": "http://127.0.0.1:50973",
+    "documentStatus": 200,
+    "packageVersion": "0.1.72",
+    "packageIntegrity": "sha512-nzw5UHbWGzh5NehruQ0q1ShMtrTN1jxWzK4gn+4KdQxP6qYM0znH8jVGYPCPxQnw+QdOWwI7a3+RnmI9g7oW9A==",
+    "title": "ZCode - Web + Server",
+    "chromium": "158.0.8127.18",
+    "platform": "darwin-arm64",
+    "node": "v24.14.0",
+    "runtimeAssembly": "official launcher with tagged compiled components",
+    "visibleText": "Welcome to ZCode\n\nLog in to Z.AI to start using ZCode\n\nLogin with Browser\nUse API key\n切换到中国\n\nBy signing in, you agree to our\nTerms of Service\nand\nPrivacy Policy\n\n© 2026 ZCode All rights reserved.",
+    "buttons": [
+      "Login with Browser",
+      "Use API key",
+      "切换到中国",
+      "Terms of Service",
+      "Privacy Policy"
+    ],
+    "workspaceEntries": [],
+    "screenshotSha256": "a51108c3e3a7e9e56823808a147749cdb023733b2aae529ff2ae4fa3a818bb1a",
+    "verifiedAtUtc": "2026-11-28T02:33:12+00:00",
+    "boundSocket": "127.0.0.1:50973",
+    "pnpm": "10.33.2",
+    "artifactSha256": {
+      "bin/zcode.mjs": "191db90c74ea13c71e225774fde85db3c662f36a0a79d5a6bf3011590d35b904",
+      "server/entry-http.js": "a869c17a28fe5244079a5b61db0f094e9982ad940d0ba6f3e2dae32e875be6dc",
+      "web/index.html": "49b775aed0ce382381c4f0aacadff534667327af316cc1ce53b6d57b9237663a",
+      "agent/zcode.cjs": "c0e2f4652e92103301cf6ec59d7a1a6b9751386826e727e000f9c7aa441139ab"
+    },
+    "screenshot": "macos-sign-in.png",
+    "boundary": "The upstream launcher loaded the Agent bundle, HTTP server, and Web assets compiled from the pinned v4.0.0 tag. The scratch profile used a disposable local credential-storage key. Chromium displayed the signed-out ZCode screen and the two provider controls. The scratch workspace remained empty."
+  },
+  "ubuntuPackagedRuntime": {
+    "url": "http://127.0.0.1:3030/",
+    "generated": "http://127.0.0.1:3030/",
+    "final": "http://127.0.0.1:3030/",
+    "status": 200,
+    "title": "ZCode - Web + Server",
+    "engine": "141.0.7390.37",
+    "visibleText": "Welcome to ZCode\n\nLog in to Z.AI to start using ZCode\n\nLogin with Browser\nUse API key\n切换到中国\n\nBy signing in, you agree to our\nTerms of Service\nand\nPrivacy Policy\n\n© 2026 ZCode All rights reserved.",
+    "controls": [
+      [
+        "Minimize window"
+      ],
+      [
+        "Maximize or restore window"
+      ],
+      [
+        "Close window"
+      ],
+      [
+        "Login with Browser"
+      ],
+      [
+        "Use API key"
+      ],
+      [
+        "切换到中国"
+      ],
+      [
+        "Terms of Service"
+      ],
+      [
+        "Privacy Policy"
+      ]
+    ],
+    "errors": [],
+    "screenshotSha256": "68c753e156f56e7ea9212bab68b855c2977219759c25039f475db2becbefa872",
+    "node": "v24.14.0",
+    "pnpm": "10.33.2",
+    "verifiedAtUtc": "2026-11-28T02:29:17Z",
+    "platform": "Ubuntu 24.04 x86_64",
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46091429522/job/140812996429",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46091429522/artifacts/15244815361",
+    "artifactSha256": "4c399f9e8c50d600298cdecc9c167e4fde274ad22920fd1df14befcf6c83654b",
+    "builtArchive": "zcode-4.0.0.tar.gz",
+    "builtArchiveSha256": "925450db5a38ca6fdb1886094b62b1c80516a3dbf3a8b1a1ceac10d05d1affb1",
+    "linkPackageCommit": "d3051e8cf4d1eaba5686ae13876481d9390f2ff0",
+    "boundSocket": "127.0.0.1:3030",
+    "workspaceEntries": [],
+    "screenshot": "ubuntu-sign-in.png",
+    "boundary": "The hosted build packaged and extracted the pinned vendor unified CLI archive and launched it with a disposable local credential-storage key. The exact candidate-generated URL displayed the official signed-out workbench. The retained artifact contains the archive digest and browser proof. The scratch workspace remained empty."
   }
 }
