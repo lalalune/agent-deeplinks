@@ -1,0 +1,108 @@
+name: T3 Code 2.4.0 Android Add Environment link
+on:
+  push:
+    branches: [codex/t3-android-add-environment-native]
+permissions:
+  contents: read
+jobs:
+  native-arm:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          fetch-depth: 3
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Fetch publisher artifacts and prepare the pinned ARM container
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          test "$(uname -m)" = aarch64
+          qa="$RUNNER_TEMP/t3-native-arm-qa"
+          mkdir -p "$qa"/{evidence,package}
+          printf '%s\n' "$(uname -m)" "$(uname -r)" | tee "$qa/evidence/host.txt"
+          base=https://github.com/pingdotgg/t3code/releases/download
+          curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 110 --max-filesize 175000000 \
+            "$base/v0.1.14-nightly.20261127.5359/t3code-android-internal-2.4.0-833.apk" -o "$qa/t3code.apk" &
+          apk_download=$!
+          curl -fsS --proto '=https' --connect-timeout 15 --max-time 110 --max-filesize 210000000 \
+            https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip -o "$qa/tools.zip" &
+          tools_download=$!
+          image='docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2'
+          timeout 240 docker pull --platform linux/arm64 "$image" > "$qa/evidence/image-pull.txt" 2>&1 &
+          image_download=$!
+          sudo apt-get update -qq 2>&1 | tee "$qa/apt-update.log" >/dev/null
+          sudo apt-get install -y --no-install-recommends adb 2>&1 | tee "$qa/apt-tools.log" >/dev/null
+          sudo modprobe binder_linux devices=binder,hwbinder,vndbinder
+          modinfo -F filename binder_linux | tee -a "$qa/evidence/host.txt"
+          for module in iptable_filter ip6table_filter iptable_raw ip6table_raw iptable_mangle ip6table_mangle iptable_nat ip6table_nat; do
+            printf 'Android netd kernel module %s: ' "$module" | tee -a "$qa/evidence/host.txt"
+            if ! sudo modprobe "$module"; then
+              printf 'unavailable in the hosted kernel\n' | tee -a "$qa/evidence/host.txt"
+              exit 34
+            fi
+            modinfo -F filename "$module" | tee -a "$qa/evidence/host.txt"
+          done
+          wait "$apk_download"
+          wait "$tools_download"
+          wait "$image_download"
+          printf '%s  %s\n' \
+            57bd469258632c92f5cdb9ae0ce32888a9549bd176c2e332fd3f93c70112b62c "$qa/t3code.apk" \
+            4e4c464f145a7512b57d088ac6c278c03c9eea610886b35a5e0804e74eedf583 "$qa/tools.zip" \
+            | sha256sum --check | tee "$qa/evidence/artifact-digests.txt"
+          unzip -q "$qa/tools.zip" -d "$qa/tools"
+          mkdir -p "$qa/sdk/cmdline-tools"
+          mv "$qa/tools/cmdline-tools" "$qa/sdk/cmdline-tools/latest"
+          manager="$qa/sdk/cmdline-tools/latest/bin/sdkmanager"
+          set +o pipefail
+          yes | "$manager" --sdk_root="$qa/sdk" --licenses > "$qa/sdk-license.log"
+          set -o pipefail
+          "$manager" --sdk_root="$qa/sdk" 'build-tools;36.0.0' > "$qa/evidence/sdk-install.txt" 2>&1
+          curl -fsS --proto '=https' --max-time 20 https://app.t3.codes/.well-known/assetlinks.json -o "$qa/evidence/t3-assetlinks.json"
+          jq -er '.[] | select(.target.package_name == "com.t3tools.t3code" and (.relation | index("delegate_permission/common.handle_all_urls"))) | .target.sha256_cert_fingerprints[] | gsub(":"; "") | ascii_downcase' "$qa/evidence/t3-assetlinks.json" | grep -Fx 'b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6'
+          "$qa/sdk/build-tools/36.0.0/apksigner" verify --min-sdk-version 35 --max-sdk-version 35 --verbose --print-certs "$qa/t3code.apk" | tee "$qa/evidence/apk-signing.txt"
+          grep -Fqx 'Signer #1 certificate SHA-256 digest: b9f51ed5a76cd186c95108f21991b7d53a58fda98312a9e353e21a59b24203b6' "$qa/evidence/apk-signing.txt"
+          grep -Fx 'Verified using v3 scheme (APK Signature Scheme v3): true' "$qa/evidence/apk-signing.txt"
+          grep -Fx 'Verified for SourceStamp: true' "$qa/evidence/apk-signing.txt"
+          grep -Fx 'Source Stamp Signer certificate SHA-256 digest: 3257d599a49d2c961a471ca9843f59d341a405884583fc087df4237b733bbd6d' "$qa/evidence/apk-signing.txt"
+          test "$(docker image inspect --format '{{.Architecture}}' "$image")" = arm64
+          printf '%s\n' "$image" > "$qa/evidence/pinned-runtime-image.txt"
+      - name: Build the exact feature package and generate its Android and iOS links
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/t3-native-arm-qa"
+          git worktree add --detach "$qa/library-src" 5c206810604ef81466d8f6b1f308273037b2dc2c
+          cd "$qa/library-src"
+          git rev-parse HEAD | tee "$qa/evidence/library-git.txt" | grep -Fx 5c206810604ef81466d8f6b1f308273037b2dc2c
+          npm ci --no-audit --no-fund
+          npm pack --pack-destination "$qa/package" --json > "$qa/evidence/npm-pack.json"
+          cd "$qa/package"
+          package=$(jq -er '.[0].filename' "$qa/evidence/npm-pack.json")
+          sha256sum "$package" > "$qa/evidence/library-sha256.txt"
+          tar -xzf "$package"
+          node --input-type=module - <<'JS' > "$qa/evidence/requested-links.json"
+          import assert from 'node:assert/strict';
+          import { getAgentLink } from './package/dist/index.js';
+          const links = Object.fromEntries(['ios','android'].map(platform =>
+            [platform, getAgentLink('t3-code', platform, { action: 'add-environment' })]));
+          assert.equal(links.android, 't3code://settings/environment-new');
+          assert.equal(links.ios, links.android);
+          console.log(JSON.stringify(links));
+          JS
+      - name: Exercise the link in the stock Android client without credentials
+        shell: bash
+        run: bash .github/qa/t3-add-environment-android.sh "$RUNNER_TEMP/t3-native-arm-qa"
+      - name: Save bounded native ARM evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: t3-833-add-environment-android
+          path: ${{ runner.temp }}/t3-native-arm-qa/evidence/
+          if-no-files-found: warn
+          retention-days: 30
