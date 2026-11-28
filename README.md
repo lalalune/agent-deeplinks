@@ -61,6 +61,14 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 
 On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
 
+### Connect a T3 Code mobile environment
+
+Choose **T3 Code → Add environment** on iOS or Android to open the setup form. Enter your environment address and pairing code in T3 Code.
+
+```ts
+getAgentLink("t3-code", "ios", { action: "add-environment" })
+```
+
 ### Existing desktop chats
 
 Choose **Existing chat** for Claude, ChatGPT, or Codex in the desktop playground. Use the UUID from a Claude conversation URL. ChatGPT and Codex also accept the link from **Copy chat deep link**, including the owning host ID for an SSH chat. The desktop app needs access to the chat and its connection. [Claude desktop links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link) · [ChatGPT desktop commands](https://learn.chatgpt.com/docs/reference/commands#deep-links) · [Codex SSH test](research/evidence/codex-copied-remote-thread/native-ssh-reopen-proof.json)
