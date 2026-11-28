@@ -166,6 +166,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "/absolute/path/to/project", action: "ide-open" },
   { agent: "opencode", label: "project draft", inputLabel: "Absolute local folder",
     placeholder: "/absolute/path/to/project", field: "directory", platform: "desktop" },
+  { agent: "opencode", label: "server pairing", inputLabel: "OpenCode CLI or Copy/Share pairing URL",
+    placeholder: "opencode-ios://pair?…", action: "server-pair", platform: "android" },
 ];
 
 const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, ActionExampleSpec>>>> = {
@@ -351,7 +353,7 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
   opencode: {
     "server-pair": {
       label: "Pair server",
-      options: () => ({ target: "https://code.example.com/auth/connect/example_code" }),
+      options: (platform) => platform === "android" ? {} : { target: "https://code.example.com/auth/connect/example_code" },
     },
   },
   kimi: {
@@ -629,6 +631,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const [prompt, setPrompt] = useState("");
   const isIdePath = example.action === "ide-open";
   const isLocalDirectory = example.field === "directory";
+  const isPairing = example.action === "server-pair";
   const target = isIdePath || isLocalDirectory ? value : value.trim();
   const actionRoute = example.action ? getAgentRoute(example.agent, platform, example.action) : null;
   const choices = actionRoute?.inputs.find(({ field }) => field === "target")?.choices;
@@ -640,7 +643,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const options = { ...destinationOptions, ...(prompt && { prompt }), ...(browserOnly && { browserOnly }) };
   const href = (target || choices) && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
-  const label = `Open ${destination}`;
+  const label = isPairing ? "Review OpenCode pairing" : `Open ${destination}`;
 
   return (
     <div role="region" aria-label={`${destination} link`} className="link-setup">
@@ -653,9 +656,9 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
             ))}
           </select>
         ) : (
-          <input value={value} onChange={(event) => setValue(event.target.value)}
+          <input type={isPairing ? "password" : "text"} value={value} onChange={(event) => setValue(event.target.value)}
             placeholder={example.placeholder} aria-invalid={Boolean(target && !href)}
-              autoComplete="off" autoCapitalize="off" spellCheck={false} />
+            autoComplete="off" autoCapitalize="off" spellCheck={false} />
         )}
       </label>
       {(promptLimit !== undefined || isLocalDirectory) && (
@@ -666,7 +669,8 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
       )}
       {href ? (
         <Button asChild variant="ghost" className={iconOnly ? "agent-btn agent-btn-icon" : "agent-btn"}>
-          <a href={href} {...linkAttrs(href)} aria-label={label} title={label}>
+          <a href={href} {...linkAttrs(href)} referrerPolicy={isPairing ? "no-referrer" : undefined}
+            aria-label={label} title={label}>
             <AgentLogo agent={example.agent} />
             {!iconOnly && <span className="agent-name">{label}</span>}
           </a>
