@@ -1,0 +1,105 @@
+{
+  "site": "https://deeplinks.fun/",
+  "canonical": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+  "legacy": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+  "fixtureId": "deeplinks-qa-canvas-20261127",
+  "scope": "Signed-out browser navigation and a synthetic Canvas placeholder.",
+  "result": [
+    {
+      "profile": "Desktop Chromium",
+      "browser": "158.0.8127.18",
+      "platform": "Web",
+      "bundle": "/assets/index-BAbBPTu6.js",
+      "buttons": [
+        {
+          "iconOnly": false,
+          "input": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Viewer document received. Authentication screen was outside the browser observation."
+        },
+        {
+          "iconOnly": true,
+          "input": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Browser security verification"
+        }
+      ]
+    },
+    {
+      "profile": "Firefox 375px",
+      "browser": "159.0",
+      "platform": "Web",
+      "bundle": "/assets/index-BAbBPTu6.js",
+      "buttons": [
+        {
+          "iconOnly": false,
+          "input": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "boundary": "Viewer document received. Authentication screen was outside the browser observation."
+        },
+        {
+          "iconOnly": true,
+          "input": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "boundary": "Viewer document received. Authentication screen was outside the browser observation."
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browser": "27.2",
+      "platform": "Mobile",
+      "bundle": "/assets/index-BAbBPTu6.js",
+      "buttons": [
+        {
+          "iconOnly": false,
+          "input": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Sign in"
+        },
+        {
+          "iconOnly": true,
+          "input": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Sign in"
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "browser": "158.0.8127.18",
+      "platform": "Mobile",
+      "bundle": "/assets/index-BAbBPTu6.js",
+      "buttons": [
+        {
+          "iconOnly": false,
+          "input": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Sign in"
+        },
+        {
+          "iconOnly": true,
+          "input": "https://cursor.com/dashboard/shared-canvases?shareId=deeplinks-qa-canvas-20261127",
+          "requested": "https://cursor.com/c/deeplinks-qa-canvas-20261127",
+          "viewerStatus": 200,
+          "final": "https://authenticator.cursor.sh/",
+          "boundary": "Sign in"
+        }
+      ]
+    }
+  ]
+}

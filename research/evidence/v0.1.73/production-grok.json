@@ -1,0 +1,28 @@
+{
+  "site": "https://deeplinks.fun/",
+  "browser": "158.0.8127.18",
+  "bundle": "/assets/index-BAbBPTu6.js",
+  "configuredCopyLink": true,
+  "labels": [
+    {
+      "style": "Icons + names",
+      "url": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+      "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+      "dimensions": [
+        832,
+        1248
+      ],
+      "status": 200
+    },
+    {
+      "style": "Icons only",
+      "url": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019?stay_in_browser=true",
+      "final": "https://grok.com/imagine/post/8d29841d-c4d9-4029-88e0-341a1c7dc019",
+      "dimensions": [
+        832,
+        1248
+      ],
+      "status": 200
+    }
+  ]
+}

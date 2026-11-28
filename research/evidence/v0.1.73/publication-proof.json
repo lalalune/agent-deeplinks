@@ -1,0 +1,39 @@
+{
+  "version": "0.1.73",
+  "tagCommit": "ac108f8c8066b3d425ca2fc03bfb5afbe575b6d7",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100846915",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100847110",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100847176",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.73",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.73/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://04bd1b1e.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://8444394a.agent-deeplinks.pages.dev/",
+  "previewDeployment": "https://318baa81.agent-deeplinks.pages.dev/",
+  "githubAndZipTarballSha256": "3a8d1475ef54804cac83b5ffd9a35ecb2e7a73531ac671fe032da693ec7ce640",
+  "githubReleaseZipSha256": "77afdd78f2e337842d183dd89e76b53613af9865c2b7d944d39318f8b3c68591",
+  "productionAndZipHtmlSha256": "dc6bdea692475fe8b7efb9d1346d392f8153f1cb035820eff0f6882eb8ef99f3",
+  "productionAndZipJavaScriptSha256": "0e5190afab4f1e3a3e0dd12226a08cf4732eb05429ca5d9b4678f03fd8b47534",
+  "productionAndZipCssSha256": "a7f9c3d3799edfcd276a86530e6d5cfe8dc7dc8f0ea4e94419a5b356f210bbcf",
+  "bundle": "/assets/index-BAbBPTu6.js",
+  "localPackageTestsPassed": 65,
+  "primaryRoutes": 74,
+  "staticActionExamples": 70,
+  "productionGrokRenderedPostButtonStyles": 2,
+  "previewCanvasTrustedClicks": 8,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshGitHubCoreInstall": {
+    "version": "0.1.73",
+    "svgExports": 21,
+    "reactInstalled": false,
+    "newActionsVerified": 2
+  },
+  "freshGitHubReactInstall": {
+    "version": "0.1.73",
+    "react": "18.3.1",
+    "newActionsVerified": 2,
+    "bothReactVariants": true
+  },
+  "productionCanvasTrustedClicks": 8
+}

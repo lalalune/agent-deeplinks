@@ -1,0 +1,142 @@
+{
+  "site": "https://deeplinks.fun/",
+  "scope": "Live Playground layout, labels, route counts and SVG decoding.",
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-BAbBPTu6.js",
+      "state": [
+        {
+          "platform": "desktop",
+          "primaryRoutes": 16,
+          "staticActionExamples": 23,
+          "iconsDecoded": 39,
+          "width": 1250,
+          "contentWidth": 1250,
+          "labels": true
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "staticActionExamples": 25,
+          "iconsDecoded": 46,
+          "width": 1250,
+          "contentWidth": 1250,
+          "labels": true
+        },
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "staticActionExamples": 12,
+          "iconsDecoded": 31,
+          "width": 1250,
+          "contentWidth": 1250,
+          "labels": true
+        },
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "staticActionExamples": 10,
+          "iconsDecoded": 28,
+          "width": 1250,
+          "contentWidth": 1250,
+          "labels": true
+        }
+      ]
+    },
+    {
+      "profile": "Firefox 375px",
+      "browser": "159.0",
+      "script": "/assets/index-BAbBPTu6.js",
+      "state": [
+        {
+          "platform": "desktop",
+          "primaryRoutes": 16,
+          "staticActionExamples": 23,
+          "iconsDecoded": 39,
+          "width": 375,
+          "contentWidth": 375,
+          "labels": true
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "staticActionExamples": 25,
+          "iconsDecoded": 46,
+          "width": 375,
+          "contentWidth": 375,
+          "labels": true
+        },
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "staticActionExamples": 12,
+          "iconsDecoded": 31,
+          "width": 375,
+          "contentWidth": 375,
+          "labels": true
+        },
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "staticActionExamples": 10,
+          "iconsDecoded": 28,
+          "width": 375,
+          "contentWidth": 375,
+          "labels": true
+        }
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browser": "27.2",
+      "script": "/assets/index-BAbBPTu6.js",
+      "state": [
+        {
+          "platform": "ios",
+          "primaryRoutes": 19,
+          "staticActionExamples": 12,
+          "iconsDecoded": 31,
+          "width": 393,
+          "contentWidth": 393,
+          "labels": true
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "staticActionExamples": 25,
+          "iconsDecoded": 46,
+          "width": 393,
+          "contentWidth": 393,
+          "labels": true
+        }
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "browser": "158.0.8127.18",
+      "script": "/assets/index-BAbBPTu6.js",
+      "state": [
+        {
+          "platform": "android",
+          "primaryRoutes": 18,
+          "staticActionExamples": 10,
+          "iconsDecoded": 28,
+          "width": 360,
+          "contentWidth": 360,
+          "labels": true
+        },
+        {
+          "platform": "web",
+          "primaryRoutes": 21,
+          "staticActionExamples": 25,
+          "iconsDecoded": 46,
+          "width": 360,
+          "contentWidth": 360,
+          "labels": true
+        }
+      ]
+    }
+  ]
+}
