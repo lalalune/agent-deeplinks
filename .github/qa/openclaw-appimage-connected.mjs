@@ -113,8 +113,31 @@ async function evidenceFrame(captured, label) {
   await writeFile(join(out, `${label}.png`), await readFile(captured.png));
 }
 
-function setupAction(action, name) {
-  checked('/usr/bin/python3', [setupDriver, action, name], { timeout: 14_000 });
+async function setupAction(action, name) {
+  const accessibility = command('/usr/bin/python3', [setupDriver, action, name], { timeout: 14_000 });
+  if (accessibility.status === 0) return 'AT-SPI';
+  await awaitValue(`The native setup did not show the ${name} control`, 18_000, () => {
+    const png = join(scratch, 'setup-control.png');
+    checked('scrot', ['--overwrite', png]);
+    const lines = new Map();
+    for (const row of checked('tesseract', [png, 'stdout', '--psm', '11', 'tsv']).split('\n')) {
+      const [level, page, block, paragraph, line, , left, top, width, height, , word] = row.split('\t');
+      if (level !== '5' || !word?.trim()) continue;
+      const key = [page, block, paragraph, line].join(':');
+      const words = lines.get(key) ?? [];
+      words.push({ word, x: Number(left), y: Number(top), width: Number(width), height: Number(height) });
+      lines.set(key, words);
+    }
+    const matches = [...lines.values()].filter(words =>
+      words.map(({ word }) => word.toLowerCase()).join(' ') === name.toLowerCase());
+    const words = matches.at(-1);
+    if (!words) return false;
+    const x = Math.floor((words[0].x + words.at(-1).x + words.at(-1).width) / 2);
+    const y = Math.floor(words[0].y + (action === 'focus' ? 33 : words[0].height / 2));
+    checked('xdotool', ['mousemove', String(x), String(y), 'click', '1']);
+    return true;
+  });
+  return 'X11 pointer with displayed text';
 }
 
 async function currentAdmissions() {
@@ -162,13 +185,22 @@ try {
     return visible.includes(current) && current;
   });
   report.disposableSetup = { window: setupWindow, route: 'Direct connection from the native setup wizard', origin, prefix };
-  setupAction('click', 'Get started');
-  setupAction('click', 'On another computer');
-  setupAction('focus', 'Gateway URL');
+  const setupPage = await awaitValue('No welcome or location page in the native setup window', 35_000, () => {
+    const captured = capture('before-credentials');
+    return /get started|on another computer|where should your assistant live/iu.test(captured.text) ? captured : null;
+  });
+  await evidenceFrame(setupPage, 'before-credentials');
+  report.disposableSetup.beforeCredentialsText = setupPage.text;
+  report.disposableSetup.inputs = [];
+  if (!/on another computer|where should your assistant live/iu.test(setupPage.text)) {
+    report.disposableSetup.inputs.push(await setupAction('click', 'Get started'));
+  }
+  report.disposableSetup.inputs.push(await setupAction('click', 'On another computer'));
+  report.disposableSetup.inputs.push(await setupAction('focus', 'Gateway URL'));
   checked('xdotool', ['type', '--clearmodifiers', '--file', '-'], { input: origin + prefix });
-  setupAction('focus', 'Gateway token');
+  report.disposableSetup.inputs.push(await setupAction('focus', 'Gateway token'));
   checked('xdotool', ['type', '--clearmodifiers', '--file', '-'], { input: token });
-  setupAction('click', 'Connect to Gateway');
+  report.disposableSetup.inputs.push(await setupAction('click', 'Connect to Gateway'));
 
   const initial = await awaitValue('AppImage did not visibly attach to the live Control UI', 120_000, () => {
     const window = command('xdotool', ['search', '--onlyvisible', '--pid', String(report.app.pid)]);
@@ -187,8 +219,9 @@ try {
   assert.equal(desktopConfig.gateway.mode, 'remote');
   assert.equal(desktopConfig.gateway.remote.transport, 'direct');
   report.disposableSetup.persistedTransport = desktopConfig.gateway.remote.transport;
-  report.disposableSetup.persistedEndpoint = desktopConfig.gateway.remote.url;
-  assert.equal(new URL(report.disposableSetup.persistedEndpoint.replace(/^ws:/u, 'http:')).origin, origin);
+  const persistedEndpoint = new URL(desktopConfig.gateway.remote.url.replace(/^ws:/u, 'http:'));
+  assert.equal(persistedEndpoint.origin, origin);
+  report.disposableSetup.persistedEndpoint = persistedEndpoint.origin + persistedEndpoint.pathname;
   const xprops = checked('xprop', ['-id', initial.window, '_NET_WM_PID']);
   assert.match(xprops, new RegExp(`= ${report.app.pid}\\b`));
   checked('xdotool', ['windowminimize', initial.window]);
