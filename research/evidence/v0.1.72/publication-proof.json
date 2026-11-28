@@ -41,5 +41,30 @@
     "t3AddEnvironmentResolved": true,
     "claudeSvgLoaded": true
   },
-  "liveZCodeLoopbackFixtureNavigations": 8
+  "liveZCodeLoopbackFixtureNavigations": 8,
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46091217139",
+  "registryVersion": "0.1.72",
+  "registryTarballSha256": "4a51021c6227eab8020d2aa3f15f47b2763af224cbd86ce43e71f5c25858820b",
+  "uncompressedNpmGitHubAndZipTarSha256": "a4ad756756b35660e5f65c0142dacf60bc5a4a385f63c7627ef354fd6636f0da",
+  "hostedPublicationPackageTestsPassed": 63,
+  "freshPublicRegistryInstall": {
+    "coworkT3AndZcode": true,
+    "configuredSshHostAndGrokPages": true,
+    "openCodeCopySharePairing": true,
+    "verifiedCloudAndWorkspaceLinks": 5,
+    "version": "0.1.72",
+    "svgExports": 21,
+    "copiedOpencodeBrowserSessions": true,
+    "bothReactVariants": true,
+    "sharedKimiChat": true,
+    "exactWindowsReviewUri": "antigravity-ide://file/D:/a/_temp/antigravity-ide/QA%20Antigravity%20IDE%20exact%20file%20opener%207812.txt",
+    "linuxReviewEvidence": true,
+    "desktopToolDrafts": 3,
+    "publishedCodexSettingsTargets": 7,
+    "reactVersion": "19.3.1"
+  },
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
 }
