@@ -1,0 +1,209 @@
+{
+  "verifiedAtUtc": "2026-11-28T03:24:42.377Z",
+  "baseCommit": "c9f094d1f81aae82ec33a1a95088db013c255e58",
+  "build": "Local package and production Playground build with published-app",
+  "builtActionsSha256": "f2d471cdd2041c5f3cee73026afa2fa8cb7c28a19196f5295355696c2f0aaa9b",
+  "builtPlaygroundBundles": {
+    "index-Dqyhtp53.js": "48a9b3bd9a6306012b632e17f756cf09e30e7549d935589fe83dea89b4455b39"
+  },
+  "action": "published-app",
+  "copied": "https://Tiny-City.grok.me?ref=inert#drop",
+  "canonical": "https://tiny-city.grok.me/",
+  "firstPartyDocumentation": "https://x.ai/news/grok-build-for-everyone#publish-to-a-link-share-it-anywhere",
+  "screenshotFixture": "Tiny City example named in the vendor announcement",
+  "networkPolicy": "Fresh browser contexts with only GET, HEAD and OPTIONS to the app, Grok's public app bootstrap and local Playground. WebSockets, service workers and external calls blocked. Game controls left untouched.",
+  "browsers": [
+    {
+      "engineVersion": "158.0.8127.18",
+      "freshCookies": true,
+      "profile": "desktop-chromium",
+      "platform": "web",
+      "generated": "https://tiny-city.grok.me/",
+      "status": 200,
+      "final": "https://tiny-city.grok.me/",
+      "title": "Tiny City",
+      "islandDimensions": [
+        1408,
+        1408
+      ],
+      "controls": [
+        "Upgrade · 15",
+        "New island · 300"
+      ],
+      "screenshot": "desktop-chromium.jpg",
+      "screenshotSha256": "af4de554bdda41bec05696c927db5763f1d456e7f65f2493b703dbae6149dee7",
+      "allowedResponses": [
+        "GET https://grok.com/grok-app-builder/extensions.js 200",
+        "GET https://tiny-city.grok.me/ 200",
+        "GET https://tiny-city.grok.me/assets/index-icV0ls_4.js 200",
+        "GET https://tiny-city.grok.me/assets/routes-BD-tW6Kf.js 200",
+        "GET https://tiny-city.grok.me/assets/styles-CEO6LpJ7.css 200",
+        "GET https://tiny-city.grok.me/island.webp 200",
+        "GET https://tiny-city.grok.me/tinycoin.png 200"
+      ],
+      "blockedOrigins": [
+        "https://app-builder-deployer.grok.com",
+        "https://fonts.googleapis.com"
+      ],
+      "writesBlocked": []
+    },
+    {
+      "engineVersion": "158.0.8127.18",
+      "freshCookies": true,
+      "profile": "android-pixel-9",
+      "platform": "android",
+      "generated": "https://tiny-city.grok.me/",
+      "status": 200,
+      "final": "https://tiny-city.grok.me/",
+      "title": "Tiny City",
+      "islandDimensions": [
+        1408,
+        1408
+      ],
+      "controls": [
+        "Upgrade · 15",
+        "New island · 300"
+      ],
+      "screenshot": "android-pixel-9.jpg",
+      "screenshotSha256": "5a7e14bd1b662d0e871ddbed7fb9e3ff8b02771aedaff3080c535ccc64225357",
+      "allowedResponses": [
+        "GET https://grok.com/grok-app-builder/extensions.js 200",
+        "GET https://tiny-city.grok.me/ 200",
+        "GET https://tiny-city.grok.me/assets/index-icV0ls_4.js 200",
+        "GET https://tiny-city.grok.me/assets/routes-BD-tW6Kf.js 200",
+        "GET https://tiny-city.grok.me/assets/styles-CEO6LpJ7.css 200",
+        "GET https://tiny-city.grok.me/island.webp 200",
+        "GET https://tiny-city.grok.me/tinycoin.png 200"
+      ],
+      "blockedOrigins": [
+        "https://app-builder-deployer.grok.com",
+        "https://fonts.googleapis.com"
+      ],
+      "writesBlocked": []
+    },
+    {
+      "engineVersion": "27.2",
+      "freshCookies": true,
+      "profile": "iphone-15",
+      "platform": "ios",
+      "generated": "https://tiny-city.grok.me/",
+      "status": 200,
+      "final": "https://tiny-city.grok.me/",
+      "title": "Tiny City",
+      "islandDimensions": [
+        1408,
+        1408
+      ],
+      "controls": [
+        "Upgrade · 15",
+        "New island · 300"
+      ],
+      "screenshot": "iphone-15.jpg",
+      "screenshotSha256": "ac0d88103780bb05511baa64a0583a98edcc535207da85dc341cb916d005dc2e",
+      "allowedResponses": [
+        "GET https://grok.com/grok-app-builder/extensions.js 200",
+        "GET https://tiny-city.grok.me/ 200",
+        "GET https://tiny-city.grok.me/__grok/manifest.webmanifest 200",
+        "GET https://tiny-city.grok.me/assets/index-icV0ls_4.js 200",
+        "GET https://tiny-city.grok.me/assets/routes-BD-tW6Kf.js 200",
+        "GET https://tiny-city.grok.me/assets/styles-CEO6LpJ7.css 200",
+        "GET https://tiny-city.grok.me/island.webp 200",
+        "GET https://tiny-city.grok.me/tinycoin.png 200"
+      ],
+      "blockedOrigins": [
+        "https://app-builder-deployer.grok.com",
+        "https://fonts.googleapis.com"
+      ],
+      "writesBlocked": []
+    }
+  ],
+  "playground": {
+    "engineVersion": "158.0.8127.18",
+    "freshCookies": true,
+    "localProductionBuild": true,
+    "buttons": [
+      {
+        "style": "Icons + names",
+        "final": "https://tiny-city.grok.me/",
+        "title": "Tiny City",
+        "islandDimensions": [
+          1408,
+          1408
+        ],
+        "controls": [
+          "Upgrade · 15",
+          "New island · 300"
+        ]
+      },
+      {
+        "style": "Icons only",
+        "final": "https://tiny-city.grok.me/",
+        "title": "Tiny City",
+        "islandDimensions": [
+          1408,
+          1408
+        ],
+        "controls": [
+          "Upgrade · 15",
+          "New island · 300"
+        ]
+      }
+    ],
+    "mobileLinks": {
+      "iOS": "https://tiny-city.grok.me/",
+      "Android": "https://tiny-city.grok.me/"
+    },
+    "rejectedOffDomain": true,
+    "configuredHref": "https://tiny-city.grok.me/",
+    "screenshot": "playground-configured.jpg",
+    "screenshotSha256": "d9f4252de6e76aa9049987cda60568a7f5117d8c77cb8b7d5c8a82eb27d56953",
+    "allowedResponses": [
+      "GET https://grok.com/grok-app-builder/extensions.js 200",
+      "GET https://tiny-city.grok.me/ 200",
+      "GET https://tiny-city.grok.me/assets/index-icV0ls_4.js 200",
+      "GET https://tiny-city.grok.me/assets/routes-BD-tW6Kf.js 200",
+      "GET https://tiny-city.grok.me/assets/styles-CEO6LpJ7.css 200",
+      "GET https://tiny-city.grok.me/island.webp 200",
+      "GET https://tiny-city.grok.me/tinycoin.png 200"
+    ],
+    "blockedOrigins": [
+      "https://app-builder-deployer.grok.com",
+      "https://fonts.googleapis.com"
+    ],
+    "writesBlocked": []
+  },
+  "httpControls": [
+    {
+      "input": "https://driver.grok.me/",
+      "status": 404,
+      "final": "https://driver.grok.me/",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "input": "https://www.grok.me/",
+      "status": 200,
+      "final": "https://grok.com/",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "input": "https://tiny-city.grok.me/.well-known/apple-app-site-association",
+      "status": 404,
+      "final": "https://tiny-city.grok.me/.well-known/apple-app-site-association",
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "input": "https://tiny-city.grok.me/.well-known/assetlinks.json",
+      "status": 404,
+      "final": "https://tiny-city.grok.me/.well-known/assetlinks.json",
+      "contentType": "text/html; charset=utf-8"
+    }
+  ],
+  "manifest": {
+    "url": "https://tiny-city.grok.me/__grok/manifest.webmanifest",
+    "name": "Grok App",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone"
+  },
+  "boundary": "Published app browser render. Web-app installation, native dispatch, account-gated apps and custom domains were outside this check."
+}

@@ -5,7 +5,7 @@ export type AgentActionId =
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
   | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open"
-  | "cowork" | "add-environment" | "local-web" | "shared-canvas" | "imagine-post";
+  | "cowork" | "add-environment" | "local-web" | "shared-canvas" | "imagine-post" | "published-app";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
@@ -331,6 +331,13 @@ const grokBotMarketplace: ActionDefinition = {
   },
 };
 
+function prepareHostedPage({ target }: Fields, url: string): string | null {
+  if (!target || unsafeCharacters.test(target)) return null;
+  const [, label, suffix] = /^https:\/\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\.([a-z.]+)\/?(?:[?#][^\s\\]*)?$/i.exec(target.trim()) ?? [];
+  const domain = new URL(url).hostname;
+  return label && suffix?.toLowerCase() === domain ? `https://${label.toLowerCase()}.${domain}/` : null;
+}
+
 const grokBotPage: ActionDefinition = {
   id: "bot-page", label: "Open shared Bot Page", url: "https://pages.grok.bot/",
   behavior: "launch", evidence: "verified",
@@ -341,11 +348,7 @@ const grokBotPage: ActionDefinition = {
   fields: { target: "" }, required: ["target"],
   inputs: [input("target", "Public Grok Bot Page link", "https://bot-team-kanban-example-2ncd.pages.grok.bot/")],
   note: "Opens the public Page in a browser without sign-in. Use the address copied from Grok Bot’s share menu.",
-  prepare: ({ target }) => {
-    if (!target || unsafeCharacters.test(target)) return null;
-    const pageId = /^https:\/\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\.pages\.grok\.bot\/?(?:[?#][^\s\\]*)?$/i.exec(target.trim())?.[1];
-    return pageId ? `https://${pageId.toLowerCase()}.pages.grok.bot/` : null;
-  },
+  prepare: prepareHostedPage,
 };
 
 const cursorPlugin = pathAction({
@@ -762,6 +765,23 @@ const grokImaginePost: ActionDefinition = {
   },
 };
 
+const grokPublishedApp: ActionDefinition = {
+  id: "published-app", label: "Open published Grok app", url: "https://grok.me/",
+  behavior: "launch", evidence: "verified",
+  sources: [
+    "https://x.ai/news/grok-build-for-everyone#publish-to-a-link-share-it-anywhere",
+    "https://tiny-city.grok.me/",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-published-app/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Published Grok app link", "https://tiny-city.grok.me/")],
+  note: "Opens the published app in a browser. Access depends on the publisher's sharing settings.",
+  prepare: (fields, url) => {
+    const href = prepareHostedPage(fields, url);
+    return href === "https://www.grok.me/" ? null : href;
+  },
+};
+
 const zcodeLocalWeb: ActionDefinition = {
   id: "local-web", label: "Open local Web workspace", url: "http://127.0.0.1:3030/",
   behavior: "launch", evidence: "verified",
@@ -1008,15 +1028,15 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     web: [sharedChat({
       url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks, grokShareAndroid14Checks],
       note: "The public conversation rendered in signed-out desktop and iPhone browsers. With Grok installed, the browser flag kept the link in the tested Android 15 browser. The tested Android 14 build still opened Grok.",
-    }, "?stay_in_browser=true", grokShareFormat), grokImaginePost],
+    }, "?stay_in_browser=true", grokShareFormat), grokImaginePost, grokPublishedApp],
     ios: [sharedChat({
       url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/apple-app-site-association", "https://github.com/lalalune/agent-deeplinks/actions/runs/45693328012/artifacts/15057684811"],
       note: "The clean share link matches Grok’s production Universal Link. In-app conversation rendering still needs a device check.",
-    }, "", grokShareFormat)],
+    }, "", grokShareFormat), grokPublishedApp],
     android: [sharedChat({
       url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/assetlinks.json", grokShareAndroidChecks, grokShareAndroid14Checks],
       note: "Stock Android 14 and 15 opened the signed Grok app with the clean share link. Both checks reached Google Play license verification. Opening the conversation requires a licensed install.",
-    }, "", grokShareFormat)],
+    }, "", grokShareFormat), grokPublishedApp],
   },
   "grok-bot": {
     web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web, grokBotMarketplace, grokBotPage],

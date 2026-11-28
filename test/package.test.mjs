@@ -1266,6 +1266,30 @@ test("opens current and legacy Cursor Canvas shares in a browser", () => {
   assert.equal(getAgentLink("cursor", "desktop", { action, target: id }), null);
 });
 
+test("opens published Grok app addresses on desktop and mobile browsers", () => {
+  const action = "published-app";
+  const url = "https://tiny-city.grok.me/";
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("grok", platform, { action, target: url }), url);
+    const options = { action, target: "  https://Tiny-City.grok.me?ref=inert#drop  " };
+    assert.equal(getAgentLink("grok", platform, options), url);
+    for (const target of [
+      "", "tiny-city", "https://grok.me/", "https://www.grok.me/", "https://tiny-city.grok.me.example/",
+      "https://a.b.grok.me/", "http://tiny-city.grok.me/", "https://other@example.grok.me/",
+      "https://tiny-city.grok.me:443/", "https://tiny-city.grok.me/another", "https://tiny-city.grok.me/x/..",
+      "https://tiny-city.pages.grok.bot/", url + "\n",
+    ]) {
+      assert.equal(getAgentLink("grok", platform, { action, target }), null, target);
+    }
+    assert.equal(getAgentLink("grok", platform, { ...options, prompt: special }), null);
+    for (const iconOnly of [true, false]) {
+      const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "grok", platform, options, iconOnly }));
+      assert.ok(markup.includes(`href="${url}"`));
+    }
+  }
+  assert.equal(getAgentLink("grok", "desktop", { action, target: url }), null);
+});
+
 test("opens Grok Imagine posts by ID or copied share link", () => {
   const action = "imagine-post";
   const id = "8d29841d-c4d9-4029-88e0-341a1c7dc019";
