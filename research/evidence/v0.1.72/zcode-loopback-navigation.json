@@ -1,0 +1,47 @@
+{
+  "production": "https://deeplinks.fun/",
+  "localDocumentRequests": 8,
+  "results": [
+    {
+      "profile": "Desktop Chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "opened": "http://127.0.0.1:50339/",
+      "buttonStyles": [
+        "Icons + names",
+        "Icons only"
+      ]
+    },
+    {
+      "profile": "Firefox 375px",
+      "browser": "159.0",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "opened": "http://127.0.0.1:50339/",
+      "buttonStyles": [
+        "Icons + names",
+        "Icons only"
+      ]
+    },
+    {
+      "profile": "iPhone WebKit",
+      "browser": "27.2",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "opened": "http://127.0.0.1:50339/",
+      "buttonStyles": [
+        "Icons + names",
+        "Icons only"
+      ]
+    },
+    {
+      "profile": "Pixel Chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "opened": "http://127.0.0.1:50339/",
+      "buttonStyles": [
+        "Icons + names",
+        "Icons only"
+      ]
+    }
+  ],
+  "scope": "Browsers followed both buttons from the HTTPS Playground to a disposable HTTP loopback fixture."
+}
