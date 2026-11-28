@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-27",
+  "host": {
+    "os": "macOS 26.2 (25C56)",
+    "architecture": "arm64"
+  },
+  "cli": {
+    "version": "2.8.1",
+    "releaseUrl": "https://github.com/MoonshotAI/kimi-code/releases/tag/%40moonshot-ai%2Fkimi-code%402.8.1",
+    "archiveName": "kimi-code-darwin-arm64.tar.gz",
+    "archiveSha256": "39582deb22cb9c5a2127b3cfea28816b0f928b3b8e5506cc3c7db8bbcebfae63",
+    "strictCodeSignatureVerified": true,
+    "signingAuthority": "Developer ID Application: Beijing Moonshot Technology Co., Ltd (2J9472RW75)",
+    "sourceCommit": "62402f173c5a838a1c1f8fa263b637a22486fa39"
+  },
+  "library": {
+    "version": "0.1.73",
+    "archiveUrl": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.73/agent-deeplinks.tgz",
+    "archiveSha256": "3a8d1475ef54804cac83b5ffd9a35ecb2e7a73531ac671fe032da693ec7ce640"
+  },
+  "runtime": {
+    "cliBrowserRequestCapturedBy": "isolated open command shim",
+    "browserTarget": "separate CLI process with the same scratch session store",
+    "browserServerBind": "loopback",
+    "browserServerOutboundNetwork": "loopback only",
+    "browserClientOutboundRequests": "other origins blocked by the test harness",
+    "initialAuthorization": "disposable local token provided separately in each scratch browser context",
+    "tokenBearingLibraryUrlRejected": true,
+    "accountSignIn": false,
+    "ownerDevicesUsed": false,
+    "iphoneWebKit": "Playwright mobile browser profile on macOS",
+    "workspaceFixture": "two distinct empty scratch workspaces with one idle session each"
+  }
+}

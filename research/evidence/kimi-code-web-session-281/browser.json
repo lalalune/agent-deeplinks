@@ -1,0 +1,148 @@
+{
+  "origin": "http://127.0.0.1:58661",
+  "cliVersion": "2.8.1",
+  "libraryVersion": "0.1.73",
+  "localAuthOnly": true,
+  "modelCredentialsUsed": false,
+  "promptSubmitted": false,
+  "profiles": [
+    {
+      "profile": "desktop-chrome",
+      "platform": "web",
+      "browserVersion": "158.0.8127.37",
+      "routes": [
+        {
+          "url": "http://127.0.0.1:58661/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "id": "session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "title": "Deeplinks scratch session Alpha",
+          "tab": "same-tab",
+          "apiReads": [
+            {
+              "pathname": "/api/v1/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+              "status": 200,
+              "sessionId": "session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+              "activity": "idle"
+            }
+          ],
+          "wsSessionReferences": [
+            "subscribe",
+            "subscribe"
+          ],
+          "navigationStatus": 200,
+          "skippedAppearanceSetup": true,
+          "composer": {
+            "editable": true,
+            "empty": true,
+            "hitTestable": true
+          },
+          "visibleCheckpoints": [
+            "Deeplinks scratch session Alpha"
+          ],
+          "currentUrl": "http://127.0.0.1:58661/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "titleVisible": true
+        },
+        {
+          "url": "http://127.0.0.1:58661/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+          "id": "session_28a21181-905f-458d-8227-71335cf359c3",
+          "title": "Deeplinks scratch session Bravo",
+          "tab": "new-tab",
+          "apiReads": [
+            {
+              "pathname": "/api/v1/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+              "status": 200,
+              "sessionId": "session_28a21181-905f-458d-8227-71335cf359c3",
+              "activity": "idle"
+            }
+          ],
+          "wsSessionReferences": [
+            "subscribe",
+            "subscribe"
+          ],
+          "navigationStatus": 200,
+          "trustedEmptyScratchWorkspace": true,
+          "composer": {
+            "editable": true,
+            "empty": true,
+            "hitTestable": true
+          },
+          "visibleCheckpoints": [
+            "Deeplinks scratch session Bravo"
+          ],
+          "currentUrl": "http://127.0.0.1:58661/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+          "titleVisible": true
+        }
+      ],
+      "initialBrowserAuth": true,
+      "passed": true,
+      "blockedExternalOrigins": []
+    },
+    {
+      "profile": "iphone-webkit",
+      "platform": "ios",
+      "browserVersion": "27.2",
+      "routes": [
+        {
+          "url": "http://127.0.0.1:58661/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "id": "session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "title": "Deeplinks scratch session Alpha",
+          "tab": "same-tab",
+          "apiReads": [
+            {
+              "pathname": "/api/v1/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+              "status": 200,
+              "sessionId": "session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+              "activity": "idle"
+            }
+          ],
+          "wsSessionReferences": [
+            "subscribe"
+          ],
+          "navigationStatus": 200,
+          "skippedAppearanceSetup": true,
+          "composer": {
+            "editable": true,
+            "empty": true,
+            "hitTestable": true
+          },
+          "visibleCheckpoints": [
+            "Deeplinks scratch session Alpha"
+          ],
+          "currentUrl": "http://127.0.0.1:58661/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+          "titleVisible": true
+        },
+        {
+          "url": "http://127.0.0.1:58661/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+          "id": "session_28a21181-905f-458d-8227-71335cf359c3",
+          "title": "Deeplinks scratch session Bravo",
+          "tab": "new-tab",
+          "apiReads": [
+            {
+              "pathname": "/api/v1/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+              "status": 200,
+              "sessionId": "session_28a21181-905f-458d-8227-71335cf359c3",
+              "activity": "idle"
+            }
+          ],
+          "wsSessionReferences": [
+            "subscribe"
+          ],
+          "navigationStatus": 200,
+          "composer": {
+            "editable": true,
+            "empty": true,
+            "hitTestable": true
+          },
+          "visibleCheckpoints": [
+            "Deeplinks scratch session Bravo"
+          ],
+          "currentUrl": "http://127.0.0.1:58661/sessions/session_28a21181-905f-458d-8227-71335cf359c3",
+          "titleVisible": true
+        }
+      ],
+      "initialBrowserAuth": true,
+      "passed": true,
+      "blockedExternalOrigins": []
+    }
+  ],
+  "sessionsStayedIdle": true
+}

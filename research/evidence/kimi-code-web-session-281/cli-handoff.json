@@ -1,0 +1,18 @@
+{
+  "fixtureId": "session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+  "capturedBy": "isolated PATH open command",
+  "modelCredentialsUsed": false,
+  "path": "/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd",
+  "host": "127.0.0.1",
+  "port": 58627,
+  "ephemeralLocalTokenFragmentPresent": true,
+  "exactSession": true,
+  "slashCommandSentToTestProcess": true,
+  "sessionBannerSeen": true,
+  "printedTokenlessSessionLinks": [
+    "http://127.0.0.1:58627/sessions/session_cdac0ec1-2283-48cf-ace0-5e4b0c6ef4bd"
+  ],
+  "screenSignals": [
+    "Login"
+  ]
+}
