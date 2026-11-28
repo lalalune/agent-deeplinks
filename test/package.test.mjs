@@ -1225,6 +1225,34 @@ test("opens public Grok conversations from both share ID forms", () => {
   assert.equal(getAgentLink("grok", "desktop", { action: "shared-chat", target: legacyId }), null);
 });
 
+test("opens the exact loopback URL printed by ZCode Web", () => {
+  const action = "local-web";
+  for (const [target, href] of [
+    ["http://127.0.0.1:3030", "http://127.0.0.1:3030/"],
+    ["  http://localhost:59422/  ", "http://localhost:59422/"],
+    ["http://[::1]:65535/", "http://[::1]:65535/"],
+  ]) {
+    assert.equal(getAgentLink("zcode", "web", { action, target }), href);
+  }
+  for (const target of [
+    "",
+    "http://127.0.0.1/",
+    "http://127.0.0.1:0/",
+    "http://127.0.0.1:65536/",
+    "http://127.0.0.1:3030/?token=private",
+    "http://127.0.0.1:3030/#private",
+    "http://127.0.0.1:3030/other",
+    "http://127.0.0.1:3030/\n",
+    "http://127.0.0.1.example:3030/",
+    "http://127.0.0.1:3030@elsewhere.example/",
+    "https://example.com:3030/",
+    "http://192.168.1.10:3030/",
+  ]) {
+    assert.equal(getAgentLink("zcode", "web", { action, target }), null);
+  }
+  assert.equal(getAgentLink("zcode", "desktop", { action, target: "http://127.0.0.1:3030/" }), null);
+});
+
 test("builds ZCode share viewers on web and mobile", () => {
   const action = "shared-chat";
   const code = "Demo_42~hello.test";

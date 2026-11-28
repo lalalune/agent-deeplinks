@@ -164,6 +164,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://www.kimi.ai/share/…", action: "shared-chat" },
   { agent: "zcode", label: "Shared chat", inputLabel: "ZCode share link or code",
     placeholder: "https://zcode.z.ai/share/…", action: "shared-chat" },
+  { agent: "zcode", label: "Local Web workspace", inputLabel: "Local ZCode Web URL",
+    placeholder: "http://127.0.0.1:3030/", action: "local-web" },
   { agent: "grok-build", label: "Cloud Agent", inputLabel: "Cloud Agent ID or URL", placeholder: "https://grok.com/build/bc-…" },
   { agent: "t3-code", label: "Pull request", inputLabel: "GitHub pull request URL or owner/repo#number",
     placeholder: "https://github.com/owner/repo/pull/1", action: "pull-request" },
