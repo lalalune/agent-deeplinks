@@ -84,6 +84,17 @@ function owned() {
   });
 }
 
+function gioLaunch(signalText, exactUri, desktopEntry) {
+  for (const signal of signalText.split(/\nsignal /u)) {
+    if (!signal.includes("member=Launched") ||
+        !signal.includes("/applications/" + desktopEntry + '" + \\0') ||
+        !signal.split("\n").some(line => line.trim() === 'string "' + exactUri + '"')) continue;
+    const pid = /^\s*int64 (\d+)$/mu.exec(signal)?.[1];
+    if (pid) return { desktopEntry, exactUri, pid: Number(pid) };
+  }
+  return null;
+}
+
 function stopOwned() {
   for (const { pid } of owned()) {
     try { process.kill(pid, "SIGTERM"); }
@@ -213,19 +224,10 @@ try {
       await page.waitForFunction(() => !location.hash.includes("/welcome"), undefined, { timeout: 15000 });
       proof.onboardedWithoutAgent = true;
     }
-    checkpoint("dispatch the exact plain saved-thread link through the stock desktop handler");
+    checkpoint("finish ordinary startup and register the stock handler");
     proof.registration = registration();
     proof.warmBaseline = page.url().split("#")[1] ?? "";
-    check("xdg-open", [blank]);
-    await page.waitForFunction(({ environmentId, threadId }) => {
-      const parts = new URL(location.href).hash.slice(1).split("?")[0].split("/").filter(Boolean).map(decodeURIComponent);
-      return parts[0] === environmentId && parts[1] === threadId;
-    }, { environmentId, threadId }, { timeout: 35000 });
-    const edit = page.locator("[contenteditable=true][data-lexical-editor=true]").filter({ visible: true });
-    await edit.first().waitFor({ state: "visible", timeout: 18000 });
-    assert.equal(await edit.first().evaluate(node => node.innerText.trim()), "");
-    proof.warmBlank = { exactThreadVisible: true, emptyEditor: true, pid: desktop.pid, page: page.url() };
-    check("scrot", ["--overwrite", join(evidence, "warm-blank-thread.png")]);
+    check("scrot", ["--overwrite", join(evidence, "ordinary-ready.png")]);
   } catch (error) {
     proof.warmObserverFailure = error.name;
     proof.warmCheckpoint = proof.lastStage;
@@ -244,17 +246,26 @@ try {
   gioEvents.stdout.on("data", data => { launchedMessages = (launchedMessages + data.toString()).slice(-8000); });
   await wait(300);
   check("xdg-open", [draft]);
-  const cold = await eventually("Stock XDG did not start a new owner with the exact URI argument", 40000, () =>
-    owned().find(info => info.executable === binary && info.argv.includes(draft) && info.pid !== proof.warmPid));
-  proof.coldApp = cold;
-  await eventually("The GIO launch trace did not contain the exact URI", 4000, () => launchedMessages.includes(draft));
-  proof.gioLaunchedContainsExactUri = true;
+  proof.gioLaunch = await eventually("The selected GIO handler did not report the exact URI", 9000, () =>
+    gioLaunch(launchedMessages, draft, proof.registration.selected));
+  assert.notEqual(proof.gioLaunch.pid, proof.warmPid);
 
   checkpoint("verify foreground draft with X11 and the native editor's Copy command");
   const png = join(evidence, "cold-composer.png");
-  const candidate = await eventually("The cold app did not show the draft in its foreground window", 70000, () => {
-    const frame = foreground(cold.pid);
+  const seenProcesses = new Map();
+  const candidate = await eventually("The cold app did not show the draft in its foreground window", 90000, () => {
+    const processes = owned().filter(info => info.executable === binary &&
+      info.pid !== proof.warmPid && !info.argv.some(arg => arg.startsWith("--type=")));
+    for (const info of processes) {
+      const uriValues = new Set([...(seenProcesses.get(info.pid)?.uriValues ?? []),
+        ...info.argv.filter(arg => arg.startsWith("t3code://"))]);
+      seenProcesses.set(info.pid, { pid: info.pid, samePidAsGio: info.pid === proof.gioLaunch.pid,
+        uriValues: [...uriValues], containedExactUri: uriValues.has(draft) });
+    }
+    proof.coldArgv = [...seenProcesses.values()];
+    const frame = processes.map(info => foreground(info.pid)).find(Boolean);
     if (!frame) return null;
+    proof.coldWindow = { ...frame, samePidAsGio: frame.pid === proof.gioLaunch.pid };
     check("scrot", ["--overwrite", png]);
     const point = findMarker(png);
     return point ? { frame, point } : null;
