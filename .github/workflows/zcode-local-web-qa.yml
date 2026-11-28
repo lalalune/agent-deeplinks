@@ -1,0 +1,64 @@
+name: ZCode v4 local Web workspace
+on:
+  push:
+    branches: [codex/zcode-local-web-qa]
+permissions:
+  contents: read
+jobs:
+  source-web:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    env:
+      CI: true
+      HUSKY: 0
+      ELECTRON_SKIP_BINARY_DOWNLOAD: 1
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v6
+        with:
+          repository: zai-org/ZCode
+          ref: a4b4445141eb7d3b3e99eada9292775383bfc44e
+          path: zcode-v4
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.14.0
+          package-manager-cache: false
+      - name: Build the tagged upstream unified distribution
+        working-directory: zcode-v4
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/zcode-web-qa"
+          mkdir -p "$qa/evidence"
+          git rev-parse HEAD | tee "$qa/evidence/upstream-sha.txt"
+          npm install --global pnpm@10.33.2
+          pnpm --version | tee "$qa/evidence/pnpm-version.txt"
+          node --version | tee "$qa/evidence/node-version.txt"
+          pnpm install --frozen-lockfile --ignore-scripts >"$qa/install.log" 2>&1 || { tail -60 "$qa/install.log" | tee "$qa/evidence/install-error.txt"; exit 1; }
+          pnpm build:zcode --base-url https://example.invalid/zcode/ >"$qa/build.log" 2>&1 || { tail -80 "$qa/build.log" | tee "$qa/evidence/build-error.txt"; exit 1; }
+          version="$(jq -er .version dist/zcode/latest.json)"
+          package="dist/zcode/releases/$version/zcode-$version.tar.gz"
+          sha256sum "$package" | tee "$qa/evidence/package-sha256.txt"
+          mkdir "$qa/extracted"
+          tar -xzf "$package" -C "$qa/extracted"
+          test -s "$qa/extracted/zcode/bin/zcode.mjs"
+      - name: Run the standalone Web workspace in an isolated browser
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/zcode-web-qa"
+          npm install --no-save --prefix "$qa/browser" playwright@1.56.1
+          "$qa/browser/node_modules/.bin/playwright" install --with-deps chromium
+          bash .github/qa/zcode-local-web.sh "$qa"
+      - name: Upload bounded Web QA evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: zcode-v4-web-proof
+          path: ${{ runner.temp }}/zcode-web-qa/evidence/
+          if-no-files-found: warn
+          retention-days: 14
