@@ -1,0 +1,47 @@
+{
+  "revision": "T3 Code 0.1.13 Linux amd64 DEB",
+  "libraryVersion": "0.1.72",
+  "binary": "/opt/T3 Code (Beta)/t3code",
+  "accountUsed": false,
+  "providerConnected": false,
+  "promptSubmitted": false,
+  "loopbackOnly": true,
+  "lastStage": "complete ordinary setup without an agent",
+  "fixture": {
+    "environmentId": "2f2bfea8-ce13-44b2-a08a-8634cace6603",
+    "threadId": "thread:project:2abcb953-f18e-4434-bd89-63b7f220fad6:352e72a3-3c75-45b2-9c0c-bc4deab75d1c",
+    "blank": "t3code://threads/2f2bfea8-ce13-44b2-a08a-8634cace6603/thread%3Aproject%3A2abcb953-f18e-4434-bd89-63b7f220fad6%3A352e72a3-3c75-45b2-9c0c-bc4deab75d1c",
+    "draft": "t3code://threads/2f2bfea8-ce13-44b2-a08a-8634cace6603/thread%3Aproject%3A2abcb953-f18e-4434-bd89-63b7f220fad6%3A352e72a3-3c75-45b2-9c0c-bc4deab75d1c?prompt=LinuxProof8296%20T3%20saved%20thread%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20stays%20unsent",
+    "marker": "LinuxProof8296 T3 saved thread + & %2F café ☃\nSecond line stays unsent",
+    "initialCounts": {
+      "threads": 1,
+      "runs": 0,
+      "provider_sessions": 0,
+      "provider_turns": 0
+    }
+  },
+  "cliStopped": {
+    "code": 130,
+    "signal": null
+  },
+  "provenance": {
+    "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/46099507621/job/140838504174",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46099507621/artifacts/15245396885",
+    "artifactZipSha256": "82a85d26c9c0dc432ebaf128cdcf43a1060828cd048bec73a7633e649d61fa29",
+    "harnessGitCommit": "18701d825ae68bf217bb148fbffd8fe266560531",
+    "linuxDistribution": "Description:\tUbuntu 24.04.5 LTS",
+    "publisherRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+    "debSha256": "630dfe9d041b42622d9e5d5b1138b3f1068136eb12af85ec34d491e33aeaa061",
+    "cliArchiveSha256": "64e0f8446d3f618b157d4e5a0a6808ab3c8bf1a1b3e44eab3100e554be05e5d7",
+    "npmSha512": "sha512-nzw5UHbWGzh5NehruQ0q1ShMtrTN1jxWzK4gn+4KdQxP6qYM0znH8jVGYPCPxQnw+QdOWwI7a3+RnmI9g7oW9A=="
+  },
+  "harnessCheckpoint": {
+    "uriDispatched": false,
+    "editorVisibilityObserved": false,
+    "failure": "Playwright Electron launch and inspector handshake timed out after 50 seconds.",
+    "launcherInspectorDependency": "https://github.com/microsoft/playwright/blob/v1.58.2/packages/playwright-core/src/server/electron/electron.ts#L158-L243",
+    "packagedNodeInspectorDisabled": "https://github.com/pingdotgg/t3code/blob/v0.1.13/scripts/build-desktop-artifact.ts#L2828-L2834",
+    "retry": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100938152",
+    "retryHarnessGitCommit": "1a0af2992c9cd07ffb8ec7ba92086e0b9fb09d49"
+  }
+}
