@@ -1,0 +1,45 @@
+{
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086112693/job/140795946988",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086112693/artifacts/15239032737",
+  "artifactSha256": "015bf4ae7c64073e0c9a9929fe4da9c1a0171a3590d1b3490ee7ceb78c784290",
+  "qaCommit": "70a919c001f472f492c9524e38c4d8bdb1aeed93",
+  "os": "Ubuntu 24.04 x86_64",
+  "installedPackage": "chatgpt 26.1120.50957",
+  "vendorDebSha256": "e8ab38df96d6070fd5d4582a606490637728243bb529e9edae19b3f0a6e664d2",
+  "signedRepositoryKeyFingerprint": "3BFA0E4AE8B8CC16A2D9BA684A3B4A566C4660E4",
+  "publishedPackage": "agent-deeplinks@0.1.68",
+  "publishedPackageSha256": "223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8",
+  "accountUsed": false,
+  "modelOrGatewayRequests": 0,
+  "scratch": "Two local empty Git repositories with distinct inert HTTPS and SCP origin URLs. App network namespace had loopback only.",
+  "dispatch": "xdg-open via the registered chatgpt.desktop scheme handler, observed in GIO.",
+  "workspaceCases": [
+    {
+      "case": "origin-only-alpha",
+      "uri": "codex://new?prompt=Codex%20QA%20origin-only-alpha%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AUnsaved%20second%20line.&originUrl=https%3A%2F%2Fexample.invalid%2Fcodex-qa%2Falpha.git",
+      "selectedProjectControl": "Codex QA workspace Alpha | Change project: Codex QA workspace Alpha",
+      "exactGioDelivery": true,
+      "exactEditableDraft": true,
+      "observedDraft": "Codex QA origin-only-alpha + & café ☃\nUnsaved second line.",
+      "screenshot": "origin-only-alpha-new-draft.png"
+    },
+    {
+      "case": "missing-path-fallback-bravo",
+      "uri": "codex://new?prompt=Codex%20QA%20missing-path-fallback-bravo%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AUnsaved%20second%20line.&path=%2Fhome%2Frunner%2Fwork%2F_temp%2Fchatgpt-linux-qa%2FCodex%20QA%20workspace%20absent&originUrl=git%40example.invalid%3Acodex-qa%2Fbravo.git",
+      "selectedProjectControl": "Codex QA workspace Bravo | Change project: Codex QA workspace Bravo",
+      "exactGioDelivery": true,
+      "exactEditableDraft": true,
+      "observedDraft": "Codex QA missing-path-fallback-bravo + & café ☃\nUnsaved second line.",
+      "screenshot": "missing-path-fallback-bravo-new-draft.png"
+    },
+    {
+      "case": "existing-path-precedence-alpha",
+      "uri": "codex://new?prompt=Codex%20QA%20existing-path-precedence-alpha%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AUnsaved%20second%20line.&path=%2Fhome%2Frunner%2Fwork%2F_temp%2Fchatgpt-linux-qa%2FCodex%20QA%20workspace%20Alpha&originUrl=git%40example.invalid%3Acodex-qa%2Fbravo.git",
+      "selectedProjectControl": "Codex QA workspace Alpha | Change project: Codex QA workspace Alpha",
+      "exactGioDelivery": true,
+      "exactEditableDraft": true,
+      "observedDraft": "Codex QA existing-path-precedence-alpha + & café ☃\nUnsaved second line.",
+      "screenshot": "existing-path-precedence-alpha-new-draft.png"
+    }
+  ]
+}
