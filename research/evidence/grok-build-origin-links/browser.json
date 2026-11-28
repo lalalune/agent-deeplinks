@@ -1,0 +1,375 @@
+{
+  "test": "Anchor clicks from a loopback HTTPS-link fixture in fresh signed-out browser contexts",
+  "signedIn": false,
+  "pairingCredentialsUsed": false,
+  "profiles": [
+    {
+      "profile": "stock-chrome-desktop",
+      "version": "158.0.8127.37",
+      "cases": [
+        {
+          "name": "inbox",
+          "wanted": "https://grok.com/build/agents",
+          "href": "https://grok.com/build/agents",
+          "finalUrl": "https://grok.com/build/agents",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/agents",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "codebase-pr",
+          "wanted": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "build-origin-pr",
+          "wanted": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "origin-pr",
+          "wanted": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "title": "Page not found - Grok",
+          "signInVisible": false,
+          "cloudflareError": false,
+          "navigations": [
+            {
+              "url": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+              "status": 404,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://js.stripe.com/v3/m-outer-0edadf75b42c6ef7240c043f3272f3f9.html",
+              "status": 200,
+              "server": "Fastly"
+            },
+            {
+              "url": "https://m.stripe.network/inner.html",
+              "status": 200,
+              "server": "Cloudfront"
+            }
+          ]
+        },
+        {
+          "name": "github-arm",
+          "wanted": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "href": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "finalUrl": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "pair-explanation",
+          "wanted": "https://grok.com/build/remote-control/pair",
+          "href": "https://grok.com/build/remote-control/pair",
+          "finalUrl": "https://grok.com/build/remote-control/pair",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/remote-control/pair",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "team-pair-explanation",
+          "wanted": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "href": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "finalUrl": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "cursor-pr-comparison",
+          "wanted": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+          "href": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://authenticator.cursor.sh/",
+          "title": "Just a moment...",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+              "status": 307,
+              "server": "Vercel"
+            },
+            {
+              "url": "https://cursor.com/api/auth/login",
+              "status": 307,
+              "server": "Vercel"
+            },
+            {
+              "url": "https://api.workos.com/user_management/authorize",
+              "status": 302,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticate.cursor.sh/user_management/authorize",
+              "status": 302,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticator.cursor.sh/bootstrap",
+              "status": 307,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticator.cursor.sh/",
+              "status": 307,
+              "server": null
+            },
+            {
+              "url": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+              "status": 307,
+              "server": "Vercel"
+            },
+            {
+              "url": "https://cursor.com/api/auth/login",
+              "status": 307,
+              "server": "Vercel"
+            },
+            {
+              "url": "https://api.workos.com/user_management/authorize",
+              "status": 302,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticate.cursor.sh/user_management/authorize",
+              "status": 302,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticator.cursor.sh/bootstrap",
+              "status": 307,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://authenticator.cursor.sh/",
+              "status": 403,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/g/turnstile/f/av0/rch/xiijr/0x4AAAAAAAAjq6WYeRDKmebM/light/fbE/new/normal",
+              "status": 200,
+              "server": "cloudflare"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "profile": "iphone-15-webkit",
+      "version": "27.2",
+      "cases": [
+        {
+          "name": "inbox",
+          "wanted": "https://grok.com/build/agents",
+          "href": "https://grok.com/build/agents",
+          "finalUrl": "https://grok.com/build/agents",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/agents",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "codebase-pr",
+          "wanted": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/codebase/deeplinks-qa/origin-review/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "build-origin-pr",
+          "wanted": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/origin/deeplinks-qa/origin-review/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "origin-pr",
+          "wanted": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "href": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+          "title": "Page not found - Grok",
+          "signInVisible": false,
+          "cloudflareError": false,
+          "navigations": [
+            {
+              "url": "https://grok.com/origin/deeplinks-qa/origin-review/pull/1",
+              "status": 404,
+              "server": "cloudflare"
+            },
+            {
+              "url": "https://js.stripe.com/v3/m-outer-0edadf75b42c6ef7240c043f3272f3f9.html",
+              "status": 200,
+              "server": "Fastly"
+            }
+          ]
+        },
+        {
+          "name": "github-arm",
+          "wanted": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "href": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "finalUrl": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "pair-explanation",
+          "wanted": "https://grok.com/build/remote-control/pair",
+          "href": "https://grok.com/build/remote-control/pair",
+          "finalUrl": "https://grok.com/build/remote-control/pair",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/remote-control/pair",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "team-pair-explanation",
+          "wanted": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "href": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "finalUrl": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+          "title": "grok.com | 502: Bad gateway",
+          "signInVisible": false,
+          "cloudflareError": true,
+          "navigations": [
+            {
+              "url": "https://grok.com/build/t/deeplinks-qa/remote-control/pair",
+              "status": 502,
+              "server": "cloudflare"
+            }
+          ]
+        },
+        {
+          "name": "cursor-pr-comparison",
+          "wanted": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+          "href": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+          "finalUrl": "https://authenticator.cursor.sh/",
+          "title": "Sign in",
+          "signInVisible": true,
+          "cloudflareError": false,
+          "navigations": [
+            {
+              "url": "https://cursor.com/codebase/deeplinks-qa/origin-review/pull/1",
+              "status": 307,
+              "server": null
+            },
+            {
+              "url": "https://cursor.com/api/auth/login",
+              "status": 307,
+              "server": null
+            },
+            {
+              "url": "https://api.workos.com/user_management/authorize",
+              "status": 302,
+              "server": null
+            },
+            {
+              "url": "https://authenticate.cursor.sh/user_management/authorize",
+              "status": 302,
+              "server": null
+            },
+            {
+              "url": "https://authenticator.cursor.sh/bootstrap",
+              "status": 307,
+              "server": null
+            },
+            {
+              "url": "https://authenticator.cursor.sh/",
+              "status": 200,
+              "server": "cloudflare"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

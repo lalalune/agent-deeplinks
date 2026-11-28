@@ -1,0 +1,252 @@
+{
+  "scope": "First-party public association declarations and a restricted offline pattern check. Installed dispatch is unverified.",
+  "date": "2026-11-27 ET",
+  "associationSources": [
+    "https://grok.com/.well-known/apple-app-site-association",
+    "https://app-site-association.cdn-apple.com/a/v1/grok.com",
+    "https://grok.com/.well-known/assetlinks.json"
+  ],
+  "appleVendorAndCdnEqual": true,
+  "aasaSha256": {
+    "apple": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2",
+    "publisher": "7e5b44a79d96af59fc8bbb02b0b6466cfae5e03f3deba95de569cfa9df9d57f2"
+  },
+  "cursorAppIDs": [
+    "DCNK4UB866.co.anysphere.cursor",
+    "N66CZ3Y3BX.co.anysphere.cursor"
+  ],
+  "appleRules": [
+    {
+      "index": 6,
+      "path": "/build/remote-control/pair",
+      "query": {
+        "machine": "?*",
+        "code": "?*"
+      },
+      "excluded": false
+    },
+    {
+      "index": 7,
+      "path": "/build/t/*/remote-control/pair",
+      "query": {
+        "machine": "?*",
+        "code": "?*"
+      },
+      "excluded": false
+    },
+    {
+      "index": 8,
+      "path": "/build/codebase/*/github/pull/*",
+      "query": null,
+      "excluded": true
+    },
+    {
+      "index": 9,
+      "path": "/build/codebase/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    },
+    {
+      "index": 10,
+      "path": "/build/origin/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    },
+    {
+      "index": 11,
+      "path": "/origin/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    }
+  ],
+  "appleOrdinaryGrokBuildExcluded": true,
+  "androidJsonSha256": "c75e075e4cec9ad9643e5c8ba1cf7bc7e94ebc615fbf4abdd8ca03627c8ad5e5",
+  "androidApp": "ai.x.grok.build",
+  "androidSigner": "CD:CB:47:A6:48:C4:CD:50:AD:A6:12:B4:AD:84:9C:B8:5F:EE:B4:E6:60:B0:2D:E9:5D:06:E4:1D:88:F2:58:29",
+  "androidRules": [
+    {
+      "index": 6,
+      "path": "/build/remote-control/pair",
+      "query": {
+        "machine": "?*",
+        "code": "?*"
+      },
+      "excluded": false
+    },
+    {
+      "index": 7,
+      "path": "/build/t/*/remote-control/pair",
+      "query": {
+        "machine": "?*",
+        "code": "?*"
+      },
+      "excluded": false
+    },
+    {
+      "index": 8,
+      "path": "/build/codebase/*/github/pull/*",
+      "query": null,
+      "excluded": true
+    },
+    {
+      "index": 9,
+      "path": "/build/codebase/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    },
+    {
+      "index": 10,
+      "path": "/build/origin/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    },
+    {
+      "index": 11,
+      "path": "/origin/*/*/pull/*",
+      "query": null,
+      "excluded": false
+    }
+  ],
+  "googleDomainLinkVerified": true,
+  "cases": [
+    {
+      "name": "canonical-origin",
+      "path": "/build/codebase/deeplinks-qa/origin-review/pull/1",
+      "nonemptyQueryKeys": [],
+      "iosRule": {
+        "ruleIndex": 9,
+        "path": "/build/codebase/*/*/pull/*",
+        "allowed": true
+      },
+      "androidRule": {
+        "ruleIndex": 9,
+        "path": "/build/codebase/*/*/pull/*",
+        "allowed": true
+      }
+    },
+    {
+      "name": "build-origin-alias",
+      "path": "/build/origin/deeplinks-qa/origin-review/pull/1",
+      "nonemptyQueryKeys": [],
+      "iosRule": {
+        "ruleIndex": 10,
+        "path": "/build/origin/*/*/pull/*",
+        "allowed": true
+      },
+      "androidRule": {
+        "ruleIndex": 10,
+        "path": "/build/origin/*/*/pull/*",
+        "allowed": true
+      }
+    },
+    {
+      "name": "origin-alias",
+      "path": "/origin/deeplinks-qa/origin-review/pull/1",
+      "nonemptyQueryKeys": [],
+      "iosRule": {
+        "ruleIndex": 11,
+        "path": "/origin/*/*/pull/*",
+        "allowed": true
+      },
+      "androidRule": {
+        "ruleIndex": 11,
+        "path": "/origin/*/*/pull/*",
+        "allowed": true
+      }
+    },
+    {
+      "name": "github-arm",
+      "path": "/build/codebase/deeplinks-qa/origin-review/github/pull/1",
+      "nonemptyQueryKeys": [],
+      "iosRule": {
+        "ruleIndex": 8,
+        "path": "/build/codebase/*/github/pull/*",
+        "allowed": false
+      },
+      "androidRule": {
+        "ruleIndex": 8,
+        "path": "/build/codebase/*/github/pull/*",
+        "allowed": false
+      }
+    },
+    {
+      "name": "pair-with-neither",
+      "path": "/build/remote-control/pair",
+      "nonemptyQueryKeys": [],
+      "iosRule": null,
+      "androidRule": null
+    },
+    {
+      "name": "pair-with-machine-only",
+      "path": "/build/remote-control/pair",
+      "nonemptyQueryKeys": [
+        "machine"
+      ],
+      "iosRule": null,
+      "androidRule": null
+    },
+    {
+      "name": "pair-with-code-only",
+      "path": "/build/remote-control/pair",
+      "nonemptyQueryKeys": [
+        "code"
+      ],
+      "iosRule": null,
+      "androidRule": null
+    },
+    {
+      "name": "pair-with-empty-code",
+      "path": "/build/remote-control/pair",
+      "nonemptyQueryKeys": [
+        "machine"
+      ],
+      "iosRule": null,
+      "androidRule": null
+    },
+    {
+      "name": "pair-with-both",
+      "path": "/build/remote-control/pair",
+      "nonemptyQueryKeys": [
+        "machine",
+        "code"
+      ],
+      "iosRule": {
+        "ruleIndex": 6,
+        "path": "/build/remote-control/pair",
+        "allowed": true
+      },
+      "androidRule": {
+        "ruleIndex": 6,
+        "path": "/build/remote-control/pair",
+        "allowed": true
+      }
+    },
+    {
+      "name": "team-pair-with-neither",
+      "path": "/build/t/deeplinks-qa/remote-control/pair",
+      "nonemptyQueryKeys": [],
+      "iosRule": null,
+      "androidRule": null
+    },
+    {
+      "name": "team-pair-with-both",
+      "path": "/build/t/deeplinks-qa/remote-control/pair",
+      "nonemptyQueryKeys": [
+        "machine",
+        "code"
+      ],
+      "iosRule": {
+        "ruleIndex": 7,
+        "path": "/build/t/*/remote-control/pair",
+        "allowed": true
+      },
+      "androidRule": {
+        "ruleIndex": 7,
+        "path": "/build/t/*/remote-control/pair",
+        "allowed": true
+      }
+    }
+  ],
+  "pairingValuesSent": false,
+  "stockAppleMatcher": "The local swcutil process requires root permissions. The check used only the published rule declarations and local model."
+}
