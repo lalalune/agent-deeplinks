@@ -1,0 +1,65 @@
+name: Publisher-signed Muse via Android WebView Browser
+on:
+  push:
+    branches: [codex/muse-android-webview]
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Verify Meta's release APK and exact npm link
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          qa="$RUNNER_TEMP/muse-webview"
+          mkdir -p "$qa/evidence"
+          test "$(uname -m)" = aarch64
+          printf '%s\n' "$(uname -m)" "$(uname -r)" > "$qa/evidence/host.txt"
+          cd "$qa"
+          curl -fsSL --proto '=https' --connect-timeout 20 --retry 1 --max-time 140 --max-filesize 110000000 \
+            'https://d.apkpure.net/b/APK/com.facebook.aura?version=latest' -o muse.apk &
+          apk_pid=$!
+          image='docker.io/redroid/redroid@sha256:dc2024a999dd0acb1112a23cddc9537ec8cb60a0dbe5a87ce9fbd75a2f5e94d2'
+          timeout 240 docker pull --platform linux/arm64 "$image" > evidence/image-pull.txt 2>&1 &
+          image_pid=$!
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends adb apksigner dnsmasq-base
+          sudo modprobe binder_linux devices=binder,hwbinder,vndbinder
+          for kernel in iptable_filter ip6table_filter iptable_raw ip6table_raw iptable_mangle ip6table_mangle iptable_nat ip6table_nat; do sudo modprobe "$kernel"; done
+          wait "$apk_pid"
+          wait "$image_pid"
+          printf '%s\n' '076b644e92248b41c77b192422e5c73025642ff3acd2df1008c1f36348e78354  muse.apk' | sha256sum -c | tee evidence/artifact-digests.txt
+          curl -fsSL --proto '=https' --max-time 20 https://agent.meta.ai/.well-known/assetlinks.json -o evidence/muse-dal.json
+          apksigner verify --min-sdk-version 35 --max-sdk-version 35 --print-certs muse.apk > evidence/muse-signers.txt
+          fingerprint=$(awk '/Signer #1 certificate SHA-256 digest:/{print $NF;exit}' evidence/muse-signers.txt)
+          test "$fingerprint" = a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99
+          jq -r '.[]|select(.target.package_name=="com.facebook.aura")|.target.sha256_cert_fingerprints[]|gsub(":";"")|ascii_downcase' evidence/muse-dal.json | grep -Fx "$fingerprint"
+          curl -fsSL --proto '=https' --max-time 25 https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz -o package.tgz
+          test "sha512-$(openssl dgst -sha512 -binary package.tgz | openssl base64 -A)" = "sha512-Lxhk9I7aU8/+x6yh0awbxoSJf66yD5p+5m+5dOltfC+TgbqqhkQ0UWCF7Guuntxhgxb0uPemcmYwYpBXIOwOAA=="
+          tar -xzf package.tgz
+          node --input-type=module - <<'JS' > evidence/emitted-route.txt
+          import {getAgentLink} from './package/dist/index.js';
+          import {strict as assert} from 'node:assert';
+          const route=getAgentLink('meta-muse','android');
+          assert.equal(route,'https://agent.meta.ai/chat');
+          console.log(route);
+          JS
+      - name: Tap the exact package link in the unmodified system WebView Browser
+        run: bash .github/qa/muse-android-webview.sh "$RUNNER_TEMP/muse-webview"
+      - name: Retain the bounded proof
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: muse-native-android-webview-gesture
+          path: ${{ runner.temp }}/muse-webview/evidence/
+          if-no-files-found: warn
+          retention-days: 21
