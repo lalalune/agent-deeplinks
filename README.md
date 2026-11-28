@@ -71,6 +71,27 @@ getAgentLink("claude", "desktop", { session: chatId })
 getAgentLink("codex", "desktop", { session: `codex://threads/${chatId}` })
 ```
 
+### Open an existing cloud task or session
+
+Choose **Codex → Cloud task** or **Claude Code → Cloud session** on Web, iOS, or Android. Use the Codex task ID or URL, or the Claude Code session ID. Sign in to the account that can access the task or session. On Web, the playground requests that the link stay in the browser. [Codex cloud](https://chatgpt.com/codex) · [Claude mobile deep links](https://support.claude.com/en/articles/14898120-open-the-claude-mobile-app-with-a-link)
+
+```ts
+getAgentLink("codex", "web", { task: "task_example", browserOnly: true })
+getAgentLink("claude-code", "ios", { session: "cse_example" })
+```
+
+### Open a Codex Desktop workspace draft
+
+Choose **Codex → Workspace draft** under Desktop. Enter an absolute local workspace path, a Git remote URL to match against existing workspaces, or both. Codex checks the existing local path first. The draft stays unsent. [Codex Desktop chat links](https://learn.chatgpt.com/docs/reference/commands#chats)
+
+```ts
+getAgentLink("codex", "desktop", {
+  path: "/absolute/path/to/project",
+  originUrl: "git@github.com:owner/project.git",
+  prompt: "Review this workspace.",
+})
+```
+
 ### Claude Code desktop workspaces
 
 Choose **Claude Code → Workspace link** in the desktop playground to try a local folder or SSH target. Claude Code asks you to review the destination. The prompt stays unsent.

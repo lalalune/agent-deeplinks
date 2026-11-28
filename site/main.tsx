@@ -33,11 +33,11 @@ const TABS: readonly { id: TabId; label: string }[] = [
 const DESKTOP_CHAT_AGENTS = ["chatgpt", "claude", "codex"] as const;
 type DesktopChatAgent = (typeof DESKTOP_CHAT_AGENTS)[number];
 
-type DesktopToolField = "cwd" | "repo" | "session" | "workspace";
+type DesktopToolField = "cwd" | "repo" | "session" | "workspace" | "path" | "originUrl";
 
 interface DesktopToolExample {
-  agent: "claude-code" | "github-copilot";
-  platform: "cli" | "vscode";
+  agent: "claude-code" | "github-copilot" | "codex";
+  platform: "cli" | "vscode" | "desktop";
   label: string;
   name: string;
   fields: readonly { key: DesktopToolField; label: string; placeholder: string }[];
@@ -66,6 +66,15 @@ const DESKTOP_TOOL_EXAMPLES: readonly DesktopToolExample[] = [
     fields: [{ key: "workspace", label: "Workspace folder URI (optional)", placeholder: "file:///absolute/path/to/project" }],
     note: "Opens a draft in the VS Code Agents window.",
     invalidInput: "Enter a file or VS Code Remote folder URI.",
+  },
+  {
+    agent: "codex", platform: "desktop", label: "Workspace draft", name: "Codex workspace draft",
+    fields: [
+      { key: "path", label: "Absolute workspace folder (optional)", placeholder: "/absolute/path/to/project" },
+      { key: "originUrl", label: "Git remote URL (optional)", placeholder: "https://github.com/owner/repo.git" },
+    ],
+    note: "Codex checks the local folder first. If that folder is unavailable, it looks for a workspace with the Git remote.",
+    invalidInput: "Enter an absolute local workspace folder.",
   },
 ];
 
@@ -121,7 +130,7 @@ interface DestinationExample {
   inputLabel: string;
   placeholder?: string;
   action?: AgentActionId;
-  field?: "session" | "directory";
+  field?: "session" | "directory" | "task";
   platform?: ActivePlatform;
 }
 
@@ -135,9 +144,13 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "https://chatgpt.com/share/…", action: "shared-chat" },
   { agent: "codex", label: "Shared chat", inputLabel: "Codex share link or ID",
     placeholder: "https://chatgpt.com/s/cx_…", action: "shared-chat" },
+  { agent: "codex", label: "Cloud task", inputLabel: "Cloud task ID or URL",
+    placeholder: "task_… or https://chatgpt.com/codex/tasks/…", field: "task" },
   { agent: "codex", label: "Settings section", inputLabel: "Settings section", action: "settings" },
   { agent: "claude", label: "Shared chat", inputLabel: "Claude share link or ID",
     placeholder: "https://claude.ai/share/…", action: "shared-chat" },
+  { agent: "claude-code", label: "Cloud session", inputLabel: "Cloud session ID",
+    placeholder: "session_… or cse_…", field: "session" },
   { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
     placeholder: "https://grok.com/share/…", action: "shared-chat" },
   { agent: "kimi", label: "Shared chat", inputLabel: "Kimi share link or ID",
@@ -619,10 +632,12 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
   const target = isIdePath || isLocalDirectory ? value : value.trim();
   const actionRoute = example.action ? getAgentRoute(example.agent, platform, example.action) : null;
   const choices = actionRoute?.inputs.find(({ field }) => field === "target")?.choices;
+  const route = getAgentRoute(example.agent, platform);
   const promptLimit = example.field === "session"
-    ? getAgentRoute(example.agent, platform)?.promptLimit : actionRoute?.promptLimit;
+    ? route?.promptLimit : actionRoute?.promptLimit;
   const destinationOptions = example.action ? { action: example.action, target } : { [example.field ?? "cloudAgent"]: target };
-  const options = { ...destinationOptions, ...(prompt && { prompt }) };
+  const browserOnly = platform === "web" && (example.field === "task" || Boolean(route?.browserOnlyFragment));
+  const options = { ...destinationOptions, ...(prompt && { prompt }), ...(browserOnly && { browserOnly }) };
   const href = (target || choices) && getAgentLink(example.agent, platform, options);
   const destination = `${agents[example.agent].name} ${example.label}`;
   const label = `Open ${destination}`;
@@ -657,7 +672,7 @@ function DestinationLinkSetup({ example, platform, iconOnly }: {
           </a>
         </Button>
       ) : target && <p role="status">
-        {example.field === "session" ? "Check the thread link and supply at most one draft prompt."
+        {example.agent === "t3-code" && example.field === "session" ? "Check the thread link and supply at most one draft prompt."
           : isIdePath || isLocalDirectory ? "Enter an absolute local path." : `Enter a valid ${example.inputLabel}.`}
       </p>}
     </div>
