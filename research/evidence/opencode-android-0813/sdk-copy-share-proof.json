@@ -1,0 +1,72 @@
+{
+  "certificate": "88e59062cda405496940095078714ed0f28c6d3398ed4531883c41ae835d4c39",
+  "client": "Anomaly OpenCode 0.8.13 upstream release AAB with disposable test signing",
+  "server": "One isolated OpenCode 2.4.2 server reachable at two runner loopback ports",
+  "pair": {
+    "source": "opencode-ios://pair?code=[redacted]&url=http://10.0.2.2:52049&url=http://10.0.2.2:39051&name=OpenCode%20QA%20%2B%20Caf%C3%A9",
+    "dispatched": "opencode://pair?code=[redacted]&url=http%3A%2F%2F10.0.2.2%3A52049&url=http%3A%2F%2F10.0.2.2%3A39051&name=OpenCode%20QA%20%2B%20Caf%C3%A9",
+    "decodedOriginsInOrder": [
+      "http://10.0.2.2:52049",
+      "http://10.0.2.2:39051"
+    ],
+    "displayName": "OpenCode QA + Café",
+    "originProbes": {
+      "http://10.0.2.2:52049": "HTTP/1.1 401 Unauthorized",
+      "http://10.0.2.2:39051": "HTTP/1.1 401 Unauthorized"
+    },
+    "processAbsentBeforeDispatch": true,
+    "packageScoped": false,
+    "confirmed": true,
+    "defaultsToOpenCode": true,
+    "cold": true,
+    "reviewText": "OpenCode will try 10.0.2.2:52049 and 10.0.2.2:39051 and switch to the first that answers.",
+    "savedLabelVisible": true
+  },
+  "libraryVersion": "0.1.69",
+  "libraryGitCommit": "02afbe43fc5da73c1eeecd1cf2161e35dd95eb24",
+  "observations": {
+    "initial-A": [
+      "Add attachment",
+      "All Projects",
+      "Choose agent",
+      "Choose model",
+      "Dictate message",
+      "Give me a quick tour of the code",
+      "Message",
+      "New Session, OpenCode A Target",
+      "Open sessions",
+      "OpenCode A Default",
+      "OpenCode A Target",
+      "Send message",
+      "Try Asking",
+      "What changed here recently?",
+      "What does this project do?"
+    ],
+    "paired-label-A": [
+      "Close session list",
+      "New Session",
+      "OpenCode A Default idle session",
+      "OpenCode A Target idle session",
+      "OpenCode QA + Café",
+      "Recents",
+      "Search sessions",
+      "Settings"
+    ]
+  },
+  "serverDatabaseCounts": {
+    "session_v2": 2,
+    "session_message": 0,
+    "account": 0
+  },
+  "provenance": {
+    "version": "0.8.13",
+    "versionCode": 1037,
+    "platform": "Android 16 x86_64 emulator",
+    "vendorAabSha256": "503513afb4215ec057589c86d17a69c80c3546d9a18aa6ff008268931bb09ed5",
+    "temporaryApkSha256": "5412c600dd3bd17aa5d457928aa20e9c5f801341112be1af248bb9fc27ff18a4",
+    "featurePackSha256": "c4e8051593ae704344771b05188a46cb38fcf5478efbf87d1efea68f592d440c",
+    "testJob": "https://github.com/lalalune/agent-deeplinks/actions/runs/46087516833/job/140800470596",
+    "testArtifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46087516833/artifacts/15239433519",
+    "testArtifactSha256": "f235dceba773ecab72692a2609dcb7e90443011bd830c0205e980c53f15b1da8"
+  }
+}
