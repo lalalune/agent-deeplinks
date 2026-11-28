@@ -69,6 +69,7 @@ const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blo
 const sharedChatAppleChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45687467247/artifacts/15056787932";
 const grokShareDocs = "https://x.ai/legal/faq";
 const grokShareAndroidChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45693298941/artifacts/15058854516";
+const grokShareAndroid14Checks = "https://github.com/lalalune/agent-deeplinks/actions/runs/46086846186/artifacts/15238959705";
 const grokShareChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-public-share/proof.json";
 const openCodePairDocs = "https://opencode.ai/docs/cli/commands#pair";
 const openCodePairSource = "https://github.com/anomalyco/opencode-android/blob/v0.8.9/server/src/main/kotlin/ai/opencode/server/OpenCodePairingLink.kt";
@@ -892,16 +893,16 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
   },
   grok: {
     web: [sharedChat({
-      url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks],
-      note: "The public conversation rendered in signed-out desktop and iPhone browsers. The browser flag excluded iOS association and kept the exact link in the browser on the tested Android 15 build.",
+      url: grokSharedChat, evidence: "verified", sources: [grokShareDocs, grokShareChecks, grokShareAndroidChecks, grokShareAndroid14Checks],
+      note: "The public conversation rendered in signed-out desktop and iPhone browsers. With Grok installed, the browser flag kept the link in the tested Android 15 browser. The tested Android 14 build still opened Grok.",
     }, "?stay_in_browser=true", grokShareFormat)],
     ios: [sharedChat({
       url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/apple-app-site-association", "https://github.com/lalalune/agent-deeplinks/actions/runs/45693328012/artifacts/15057684811"],
       note: "The clean share link matches Grok’s production Universal Link. In-app conversation rendering still needs a device check.",
     }, "", grokShareFormat)],
     android: [sharedChat({
-      url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/assetlinks.json", grokShareAndroidChecks],
-      note: "Stock Android 15 opened the signed Grok app with the clean share link. The test reached Google Play license verification. In-app conversation rendering is still unverified.",
+      url: grokSharedChat, evidence: "source", sources: ["https://grok.com/.well-known/assetlinks.json", grokShareAndroidChecks, grokShareAndroid14Checks],
+      note: "Stock Android 14 and 15 opened the signed Grok app with the clean share link. Both checks reached Google Play license verification. Opening the conversation requires a licensed install.",
     }, "", grokShareFormat)],
   },
   "grok-bot": {

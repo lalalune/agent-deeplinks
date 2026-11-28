@@ -61,8 +61,6 @@ const icon = getAgentIcon("claude") // data:image/svg+xml,...
 
 On Android, Claude's default link opens the installed app through its HTTPS App Link. Use `shared-chat` for a public Claude share or `getAgentLink("claude", "android", { action: "install" })` to send someone to Google Play.
 
-In the Android playground, choose **OpenCode → Server pairing** and enter a link from `opencode pair` or from OpenCode's **Copy/Share** action. The playground keeps the one-time code in the form until you close it or change platforms. OpenCode shows a confirmation before pairing.
-
 ### Existing desktop chats
 
 Choose **Existing chat** for Claude, ChatGPT, or Codex in the desktop playground. Use the UUID from a Claude conversation URL. ChatGPT and Codex also accept the link from **Copy chat deep link**, including the owning host ID for an SSH chat. The desktop app needs access to the chat and its connection. [Claude desktop links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link) · [ChatGPT desktop commands](https://learn.chatgpt.com/docs/reference/commands#deep-links) · [Codex SSH test](research/evidence/codex-copied-remote-thread/native-ssh-reopen-proof.json)
@@ -173,6 +171,8 @@ getAgentLink("opencode", "desktop", {
 ```
 
 ### OpenCode on Android
+
+In the Android playground, choose **OpenCode → Server pairing** and enter a link from `opencode pair` or OpenCode's **Copy/Share** action. OpenCode shows a confirmation before pairing. [OpenCode pairing guide](https://opencode.ai/docs/cli/commands#pair)
 
 Pair a server in OpenCode first. Use the Android app's **Copy Session ID** action to open a saved session on the active server. If your integration already has the full Android AppSearch URI, pass it as `session` to preserve the saved server. For a blank draft in a specific project on the active server, pass its `id` from that server's `GET /api/project` response as `project` with `mode: "new"`. [OpenCode API](https://opencode.ai/docs/api#project.list) · [Android link research](research/coding-agents.md#opencode) · [Live playground](https://deeplinks.fun/)
 
