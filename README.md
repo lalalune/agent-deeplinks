@@ -138,7 +138,7 @@ getAgentLink("codex", "desktop", {
 })
 ```
 
-Choose **Codex → Add SSH host** to add an existing alias from `~/.ssh/config` to Codex. The link opens SSH settings and adds the host with automatic connection disabled. [Codex SSH links](https://learn.chatgpt.com/docs/app/commands#settings)
+Choose **Codex → Add SSH host** and use an alias from `~/.ssh/config`. The link adds the host with automatic connection disabled and opens SSH settings. The tested macOS build also added an unknown alias as a disconnected entry. [Codex SSH links](https://learn.chatgpt.com/docs/app/commands#settings) · [Native test](research/evidence/codex-ssh-add/proof.json)
 
 ```ts
 getAgentLink("codex", "desktop", { action: "add-ssh-host", target: "build-box" })

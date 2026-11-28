@@ -1,0 +1,62 @@
+{
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46088182694/job/140802629073",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46088182694/artifacts/15240645179",
+  "artifactSha256": "4c7abd28a5204c39e7dc407a8420c70044dfa33007e6b73326ce5b4caa257056",
+  "workflowCommit": "ef3fc1e",
+  "os": "macOS 15.8.2 (24H232) ARM64",
+  "appVersion": "26.1120.50957",
+  "appDeveloperTeam": "2DC432GLL2",
+  "vendorDmgSha256": "00db5b0c41e91d6d8c257a7ddfff15bfe2b1e56f1119b54079821b144e86a5a3",
+  "fixture": {
+    "alias": "deeplink-qa-host",
+    "unknownAlias": "not-configured-qa",
+    "host": "127.0.0.1",
+    "port": 49172
+  },
+  "existingSettingsBuilderVersion": "0.1.70",
+  "newActionVerifiedSeparatelyAgainstExactDispatchedUris": true,
+  "stockDispatch": "/usr/bin/open via LaunchServices",
+  "sameSettingsWindowForAllDispatches": true,
+  "accountUsed": false,
+  "fixtureSshConfigUnchanged": true,
+  "fixtureSshConnections": 0,
+  "providerRequests": 0,
+  "savedConversationTurns": 0,
+  "observations": [
+    {
+      "step": "Before",
+      "uri": "codex://settings/connections/ssh",
+      "visibleRows": [],
+      "screenshot": "before.png"
+    },
+    {
+      "step": "Unknown alias",
+      "uri": "codex://settings/connections/ssh/add?name=not-configured-qa",
+      "visibleRows": [
+        "not-configured-qa · Disconnected"
+      ],
+      "automaticConnectionToggleOff": true,
+      "errorVisibleInCapturedWindow": false,
+      "screenshot": "missing-alias.png"
+    },
+    {
+      "step": "Configured alias",
+      "uri": "codex://settings/connections/ssh/add?name=deeplink-qa-host",
+      "visibleRows": [
+        "deeplink-qa-host · Disconnected",
+        "not-configured-qa · Disconnected"
+      ],
+      "automaticConnectionTogglesOff": true,
+      "screenshot": "configured-alias.png"
+    },
+    {
+      "step": "Open SSH settings again",
+      "uri": "codex://settings/connections/ssh",
+      "visibleRows": [
+        "deeplink-qa-host · Disconnected",
+        "not-configured-qa · Disconnected"
+      ],
+      "screenshotInArtifact": "settings-after.png"
+    }
+  ]
+}

@@ -868,8 +868,11 @@ const codexSettings: ActionDefinition = {
 const sshConfigAlias = /^(?!-)[\p{L}\p{N}_.:-]+$/u;
 const codexAddSshHost: ActionDefinition = {
   id: "add-ssh-host", label: "Add SSH host", url: "codex://settings/connections/ssh/add",
-  behavior: "configure", evidence: "documented", sources: [`${desktopPlugins}#settings`],
-  note: "Adds a named host from your SSH config to Codex with automatic connection disabled and opens SSH settings.",
+  behavior: "configure", evidence: "verified", sources: [
+    `${desktopPlugins}#settings`,
+    "https://github.com/lalalune/agent-deeplinks/actions/runs/46088182694/job/140802629073",
+  ],
+  note: "Adds a named host with automatic connection disabled and opens SSH settings. Use an alias from your SSH config. The tested macOS build also added an unknown alias as a disconnected entry.",
   fields: { target: "name" }, required: ["target"],
   inputs: [input("target", "SSH host alias", "build-box")],
   prepare: ({ target }, url) => target && sshConfigAlias.test(target) ? url : null,
