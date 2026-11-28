@@ -1,0 +1,128 @@
+{
+  "verifiedAt": "2026-11-27",
+  "platform": {
+    "product": "macOS",
+    "version": "26.2",
+    "build": "25C56",
+    "architecture": "arm64"
+  },
+  "vendorBundle": {
+    "appVersion": "0.23.3+canary.20261124T064706Z",
+    "bundleId": "com.nousresearch.hermes-bundled-canary",
+    "signer": "Developer ID Application: Nous Research Inc (763K57MW7Z)",
+    "executableSignatureVerifiedWithResourcesOmitted": true,
+    "archive": {
+      "filename": "HermesBundled-0.23.3+canary.20261124T064706Z-mac-arm64.zip",
+      "bytes": 982709453,
+      "sha256": "ade2a6a87e2fb744635280ca978466de48e077a150f9f61e0887d911da75cb88",
+      "sha512Base64": "DC7+ZkXxSuER4M7qdu8mgWNiL3SV7ZY5tDENp36S4rR5f2DtmF83/YQyiCxZUB7fBwL27JLXhEYq7KInltUShw==",
+      "matchedOfficialUpdaterReceipt": true,
+      "updaterReceipt": "https://hermes-assets.nousresearch.com/releases/darwin/canary/canary-mac.yml"
+    },
+    "release": "https://github.com/NousResearch/hermes-agent/releases/tag/canary.20261124T064706Z-v0.23.3"
+  },
+  "exactURI": "hermes://open/20261127_222101_94acb3",
+  "taggedSource": {
+    "uriResolver": "https://github.com/NousResearch/hermes-agent/blob/canary.20261124T064706Z-v0.23.3/apps/desktop/src/lib/hermes-open-target.ts#L158-L165",
+    "rendererIntegration": "https://github.com/NousResearch/hermes-agent/blob/canary.20261124T064706Z-v0.23.3/apps/desktop/src/app/contrib/hooks/use-desktop-integrations.ts#L497-L505",
+    "sessionRoute": "https://github.com/NousResearch/hermes-agent/blob/canary.20261124T064706Z-v0.23.3/apps/desktop/src/app/routes.ts#L233-L235"
+  },
+  "fixture": {
+    "target": {
+      "id": "20261127_222101_94acb3",
+      "title": "Hermes isolated target session 94AC",
+      "marker": "Hermes native target transcript 94AC"
+    },
+    "control": {
+      "id": "20261127_222102_572fe8",
+      "title": "Hermes isolated control session 572F",
+      "marker": "Hermes native control transcript 572F"
+    }
+  },
+  "method": "Seeded via bundled Python SessionDB. Targeted the exact bundle with stock macOS open -n -g -a and observed only the owned app windows.",
+  "isolation": {
+    "freshHermesHomeXdgAndElectronDataInEachAttempt": true,
+    "isolatedBundledBackend": true,
+    "ignoreExistingBackend": true,
+    "processSettingsConfirmed": true,
+    "homeOverridden": false,
+    "protocolRegistrationSkipped": true,
+    "devToolsEnabled": false,
+    "providerConfigured": false,
+    "externalAccountUsed": false,
+    "promptSent": false
+  },
+  "attempts": [
+    {
+      "fixtureConfig": "Minimal scratch config",
+      "mode": "cold",
+      "observationWindowSeconds": 57,
+      "launchServicesExit": 0,
+      "applicationLog": [
+        "[deeplink] delivered open/20261127_222101_94acb3"
+      ],
+      "targetTranscriptVisible": false,
+      "windowObservation": "Hermes Connecting animation",
+      "databaseBefore": {
+        "sessions": 2,
+        "messages": 2,
+        "targetIsNotMostRecent": true
+      },
+      "databaseAfter": {
+        "sessions": 2,
+        "messages": 2,
+        "targetIsNotMostRecent": true
+      },
+      "ownedAppExited": true
+    },
+    {
+      "fixtureConfig": "Vendor defaults in fresh scratch profile",
+      "mode": "cold",
+      "observationWindowSeconds": 177,
+      "launchServicesExit": 0,
+      "applicationLog": [
+        "[deeplink] delivered open/20261127_222101_94acb3"
+      ],
+      "gatewayReadyElapsedSeconds": 164,
+      "ownedGateway": {
+        "loopbackListeners": 0,
+        "healthStatuses": []
+      },
+      "desktopGatewayStartupDeadlines": 2,
+      "scratchGatewayControlSocketAnnounced": true,
+      "scopedLoopbackCheckDuringRetry": {
+        "loopbackListeners": 0,
+        "healthStatuses": []
+      },
+      "screenshotTextChecks": {
+        "controlTranscript": false,
+        "newSessionVisible": false,
+        "onboardingVisible": false,
+        "targetTitle": false,
+        "targetTranscript": false
+      },
+      "accessibilityTextChecks": {
+        "controlTranscript": false,
+        "elements": 324,
+        "owned": true,
+        "targetTitle": false,
+        "targetTranscript": false,
+        "trusted": true
+      },
+      "targetTranscriptVisible": false,
+      "windowObservation": "Connecting overlay remained visible in the owned native window",
+      "databaseBefore": {
+        "sessions": 2,
+        "messages": 2,
+        "targetIsNotMostRecent": true
+      },
+      "databaseAfter": {
+        "sessions": 2,
+        "messages": 2,
+        "targetIsNotMostRecent": true
+      },
+      "ownedAppExited": true
+    }
+  ],
+  "result": "bounded dispatch"
+}
