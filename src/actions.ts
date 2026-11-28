@@ -3,7 +3,7 @@ import type { AgentId, AgentRoute, Platform } from "./catalog.js";
 export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
-  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "remote-session" | "server-pair"
+  | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
   | "settings" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
@@ -324,6 +324,23 @@ const grokBotMarketplace: ActionDefinition = {
     const path = pathname ? pathname.slice(basePath.length + 1) : value.replace(/\/$/u, "");
     return (path !== "bots" && slug.test(path)) || (path.startsWith("bots/") && slug.test(path.slice(5)))
       ? `${url}/${path}` : null;
+  },
+};
+
+const grokBotPage: ActionDefinition = {
+  id: "bot-page", label: "Open shared Bot Page", url: "https://pages.grok.bot/",
+  behavior: "launch", evidence: "verified",
+  sources: [
+    "https://docs.x.ai/grok-bot/files-and-results#share-a-page",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/grok-bot-public-page/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Public Grok Bot Page link", "https://bot-team-kanban-example-2ncd.pages.grok.bot/")],
+  note: "Opens the public Page in a browser without sign-in. Use the address copied from Grok Bot’s share menu.",
+  prepare: ({ target }) => {
+    if (!target || unsafeCharacters.test(target)) return null;
+    const pageId = /^https:\/\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\.pages\.grok\.bot\/?(?:[?#][^\s\\]*)?$/i.exec(target.trim())?.[1];
+    return pageId ? `https://${pageId.toLowerCase()}.pages.grok.bot/` : null;
   },
 };
 
@@ -906,9 +923,9 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     }, "", grokShareFormat)],
   },
   "grok-bot": {
-    web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web, grokBotMarketplace],
+    web: [grokPlugin, grokTeamBot.web, grokBotTemplate.web, grokBotMarketplace, grokBotPage],
     desktop: [grokPlugin, grokTeamPlugin, grokTeamBot.desktop, grokBotTemplate.desktop],
-    ios: [...grokMobileActions, grokBotMarketplace],
+    ios: [...grokMobileActions, grokBotMarketplace, grokBotPage],
     android: [
       {
         ...grokPlugin, sources: [...grokPlugin.sources, grokAndroidPluginCheck],
@@ -918,7 +935,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
         ...grokTeamPlugin, sources: [...grokTeamPlugin.sources, grokAndroidPluginCheck],
         note: "The signed Android app received the custom URI and reached Google Play license verification. Team plugin review requires sign-in and access.",
       },
-      grokTeamBot.mobile, grokBotTemplate.mobile, grokBotMarketplace,
+      grokTeamBot.mobile, grokBotTemplate.mobile, grokBotMarketplace, grokBotPage,
     ],
   },
   cursor: {

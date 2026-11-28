@@ -1148,6 +1148,35 @@ test("opens Grok Bot Team Bots and templates with the vendor's share and native 
   assert.equal(getAgentLink("grok-bot", "web", { action: "bot-template", target: `https://x.ai/bot/${template}/one/two` }), null);
 });
 
+test("opens public Grok Bot Pages in the supported browsers", () => {
+  const url = "https://bot-team-kanban-example-2ncd.pages.grok.bot/";
+  const action = "bot-page";
+  for (const platform of ["web", "ios", "android"]) {
+    assert.equal(getAgentLink("grok-bot", platform, { action, target: url }), url);
+    assert.equal(getAgentLink("grok-bot", platform, { action, target: "  " + url.toUpperCase() + "?ref=inert#drop  " }), url);
+    assert.equal(getAgentRoute("grok-bot", platform, action).behavior, "launch");
+    for (const target of [
+      "",
+      "https://pages.grok.bot/",
+      "https://pages.grok.bot/example",
+      "https://a.b.pages.grok.bot/",
+      "https://a.pages.grok.bot.example/",
+      "https://a.pages.grok.bot@elsewhere.example/",
+      "https://owner@a.pages.grok.bot/",
+      "https://a.pages.grok.bot:443/",
+      "https://a.pages.grok.bot/__cursor/frame",
+      "https://-a.pages.grok.bot/",
+      "https://" + "a".repeat(64) + ".pages.grok.bot/",
+      "http://a.pages.grok.bot/",
+      url + "\n#inert",
+    ]) {
+      assert.equal(getAgentLink("grok-bot", platform, { action, target }), null);
+    }
+    assert.equal(getAgentLink("grok-bot", platform, { action, target: url, prompt: special }), null);
+  }
+  assert.equal(getAgentLink("grok-bot", "desktop", { action, target: url }), null);
+});
+
 test("opens shared chat snapshots with platform-specific browser exclusions", () => {
   const id = "68ec50da-cf00-8005-b5f6-b683506e5853";
   for (const [agent, host, exclusion] of [
