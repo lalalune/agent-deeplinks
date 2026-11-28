@@ -36,6 +36,7 @@ jobs:
           test "$(curl -fsSI --proto '=https' --max-time 15 "$channel" | tr -d '\r' | awk 'tolower($1)=="location:" { print $2 }')" = "$download"
           curl -fsSL --proto '=https' --connect-timeout 15 --max-time 160 --max-filesize 330000000 -D "$scratch/download-headers.txt" "$download" -o "$scratch/Cursor.dmg"
           test "$(stat -f %z "$scratch/Cursor.dmg")" = 306099513
+          printf '%s  %s\n' 1f79ac4b799334c6ae2a70694f390a4264180336219a22366689a54c345eb9ab "$scratch/Cursor.dmg" | shasum -a 256 -c | tee "$output/dmg-check.txt"
           tr -d '\r' < "$scratch/download-headers.txt" | grep -iFx 'etag: "9b433927f241a98151b3c87b349e9d8e-37"'
           { printf '%s\n' "$channel" "$download"; shasum -a 256 "$scratch/Cursor.dmg"; } > "$output/official-download.txt"
           hdiutil attach -readonly -nobrowse -noautoopen -mountpoint "$scratch/mount" "$scratch/Cursor.dmg"

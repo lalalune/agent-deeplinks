@@ -10,6 +10,7 @@ const app = realpathSync(installed);
 const output = join(scratch, 'evidence');
 const profile = join(scratch, 'profile');
 const probe = join(scratch, 'observe');
+const renderer = 'http://127.0.0.1:14637/json/list';
 const library = join(scratch, 'library/package');
 const { getAgentLink } = await import(pathToFileURL(join(library, 'dist/index.js')));
 const packageVersion = JSON.parse(readFileSync(join(library, 'package.json'), 'utf8')).version;
@@ -30,6 +31,15 @@ function matchingLines() {
   });
 }
 
+async function localRenderers() {
+  try {
+    const response = await fetch(renderer, { signal: AbortSignal.timeout(1500) });
+    return (await response.json()).filter(target => target.type === 'page').map(({ title, url }) => ({ title, url }));
+  } catch {
+    return [];
+  }
+}
+
 function ownedWindow(snapshot, name) {
   if (snapshot.frontmost.path !== app) return null;
   const [window] = snapshot.frontmostOwnedVisibleWindows;
@@ -48,18 +58,18 @@ try {
   assert.equal(proof.routeResolver, app);
   assert.deepEqual(state().cursor, []);
 
-  stage = 'open stock classic editor in a fresh profile';
-  const document = join(scratch, 'Cloud Agent link QA.txt');
-  writeFileSync(document, 'Disposable editor baseline for the Cursor Cloud Agent link test.\n');
+  stage = 'open the stock client in a fresh account-free profile';
   run('/usr/bin/open', ['-a', app, '--args', '--classic', '--disable-telemetry', '--disable-updates',
-    '--skip-welcome', '--user-data-dir', profile, document]);
+    '--skip-welcome', '--user-data-dir', profile, '--remote-debugging-address=127.0.0.1',
+    '--remote-debugging-port=14637']);
   const waitForEditor = Date.now() + 48000;
   while (Date.now() < waitForEditor) {
     proof.before = ownedWindow(state(), 'before');
-    if (proof.before && /Cloud Agent link QA|Disposable editor baseline|Get Started|Explorer/u.test(proof.before.ocr)) break;
+    proof.renderersBefore = await localRenderers();
+    if (proof.before && (proof.renderersBefore.length || /Cursor|Explorer/i.test(proof.before.ocr))) break;
     await wait(800);
   }
-  assert.match(proof.before?.ocr ?? '', /Cloud Agent link QA|Disposable editor baseline|Get Started|Explorer/u, 'classic editor baseline missing');
+  assert.equal(proof.before?.owner.path, app, 'owned fresh-profile window missing');
   assert.deepEqual(matchingLines(), []);
 
   stage = 'dispatch exact library URL through stock LaunchServices';
@@ -76,6 +86,7 @@ try {
     if (proof.after && signedOut(proof.after.ocr) && proof.lookupLog.length) break;
     await wait(1000);
   }
+  proof.renderersAfter = await localRenderers();
   assert.ok(proof.lookupLog?.length, 'Cursor did not log the exact synthetic Agent ID in a lookup line');
   assert.equal(proof.after?.owner.path, app, 'the installed signed app did not own the observed window');
   assert.ok(signedOut(proof.after.ocr), 'the signed-out native endpoint was not visible');
