@@ -1,0 +1,2 @@
+/Users/runner/Applications/Muse.app: accepted
+source=Notarized Developer ID

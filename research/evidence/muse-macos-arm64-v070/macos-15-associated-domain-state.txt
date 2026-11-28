@@ -1,0 +1,13 @@
+Sample 0 at 2026-11-28T00:30:02Z
+
+Sample 1 at 2026-11-28T00:30:12Z
+Service:              applinks
+App ID:               V9WTTPBFK9.com.meta.endo
+Domain:               agent.meta.ai
+User Approval:        unspecified
+Site/Fmwk Approval:   approved
+Flags:
+Last Checked:         2026-11-28 00:30:03 +0000
+Next Check:           2026-12-03 00:19:22 +0000
+
+=================================== NETWORK ====================================
