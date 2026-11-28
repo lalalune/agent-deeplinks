@@ -221,16 +221,24 @@ scoped_a = library_link({'session': source_uri})
 assert scoped_a == source_uri
 verify('scoped-A', scoped_a, idle(fixture_a['default']['title'], 'OpenCode A Default'), cold=True)
 
-browser = library_link({'server': fixture_a['address'], 'session': fixture_a['default']['id']}, 'web')
-origin_key = base64.urlsafe_b64encode(fixture_a['address'].encode()).decode().rstrip('=')
-assert browser == fixture_a['address'] + '/server/' + origin_key + '/session/' + fixture_a['default']['id']
-assert browser == library_link({'server': fixture_a['address'], 'session': browser}, 'ios')
+session_id = fixture_a['default']['id']
+port = urlsplit(fixture_a['address']).port
+assert isinstance(port, int)
+assert library_link({'server': fixture_a['address'], 'session': session_id}, 'web', allow_missing=True) is None
+reverse = f'tcp:{port}'
+android('reverse', reverse, reverse)
+browser_origin = f'http://127.0.0.1:{port}'
+browser = library_link({'server': browser_origin, 'session': session_id}, 'web')
+origin_key = base64.urlsafe_b64encode(browser_origin.encode()).decode().rstrip('=')
+assert browser == browser_origin + '/server/' + origin_key + '/session/' + session_id
+assert browser == library_link({'server': browser_origin, 'session': browser}, 'ios')
 web_resolvers = save('browser-resolved.txt', android('shell',
     f'cmd package query-activities --brief {args}{shlex.quote(browser)}'))
 assert activity not in web_resolvers
 assert package not in web_resolvers
 proof['browserRoute'] = {
     'url': browser, 'sameSavedSessionId': True, 'openCodeAbsentFromResolver': True,
+    'emulatorReverseToSameLoopbackServer': True, 'cleartextNonLoopbackAddressRejected': True,
     'resolverOutput': web_resolvers.strip().splitlines(),
 }
 persist()
