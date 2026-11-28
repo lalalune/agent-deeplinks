@@ -17,7 +17,9 @@ jobs:
         run: |
           set -euo pipefail
           qa="$RUNNER_TEMP/android-agent-links"
-          mkdir -p "$qa"/{evidence,grok}
+          export ANDROID_AVD_HOME="$qa/avd"
+          export ANDROID_USER_HOME="$qa/android-user"
+          mkdir -p "$qa"/{evidence,grok} "$ANDROID_AVD_HOME" "$ANDROID_USER_HOME"
           test -c /dev/kvm
           sudo chmod a+rw /dev/kvm
           sudo apt-get update -qq
@@ -31,7 +33,11 @@ jobs:
           "$sdkmanager" "$image" emulator platform-tools >"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
           grep -E '^Pkg\.(Desc|Revision|Path)=|^AndroidVersion\.ApiLevel=|^SystemImage\.Abi=|^SystemImage\.TagId=' \
             "$ANDROID_HOME/system-images/android-34/google_apis/x86_64/source.properties" > "$qa/evidence/system-image.txt"
-          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n grok-qa -k "$image" -f
+          printf 'no\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/avdmanager" create avd -n grok-qa -k "$image" -f \
+            --path "$ANDROID_AVD_HOME/grok-qa.avd"
+          test -s "$ANDROID_AVD_HOME/grok-qa.ini"
+          "$ANDROID_HOME/emulator/emulator" -list-avds > "$qa/evidence/avds.txt"
+          grep -Fx grok-qa "$qa/evidence/avds.txt"
           wait "$download"
           cd "$qa"
           sha256sum grok.apk | tee evidence/artifact-digests.txt

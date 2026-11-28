@@ -5,6 +5,8 @@ serial=emulator-5556
 adb="$ANDROID_HOME/platform-tools/adb"
 emulator="$ANDROID_HOME/emulator/emulator"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export ANDROID_AVD_HOME="$qa/avd"
+export ANDROID_USER_HOME="$qa/android-user"
 pkg=ai.x.grok
 "$emulator" -version > "$qa/evidence/emulator-version.txt" 2>&1 || { cat "$qa/evidence/emulator-version.txt"; exit 1; }
 "$emulator" -avd grok-qa -port 5556 -no-window -no-snapshot -no-audio -no-boot-anim \
