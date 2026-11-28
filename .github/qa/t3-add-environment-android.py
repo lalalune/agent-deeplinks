@@ -107,8 +107,9 @@ def dispatch(name):
 
 
 stop()
-baseline = shell("am", "start", "-W", "-a", "android.intent.action.MAIN",
-                 "-c", "android.intent.category.LAUNCHER", "-p", package, timeout=40)
+dispatch("cold")
+assert shell("pm", "clear", package).strip() == "Success", "Could not reset the disposable app for the warm control"
+baseline = shell("am", "start", "-W", "-n", package + "/.MainActivity", timeout=40)
 (evidence / "stock-home-launch.txt").write_text(baseline)
 assert "Status: ok" in baseline and package + "/" in baseline
 home, data, home_nodes = wait_ui(lambda current: bool(current) and "Add environment" in labels(current))
@@ -118,8 +119,6 @@ proof["warmBaseline"] = {
     "formAbsent": not ({"Address", "Code"} <= labels(home_nodes) and len(edits(home_nodes)) == 2),
 }
 dispatch("warm")
-stop()
-dispatch("cold")
 cold = proof["results"]["cold"]
 warm = proof["results"]["warm"]
 assert cold["reportedCold"] and cold["processesBefore"] == [] and cold["processesAfter"]
