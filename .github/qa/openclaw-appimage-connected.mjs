@@ -185,8 +185,6 @@ try {
     return visible.includes(current) && current;
   });
   report.disposableSetup = { window: setupWindow, route: 'Direct connection from the native setup wizard', origin, prefix };
-  checked('xdotool', ['windowmove', '--sync', setupWindow, '40', '35']);
-  checked('xdotool', ['windowsize', '--sync', setupWindow, '1510', '1040']);
   const setupPage = await awaitValue('No welcome or location page in the native setup window', 35_000, () => {
     const captured = capture('before-credentials');
     return /get started|on another computer|where should your assistant live/iu.test(captured.text) ? captured : null;
