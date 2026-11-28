@@ -1,0 +1,133 @@
+{
+  "verifiedAtUtc": "2026-11-28T04:07:57.645Z",
+  "preview": "https://47acdf19.agent-deeplinks.pages.dev/",
+  "revision": "5c387b91d110ea0b9f8383f5d1dda11e9cd35e4b",
+  "referenceEvidence": "research/evidence/grok-published-app/proof.json",
+  "scope": "Cloudflare preview and real vendor destination. Fresh contexts and read-only requests. Game controls left untouched.",
+  "browsers": [
+    {
+      "profile": "Desktop Chromium",
+      "engineVersion": "158.0.8127.18",
+      "platform": "Web",
+      "freshCookies": true,
+      "previewStatus": 200,
+      "asset": "https://47acdf19.agent-deeplinks.pages.dev/assets/index-Dqyhtp53.js",
+      "assetSha256": "48a9b3bd9a6306012b632e17f756cf09e30e7549d935589fe83dea89b4455b39",
+      "installCommand": "npm install agent-deeplinks",
+      "github": "https://github.com/lalalune/agent-deeplinks",
+      "zip": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "clicks": [
+        {
+          "style": "Icons + names",
+          "href": "https://tiny-city.grok.me/",
+          "visibleLabel": "Grok\nTiny City example",
+          "svgSha256": "ad3238b284ac6a6f84fa0f458b59b04e7c6666d43012e59c823da63fde0d4a32",
+          "final": "https://tiny-city.grok.me/",
+          "title": "Tiny City",
+          "islandNaturalSize": [
+            1408,
+            1408
+          ],
+          "visibleControls": [
+            "Upgrade · 15",
+            "New island · 300"
+          ]
+        },
+        {
+          "style": "Icons only",
+          "href": "https://tiny-city.grok.me/",
+          "visibleLabel": "",
+          "svgSha256": "ad3238b284ac6a6f84fa0f458b59b04e7c6666d43012e59c823da63fde0d4a32",
+          "final": "https://tiny-city.grok.me/",
+          "title": "Tiny City",
+          "islandNaturalSize": [
+            1408,
+            1408
+          ],
+          "visibleControls": [
+            "Upgrade · 15",
+            "New island · 300"
+          ]
+        }
+      ],
+      "publicReads": [
+        "/ 200",
+        "/island.webp 200"
+      ]
+    },
+    {
+      "profile": "iPhone 15 WebKit",
+      "engineVersion": "27.2",
+      "platform": "iOS",
+      "freshCookies": true,
+      "previewStatus": 200,
+      "asset": "https://47acdf19.agent-deeplinks.pages.dev/assets/index-Dqyhtp53.js",
+      "assetSha256": "48a9b3bd9a6306012b632e17f756cf09e30e7549d935589fe83dea89b4455b39",
+      "installCommand": "npm install agent-deeplinks",
+      "github": "https://github.com/lalalune/agent-deeplinks",
+      "zip": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+      "clicks": [
+        {
+          "style": "Icons + names",
+          "href": "https://tiny-city.grok.me/",
+          "visibleLabel": "Grok\nTiny City example",
+          "svgSha256": "ad3238b284ac6a6f84fa0f458b59b04e7c6666d43012e59c823da63fde0d4a32",
+          "final": "https://tiny-city.grok.me/",
+          "title": "Tiny City",
+          "islandNaturalSize": [
+            1408,
+            1408
+          ],
+          "visibleControls": [
+            "Upgrade · 15",
+            "New island · 300"
+          ]
+        },
+        {
+          "style": "Icons only",
+          "href": "https://tiny-city.grok.me/",
+          "visibleLabel": "",
+          "svgSha256": "ad3238b284ac6a6f84fa0f458b59b04e7c6666d43012e59c823da63fde0d4a32",
+          "final": "https://tiny-city.grok.me/",
+          "title": "Tiny City",
+          "islandNaturalSize": [
+            1408,
+            1408
+          ],
+          "visibleControls": [
+            "Upgrade · 15",
+            "New island · 300"
+          ]
+        }
+      ],
+      "publicReads": [
+        "/ 200",
+        "/island.webp 200"
+      ]
+    }
+  ],
+  "githubRevision": {
+    "readme": "https://github.com/lalalune/agent-deeplinks/blob/5c387b91d110ea0b9f8383f5d1dda11e9cd35e4b/README.md",
+    "research": "https://github.com/lalalune/agent-deeplinks/blob/5c387b91d110ea0b9f8383f5d1dda11e9cd35e4b/research/evidence/grok-published-app/proof.json",
+    "appMatches": true,
+    "bundleMatches": true
+  },
+  "publicZip": {
+    "download": "https://github.com/lalalune/agent-deeplinks/releases/latest/download/agent-deeplinks.zip",
+    "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.73",
+    "sha256": "77afdd78f2e337842d183dd89e76b53613af9865c2b7d944d39318f8b3c68591",
+    "package": {
+      "name": "agent-deeplinks",
+      "version": "0.1.73",
+      "sha256": "3a8d1475ef54804cac83b5ffd9a35ecb2e7a73531ac671fe032da693ec7ce640",
+      "publishedAppPresent": false,
+      "imaginePostPresent": true
+    }
+  },
+  "publicNpm": {
+    "checkedAtUtc": "2026-11-28T04:08:18Z",
+    "latest": "0.1.72",
+    "exactPublished": null,
+    "exactPresent": false
+  }
+}
