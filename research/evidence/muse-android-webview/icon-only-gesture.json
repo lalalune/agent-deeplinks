@@ -1,0 +1,43 @@
+{
+  "observedDate": "2026-11-27",
+  "package": "agent-deeplinks@0.1.68",
+  "packageTarballSha256": "223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8",
+  "platform": "Android 15 ARM64, pinned ReDroid with system-installed Browser2.apk",
+  "emittedLink": "https://agent.meta.ai/chat",
+  "browser": {
+    "package": "org.chromium.webview_shell",
+    "activity": "org.chromium.webview_shell/.WebViewBrowserActivity",
+    "apkPath": "/system/product/app/Browser2/Browser2.apk",
+    "webViewProvider": "com.android.webview",
+    "chromiumVersion": "128.0.6613.88"
+  },
+  "gesture": {
+    "mode": "icon-only",
+    "anchorTarget": "_blank",
+    "anchorRel": "noopener noreferrer",
+    "icon": "package/icons/meta-muse.svg",
+    "visibleCoordinates": [91, 306],
+    "domEventTrusted": true,
+    "userActivationActive": true,
+    "chooserUsed": false
+  },
+  "muse": {
+    "package": "com.facebook.aura",
+    "version": "18.0.0.8.161",
+    "apkSha256": "076b644e92248b41c77b192422e5c73025642ff3acd2df1008c1f36348e78354",
+    "certificateSha256": "a16bbe0247a738bc8f09fef50d890dc177ec875a83a121f877329b1b89667e99",
+    "agentMetaAiAssociationVerifiedByAndroid": true,
+    "processRunningBeforeTap": false,
+    "foregroundAfterTap": "com.facebook.aura/.main.AuraMainActivity",
+    "visibleLabels": ["Welcome to Muse", "Mobile number or email", "Continue"],
+    "signedIn": false,
+    "sent": false
+  },
+  "otherVariants": "The icon-and-name and same-tab fixtures loaded. Their taps stopped at a harness ambiguity between the clickable anchor and its visible text.",
+  "guestExternalNetworkDeniedAfterAssociationVerification": true,
+  "browserScreenshotSha256": "1928a305e87ac2fdf342e43f9380916c69ef4469c8eaaaf6b3f346d1d37a48ec",
+  "museScreenshotSha256": "fde8146ed0d5ee4a7731b6eebc4f5692dced08925abea80a0d8356d343c1151f",
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46085546025/job/140794146364",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46085546025/artifacts/15238533442",
+  "retrievedArchiveSha256": "ce4f21f3c8ecc7b48917e05777a8de49549a5913e99b720afcebae910caadf74"
+}
