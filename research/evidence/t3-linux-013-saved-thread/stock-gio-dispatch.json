@@ -1,0 +1,56 @@
+{
+  "revision": "T3 Code 0.1.13 Linux amd64 DEB",
+  "libraryVersion": "0.1.72",
+  "binary": "/opt/T3 Code (Beta)/t3code",
+  "accountUsed": false,
+  "providerConnected": false,
+  "promptSubmitted": false,
+  "loopbackOnly": true,
+  "provenance": {
+    "harnessCommit": "1a0af2992c9cd07ffb8ec7ba92086e0b9fb09d49",
+    "run": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100938152/job/140842982627",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46100938152/artifacts/15247288138",
+    "artifactZipSha256": "2abe52f00e10e1f78fec4f2605b905b17ca097f2bdfe177177d4472e023a809a",
+    "publisherRelease": "https://github.com/pingdotgg/t3code/releases/tag/v0.1.13",
+    "linuxDistribution": "Description:\tUbuntu 24.04.5 LTS",
+    "debSha256": "630dfe9d041b42622d9e5d5b1138b3f1068136eb12af85ec34d491e33aeaa061",
+    "cliSha256": "64e0f8446d3f618b157d4e5a0a6808ab3c8bf1a1b3e44eab3100e554be05e5d7",
+    "npmIntegrity": "sha512-nzw5UHbWGzh5NehruQ0q1ShMtrTN1jxWzK4gn+4KdQxP6qYM0znH8jVGYPCPxQnw+QdOWwI7a3+RnmI9g7oW9A=="
+  },
+  "fixture": {
+    "environmentId": "9b41f4c1-05fe-4fd0-aa42-0dcfe8479288",
+    "threadId": "thread:project:051c6922-9142-44bc-9263-12ad18b8fbfb:09f8b61b-0335-4c83-a0ea-06ada3463135",
+    "blank": "t3code://threads/9b41f4c1-05fe-4fd0-aa42-0dcfe8479288/thread%3Aproject%3A051c6922-9142-44bc-9263-12ad18b8fbfb%3A09f8b61b-0335-4c83-a0ea-06ada3463135",
+    "draft": "t3code://threads/9b41f4c1-05fe-4fd0-aa42-0dcfe8479288/thread%3Aproject%3A051c6922-9142-44bc-9263-12ad18b8fbfb%3A09f8b61b-0335-4c83-a0ea-06ada3463135?prompt=LinuxProof8296%20T3%20saved%20thread%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20stays%20unsent",
+    "marker": "LinuxProof8296 T3 saved thread + & %2F café ☃\nSecond line stays unsent",
+    "initialCounts": {
+      "threads": 1,
+      "runs": 0,
+      "provider_sessions": 0,
+      "provider_turns": 0
+    }
+  },
+  "warm": {
+    "stockAppOwnedVisibleWindow": true,
+    "loopbackRendererObserverMatchedAppPid": true,
+    "plainSavedThreadRendered": false,
+    "rendererWaitResult": "TimeoutError"
+  },
+  "cold": {
+    "earlierAppStoppedBeforeReplay": true,
+    "selectedHandler": {
+      "selected": "com.t3tools.T3Code.desktop",
+      "selectedExec": "Exec=\"/opt/T3 Code (Beta)/t3code\" %U"
+    },
+    "mimeType": "x-scheme-handler/t3code",
+    "stockGioLaunchedSignal": {
+      "desktopEntry": "com.t3tools.T3Code.desktop",
+      "exactUri": "t3code://threads/9b41f4c1-05fe-4fd0-aa42-0dcfe8479288/thread%3Aproject%3A051c6922-9142-44bc-9263-12ad18b8fbfb%3A09f8b61b-0335-4c83-a0ea-06ada3463135?prompt=LinuxProof8296%20T3%20saved%20thread%20%2B%20%26%20%252F%20caf%C3%A9%20%E2%98%83%0ASecond%20line%20stays%20unsent",
+      "pid": 4112
+    },
+    "processExactUriArgumentObservedByHarness": false,
+    "savedThreadComposerObserved": false,
+    "checkStoppedAt": "Stock XDG did not start a new owner with the exact URI argument"
+  },
+  "result": "Stock GIO emitted the complete package-generated URI for the installed Linux handler. The subsequent process-argument observation timed out before checking the cold renderer."
+}
