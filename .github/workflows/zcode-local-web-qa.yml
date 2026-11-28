@@ -38,7 +38,7 @@ jobs:
           npm install --global pnpm@10.33.2
           pnpm --version | tee "$qa/evidence/pnpm-version.txt"
           node --version | tee "$qa/evidence/node-version.txt"
-          pnpm install --frozen-lockfile --ignore-scripts >"$qa/install.log" 2>&1 || { tail -60 "$qa/install.log" | tee "$qa/evidence/install-error.txt"; exit 1; }
+          pnpm install --frozen-lockfile --ignore-scripts --config.node-linker=isolated >"$qa/install.log" 2>&1 || { tail -60 "$qa/install.log" | tee "$qa/evidence/install-error.txt"; exit 1; }
           pnpm build:zcode --base-url https://example.invalid/zcode/ >"$qa/build.log" 2>&1 || { tail -80 "$qa/build.log" | tee "$qa/evidence/build-error.txt"; exit 1; }
           version="$(jq -er .version dist/zcode/latest.json)"
           package="dist/zcode/releases/$version/zcode-$version.tar.gz"
