@@ -1,4 +1,4 @@
-name: Stock Cursor Cloud Agent on Apple Silicon
+name: Stock Cursor Cloud Agent from the production playground
 on:
   push:
     branches: [codex/cursor-cloud-macos-071]
@@ -56,13 +56,13 @@ jobs:
           spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee "$output/gatekeeper.txt"
           grep -Fx 'source=Notarized Developer ID' "$output/gatekeeper.txt"
           /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
-          xcrun swiftc .github/qa/cursor-cloud-macos.swift -o "$scratch/observe"
-      - name: Open the exact Cloud Agent link in the signed client
-        run: node .github/qa/cursor-cloud-macos.mjs "$RUNNER_TEMP/cursor-cloud-agent" "$HOME/Applications/Cursor.app"
+          xcrun swiftc .github/qa/cursor-cloud-browser.swift -o "$scratch/browser-observe"
+      - name: Cold-open Cursor from the exact published Cloud Agent button
+        run: node .github/qa/cursor-cloud-browser.mjs "$RUNNER_TEMP/cursor-cloud-agent" "$HOME/Applications/Cursor.app"
       - uses: actions/upload-artifact@v7
         if: always()
         with:
-          name: cursor-signed-apple-silicon-cloud-agent
+          name: cursor-signed-apple-silicon-cloud-agent-browser
           path: ${{ runner.temp }}/cursor-cloud-agent/evidence/
           if-no-files-found: error
           retention-days: 30
