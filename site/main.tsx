@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { Check, Copy, Download, Github, Terminal } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import {
   agents, getAgentActions, getAgentIcon, getAgentLink, getAgentRoute,
 } from "../src/index.js";
@@ -33,11 +34,12 @@ const TABS: readonly { id: TabId; label: string }[] = [
 const DESKTOP_CHAT_AGENTS = ["chatgpt", "claude", "codex"] as const;
 type DesktopChatAgent = (typeof DESKTOP_CHAT_AGENTS)[number];
 
-type DesktopToolField = "cwd" | "repo" | "session" | "workspace" | "path" | "originUrl";
+type DesktopToolField = "cwd" | "repo" | "session" | "workspace" | "path" | "originUrl" | "folders" | "files";
 
 interface DesktopToolExample {
-  agent: "claude-code" | "github-copilot" | "codex";
+  agent: "claude" | "claude-code" | "github-copilot" | "codex";
   platform: "cli" | "vscode" | "desktop";
+  action?: AgentActionId;
   label: string;
   name: string;
   fields: readonly { key: DesktopToolField; label: string; placeholder: string }[];
@@ -46,6 +48,15 @@ interface DesktopToolExample {
 }
 
 const DESKTOP_TOOL_EXAMPLES: readonly DesktopToolExample[] = [
+  {
+    agent: "claude", platform: "desktop", action: "cowork", label: "Cowork draft", name: "Claude Cowork",
+    fields: [
+      { key: "folders", label: "Absolute folders (optional, one per line)", placeholder: "/absolute/path/to/folder" },
+      { key: "files", label: "Absolute files (optional, one per line)", placeholder: "/absolute/path/to/notes.md" },
+    ],
+    note: "Claude asks you to confirm linked folders. The draft stays unsent.",
+    invalidInput: "Enter one absolute local path per line and check the draft length.",
+  },
   {
     agent: "claude-code", platform: "cli", label: "Terminal", name: "Claude Code in Terminal",
     fields: [
@@ -854,21 +865,33 @@ function ClaudeCodeWorkspaceLink({ iconOnly }: { iconOnly: boolean }) {
 function DesktopToolLinkSetup({ example, iconOnly }: { example: DesktopToolExample; iconOnly: boolean }) {
   const [fields, setFields] = useState<Partial<Record<DesktopToolField, string>>>({});
   const [prompt, setPrompt] = useState(LIVE_PROMPT);
-  const route = getAgentRoute(example.agent, example.platform);
+  const route = example.action ? getAgentRoute(example.agent, example.platform, example.action)
+    : getAgentRoute(example.agent, example.platform);
   const needsPrompt = route?.required?.includes("prompt") ?? false;
-  const href = getAgentLink(example.agent, example.platform, { ...fields, prompt });
+  const { folders, files, ...singleFields } = fields;
+  const href = getAgentLink(example.agent, example.platform, {
+    ...singleFields, prompt, action: example.action,
+    folders: folders?.split("\n").filter(Boolean),
+    files: files?.split("\n").filter(Boolean),
+  });
   const label = `Open ${example.name}`;
 
   return (
     <div role="region" aria-label={`${example.name} link`} className="workspace-setup">
       <div className="link-setup">
-        {example.fields.map(({ key, label: fieldLabel, placeholder }) => (
-          <label key={key}>
-            {fieldLabel}
-            <input value={fields[key] ?? ""} placeholder={placeholder} autoComplete="off" spellCheck={false}
-              onChange={(event) => setFields({ ...fields, [key]: event.target.value || undefined })} />
-          </label>
-        ))}
+        {example.fields.map(({ key, label: fieldLabel, placeholder }) => {
+          const props = {
+            value: fields[key] ?? "", placeholder, autoComplete: "off", spellCheck: false,
+            onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+              setFields({ ...fields, [key]: event.target.value || undefined }),
+          };
+          return (
+            <label key={key}>
+              {fieldLabel}
+              {key === "folders" || key === "files" ? <textarea {...props} rows={2} /> : <input {...props} />}
+            </label>
+          );
+        })}
         <label>
           {needsPrompt ? "Draft prompt" : "Draft prompt (optional)"}
           <textarea value={prompt} onChange={(event) => setPrompt(event.target.value)} rows={2} maxLength={route?.promptLimit} />

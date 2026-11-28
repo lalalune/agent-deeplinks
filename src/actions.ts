@@ -4,9 +4,9 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
-  | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open";
+  | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open" | "cowork";
 
-export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content";
+export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
 export interface AgentActionInput {
   readonly field: AgentActionField;
@@ -23,7 +23,7 @@ export interface AgentActionRoute extends Omit<AgentRoute, "fields" | "required"
   readonly required: readonly AgentActionField[];
 }
 
-type Fields = Partial<Record<AgentActionField, string>>;
+type Fields = Partial<Record<Exclude<AgentActionField, "folders" | "files">, string>>;
 type ActionDefinition = AgentActionRoute & {
   readonly prepare: (fields: Fields, url: string) => string | null;
 };
@@ -65,6 +65,8 @@ const t3PullRequestRepository = /^(?!\.+$)[A-Za-z0-9._-]{1,100}$/u;
 const t3PromptLimit = 8_000;
 const chatgptShareDocs = "https://help.openai.com/en/articles/7925741-sharing-conversations-and-scheduled-tasks-in-chatgpt";
 const claudeShareDocs = "https://support.claude.com/en/articles/16762437-public-links-for-shared-chats";
+const claudeDesktopLinkDocs = "https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link";
+const claudeCoworkPromptLimit = 14_000;
 const sharedChatBrowserChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/shared-chat-browser/proof.json";
 const sharedChatAppleChecks = "https://github.com/lalalune/agent-deeplinks/actions/runs/45687467247/artifacts/15056787932";
 const grokShareDocs = "https://x.ai/legal/faq";
@@ -895,6 +897,18 @@ const codexAutomations: ActionDefinition = {
 };
 
 const codexDesktopActions = [codexPlugin, codexInstall, codexPluginChat, codexSettings, codexAddSshHost, codexSkills, codexAutomations];
+const claudeCowork: ActionDefinition = {
+  id: "cowork", label: "Open Claude Cowork", url: "claude://cowork/new",
+  behavior: "draft", evidence: "documented", sources: [
+    claudeDesktopLinkDocs,
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/claude-cowork-native/proof.json",
+  ],
+  note: "Prefills a Cowork draft in Claude Desktop. Claude asks for confirmation before adopting linked folders. Stock macOS opened both exact links to Claude sign-in. The composer requires an eligible account.",
+  fields: { prompt: "q", folders: "folder", files: "file" }, required: [], promptLimit: claudeCoworkPromptLimit,
+  inputs: [input("prompt", "Draft prompt"), input("folders", "Absolute folders"), input("files", "Absolute files")],
+  prepare: ({ prompt }, url) => (prompt?.length ?? 0) <= claudeCoworkPromptLimit ? url : null,
+};
+
 const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly ActionDefinition[]>>>> = {
   chatgpt: {
     web: [chatgptApp(chatgptPlugins, false), chatgptPlugin, chatgptPluginInstall, chatgptPluginChat, customGpt,
@@ -996,7 +1010,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
         url: claudeSharedChat, evidence: "verified", sources: [claudeShareDocs, sharedChatBrowserChecks],
         note: "The public snapshot rendered in iPhone WebKit. Desktop Chromium reached a security verification page. The web fragment excludes iOS handoff.",
       }, "#no_universal_links")],
-    desktop: [claudePlugin],
+    desktop: [claudePlugin, claudeCowork],
     ios: [sharedChat({
       url: claudeSharedChat, evidence: "source",
       sources: ["https://claude.ai/.well-known/apple-app-site-association", sharedChatAppleChecks],

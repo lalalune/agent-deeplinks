@@ -110,6 +110,19 @@ getAgentLink("claude-code", "desktop", {
 })
 ```
 
+### Open a Claude Cowork draft
+
+Under **Desktop**, choose **Claude → Cowork draft**. You can prefill a prompt and attach multiple absolute folder or file paths. Claude asks you to confirm each folder. [Claude Desktop deep links](https://support.claude.com/en/articles/14729294-open-claude-desktop-with-a-link)
+
+```ts
+getAgentLink("claude", "desktop", {
+  action: "cowork",
+  prompt: "Review these notes.",
+  folders: ["/absolute/path/to/docs", "/absolute/path/to/research"],
+  files: ["/absolute/path/to/notes.md", "/absolute/path/to/outline.md"],
+})
+```
+
 ### Open a terminal or VS Code draft
 
 Under **Desktop** in the playground, choose **Claude Code → Terminal**, **Claude Code → VS Code**, or **GitHub Copilot → VS Code Agents**. Claude Code Terminal takes a local directory or a GitHub repository slug. The VS Code extension can reopen a session from the open workspace. VS Code Agents requires a draft prompt in VS Code 1.148.0 and accepts an optional workspace folder URI. The prompts stay unsent. [Claude Code terminal links](https://code.claude.com/docs/en/deep-links) · [Claude Code extension](https://code.claude.com/docs/en/vs-code#launch-a-vs-code-tab-from-other-tools) · [VS Code Agents draft links](https://code.visualstudio.com/docs/configure/command-line#_prepare-a-new-agent-session-draft) · [VS Code 1.148.0 parser tests](https://github.com/microsoft/vscode/blob/661626d0e72f97806550790a98fb87116c9db825/src/vs/platform/window/test/common/window.test.ts#L77)

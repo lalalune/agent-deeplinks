@@ -5,7 +5,7 @@ import { iconSources } from "./generated-icons.js";
 
 export * from "./catalog.js";
 
-export interface LinkOptions extends Partial<Record<LinkField | AgentActionField, string>> {
+export interface LinkOptions extends Partial<Record<LinkField | Exclude<AgentActionField, "folders" | "files">, string>> {
   /** Open an app, plugin, skill, or other provider-specific destination. */
   action?: AgentActionId;
   /** Permit routes whose client behavior still needs confirmation. */
@@ -14,6 +14,10 @@ export interface LinkOptions extends Partial<Record<LinkField | AgentActionField
   allowSend?: boolean;
   /** Apply the provider's iOS Universal Link exclusion when available. */
   browserOnly?: boolean;
+  /** Absolute folder paths for the Claude Cowork draft. */
+  folders?: readonly string[];
+  /** Absolute file paths for the Claude Cowork draft. */
+  files?: readonly string[];
 }
 
 const ownerAndRepo = /^[\w.-]+\/[\w.-]+$/u;
@@ -150,15 +154,15 @@ function encodeLinkValue(value: string): string {
 
 function getLinkParameters(
   route: Pick<AgentRoute, "encodeQueryValuesTwice" | "query"> & { fields?: Readonly<Record<string, string | undefined>> },
-  fields: Readonly<Record<string, string | undefined>>,
+  fields: Readonly<Record<string, string | readonly string[] | undefined>>,
   baseUrl: string,
 ): string {
   const query: string[] = [];
   for (const [field, parameter] of Object.entries(route.fields ?? {})) {
     if (!parameter || (field === "repo" && fields.cwd)) continue;
     const value = fields[field];
-    if (value !== undefined && value !== "") {
-      const encoded = encodeLinkValue(value);
+    for (const item of typeof value === "string" ? (value ? [value] : []) : value ?? []) {
+      const encoded = encodeLinkValue(item);
       query.push(`${parameter}=${route.encodeQueryValuesTwice ? encodeURIComponent(encoded) : encoded}`);
     }
   }
@@ -239,7 +243,7 @@ export function getAgentLink(
   platform: Platform,
   options: LinkOptions = {},
 ): string | null {
-  const { action, allowExperimental, allowSend, browserOnly, ...fields } = options;
+  const { action, allowExperimental, allowSend, browserOnly, folders, files, ...fields } = options;
   const actionRoute = action === undefined ? undefined : getActionDefinition(agent, platform, action);
   const route = action === undefined ? getAgentRoute(agent, platform) : actionRoute;
   if (!route) return null;
@@ -249,13 +253,21 @@ export function getAgentLink(
       return null;
     }
   }
+  for (const [field, paths] of Object.entries({ folders, files })) {
+    if (paths !== undefined && (!Object.hasOwn(route.fields ?? {}, field) || !Array.isArray(paths) ||
+      Array.from(paths).some(path => typeof path !== "string" || !isLocalPath(path)))) return null;
+  }
   if (actionRoute) {
+    const actionFields = { ...fields, folders, files };
     if ((actionRoute.experimental && !allowExperimental) ||
       (actionRoute.behavior === "send" && !allowSend) ||
-      actionRoute.required.some((field) => !fields[field]?.trim())) return null;
-    const baseUrl = actionRoute.prepare(fields, actionRoute.url);
+      actionRoute.required.some((field) => {
+        const value = actionFields[field];
+        return typeof value === "string" ? !value.trim() : !value?.length;
+      })) return null;
+    const baseUrl = actionRoute.prepare(actionFields, actionRoute.url);
     if (!baseUrl) return null;
-    const url = baseUrl + getLinkParameters(actionRoute, fields, baseUrl);
+    const url = baseUrl + getLinkParameters(actionRoute, actionFields, baseUrl);
     return actionRoute.urlLimit && url.length > actionRoute.urlLimit ? null : url;
   }
   const codexDesktopSession = platform === "desktop" && (agent === "codex" || agent === "chatgpt");
@@ -349,7 +361,7 @@ export function getAgentLink(
   if (agent === "openclaw" && (platform === "desktop" || platform === "ios") && fields.server) {
     return fields.prompt ? null : getOpenClawGatewayLink(fields.server, platform);
   }
-  if (route.required?.some((field) => !fields[field]?.trim())) return null;
+  if (route.required?.some((field) => !fields[field as LinkField]?.trim())) return null;
   if (agent === "github-copilot" && platform !== "vscode" &&
     !fields.repo && !fields.prompt?.trim() && !fields.customAgent?.trim()) return null;
 

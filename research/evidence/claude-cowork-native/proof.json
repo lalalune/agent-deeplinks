@@ -1,0 +1,37 @@
+{
+  "job": "https://github.com/lalalune/agent-deeplinks/actions/runs/46090177035/job/140809008712",
+  "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46090177035/artifacts/15240673309",
+  "artifactSha256": "164c7928b3137fea858e2135d6c29d6b361889aec712ce856e2d9317510612b1",
+  "qaCommit": "b13f4ef",
+  "installerManifest": "https://downloads.claude.ai/releases/darwin/universal/RELEASES.json",
+  "installerSha256": "800806556cacece6bdacbb9f3aef1849a9ed8d6fc2ee0eb2ed881a098d094eab",
+  "appBundleId": "com.anthropic.claudefordesktop",
+  "appVersion": "7.37095.0",
+  "appSignerTeam": "Q6L2SF6YDW",
+  "notarized": true,
+  "system": "macOS 26.7.2 (25G332) arm64",
+  "dispatch": "Stock LaunchServices /usr/bin/open",
+  "accountUsed": false,
+  "promptSubmitted": false,
+  "attachmentApproved": false,
+  "scope": "Stock cold dispatch and native sign-in. Composer and confirmation require an eligible account.",
+  "cases": [
+    {
+      "name": "blank",
+      "uri": "claude://cowork/new",
+      "appStoppedBeforeDispatch": true,
+      "matchingResolver": true,
+      "exactDispatch": true,
+      "signedOutWindowVisible": true
+    },
+    {
+      "name": "draft-and-attachments",
+      "uri": "claude://cowork/new?q=Cowork%20QA%20exact%20draft%20%2B%20%26%20caf%C3%A9%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2FUsers%2Frunner%2Fwork%2F_temp%2Fclaude-cowork%2Ffixture%2FQA%20caf%C3%A9%20%2B%20one&folder=%2FUsers%2Frunner%2Fwork%2F_temp%2Fclaude-cowork%2Ffixture%2FQA%20%26%20two&file=%2FUsers%2Frunner%2Fwork%2F_temp%2Fclaude-cowork%2Ffixture%2FQA%20caf%C3%A9%20%2B%20one%2FMarker%20%2B%20one.txt&file=%2FUsers%2Frunner%2Fwork%2F_temp%2Fclaude-cowork%2Ffixture%2FQA%20%26%20two%2FMarker%20%26%20two.txt",
+      "appStoppedBeforeDispatch": true,
+      "matchingResolver": true,
+      "exactDispatch": true,
+      "signedOutWindowVisible": true
+    }
+  ],
+  "signedOutAttachmentCaseScreenshot": "draft-and-attachments.png"
+}

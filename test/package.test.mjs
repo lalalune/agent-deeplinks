@@ -1417,6 +1417,38 @@ test("opens a Cursor Origin pull request on web, iOS, and Android", () => {
   assert.equal(getAgentLink("cursor", "android"), "https://cursor.com/agents");
 });
 
+test("opens a Claude Cowork draft with ordered local folder and file attachments", () => {
+  const action = "cowork";
+  const base = "claude://cowork/new";
+  const prompt = "Review only + & café ☃ %2F\nKeep this unsent.";
+  const folders = ["/tmp/QA café + one", "C:\\QA & two"];
+  const files = ["/tmp/QA café + one/a%2Fb.md", "C:\\QA & two\\b.txt"];
+  const options = { action, prompt, folders, files };
+  const expected = `${base}?q=${encodeURIComponent(prompt)}` +
+    folders.map((path) => `&folder=${encodeURIComponent(path)}`).join("") +
+    files.map((path) => `&file=${encodeURIComponent(path)}`).join("");
+  assert.equal(getAgentLink("claude", "desktop", options), expected);
+  assert.equal(getAgentLink("claude", "desktop", { action }), base);
+  assert.equal(getAgentLink("claude", "desktop", { action, folders: [], files: [] }), base);
+  assert.equal(getAgentLink("claude", "desktop", { action, prompt: "x".repeat(14_001) }), null);
+  for (const invalid of ["relative", "https://example.invalid/a.md", "/tmp/../other", "/tmp/a\nb", ""]) {
+    assert.equal(getAgentLink("claude", "desktop", { action, folders: [folders[0], invalid] }), null);
+    assert.equal(getAgentLink("claude", "desktop", { action, files: [invalid] }), null);
+  }
+  for (const invalid of [null, "/tmp/a.md", [42], Array(1)]) {
+    assert.equal(getAgentLink("claude", "desktop", { action, files: invalid }), null);
+  }
+  for (const platform of ["web", "ios", "android", "cli", "vscode"]) {
+    assert.equal(getAgentLink("claude", platform, options), null);
+  }
+  assert.equal(getAgentLink("claude", "desktop", { folders }), null);
+  assert.equal(getAgentLink("claude-code", "desktop", options), null);
+  for (const iconOnly of [false, true]) {
+    const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "claude", platform: "desktop", options, iconOnly }));
+    assert.ok(markup.includes(`href="${expected.replaceAll("&", "&amp;")}"`));
+  }
+});
+
 test("discovers supported actions without replacing default routes and uses them through React", () => {
   assert.deepEqual(getAgentActions("chatgpt", "android").map(({ id }) => id), ["shared-chat"]);
   assert.equal(getAgentLink("chatgpt", "android"), "https://chatgpt.com/open-app");
