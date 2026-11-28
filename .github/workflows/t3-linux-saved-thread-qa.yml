@@ -1,0 +1,96 @@
+name: T3 Code 0.1.13 Linux stock saved-thread draft QA
+
+on:
+  push:
+    branches: [codex/t3-linux-013-saved-thread]
+
+permissions:
+  contents: read
+
+jobs:
+  cold:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify exact registry SDK and stock Linux fixture executable
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/t3-cold-linux"
+          mkdir -p "$scratch/evidence" "$scratch/library" "$scratch/cli"
+          npm install --ignore-scripts --no-audit --no-fund --prefix "$scratch" playwright-core@1.58.2
+          curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 45 --max-filesize 300000 \
+            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.72.tgz -o "$scratch/library.tgz"
+          expected='nzw5UHbWGzh5NehruQ0q1ShMtrTN1jxWzK4gn+4KdQxP6qYM0znH8jVGYPCPxQnw+QdOWwI7a3+RnmI9g7oW9A=='
+          actual=$(openssl dgst -sha512 -binary "$scratch/library.tgz" | openssl base64 -A)
+          test "$actual" = "$expected"
+          printf 'sha512-%s\n' "$actual" > "$scratch/evidence/library-integrity.txt"
+          tar -xzf "$scratch/library.tgz" -C "$scratch/library" --strip-components 1
+          test "$(node -p 'require(process.argv[1]).version' "$scratch/library/package.json")" = 0.1.72
+          curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 110 --max-filesize 220000000 \
+            https://github.com/pingdotgg/t3code/releases/download/v0.1.13/t3-0.1.13-linux-x64.tar.gz -o "$scratch/cli.tgz"
+          test "$(stat -c %s "$scratch/cli.tgz")" = 185312913
+          printf '%s  %s\n' 64e0f8446d3f618b157d4e5a0a6808ab3c8bf1a1b3e44eab3100e554be05e5d7 "$scratch/cli.tgz" | sha256sum -c
+          sha256sum "$scratch/cli.tgz" > "$scratch/evidence/cli-sha256.txt"
+          tar -xzf "$scratch/cli.tgz" -C "$scratch/cli" --strip-components 1
+          test -x "$scratch/cli/t3"
+      - name: Install the vendor-checksum package and standard desktop prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/t3-cold-linux"
+          evidence="$scratch/evidence"
+          mkdir -p "$evidence"
+          asset="$scratch/T3-Code-0.1.13-amd64.deb"
+          curl --fail --silent --show-error --location --proto '=https' --connect-timeout 20 --max-time 120 --max-filesize 220000000 \
+            https://github.com/pingdotgg/t3code/releases/download/v0.1.13/T3-Code-0.1.13-amd64.deb -o "$asset"
+          test "$(stat -c %s "$asset")" = 208526808
+          printf '%s  %s\n' 630dfe9d041b42622d9e5d5b1138b3f1068136eb12af85ec34d491e33aeaa061 "$asset" | sha256sum -c
+          sha256sum "$asset" > "$evidence/sha256.txt"
+          sudo apt-get update -o Acquire::Retries=2
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            at-spi2-core dbus-x11 desktop-file-utils gsettings-desktop-schemas libglib2.0-bin openbox \
+            scrot tesseract-ocr xauth xclip xdg-utils xdotool xvfb
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "$asset"
+          dpkg-query -W t3code | tee "$evidence/installed.txt"
+          test "$(dpkg-query -W -f='${Version}' t3code)" = 0.1.13
+          cp /usr/share/applications/t3code.desktop "$evidence/"
+          grep -E '^(Exec|MimeType)=' "$evidence/t3code.desktop"
+          lsb_release -d > "$evidence/os.txt"
+      - name: Dispatch the exact URI in a fresh account-free desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/t3-cold-linux"
+          mkdir -m 700 "$scratch/home" "$scratch/config" "$scratch/data" "$scratch/cache" "$scratch/state" "$scratch/runtime" "$scratch/t3" "$scratch/fixture"
+          node_bin="$(command -v node)"
+          # Start only loopback in the new network namespace, then keep all test apps unprivileged.
+          # shellcheck disable=SC2016
+          sudo unshare --net --fork bash -euc '
+            ip link set lo up
+            ip -j link show > "$2/evidence/links.json"
+            ip -j route show table main > "$2/evidence/routes.json"
+            exec runuser -u "$1" -- env -i \
+              PATH="/usr/bin:/bin" HOME="$2/home" XDG_CONFIG_HOME="$2/config" \
+              XDG_DATA_HOME="$2/data" XDG_CACHE_HOME="$2/cache" XDG_STATE_HOME="$2/state" \
+              XDG_RUNTIME_DIR="$2/runtime" XDG_CURRENT_DESKTOP=GNOME XDG_DATA_DIRS=/usr/local/share:/usr/share \
+              T3CODE_HOME="$2/t3" T3CODE_TELEMETRY_ENABLED=false T3CODE_DISABLE_AUTO_UPDATE=true \
+              LANG=C.UTF-8 BROWSER=false \
+              xvfb-run -a --server-args="-screen 0 1536x1000x24" dbus-run-session -- \
+              "$3" .github/qa/t3-linux-saved-thread-qa.mjs "$2"
+          ' qa "$(id -un)" "$scratch" "$node_bin"
+      - name: Save XDG and native draft evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: t3-code-0.1.13-linux-saved-thread-evidence
+          path: ${{ runner.temp }}/t3-cold-linux/evidence
+          if-no-files-found: warn
+          retention-days: 14
