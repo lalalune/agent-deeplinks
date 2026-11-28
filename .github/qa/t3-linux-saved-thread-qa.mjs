@@ -15,13 +15,14 @@ const cli = join(scratch, "cli", "t3");
 const database = join(process.env.T3CODE_HOME, "userdata", "statev2.sqlite");
 const identity = join(process.env.T3CODE_HOME, "userdata", "environment-id");
 const load = createRequire(join(scratch, "package.json"));
-const { _electron } = load("playwright-core");
+const { chromium } = load("playwright-core");
 const { getAgentLink } = await import(pathToFileURL(join(scratch, "library/dist/index.js")));
 const mime = "x-scheme-handler/t3code";
 const marker = "LinuxProof8296 T3 saved thread + & %2F café ☃\nSecond line stays unsent";
 const expectedCounts = { threads: 1, runs: 0, provider_sessions: 0, provider_turns: 0 };
 const proof = { revision: "T3 Code 0.1.13 Linux amd64 DEB", libraryVersion: "0.1.72", binary,
   accountUsed: false, providerConnected: false, promptSubmitted: false };
+const observerOrigin = "http://127.0.0.1:14637";
 
 function run(file, args, options = {}) {
   const result = spawnSync(file, args, { encoding: "utf8", env: process.env, timeout: 6500, ...options });
@@ -119,8 +120,26 @@ function findMarker(png) {
   return null;
 }
 
+async function attachPackagedRenderer(pid) {
+  const listener = await eventually("The stock app did not expose a matching loopback renderer observer", 38000, () => {
+    const rows = run("ss", ["-H", "-ltnp", "sport = :14637"]).stdout.trim().split("\n").filter(Boolean);
+    return rows.length === 1 && rows[0].includes("127.0.0.1:14637") && rows[0].includes("pid=" + pid + ",");
+  });
+  assert.equal(listener, true);
+  proof.warmObserverMatchedAppPid = true;
+  const browser = await chromium.connectOverCDP(observerOrigin, { timeout: 12000 });
+  try {
+    const page = await eventually("The packaged app had no renderer target", 20000, () =>
+      browser.contexts().flatMap(context => context.pages()).find(page => page.url().startsWith("t3code://app/")));
+    return { browser, page };
+  } catch (error) {
+    await browser.close().catch(() => {});
+    throw error;
+  }
+}
+
 const manager = spawn("openbox", [], { stdio: "ignore" });
-let app;
+let browser;
 let cliProcess;
 let gioEvents;
 let launchedMessages = "";
@@ -168,31 +187,52 @@ try {
   proof.cliStopped = await Promise.race([cliExit, wait(8000).then(() => null)]);
   assert.ok(proof.cliStopped);
 
-  checkpoint("complete ordinary setup without an agent");
-  app = await _electron.launch({ executablePath: binary, args: ["--no-sandbox"], env: process.env, timeout: 50000 });
-  const page = await app.firstWindow({ timeout: 40000 });
-  await page.waitForFunction(() => location.hostname === "app" && document.body?.innerText?.trim(), undefined, { timeout: 25000 });
-  const skip = page.getByRole("button", { name: "Start without an agent", exact: true });
-  if (await skip.waitFor({ timeout: 9000 }).then(() => true, () => false)) {
-    await skip.click({ timeout: 8000 });
-    await page.waitForFunction(() => !location.hash.includes("/welcome"), undefined, { timeout: 15000 });
-    proof.onboardedWithoutAgent = true;
+  checkpoint("start the stock package directly with a loopback renderer observer");
+  const desktopLog = openSync(join(scratch, "private-desktop.log"), "wx", 0o600);
+  const desktop = spawn(binary, [
+    "--no-sandbox", "--remote-debugging-address=127.0.0.1", "--remote-debugging-port=14637",
+  ], { env: process.env, cwd: fixture, stdio: ["ignore", desktopLog, desktopLog] });
+  closeSync(desktopLog);
+  desktop.once("error", error => { proof.warmSpawnError = error.code; });
+  proof.warmPid = desktop.pid ?? null;
+  try {
+    proof.warmWindow = await eventually("The packaged app did not own a foreground setup window", 30000,
+      () => foreground(desktop.pid));
+    check("scrot", ["--overwrite", join(evidence, "ordinary-startup.png")]);
+    const connected = await attachPackagedRenderer(desktop.pid);
+    browser = connected.browser;
+    const page = connected.page;
+    await page.waitForFunction(() => document.body?.innerText?.trim(), undefined, { timeout: 25000 })
+      .catch(async () => {
+        proof.packagedRootBootstrap = true;
+        await page.goto("t3code://app/#/", { waitUntil: "domcontentloaded", timeout: 12000 });
+      });
+    const skip = page.getByRole("button", { name: "Start without an agent", exact: true });
+    if (await skip.waitFor({ timeout: 9000 }).then(() => true, () => false)) {
+      await skip.click({ timeout: 8000 });
+      await page.waitForFunction(() => !location.hash.includes("/welcome"), undefined, { timeout: 15000 });
+      proof.onboardedWithoutAgent = true;
+    }
+    checkpoint("dispatch the exact plain saved-thread link through the stock desktop handler");
+    proof.registration = registration();
+    proof.warmBaseline = page.url().split("#")[1] ?? "";
+    check("xdg-open", [blank]);
+    await page.waitForFunction(({ environmentId, threadId }) => {
+      const parts = new URL(location.href).hash.slice(1).split("?")[0].split("/").filter(Boolean).map(decodeURIComponent);
+      return parts[0] === environmentId && parts[1] === threadId;
+    }, { environmentId, threadId }, { timeout: 35000 });
+    const edit = page.locator("[contenteditable=true][data-lexical-editor=true]").filter({ visible: true });
+    await edit.first().waitFor({ state: "visible", timeout: 18000 });
+    assert.equal(await edit.first().evaluate(node => node.innerText.trim()), "");
+    proof.warmBlank = { exactThreadVisible: true, emptyEditor: true, pid: desktop.pid, page: page.url() };
+    check("scrot", ["--overwrite", join(evidence, "warm-blank-thread.png")]);
+  } catch (error) {
+    proof.warmObserverFailure = error.name;
+    proof.warmCheckpoint = proof.lastStage;
+    if (foreground(desktop.pid)) check("scrot", ["--overwrite", join(evidence, "warm-last-visible.png")]);
   }
-
-  checkpoint("dispatch the exact plain saved-thread link through the stock desktop handler");
-  proof.registration = registration();
-  proof.warmBaseline = page.url().split("#")[1] ?? "";
-  check("xdg-open", [blank]);
-  await page.waitForFunction(({ environmentId, threadId }) => {
-    const parts = new URL(location.href).hash.slice(1).split("?")[0].split("/").filter(Boolean).map(decodeURIComponent);
-    return parts[0] === environmentId && parts[1] === threadId;
-  }, { environmentId, threadId }, { timeout: 35000 });
-  const edit = page.locator("[contenteditable=true][data-lexical-editor=true]").filter({ visible: true });
-  await edit.first().waitFor({ state: "visible", timeout: 18000 });
-  assert.equal(await edit.first().evaluate(node => node.innerText.trim()), "");
-  proof.warmBlank = { exactThreadVisible: true, emptyEditor: true, pid: app.process().pid, page: page.url() };
-  await app.close();
-  app = undefined;
+  if (browser) await browser.close().catch(() => {});
+  browser = undefined;
   stopOwned();
   await eventually("An installed T3 process remained before cold dispatch", 19000, () => owned().length === 0);
   proof.processAbsentBeforeCold = true;
@@ -205,9 +245,9 @@ try {
   await wait(300);
   check("xdg-open", [draft]);
   const cold = await eventually("Stock XDG did not start a new owner with the exact URI argument", 40000, () =>
-    owned().find(info => info.executable === binary && info.argv.includes(draft) && info.pid !== proof.warmBlank.pid));
+    owned().find(info => info.executable === binary && info.argv.includes(draft) && info.pid !== proof.warmPid));
   proof.coldApp = cold;
-  assert.ok(launchedMessages.includes(draft), "The GIO launch trace did not contain the exact URI");
+  await eventually("The GIO launch trace did not contain the exact URI", 4000, () => launchedMessages.includes(draft));
   proof.gioLaunchedContainsExactUri = true;
 
   checkpoint("verify foreground draft with X11 and the native editor's Copy command");
@@ -237,7 +277,7 @@ try {
 } finally {
   if (gioEvents) gioEvents.kill("SIGTERM");
   if (launchedMessages) writeFileSync(join(evidence, "gio-launch.txt"), launchedMessages);
-  if (app) await app.close().catch(() => {});
+  if (browser) await browser.close().catch(() => {});
   if (cliProcess?.exitCode === null) cliProcess.kill("SIGTERM");
   stopOwned();
   manager.kill("SIGTERM");
