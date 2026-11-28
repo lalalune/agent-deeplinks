@@ -1,0 +1,42 @@
+{
+  "version": "0.1.70",
+  "tagCommit": "3539c53b6ad86eed5fdd01a386f8a8e57384ef1a",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46087238009",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46087238317",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46087238285",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.70",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.70/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://554ec02f.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://a04cc709.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "e2527dc68e3a1fdf83b186562a912e8512365ea8dfa2d1b0e0fcb66dcbca0e1e",
+  "githubReleaseZipSha256": "a0ec2cae7f11f134d835ea6aba05ac6b95ace0d88c0647f01817bfb74e9a83a7",
+  "productionAndZipHtmlSha256": "1bc2c3348fc4dfb6182f70378d911818f8d94fc9a2af611a6dc1d9cd26540770",
+  "productionAndZipJavaScriptSha256": "1fdcc5dc2a586d51b2c09f52555fa7d26d1fed9ac319deaa04869c73b284c5ed",
+  "bundle": "/assets/index-zLEG-Frk.js",
+  "packageTestsPassed": 58,
+  "primaryRoutes": 74,
+  "staticActionExamples": 64,
+  "openCodePairingButtonClicks": 12,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstalls": [
+    {
+      "source": "public npm registry by package name",
+      "reactMajor": 19,
+      "svgExports": 21,
+      "openCodeCopySharePairing": true
+    },
+    {
+      "source": "tarball extracted from GitHub release ZIP",
+      "reactMajor": 18,
+      "svgExports": 21,
+      "openCodeCopySharePairing": true
+    }
+  ],
+  "bothReactButtonStyles": true,
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}

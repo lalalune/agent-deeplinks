@@ -1,0 +1,110 @@
+{
+  "site": "https://deeplinks.fun/",
+  "results": [
+    {
+      "name": "desktop-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-zLEG-Frk.js",
+      "nativeAndroidSetupOnly": true,
+      "pairingCodeRequests": 0,
+      "blockedOrigins": [
+        "https://static.cloudflareinsights.com",
+        "https://fonts.googleapis.com"
+      ],
+      "checks": [
+        {
+          "type": "copy-share",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        },
+        {
+          "type": "copy-share",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        }
+      ]
+    },
+    {
+      "name": "desktop-firefox",
+      "version": "159.0",
+      "bundle": "/assets/index-zLEG-Frk.js",
+      "nativeAndroidSetupOnly": true,
+      "pairingCodeRequests": 0,
+      "blockedOrigins": [
+        "https://static.cloudflareinsights.com",
+        "https://fonts.googleapis.com"
+      ],
+      "checks": [
+        {
+          "type": "copy-share",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        },
+        {
+          "type": "copy-share",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        }
+      ]
+    },
+    {
+      "name": "iphone-webkit",
+      "bundle": "/assets/index-zLEG-Frk.js",
+      "nativeAndroidSetupOnly": true,
+      "checks": []
+    },
+    {
+      "name": "pixel-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-zLEG-Frk.js",
+      "nativeAndroidSetupOnly": true,
+      "pairingCodeRequests": 0,
+      "blockedOrigins": [
+        "https://static.cloudflareinsights.com",
+        "https://fonts.googleapis.com"
+      ],
+      "checks": [
+        {
+          "type": "copy-share",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": false,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        },
+        {
+          "type": "copy-share",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid&url=http%3A%2F%2F192.0.2.7%3A4096&name=QA%20Lab%20%2B%20Caf%C3%A9"
+        },
+        {
+          "type": "cli",
+          "iconOnly": true,
+          "href": "opencode://pair?code=qa_pair_fixture&url=https%3A%2F%2Fexample.invalid"
+        }
+      ]
+    }
+  ]
+}
