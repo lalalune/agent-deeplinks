@@ -1,0 +1,202 @@
+{
+  "url": "https://deeplinks.fun/",
+  "scope": "Trusted browser clicks intercepted before native dispatch.",
+  "result": [
+    {
+      "name": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "calls": [
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "ios"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "ios"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "android"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "android"
+        }
+      ]
+    },
+    {
+      "name": "narrow-firefox",
+      "browser": "159.0",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "calls": [
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "ios"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "ios"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "android"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "android"
+        }
+      ]
+    },
+    {
+      "name": "iphone-webkit",
+      "browser": "27.2",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "calls": [
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "ios"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "ios"
+        }
+      ]
+    },
+    {
+      "name": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-DTKbC1-x.js",
+      "calls": [
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": false,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new?q=Exact%20local%20draft%20caf%C3%A9%20%2B%20%26%20%E2%98%83%20%252F%0AKeep%20this%20unsent.&folder=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one&folder=C%3A%5CCowork%20QA%20%26%20two&file=%2Ftmp%2FCowork%20QA%20caf%C3%A9%20%2B%20one%2Fnotes%252F.md&file=C%3A%5CCowork%20QA%20%26%20two%5Cnotes.txt",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "Open Claude Cowork",
+          "href": "claude://cowork/new",
+          "iconOnly": true,
+          "platform": "desktop"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": false,
+          "platform": "android"
+        },
+        {
+          "label": "T3 Code: Add environment",
+          "href": "t3code://settings/environment-new",
+          "iconOnly": true,
+          "platform": "android"
+        }
+      ]
+    }
+  ]
+}

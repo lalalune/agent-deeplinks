@@ -1,0 +1,35 @@
+{
+  "version": "0.1.72",
+  "tagCommit": "8a1a6a7c22f4e7073f200c05e81119b49e12db11",
+  "hostedCi": "https://github.com/lalalune/agent-deeplinks/actions/runs/46091217374",
+  "registryPublicationWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46091217132",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.72",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.72/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://f6ef50ca.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://c0818051.agent-deeplinks.pages.dev/",
+  "githubAndZipTarballSha256": "3b0a4fab4f6c10204cc4c1912f3e65084ac65c18f6deb86b91999e89678d858d",
+  "githubReleaseZipSha256": "53060dfb53fed58df856b9a3a2620dd24f83290c72faf5ff452c8349e39849fd",
+  "productionAndZipHtmlSha256": "ba5ee7504d063c9cd074a4e77e853e4ba75f0133c95f25d6fbd02c697076069f",
+  "productionAndZipJavaScriptSha256": "d0dd07fcde2fb8ffc92ae9714657cdfc66093c4e9f93dbcc9b39ee825dc6ff4b",
+  "bundle": "/assets/index-DTKbC1-x.js",
+  "localPackageTestsPassed": 63,
+  "primaryRoutes": 74,
+  "staticActionExamples": 69,
+  "coworkAndT3ButtonTargets": 28,
+  "zcodeButtonTargets": 16,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshZipCoreInstall": {
+    "version": "0.1.72",
+    "reactInstalled": false,
+    "svgExports": 21,
+    "newActionsVerified": 3
+  },
+  "freshZipReactInstall": {
+    "reactVersion": "18.3.1",
+    "svgExports": 21,
+    "bothButtonStyles": true,
+    "newActionsVerified": 3
+  }
+}
