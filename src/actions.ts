@@ -5,7 +5,7 @@ export type AgentActionId =
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
   | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open"
-  | "cowork" | "add-environment" | "local-web";
+  | "cowork" | "add-environment" | "local-web" | "shared-canvas";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
@@ -709,6 +709,28 @@ const cursorSharedChat = sharedChat({
   sources: ["https://cursor.com/help/ai-features/shared-transcripts"],
   note: "Opens a read-only Cursor transcript in the browser. Access depends on how its author shared it.",
 }, "", { id: /^[a-z0-9][a-z0-9_-]{0,127}$/iu, example: "abc123" });
+const cursorCanvasId = /^(?!\.{1,2}$)[A-Za-z0-9._~-]+$/u;
+const cursorSharedCanvas: ActionDefinition = {
+  id: "shared-canvas", label: "Open shared canvas", url: "https://cursor.com/c/",
+  behavior: "launch", evidence: "observed",
+  sources: [
+    "https://cursor.com/docs/agent/tools/canvas#sharing-canvases",
+    "https://cursor.com/docs/release-notes/web",
+    "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/cursor-shared-canvas/proof.json",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Canvas share link or ID", "https://cursor.com/c/abc123")],
+  note: "Opens a shared Canvas in the browser. Cursor forwards older dashboard share links to this viewer. Viewing a canvas requires access to the team that published it.",
+  prepare: ({ target }, url) => {
+    const id = readId(target, cursorCanvasId, url);
+    if (id) return `${url}${encodeURIComponent(id)}`;
+    const legacy = readLink(target?.trim() ?? "", url);
+    if (legacy?.pathname.replace(/\/$/u, "") !== "/dashboard/shared-canvases") return null;
+    const [legacyId, duplicate] = legacy.searchParams.getAll("shareId");
+    return legacyId && duplicate === undefined && cursorCanvasId.test(legacyId)
+      ? `${url}${encodeURIComponent(legacyId)}` : null;
+  },
+};
 const claudeAndroidInstall: ActionDefinition = {
   id: "install", label: "Get Claude on Google Play",
   url: "https://play.google.com/store/apps/details?id=com.anthropic.claude",
@@ -996,10 +1018,10 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
     ],
   },
   cursor: {
-    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web"), cursorSharedChat],
+    web: [cursorPlugin, cursorMcp("https://cursor.com/install-mcp", "handoff"), cursorCustomization("command", "web"), cursorCustomization("rule", "web"), cursorPullRequest("web"), cursorSharedChat, cursorSharedCanvas],
     desktop: [cursorMcp("cursor://anysphere.cursor-deeplink/mcp/install", "confirm"), cursorCustomization("command", "desktop"), cursorCustomization("rule", "desktop")],
-    ios: [cursorPullRequest("ios"), cursorSharedChat],
-    android: [cursorPullRequest("android"), cursorSharedChat],
+    ios: [cursorPullRequest("ios"), cursorSharedChat, cursorSharedCanvas],
+    android: [cursorPullRequest("android"), cursorSharedChat, cursorSharedCanvas],
   },
   antigravity: {
     web: [antigravityWebMarketplace, antigravityWebPlugin, antigravityRemoteSession],

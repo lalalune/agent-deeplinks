@@ -1240,6 +1240,32 @@ test("opens public Grok conversations from both share ID forms", () => {
   assert.equal(getAgentLink("grok", "desktop", { action: "shared-chat", target: legacyId }), null);
 });
 
+test("opens current and legacy Cursor Canvas shares in a browser", () => {
+  const action = "shared-canvas";
+  const id = "qa-canvas_20261127";
+  const href = `https://cursor.com/c/${id}`;
+  const legacy = `https://cursor.com/dashboard/shared-canvases?shareId=${id}`;
+  for (const platform of ["web", "ios", "android"]) {
+    for (const target of [id, href, `${href}/?source=copy#discard`, legacy]) {
+      assert.equal(getAgentLink("cursor", platform, { action, target }), href);
+    }
+    for (const target of [
+      "", ".", "..", `${href}%2Fother`, `${href}/other`, `${legacy}&shareId=another`,
+      "https://cursor.com/dashboard/shared-canvases", `https://cursor.com.example/c/${id}`,
+      `https://elsewhere.example@cursor.com/c/${id}`, `http://cursor.com/c/${id}`,
+      `https://cursor.com/s/${id}`, `https://cursor.com/dashboard/shared-canvases?shareId=a%2Fb`,
+    ]) {
+      assert.equal(getAgentLink("cursor", platform, { action, target }), null, target);
+    }
+    for (const iconOnly of [true, false]) {
+      const options = { action, target: legacy };
+      const markup = renderToStaticMarkup(createElement(AgentLink, { agent: "cursor", platform, options, iconOnly }));
+      assert.ok(markup.includes(`href="${href}"`));
+    }
+  }
+  assert.equal(getAgentLink("cursor", "desktop", { action, target: id }), null);
+});
+
 test("opens the exact loopback URL printed by ZCode Web", () => {
   const action = "local-web";
   for (const [target, href] of [

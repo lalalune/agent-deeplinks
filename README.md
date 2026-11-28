@@ -241,7 +241,7 @@ const pluginChatUrl = getAgentLink("codex", "desktop", {
 
 See [research/plugin-links.md](research/plugin-links.md) for all supported action IDs, parameters, and provider requirements.
 
-In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cursor **Origin PR** link, or Cursor **Shared transcript** link. Viewing these destinations requires the access granted by their owner. For a Cursor transcript in a desktop or mobile browser, use `shared-chat` with the share ID or the full `https://cursor.com/s/…` URL. [Cursor shared transcripts](https://cursor.com/help/ai-features/shared-transcripts)
+In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cursor **Origin PR** link, or Cursor **Shared transcript** link. Viewing these destinations requires the access granted by their owner. For a Cursor transcript in a desktop or mobile browser, use `shared-chat` with the share ID or the full `https://cursor.com/s/…` URL. Use `shared-canvas` for `https://cursor.com/c/…`, a canvas share ID, or an older Shared Canvases dashboard link. Cursor restricts shared canvases to members of the publishing team. [Cursor shared transcripts](https://cursor.com/help/ai-features/shared-transcripts) · [Cursor canvases](https://cursor.com/docs/agent/tools/canvas#sharing-canvases)
 
 Use **Shared chat** to paste a ChatGPT, Claude, Codex, Grok, Kimi, or ZCode share link. The playground offers each provider on its supported targets and keeps Kimi's public chat example available. In your code, pass the link as `target` with `action: "shared-chat"` to `getAgentLink`. The link retains the author's sharing permissions.
 
