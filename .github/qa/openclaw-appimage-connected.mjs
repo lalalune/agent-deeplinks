@@ -185,6 +185,8 @@ try {
     return visible.includes(current) && current;
   });
   report.disposableSetup = { window: setupWindow, route: 'Direct connection from the native setup wizard', origin, prefix };
+  checked('xdotool', ['windowmove', '--sync', setupWindow, '40', '35']);
+  checked('xdotool', ['windowsize', '--sync', setupWindow, '1510', '1040']);
   const setupPage = await awaitValue('No welcome or location page in the native setup window', 35_000, () => {
     const captured = capture('before-credentials');
     return /get started|on another computer|where should your assistant live/iu.test(captured.text) ? captured : null;
@@ -198,9 +200,11 @@ try {
   report.disposableSetup.inputs.push(await setupAction('click', 'On another computer'));
   report.disposableSetup.inputs.push(await setupAction('focus', 'Gateway URL'));
   checked('xdotool', ['type', '--clearmodifiers', '--file', '-'], { input: origin + prefix });
+  await evidenceFrame(capture('direct-form'), 'direct-form');
   report.disposableSetup.inputs.push(await setupAction('focus', 'Gateway token'));
   checked('xdotool', ['type', '--clearmodifiers', '--file', '-'], { input: token });
-  report.disposableSetup.inputs.push(await setupAction('click', 'Connect to Gateway'));
+  checked('xdotool', ['key', '--clearmodifiers', 'Return']);
+  report.disposableSetup.inputs.push('X11 Return from the native masked credential field');
 
   const initial = await awaitValue('AppImage did not visibly attach to the live Control UI', 120_000, () => {
     const window = command('xdotool', ['search', '--onlyvisible', '--pid', String(report.app.pid)]);
