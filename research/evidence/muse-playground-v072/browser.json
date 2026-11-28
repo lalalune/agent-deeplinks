@@ -1,0 +1,170 @@
+{
+  "site": "https://deeplinks.fun/",
+  "libraryVersion": "0.1.72",
+  "productionSha256": "ba5ee7504d063c9cd074a4e77e853e4ba75f0133c95f25d6fbd02c697076069f",
+  "chromeVersion": "158.0.8127.37",
+  "accountUsed": false,
+  "credentialsSubmitted": false,
+  "checks": [
+    {
+      "platform": "desktop",
+      "style": "named",
+      "exactUrl": "https://agent.meta.ai/chat",
+      "navigations": [
+        {
+          "status": 302,
+          "url": "https://agent.meta.ai/chat"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/chat?"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/"
+        },
+        {
+          "status": 200,
+          "url": "https://muse.ai/?aymh_complete=1"
+        }
+      ],
+      "anchor": {
+        "href": "https://agent.meta.ai/chat",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "text": "Meta Muse",
+        "decodedSvg": true
+      },
+      "activation": {
+        "trusted": true,
+        "active": true,
+        "href": "https://agent.meta.ai/chat"
+      },
+      "destination": "https://muse.ai/",
+      "visibleText": [
+        "Log in or create an account",
+        "Ready to try Muse?",
+        "Log in"
+      ]
+    },
+    {
+      "platform": "desktop",
+      "style": "icon",
+      "exactUrl": "https://agent.meta.ai/chat",
+      "navigations": [
+        {
+          "status": 302,
+          "url": "https://agent.meta.ai/chat"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/chat?"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/"
+        },
+        {
+          "status": 200,
+          "url": "https://muse.ai/?aymh_complete=1"
+        }
+      ],
+      "anchor": {
+        "href": "https://agent.meta.ai/chat",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "text": "",
+        "decodedSvg": true
+      },
+      "activation": {
+        "trusted": true,
+        "active": true,
+        "href": "https://agent.meta.ai/chat"
+      },
+      "destination": "https://muse.ai/",
+      "visibleText": [
+        "Log in or create an account",
+        "Ready to try Muse?",
+        "Log in"
+      ]
+    },
+    {
+      "platform": "web",
+      "style": "named",
+      "exactUrl": "https://muse.ai/chat?nr=1",
+      "navigations": [
+        {
+          "status": 307,
+          "url": "https://muse.ai/chat?nr=1"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/?nr=1"
+        },
+        {
+          "status": 200,
+          "url": "https://muse.ai/?nr=1&aymh_complete=1"
+        }
+      ],
+      "anchor": {
+        "href": "https://muse.ai/chat?nr=1",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "text": "Meta Muse",
+        "decodedSvg": true
+      },
+      "activation": {
+        "trusted": true,
+        "active": true,
+        "href": "https://muse.ai/chat?nr=1"
+      },
+      "destination": "https://muse.ai/?nr=1&aymh_complete=1",
+      "visibleText": [
+        "Log in or create an account",
+        "Ready to try Muse?",
+        "Log in"
+      ]
+    },
+    {
+      "platform": "web",
+      "style": "icon",
+      "exactUrl": "https://muse.ai/chat?nr=1",
+      "navigations": [
+        {
+          "status": 307,
+          "url": "https://muse.ai/chat?nr=1"
+        },
+        {
+          "status": 307,
+          "url": "https://muse.ai/?nr=1"
+        },
+        {
+          "status": 200,
+          "url": "https://muse.ai/?nr=1&aymh_complete=1"
+        }
+      ],
+      "anchor": {
+        "href": "https://muse.ai/chat?nr=1",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "text": "",
+        "decodedSvg": true
+      },
+      "activation": {
+        "trusted": true,
+        "active": true,
+        "href": "https://muse.ai/chat?nr=1"
+      },
+      "destination": "https://muse.ai/?nr=1",
+      "visibleText": [
+        "Log in or create an account",
+        "Ready to try Muse?",
+        "Log in"
+      ]
+    }
+  ],
+  "result": "Four live Playground buttons opened the public browser destination",
+  "npmTarballSha256": "4a51021c6227eab8020d2aa3f15f47b2763af224cbd86ce43e71f5c25858820b",
+  "macos": "26.2",
+  "architecture": "arm64"
+}
