@@ -4,7 +4,8 @@ export type AgentActionId =
   | "app" | "plugin" | "plugin-install" | "plugin-chat" | "team-plugin"
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
-  | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open" | "cowork";
+  | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open"
+  | "cowork" | "add-environment";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
@@ -58,6 +59,7 @@ const cursorOriginDocs = "https://cursor.com/docs/origin/pull-requests";
 const cursorOriginPullRequestPath = /^[A-Za-z0-9][A-Za-z0-9_-]*\/(?!\.{1,2}\/)[A-Za-z0-9_.-]+\/pull\/[1-9][0-9]*$/u;
 const cursorOriginPullRequestChecks = "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/cursor-origin-pull-request/proof.json";
 const t3PullRequestSource = "https://github.com/pingdotgg/t3code/blob/v0.1.13/packages/shared/src/promptLinks.ts";
+const t3AddEnvironmentSource = "https://github.com/pingdotgg/t3code/blob/7deb51b5503c172eb3abddc6f0efec701e685cd4/apps/mobile/src/Stack.tsx#L313-L317";
 const t3PullRequestUrl = /^https?:\/\/(?:www\.)?github\.com\/([^/?#]+)\/([^/?#]+)\/pull\/(\d+)(?:[/?#].*)?$/iu;
 const t3PullRequestShorthand = /^([^/\s#]+)\/([^/\s#]+)(?:\/|#)(\d+)$/u;
 const t3PullRequestOwner = /^[A-Za-z0-9][A-Za-z0-9-]{0,38}$/u;
@@ -839,6 +841,14 @@ function normalizeOpenCodeNativePairing(url: string, query: string): string | nu
   return `${url}?${queryItems.join("&")}`;
 }
 
+const t3AddEnvironment: ActionDefinition = {
+  id: "add-environment", label: "Add environment", url: "t3code://settings/environment-new",
+  behavior: "launch", evidence: "source", sources: [t3AddEnvironmentSource],
+  note: "Opens the mobile Add Environment form. Enter the address and pairing code in T3 Code.",
+  fields: {}, required: [], inputs: [],
+  prepare: (_fields, url) => url,
+};
+
 const grokMobileActions = [grokPlugin, grokTeamPlugin, grokTeamBot.mobile, grokBotTemplate.mobile];
 const codexSettingsSections = [
   { value: "", label: "Main Settings" },
@@ -981,7 +991,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
   openclaw: { desktop: [openClawCatalogInstall("plugin"), openClawCatalogInstall("skill"), openClawCatalogInstall("template")] },
   "t3-code": {
     web: [t3PullRequest("web")], desktop: [t3PullRequest("desktop")],
-    ios: [t3PullRequest("ios")], android: [t3PullRequest("android")],
+    ios: [t3PullRequest("ios"), t3AddEnvironment], android: [t3PullRequest("android"), t3AddEnvironment],
   },
   opencode: {
     web: [openCodePairing({

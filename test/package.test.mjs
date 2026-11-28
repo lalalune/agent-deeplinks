@@ -8,6 +8,21 @@ import { AgentLink } from "../dist/react.js";
 
 const special = "Keep A&B + café/🎉?\nNew line.";
 
+test("opens the blank mobile T3 Code environment setup form", () => {
+  const options = { action: "add-environment" };
+  const href = "t3code://settings/environment-new";
+  for (const platform of ["ios", "android"]) {
+    assert.equal(getAgentLink("t3-code", platform, options), href);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, target: "https://example.com/pair#token=value" }), null);
+    assert.equal(getAgentLink("t3-code", platform, { ...options, prompt: special }), null);
+    assert.deepEqual(getAgentRoute("t3-code", platform, options.action).required, []);
+    assert.match(renderToStaticMarkup(createElement(AgentLink, { agent: "t3-code", platform, options })),
+      /href="t3code:\/\/settings\/environment-new"/u);
+  }
+  assert.equal(getAgentLink("t3-code", "web", options), null);
+  assert.equal(getAgentLink("t3-code", "desktop", options), null);
+});
+
 test("opens an OpenCode pairing review from an issued connect link", () => {
   const source = "http://10.0.2.2:18443/auth/connect/qa_Code-123";
   const android = "opencode://pair?code=qa_Code-123&url=http%3A%2F%2F10.0.2.2%3A18443";

@@ -378,6 +378,12 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
       options: (platform) => platform === "android" ? {} : { target: "https://code.example.com/auth/connect/example_code" },
     },
   },
+  "t3-code": {
+    "add-environment": {
+      label: "Add environment",
+      options: () => ({}),
+    },
+  },
   kimi: {
     "shared-chat": {
       label: "Public chat example",
