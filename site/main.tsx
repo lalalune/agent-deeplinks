@@ -158,6 +158,8 @@ const DESTINATION_EXAMPLES: readonly DestinationExample[] = [
     placeholder: "session_… or cse_…", field: "session" },
   { agent: "grok", label: "Shared chat", inputLabel: "Grok share link or ID",
     placeholder: "https://grok.com/share/…", action: "shared-chat" },
+  { agent: "grok-bot", label: "Public Page", inputLabel: "Public Grok Bot Page link",
+    placeholder: "https://bot-team-kanban-example-2ncd.pages.grok.bot/", action: "bot-page" },
   { agent: "kimi", label: "Shared chat", inputLabel: "Kimi share link or ID",
     placeholder: "https://www.kimi.ai/share/…", action: "shared-chat" },
   { agent: "zcode", label: "Shared chat", inputLabel: "ZCode share link or code",
@@ -308,6 +310,10 @@ const ACTION_EXAMPLES: Partial<Record<AgentId, Partial<Record<AgentActionId, Act
     "bot-marketplace": {
       label: "Bot Marketplace",
       options: () => ({ target: "bots/projects-manager" }),
+    },
+    "bot-page": {
+      label: "Public Page",
+      options: () => ({ target: "https://bot-team-kanban-example-2ncd.pages.grok.bot/" }),
     },
   },
   antigravity: {

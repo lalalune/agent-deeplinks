@@ -1,0 +1,131 @@
+{
+  "verifiedAtUtc": "2026-11-28T00:33:40+00:00",
+  "baseCommit": "470142a5848d12a1fe77e17628b0b4f662c7d534",
+  "testedBuild": "Local package and production site build with the bot-page change",
+  "builtActionsSha256": "9b8311cf6f55e7c347a13b427cc260c84f996d7a12fe0609c1760331f27b2c32",
+  "builtPlaygroundSha256": "bcc638196a2e6c3b1a36a0f3d49565a800b5e45b8fae835eb69e21a5a22b6367",
+  "officialDocs": "https://docs.x.ai/grok-bot/files-and-results#share-a-page",
+  "publishedExampleListing": "https://github.com/Agent-Analytics/awesome-grok-bot-pages#agent-orchestration",
+  "action": "bot-page",
+  "targetBeforeNormalization": "https://bot-team-kanban-example-2ncd.pages.grok.bot/?ref=inert#drop",
+  "canonicalUrl": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+  "browsers": [
+    {
+      "profile": "desktop-chromium",
+      "engineVersion": "158.0.8127.18",
+      "packagePlatform": "web",
+      "generated": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "pageTitle": "Bot Team Kanban (example) - Grok Bot",
+      "final": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "visibleTitle": "Bot Team Kanban",
+      "visibleCanvasText": [
+        "Six bots.",
+        "One board.",
+        "Example data",
+        "14 cards in motion"
+      ],
+      "visibleTryGrokBot": true,
+      "publicReads": [
+        [
+          "GET",
+          "/",
+          200
+        ],
+        [
+          "GET",
+          "/__cursor/frame",
+          200
+        ]
+      ],
+      "blocked": [
+        "POST https://bot-team-kanban-example-2ncd.pages.grok.bot/__cursor/view"
+      ],
+      "screenshotSha256": "1fc0af64ba09f65a134c4af8134d2a8edb6aa247770dac3cfe879b247256ae30",
+      "screenshot": "desktop-chromium.png"
+    },
+    {
+      "profile": "android-pixel-9",
+      "engineVersion": "158.0.8127.18",
+      "packagePlatform": "android",
+      "generated": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "pageTitle": "Bot Team Kanban (example) - Grok Bot",
+      "final": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "visibleTitle": "Bot Team Kanban",
+      "visibleCanvasText": [
+        "Six bots.",
+        "One board.",
+        "Example data",
+        "14 cards in motion"
+      ],
+      "visibleTryGrokBot": true,
+      "publicReads": [
+        [
+          "GET",
+          "/",
+          200
+        ],
+        [
+          "GET",
+          "/__cursor/frame",
+          200
+        ]
+      ],
+      "blocked": [
+        "POST https://bot-team-kanban-example-2ncd.pages.grok.bot/__cursor/view"
+      ],
+      "screenshotSha256": "3db0c54aec88408cf2bc392b8438622b40db013686d2c636a3876570910ded3b",
+      "screenshot": "android-pixel-9.png"
+    },
+    {
+      "profile": "iphone-15",
+      "engineVersion": "27.2",
+      "packagePlatform": "ios",
+      "generated": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "pageTitle": "Bot Team Kanban (example) - Grok Bot",
+      "final": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "visibleTitle": "Bot Team Kanban",
+      "visibleCanvasText": [
+        "Six bots.",
+        "One board.",
+        "Example data",
+        "14 cards in motion"
+      ],
+      "visibleTryGrokBot": true,
+      "publicReads": [
+        [
+          "GET",
+          "/",
+          200
+        ],
+        [
+          "GET",
+          "/__cursor/frame",
+          200
+        ]
+      ],
+      "blocked": [
+        "POST https://bot-team-kanban-example-2ncd.pages.grok.bot/__cursor/view"
+      ],
+      "screenshotSha256": "a49ab94f20ce54abc9af66265c91f3202046313e1f98badfb2964aa7cca3e4e9",
+      "screenshot": "iphone-15.png"
+    }
+  ],
+  "playground": {
+    "engineVersion": "158.0.8127.18",
+    "servedFromLoopback": true,
+    "staticLink": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+    "visiblePublicBoardAfterClick": true,
+    "iconAndName": true,
+    "iconOnly": true,
+    "configuredLink": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+    "rejectedOffDomainInput": true,
+    "mobileLinks": {
+      "iOS": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+      "Android": "https://bot-team-kanban-example-2ncd.pages.grok.bot/"
+    },
+    "desktopNativeButtonCount": 0,
+    "screenshot": "playground-configured.png",
+    "screenshotSha256": "507e6f9961305b1b1b7de60e46eb2413f4e9fd46aab4b71feb6a4625f8c2778f"
+  },
+  "boundary": "Fresh desktop and mobile browser profiles. Same-origin public reads and local Blob/data resources only. Service workers, WebSockets, and network writes were blocked. Mobile browsers used device profiles. No Grok Bot account was used."
+}
