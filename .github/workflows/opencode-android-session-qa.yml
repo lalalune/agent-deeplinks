@@ -1,8 +1,8 @@
-name: OpenCode Android 0.8.13 vendor pairing forms QA
+name: OpenCode Android 0.8.13 feature SDK Copy and Share QA
 
 on:
   push:
-    branches: [codex/opencode-android-0813-vendor-pairing]
+    branches: [codex/opencode-android-0813-sdk-copy-share]
     paths: [.github/workflows/opencode-android-session-qa.yml, .github/qa/opencode-android-*]
 
 permissions:
@@ -52,27 +52,35 @@ jobs:
           jarsigner -verify "$aab" | grep -F 'jar is unsigned'
       - uses: actions/checkout@v5
         with:
+          fetch-depth: 3
           persist-credentials: false
       - uses: actions/setup-node@v5
         with:
           node-version: 24
+      - name: Pack the exact feature SDK from Git
+        env:
+          SDK_COMMIT: 02afbe43fc5da73c1eeecd1cf2161e35dd95eb24
+        shell: bash
+        run: |
+          set -euo pipefail
+          qa="$RUNNER_TEMP/opencode-android-qa"
+          mkdir -p "$qa/evidence" "$qa/library"
+          git worktree add --detach "$qa/sdk-src" "$SDK_COMMIT"
+          cd "$qa/sdk-src"
+          git rev-parse HEAD | tee "$qa/evidence/sdk-git-commit.txt" | grep -Fx "$SDK_COMMIT"
+          npm ci --no-audit --no-fund
+          npm pack --pack-destination "$qa/library" --json > "$qa/evidence/npm-pack.json"
+          package=$(jq -er '.[0].filename' "$qa/evidence/npm-pack.json")
+          cd "$qa/library"
+          sha256sum "$package" | tee "$qa/evidence/npm-digest.txt"
+          tar -xzf "$package"
+          test "$(node -p 'require("./package/package.json").version')" = 0.1.69
       - name: Prepare stock Android SDK and verified Linux server
         shell: bash
         run: |
           set -euo pipefail
           qa="$RUNNER_TEMP/opencode-android-qa"
           mkdir -p "$qa/evidence" "$qa/cli"
-          curl -sS --proto '=https' --max-time 12 --output /dev/null --write-out 'public pairing page %{http_code}\n' \
-            'https://opencode.ai/pair' > "$qa/evidence/public-web-paths.txt"
-          curl -sS --proto '=https' --max-time 12 --output /dev/null --write-out 'Android assetlinks %{http_code}\n' \
-            'https://opencode.ai/.well-known/assetlinks.json' >> "$qa/evidence/public-web-paths.txt"
-          mkdir -p "$qa/library"
-          curl -fsS --proto '=https' --max-time 25 --max-filesize 300000 \
-            https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz -o "$qa/library.tgz"
-          printf '%s  %s\n' 223a0fdbd0208507b8c02d879e99c2e674ac608fa27e5d63ba0c26ef558d4bf8 "$qa/library.tgz" \
-            | sha256sum --check | tee "$qa/evidence/npm-digest.txt"
-          tar -xzf "$qa/library.tgz" -C "$qa/library"
-          test "$(node -p 'require(process.argv[1]).version' "$qa/library/package/package.json")" = 0.1.68
           sdk="$qa/sdk"
           curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 120 --max-filesize 210000000 \
             https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip -o "$qa/android-command-line-tools.zip"
@@ -96,13 +104,13 @@ jobs:
           curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 75 --max-filesize 35000000 \
             https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar -o "$qa/bundletool.jar"
           printf '%s  %s\n' a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29 "$qa/bundletool.jar" | sha256sum --check | tee "$qa/evidence/bundletool-digest.txt"
-      - name: Verify vendor forms reach stock Android pairing review and scratch servers
+      - name: Verify the feature SDK output reaches the stock Android pairing review
         shell: bash
         run: bash .github/qa/opencode-android-hosted.sh "$RUNNER_TEMP/opencode-android-qa" "$RUNNER_TEMP/opencode-android-0.8.13.aab"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: opencode-android-0.8.13-vendor-pairing-evidence
+          name: opencode-android-0.8.13-sdk-copy-share-evidence
           path: ${{ runner.temp }}/opencode-android-qa/evidence/
           if-no-files-found: ignore
           retention-days: 30

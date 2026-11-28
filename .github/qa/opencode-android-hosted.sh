@@ -13,6 +13,7 @@ avd=opencode-hosted-release-36
 serial=emulator-5554
 package=ai.opencode.mobilecode
 avd_pid=
+proxy_pid=
 servers_started=()
 cli=
 
@@ -38,6 +39,7 @@ finish() {
     fi
     kill "$avd_pid" 2>/dev/null || true
   fi
+  if [[ -n "$proxy_pid" ]]; then kill "$proxy_pid" 2>/dev/null || true; fi
   for fixture in "${servers_started[@]}"; do
     server_for "$fixture" service stop > "$evidence/service-stop-$fixture.log" 2>&1 || true
   done
@@ -54,11 +56,11 @@ trap 'exit 130' INT
 
 mkdir -p "$qa/android/avd"
 export ANDROID_USER_HOME="$qa/android" ANDROID_AVD_HOME="$qa/android/avd"
-for fixture in A B; do
+for fixture in A; do
   mkdir -p "$qa/$fixture"/{home,cache,config,data,state,tmp,runtime,"OpenCode $fixture Default"}
 done
 mkdir -p "$qa/A/OpenCode A Target"
-for project in "$qa/A/OpenCode A Default" "$qa/B/OpenCode B Default" "$qa/A/OpenCode A Target"; do
+for project in "$qa/A/OpenCode A Default" "$qa/A/OpenCode A Target"; do
   git -C "$project" -c init.defaultBranch=main init -q
   git -C "$project" -c user.name=QA -c user.email=fixture@example.invalid commit -q --allow-empty -m "QA fixture ${project##*/}"
 done
@@ -87,7 +89,7 @@ DEEPLINKS_QA_NODE=$(command -v node)
 DEEPLINKS_QA_LIBRARY="$qa/library/package/dist/index.js"
 server_for A --version | tee "$evidence/cli-version.txt"
 grep -qx 'opencode v2.4.2' "$evidence/cli-version.txt"
-for fixture in A B; do
+for fixture in A; do
   port=$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1",0)); print(s.getsockname()[1])')
   server_for "$fixture" service set hostname 127.0.0.1
   server_for "$fixture" service set port "$port"
@@ -98,6 +100,17 @@ for fixture in A B; do
   python3 "$workspace/.github/qa/opencode-android-idle.py" "$qa/$fixture" "$port" "$fixture"
   cp "$qa/$fixture/session-fixture.json" "$evidence/session-fixture-$fixture.json"
 done
+python3 "$workspace/.github/qa/opencode-android-loopback-proxy.py" "$qa/alternate-port.txt" "$port" > "$qa/proxy.log" 2>&1 &
+proxy_pid=$!
+for _ in {1..30}; do
+  kill -0 "$proxy_pid"
+  [[ -s "$qa/alternate-port.txt" ]] && break
+  sleep 0.2
+done
+alternate=$(cat "$qa/alternate-port.txt")
+[[ "$alternate" =~ ^[0-9]+$ && "$alternate" != "$port" ]]
+lsof -nP -iTCP:"$alternate" -sTCP:LISTEN > "$evidence/listener-alternate-A.txt"
+awk -v local="127.0.0.1:$alternate" 'NR>1 {n++; if ($9!=local) exit 1} END {if (n!=1) exit 1}' "$evidence/listener-alternate-A.txt"
 
 if "$adb" devices | awk -v serial="$serial" '$1==serial { seen=1 } END {exit !seen}'; then exit 3; fi
 printf '%s\n' no | avdmanager create avd --name "$avd" --package 'system-images;android-36;default;x86_64' --device pixel_7 > "$evidence/avd-create.log" 2>&1
@@ -117,13 +130,13 @@ timeout 16 "$adb" -s "$serial" shell cmd activity wait-for-broadcast-idle > "$ev
 "$adb" -s "$serial" shell dumpsys package "$package" | awk '/versionCode=|versionName=/' > "$evidence/version.txt"
 grep -q "versionCode=$version_code" "$evidence/version.txt"
 grep -q 'versionName=0.8.13' "$evidence/version.txt"
-for fixture in A B; do
+for fixture in A; do
   endpoint=$(jq -r .address "$qa/$fixture/session-fixture.json")
   server_for "$fixture" pair --url "$endpoint" > "$qa/$fixture/issuer.private" 2>&1
 done
 "$adb" -s "$serial" shell pm get-app-links "$package" > "$evidence/native-app-link-associations.txt"
 python3 "$workspace/.github/qa/opencode-android-pair.py" "$qa" "$adb" "$serial" "$package"
-for fixture in A B; do
+for fixture in A; do
   python3 - "$qa/$fixture/data/opencode/opencode.db" "$evidence/db-counts-$fixture.txt" "$fixture" <<'PYCOUNTS'
 import pathlib, sqlite3, sys
 with sqlite3.connect(f'file:{sys.argv[1]}?mode=ro', uri=True) as db:
@@ -132,4 +145,4 @@ pathlib.Path(sys.argv[2]).write_text('\n'.join(f'{table}|{count}' for table, cou
 assert result == {'session_v2': 2 if sys.argv[3] == 'A' else 1, 'session_message': 0, 'account': 0}
 PYCOUNTS
 done
-jq -e '.pairs.A.confirmed and .pairs.B.confirmed and .pairs.A.defaultsToOpenCode and (.pairs.B.defaultsToOpenCode | not) and .routes["scoped-A"].cold and .routes["scoped-A"].destinationVisible and .routes["project-draft-A"].destinationVisible and .browserRoute.openCodeAbsentFromResolver' "$qa/proof.json"
+jq -e '.pair.confirmed and .pair.cold and .pair.defaultsToOpenCode and .pair.savedLabelVisible and (.pair.originProbes | length == 2) and .routes["project-draft-A"].destinationVisible' "$qa/proof.json"

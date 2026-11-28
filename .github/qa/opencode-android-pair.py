@@ -1,4 +1,3 @@
-import base64
 import json
 import os
 import pathlib
@@ -7,32 +6,26 @@ import shlex
 import subprocess
 import sys
 import time
-from urllib.parse import quote, urlencode, urlsplit
+from urllib.parse import parse_qsl, quote, urlencode, urlsplit
 from xml.etree import ElementTree
 
 root = pathlib.Path(sys.argv[1])
 adb, serial, package = sys.argv[2:]
 activity = f'{package}/ai.opencode.app.MainActivity'
 args = '-a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d '
-fixtures = {
-    name: json.loads((root / name / 'session-fixture.json').read_text())
-    for name in ('A', 'B')
-}
-codes = {}
-for name, fixture in fixtures.items():
-    issued = (root / name / 'issuer.private').read_text()
-    matches = re.findall(r"(?m)^\s*" + re.escape(fixture['address']) + r"/auth/connect/([A-Za-z0-9_-]+)\s*$", issued)
-    assert len(matches) == 1, 'Pairing issuer did not return one matching sandbox code'
-    codes[name] = matches[0]
-pair_payloads = {}
-assert fixtures['A']['key'] != fixtures['B']['key']
+fixture = json.loads((root / 'A/session-fixture.json').read_text())
+issued = (root / 'A/issuer.private').read_text()
+matches = re.findall(r"(?m)^\s*" + re.escape(fixture['address']) + r"/auth/connect/([A-Za-z0-9_-]+)\s*$", issued)
+assert len(matches) == 1, 'Pairing issuer did not return one matching sandbox code'
+code = matches[0]
 proof = {
     'certificate': os.environ['DEEPLINKS_QA_CERT'],
     'client': 'Anomaly OpenCode 0.8.13 upstream release AAB with disposable test signing',
-    'server': 'Two isolated OpenCode 2.4.2 servers',
-    'pairs': {},
+    'server': 'One isolated OpenCode 2.4.2 server reachable at two runner loopback ports',
+    'pair': {},
     'routes': {},
-    'libraryVersion': '0.1.68',
+    'libraryVersion': '0.1.69',
+    'libraryGitCommit': (root / 'evidence/sdk-git-commit.txt').read_text().strip(),
     'observations': {},
 }
 
@@ -44,8 +37,12 @@ def persist():
 def library_link(options, platform='android', allow_missing=False):
     build = """
       import { pathToFileURL } from 'node:url';
-      const { getAgentLink } = await import(pathToFileURL(process.argv[1]));
-      const link = getAgentLink('opencode', process.argv[3], JSON.parse(process.argv[2]));
+      const { getAgentLink, getOpenCodeAndroidPairingLink } = await import(pathToFileURL(process.argv[1]));
+      const options = JSON.parse(process.argv[2]);
+      const link = getAgentLink('opencode', process.argv[3], options);
+      if (options.action === 'server-pair' && link !== getOpenCodeAndroidPairingLink(options.target)) {
+        throw new Error('OpenCode pairing entry points disagree');
+      }
       process.stdout.write(JSON.stringify(link));
     """
     try:
@@ -68,10 +65,7 @@ def android(*command):
 
 def save(name, data):
     value = data.decode(errors='replace')
-    for code in codes.values():
-        value = value.replace(code, '[redacted]')
-    for payload in pair_payloads.values():
-        value = value.replace(payload, '[redacted]')
+    value = value.replace(code, '[redacted]')
     (root / name).write_text(value)
     return value
 
@@ -107,52 +101,61 @@ def deliver(name, uri, scope_app=False):
     return started
 
 
-def pair(name):
-    fixture = fixtures[name]
-    address, code = fixture['address'], codes[name]
-    scoped = name == 'B'
-    if scoped:
-        bridge = json.dumps({'code': code, 'urls': [address]}, separators=(',', ':')).encode()
-        payload = base64.urlsafe_b64encode(bridge).decode().rstrip('=')
-        pair_payloads[name] = payload
-        uri = 'https://opencode.ai/pair#' + payload
-        redacted = 'https://opencode.ai/pair#[redacted]'
-    else:
-        uri = 'opencode-ios://pair?' + urlencode([('code', code), ('url', address)], quote_via=quote)
-        redacted = uri.replace(code, '[redacted]')
-    assert library_link({'action': 'server-pair', 'target': uri}, allow_missing=True) is None
-    command = args + shlex.quote(uri)
-    default_resolution = save(f'pair-{name}-default-resolution.txt',
-        android('shell', f'cmd package resolve-activity --brief {command}'))
-    defaults_to_open_code = activity in default_resolution
-    assert defaults_to_open_code != scoped, 'OpenCode did not produce the expected stock Android default resolution'
-    if scoped:
-        possible_activities = save('vendor-pair-page-possible-activities.txt',
-            android('shell', f'cmd package query-activities --brief {command} -p {shlex.quote(package)}'))
-        assert activity in possible_activities
-    deliver(f'pair-{name}', uri, scope_app=scoped)
-    endpoint = urlsplit(address).netloc
-    proof['pairs'][name] = {'endpoint': endpoint, 'confirmed': False, 'uri': redacted,
-        'defaultsToOpenCode': defaults_to_open_code, 'restrictedPackageForParsingOnly': scoped,
-        'currentSdkAcceptsInput': False}
+def pair(display_name):
+    address = fixture['address']
+    alternate_port = int((root / 'alternate-port.txt').read_text())
+    alternate = f'http://10.0.2.2:{alternate_port}'
+    endpoints = [urlsplit(origin).netloc for origin in (address, alternate)]
+    assert len(set(endpoints)) == 2
+    probes = {}
+    for origin in (address, alternate):
+        port = urlsplit(origin).port
+        probe = android('shell', fr"printf 'GET /api/info HTTP/1.1\r\nHost: 10.0.2.2:{port}\r\nConnection: close\r\n\r\n' | toybox nc -w 4 10.0.2.2 {port}")
+        status_line = probe.decode(errors='replace').splitlines()[0]
+        assert re.fullmatch(r'HTTP/1\.[01] [0-9]{3} .+', status_line), 'Expected HTTP from each loopback listener'
+        probes[origin] = status_line
+    assert len(set(probes.values())) == 1, 'Both aliases should reach the same OpenCode HTTP endpoint'
+    items = [('code', code), ('url', address), ('url', alternate), ('name', display_name)]
+    # The tagged Copy/Share producer leaves the origin's colon and slashes visible.
+    source = 'opencode-ios://pair?' + urlencode(items, quote_via=quote, safe=':/')
+    uri = library_link({'action': 'server-pair', 'target': source})
+    assert uri == 'opencode://pair?' + urlencode(items, quote_via=quote)
+    assert parse_qsl(urlsplit(uri).query) == items
+    android('shell', 'am', 'force-stop', package)
+    assert not android('shell', 'pidof ' + shlex.quote(package) + ' || true').strip()
+    proof['pair'] = {
+        'source': source.replace(code, '[redacted]'),
+        'dispatched': uri.replace(code, '[redacted]'),
+        'decodedOriginsInOrder': [address, alternate],
+        'displayName': display_name,
+        'originProbes': probes,
+        'processAbsentBeforeDispatch': True,
+        'packageScoped': False,
+        'confirmed': False,
+    }
     persist()
+    started = deliver('pair-A', uri)
+    assert 'LaunchState: COLD' in started
+    proof['pair'].update(defaultsToOpenCode=True, cold=True)
+    persist()
+    expected_message = f'OpenCode will try {endpoints[0]} and {endpoints[1]} and switch to the first that answers.'
     for _ in range(18):
         time.sleep(1)
-        nodes = view(f'review-{name}')
+        nodes = view('review-A')
         labels = {node.get('text', '') for node in nodes}
         buttons = [node for node in nodes if node.get('text') == 'Pair']
-        if f'Pair with {endpoint}?' in labels and len(buttons) == 1 and 'Cancel' in labels:
-            image(f'review-{name}')
+        if f'Pair with {endpoints[0]}?' in labels and expected_message in labels and len(buttons) == 1 and 'Cancel' in labels:
+            image('review-A')
+            proof['pair']['reviewText'] = expected_message
             tap(buttons[0])
-            proof['pairs'][name]['confirmed'] = True
+            proof['pair']['confirmed'] = True
             persist()
             return
         wait = [node for node in nodes if node.get('resource-id') == 'android:id/aerr_wait']
         if "System UI isn't responding" in labels and len(wait) == 1:
             tap(wait[0])
-    image(f'review-{name}-missing')
-    raise RuntimeError('Expected exact loopback pairing confirmation')
-
+    image('review-A-missing')
+    raise RuntimeError('Expected pairing confirmation showing both exact endpoints')
 
 def observe(name, predicate):
     for _ in range(12):
@@ -184,67 +187,29 @@ def verify(name, uri, predicate, cold=False):
     assert proof['routes'][name]['destinationVisible'], f'Expected native destination for {name}'
 
 
-def idle(title, project):
-    return lambda labels: (
-        {title, f'{title}, {project}'} & labels and
-        {'No messages yet', 'Message'} <= labels
-    )
-
-
 def draft(project):
     return lambda labels: {f'New Session, {project}', 'Message', 'Open sessions'} <= labels
 
 
-pair('A')
+display_name = 'OpenCode QA + Café'
+pair(display_name)
 assert observe('initial-A', lambda labels: { 'OpenCode A Default', 'OpenCode A Target' } <= labels), (
-    'First pair did not load both server A projects'
+    'Pairing did not load both scratch projects'
 )
-pair('B')
-fixture_b = fixtures['B']['default']
-assert observe('initial-B', lambda labels: {
-    'Close session list', fixture_b['title']
-} <= labels), 'Second pair did not open the sessions for server B'
-rows = [
-    node for node in view('session-list-B')
-    if node.get('package') == package and node.get('clickable') == 'true'
-    and (node.get('text') or node.get('content-desc')) == fixture_b['title']
+drawer_buttons = [
+    node for node in view('drawer-closed')
+    if node.get('package') == package and node.get('content-desc') == 'Open sessions'
 ]
-assert len(rows) == 1, 'Expected the exact sandbox session in server B Recents'
-tap(rows[0])
-assert observe('existing-B', idle(fixture_b['title'], 'OpenCode B Default')), (
-    'Selecting server B Recents did not reveal the expected empty session'
+assert len(drawer_buttons) == 1, 'Expected the native session drawer button'
+tap(drawer_buttons[0])
+assert observe('paired-label-A', lambda labels: display_name in labels and 'Close session list' in labels), (
+    'The paired server drawer did not display the exact SDK label'
 )
-
-fixture_a = fixtures['A']
-source_uri = f"opencode://session/{fixture_a['default']['id']}?server={fixture_a['key']}"
-scoped_a = library_link({'session': source_uri})
-assert scoped_a == source_uri
-verify('scoped-A', scoped_a, idle(fixture_a['default']['title'], 'OpenCode A Default'), cold=True)
-
-session_id = fixture_a['default']['id']
-port = urlsplit(fixture_a['address']).port
-assert isinstance(port, int)
-assert library_link({'server': fixture_a['address'], 'session': session_id}, 'web', allow_missing=True) is None
-reverse = f'tcp:{port}'
-android('reverse', reverse, reverse)
-browser_origin = f'http://127.0.0.1:{port}'
-browser = library_link({'server': browser_origin, 'session': session_id}, 'web')
-origin_key = base64.urlsafe_b64encode(browser_origin.encode()).decode().rstrip('=')
-assert browser == browser_origin + '/server/' + origin_key + '/session/' + session_id
-assert browser == library_link({'server': browser_origin, 'session': browser}, 'ios')
-web_resolvers = save('browser-resolved.txt', android('shell',
-    f'cmd package query-activities --brief {args}{shlex.quote(browser)}'))
-assert activity not in web_resolvers
-assert package not in web_resolvers
-proof['browserRoute'] = {
-    'url': browser, 'sameSavedSessionId': True, 'openCodeAbsentFromResolver': True,
-    'emulatorReverseToSameLoopbackServer': True, 'cleartextNonLoopbackAddressRejected': True,
-    'resolverOutput': web_resolvers.strip().splitlines(),
-}
+proof['pair']['savedLabelVisible'] = True
 persist()
 
-project = fixture_a['target']['project']
+project = fixture['target']['project']
 project_uri = library_link({'mode': 'new', 'project': project})
 assert project_uri == 'opencode://new-session?project=' + quote(project, safe="-_.!~*'()")
 verify('project-draft-A', project_uri, draft('OpenCode A Target'))
-print('Opened server B, cold-started OpenCode into the exact scoped server A session, and opened its non-default project draft. Stock Android did not route the corresponding browser URL to OpenCode.')
+print('Cold-opened the exact feature SDK link, reviewed both addresses, and paired the isolated server. The exact provided name is visible in the Android drawer.')
