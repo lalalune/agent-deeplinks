@@ -1,0 +1,33 @@
+{
+  "provider": "OpenCode",
+  "platform": "Android",
+  "version": "0.8.14",
+  "build": 1039,
+  "checkedUtc": "2026-11-28",
+  "publisher": {
+    "tag": "https://github.com/anomalyco/opencode-android/releases/tag/v0.8.14",
+    "sourceCommit": "189c8f4ce064f3d2482fa3754943526211db1133",
+    "tagReleaseAssetCount": 0,
+    "workflow": "https://github.com/anomalyco/opencode-android/actions/runs/46086148123",
+    "unsignedBundleArtifact": "https://github.com/anomalyco/opencode-android/actions/runs/46086148123/artifacts/15238959011",
+    "unsignedBundleArtifactZipSha256": "97762828f5be32f88029f945921b8e7c50d85dcdc66fb7fd4aac8b04274ccc5c",
+    "playUploadJob": "https://github.com/anomalyco/opencode-android/actions/runs/46086148123/job/140797940517",
+    "playTracksObservedInSuccessfulJob": ["internal", "beta"]
+  },
+  "anonymousAccess": {
+    "playBetaEnrollment": "https://play.google.com/apps/testing/ai.opencode.mobilecode",
+    "playBetaRedirectHost": "accounts.google.com",
+    "generatedApks": "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/ai.opencode.mobilecode/generatedApks/1039",
+    "generatedApksHttpStatus": 401,
+    "generatedApksReason": "CREDENTIALS_MISSING"
+  },
+  "comparison": {
+    "url": "https://github.com/anomalyco/opencode-android/compare/v0.8.13...v0.8.14",
+    "changedPaths": [
+      "docs/parity/session.md",
+      "feature/session/src/main/kotlin/ai/opencode/feature/session/BackgroundWorkMotion.kt",
+      "feature/session/src/main/kotlin/ai/opencode/feature/session/BackgroundWorkPanel.kt"
+    ]
+  },
+  "scope": "Publisher release, distribution and unchanged route source. Exact Play-signed installed runtime awaits an authorized Play install or export."
+}
