@@ -20,6 +20,9 @@ jobs:
           mkdir -p "$qa"/{evidence,grok}
           test -c /dev/kvm
           sudo chmod a+rw /dev/kvm
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends libpulse0 libgl1 libegl1 libx11-6 \
+            libxcb1 libxi6 libnss3 libxkbcommon0 libxkbcommon-x11-0
           sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           image='system-images;android-34;google_apis;x86_64'
           curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 130 --max-filesize 150000000 \

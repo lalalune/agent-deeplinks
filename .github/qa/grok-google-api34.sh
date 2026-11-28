@@ -8,7 +8,7 @@ export PATH="$ANDROID_HOME/platform-tools:$PATH"
 pkg=ai.x.grok
 "$emulator" -version > "$qa/evidence/emulator-version.txt" 2>&1 || { cat "$qa/evidence/emulator-version.txt"; exit 1; }
 "$emulator" -avd grok-qa -port 5556 -no-window -no-snapshot -no-audio -no-boot-anim \
-  -gpu swiftshader_indirect -accel on > "$qa/emulator.log" 2>&1 &
+  -gpu swiftshader -accel on > "$qa/emulator.log" 2>&1 &
 emulator_pid=$!
 trap 'kill "$emulator_pid" 2>/dev/null || true' EXIT
 a() { timeout 21 "$adb" -s "$serial" "$@"; }
