@@ -46,9 +46,12 @@ jobs:
           printf '%s\n' "$app_abi" > evidence/app-abi.txt
           unzip -q grok.apk ai.x.grok.apk "$native_split" config.en.apk config.mdpi.apk -d grok
           curl -fsSL --proto '=https' --max-time 20 https://grok.com/.well-known/assetlinks.json -o evidence/grok-dal.json
-          apksigner=$(find "$ANDROID_HOME/build-tools" -path '*/apksigner' | sort -V | tail -1)
+          "$sdkmanager" 'build-tools;36.0.0' >>"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
+          apksigner="$ANDROID_HOME/build-tools/36.0.0/apksigner"
           for apk in grok/*.apk; do
-            fingerprint="$("$apksigner" verify --min-sdk-version 34 --max-sdk-version 34 --print-certs "$apk" | awk '/Signer #1 certificate SHA-256 digest:/{print $NF;exit}')"
+            "$apksigner" verify --min-sdk-version 34 --max-sdk-version 34 --print-certs "$apk" \
+              > "evidence/$(basename "$apk").signing.txt" 2>&1 || { cat "evidence/$(basename "$apk").signing.txt"; exit 1; }
+            fingerprint="$(awk '/^Signer #1 certificate SHA-256 digest:/{print $NF}' "evidence/$(basename "$apk").signing.txt")"
             test "$fingerprint" = 521bf5ce7c981faba4ebd86d23f778885537cad021bc107d8915d005e99f4a12
             jq -r '.[]|select(.target.package_name=="ai.x.grok" and (.relation | index("delegate_permission/common.handle_all_urls")))|.target.sha256_cert_fingerprints[]|gsub(":";"")|ascii_downcase' evidence/grok-dal.json | grep -Fx "$fingerprint"
             printf '%s %s\n' "$apk" "$fingerprint" >> evidence/verified-signers.txt
