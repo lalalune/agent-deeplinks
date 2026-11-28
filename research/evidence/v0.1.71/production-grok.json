@@ -1,0 +1,274 @@
+{
+  "site": "https://deeplinks.fun/",
+  "scope": "Actual browser click targets intercepted prior to navigation. Live destination rendering verified separately.",
+  "result": [
+    {
+      "name": "desktop-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        }
+      ]
+    },
+    {
+      "name": "narrow-firefox",
+      "version": "159.0",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        }
+      ]
+    },
+    {
+      "name": "iphone-webkit",
+      "version": "27.2",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        }
+      ]
+    },
+    {
+      "name": "pixel-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Grok Bot: Public Page"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "href": "https://bot-team-kanban-example-2ncd.pages.grok.bot/",
+          "label": "Open Grok Bot Public Page"
+        }
+      ]
+    }
+  ]
+}

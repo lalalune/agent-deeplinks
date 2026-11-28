@@ -1,0 +1,154 @@
+{
+  "url": "https://deeplinks.fun/",
+  "scope": "Trusted button clicks intercepted before native dispatch",
+  "result": [
+    {
+      "name": "desktop-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "name": "build-box",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        },
+        {
+          "name": "build-box",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        }
+      ]
+    },
+    {
+      "name": "narrow-firefox",
+      "browser": "159.0",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "name": "build-box",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        },
+        {
+          "name": "build-box",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        }
+      ]
+    },
+    {
+      "name": "iphone-webkit",
+      "browser": "27.2",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "name": "build-box",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        },
+        {
+          "name": "build-box",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        }
+      ]
+    },
+    {
+      "name": "pixel-chromium",
+      "browser": "158.0.8127.18",
+      "bundle": "/assets/index-McPzNZ6O.js",
+      "verified": [
+        {
+          "name": "build-box",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": false,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        },
+        {
+          "name": "build-box",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=build-box"
+        },
+        {
+          "name": "Démo-02",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=D%C3%A9mo-02"
+        },
+        {
+          "name": "::1",
+          "iconOnly": true,
+          "href": "codex://settings/connections/ssh/add?name=%3A%3A1"
+        }
+      ]
+    }
+  ]
+}

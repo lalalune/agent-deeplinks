@@ -1,0 +1,47 @@
+{
+  "version": "0.1.71",
+  "tagCommit": "854be10079d252ab1defd7e0cb240f6ab75e37b6",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46088895579",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46088896087",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46088896021",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.71",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.71/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://87a5294c.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://1232624a.agent-deeplinks.pages.dev/",
+  "canonicalNpmGithubAndZipTarballSha256": "731a8095f6b7db41e21650f15938b50a1aad94f01fe2c00d32f5e78618c96b49",
+  "githubReleaseZipSha256": "3d63229d0ce06917cc179d28ce62ce8276d02c7c42b5c4a1445734a462158d98",
+  "productionAndZipHtmlSha256": "ad48cccac889db800800da96746486334fd73b9f79181b63a501eb69c51b8174",
+  "productionAndZipJavaScriptSha256": "e76720ddc1b8f4f3ad95d36bee5e44029ff22de3e5d3be3cc4ffbf78686fe064",
+  "bundle": "/assets/index-McPzNZ6O.js",
+  "packageTestsPassed": 60,
+  "primaryRoutes": 74,
+  "staticActionExamples": 67,
+  "sshHostButtonTargets": 24,
+  "grokBotPageButtonTargets": 40,
+  "liveAndExtractedZipOpenedPublicGrokBotCanvas": true,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshCoreInstall": {
+    "version": "0.1.71",
+    "installedReact": false,
+    "svgExports": 21,
+    "linksVerified": 4
+  },
+  "freshReactInstalls": [
+    {
+      "source": "public registry by package name",
+      "reactMajor": 19,
+      "svgExports": 21
+    },
+    {
+      "source": "tarball from GitHub release ZIP",
+      "reactMajor": 18,
+      "svgExports": 21
+    }
+  ],
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}
