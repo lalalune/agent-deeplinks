@@ -1,0 +1,27 @@
+{
+  "vendorSource": "https://github.com/zai-org/ZCode/tree/v4.0.0",
+  "vendorSourceCommit": "a4b4445141eb7d3b3e99eada9292775383bfc44e",
+  "linkPackageCommit": "d3051e8cf4d1eaba5686ae13876481d9390f2ff0",
+  "localWebUrl": "http://127.0.0.1:3030/",
+  "command": "zcode --web --workspace <empty scratch directory> --port 3030 --no-open",
+  "initialStartup": {
+    "workflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46090921651/job/140811360383",
+    "artifact": "https://github.com/lalalune/agent-deeplinks/actions/runs/46090921651/artifacts/15241915141",
+    "artifactSha256": "644666851d63846c4544cd29393ff8ff0a1eeba7b414012223f71fbe8eed6e07",
+    "builtArchive": "zcode-4.0.0.tar.gz",
+    "builtArchiveSha256": "c5e535d14aeb9a68374ca5dd13499313fd462bf1c4b87584da03a938da5558c7",
+    "node": "24.14.0",
+    "pnpm": "10.33.2",
+    "printedUrl": "http://127.0.0.1:3030/",
+    "serverState": "Exited before serving the browser",
+    "errorCode": "CREDENTIAL_SECURE_STORAGE_UNAVAILABLE",
+    "upstreamRecovery": "On the empty headless profile, launch with a newly generated private file referenced by ZCODE_CREDENTIAL_SECRET_FILE. The server reported permission 0600 and a length of 32–4096 bytes."
+  },
+  "playground": {
+    "engine": "158.0.8127.18",
+    "testedLoopbackHref": "http://127.0.0.1:49241/",
+    "iconOnly": true,
+    "iconAndName": true,
+    "rejectedNonLoopbackUrl": true
+  }
+}
