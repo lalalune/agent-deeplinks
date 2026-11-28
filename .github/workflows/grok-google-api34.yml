@@ -28,7 +28,7 @@ jobs:
           sdkmanager="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           image='system-images;android-34;google_apis;x86_64'
           curl -fsSL --proto '=https' --connect-timeout 15 --retry 1 --max-time 130 --max-filesize 150000000 \
-            'https://d.apkpure.net/b/APK/ai.x.grok?version=latest' -o "$qa/grok.apk" &
+            'https://dl.androidpot.net/apk/ai.x.grok/11260200/61d5f367/grok-1.2.60-release.00.xapk' -o "$qa/grok.xapk" &
           download=$!
           "$sdkmanager" "$image" emulator platform-tools >"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
           grep -E '^Pkg\.(Desc|Revision|Path)=|^AndroidVersion\.ApiLevel=|^SystemImage\.Abi=|^SystemImage\.TagId=' \
@@ -40,20 +40,10 @@ jobs:
           grep -Fx grok-qa "$qa/evidence/avds.txt"
           wait "$download"
           cd "$qa"
-          sha256sum grok.apk | tee evidence/artifact-digests.txt
-          case "$(cut -d ' ' -f1 evidence/artifact-digests.txt)" in
-            8314bf54209fe632fabc04373882d578e385930ac726cbc45481d20183da4629)
-              native_split=config.arm64_v8a.apk
-              app_abi=arm64-v8a ;;
-            b24373aca5e42a27005f483fdcbe17a6869d20ddc667cd4a149fdec90cbb7d87)
-              native_split=config.armeabi_v7a.apk
-              app_abi=armeabi-v7a ;;
-            *)
-              echo '::error::Mirror returned a Grok artifact whose digest is outside the known set.'
-              exit 1 ;;
-          esac
-          printf '%s\n' "$app_abi" > evidence/app-abi.txt
-          unzip -q grok.apk ai.x.grok.apk "$native_split" config.en.apk config.mdpi.apk -d grok
+          sha256sum grok.xapk | tee evidence/artifact-digests.txt
+          echo 'aa51410e0cdca08ec13f669258767aff5e317bb9ad8b2db94b3132eb33714a2e  grok.xapk' | sha256sum --check
+          printf 'arm64-v8a\n' > evidence/app-abi.txt
+          unzip -q grok.xapk ai.x.grok.apk config.arm64_v8a.apk config.en.apk config.xxhdpi.apk -d grok
           curl -fsSL --proto '=https' --max-time 20 https://grok.com/.well-known/assetlinks.json -o evidence/grok-dal.json
           "$sdkmanager" 'build-tools;36.0.0' >>"$qa/image-install.log" 2>&1 || { tail -20 "$qa/image-install.log"; exit 1; }
           apksigner="$ANDROID_HOME/build-tools/36.0.0/apksigner"
