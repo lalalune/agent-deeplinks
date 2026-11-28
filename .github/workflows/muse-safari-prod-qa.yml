@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 24
           package-manager-cache: false
-      - name: Generate the exact library route
+      - name: Verify the pinned npm package
         run: |
           set -euo pipefail
           output="$RUNNER_TEMP/muse-qa-results"
@@ -29,10 +29,6 @@ jobs:
           (cd "$RUNNER_TEMP" && printf '%s  %s\n' 4a51021c6227eab8020d2aa3f15f47b2763af224cbd86ce43e71f5c25858820b agent-deeplinks-0.1.72.tgz | shasum -a 256 -c) | tee "$output/npm-check.txt"
           mkdir "$RUNNER_TEMP/muse-npm"
           tar -xf "$RUNNER_TEMP/agent-deeplinks-0.1.72.tgz" -C "$RUNNER_TEMP/muse-npm"
-          curl -fsSL --proto '=https' --max-time 30 'https://deeplinks.fun/' -o "$RUNNER_TEMP/muse-playground.html"
-          curl -fsSL --proto '=https' --max-time 30 'https://deeplinks.fun/assets/index-DTKbC1-x.js' -o "$RUNNER_TEMP/muse-playground.js"
-          grep -Fq '/assets/index-DTKbC1-x.js' "$RUNNER_TEMP/muse-playground.html"
-          (cd "$RUNNER_TEMP" && printf '%s  %s\n' ba5ee7504d063c9cd074a4e77e853e4ba75f0133c95f25d6fbd02c697076069f muse-playground.html d0dd07fcde2fb8ffc92ae9714657cdfc66093c4e9f93dbcc9b39ee825dc6ff4b muse-playground.js | shasum -a 256 -c) | tee "$output/production-check.txt"
           sw_vers | tee "$output/system.txt"
           uname -m | tee -a "$output/system.txt"
           test "$(uname -m)" = arm64
@@ -113,7 +109,26 @@ jobs:
           spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee "$output/muse-at-click-gatekeeper.txt"
           grep -Fx 'source=Notarized Developer ID' "$output/muse-at-click-gatekeeper.txt"
           xcrun swiftc .github/qa/muse-safari-prod.swift -o "$RUNNER_TEMP/muse-safari-probe"
+          production_origin='https://deeplinks.fun'
+          html="$RUNNER_TEMP/muse-playground.html"
+          bundle="$RUNNER_TEMP/muse-playground.js"
+          test "$(curl -fsS --proto '=https' --max-time 30 --max-filesize 100000 -o "$html" -w '%{http_code}' "$production_origin/")" = 200
+          entry=$(sed -nE 's@^[[:space:]]*<script type="module" crossorigin src="(/assets/index-[A-Za-z0-9_-]+\.js)"></script>[[:space:]]*$@\1@p' "$html")
+          if [[ ! "$entry" =~ ^/assets/index-[A-Za-z0-9_-]+\.js$ ]]; then
+            echo 'Expected one same-origin Vite entry in the live Playground HTML.' >&2
+            exit 1
+          fi
+          test "$(curl -fsS --proto '=https' --max-time 30 --max-filesize 1200000 -o "$bundle" -w '%{http_code}' "$production_origin$entry")" = 200
+          grep -Fq 'https://agent.meta.ai/chat' "$bundle"
+          {
+            printf 'Live page %s/\nEntry module %s%s\n' "$production_origin" "$production_origin" "$entry"
+            (cd "$RUNNER_TEMP" && shasum -a 256 muse-playground.html muse-playground.js)
+          } | tee "$output/production-check.txt"
           node .github/qa/muse-safari-prod.mjs "$output" "$RUNNER_TEMP/muse-safari-probe" "$RUNNER_TEMP/muse-npm/package" "$app"
+          html_after="$RUNNER_TEMP/muse-playground-after.html"
+          test "$(curl -fsS --proto '=https' --max-time 30 --max-filesize 100000 -o "$html_after" -w '%{http_code}' "$production_origin/")" = 200
+          grep -Fq "src=\"$entry\"" "$html_after"
+          printf 'Entry module unchanged after the Safari handoff\n' | tee -a "$output/production-check.txt"
       - name: Save scoped browser and native handoff evidence
         if: always()
         uses: actions/upload-artifact@v6
