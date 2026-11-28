@@ -1,0 +1,68 @@
+name: Claude Cowork signed macOS native deep links
+on:
+  push:
+    branches: [codex/qa-claude-cowork-native]
+
+permissions:
+  contents: read
+
+jobs:
+  stock-launch:
+    runs-on: macos-26
+    timeout-minutes: 13
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Verify the current notarized Claude Desktop app
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/claude-cowork"
+          evidence="$scratch/evidence"
+          mkdir -p "$evidence" "$scratch/extracted" "$HOME/Applications"
+          sw_vers > "$evidence/system.txt"
+          uname -m >> "$evidence/system.txt"
+          test "$(uname -m)" = arm64
+          test ! -e "/Applications/Claude.app"
+          test ! -e "$HOME/Applications/Claude.app"
+          test ! -e "$HOME/Library/Application Support/Claude"
+          manifest=https://downloads.claude.ai/releases/darwin/universal/RELEASES.json
+          download=https://downloads.claude.ai/releases/darwin/universal/7.37095.0/Claude-bc368c812ec26d3a5740519cc4d5cb69bbe43025.zip
+          curl -fsSL --proto '=https' --max-time 20 --max-filesize 200000 "$manifest" -o "$evidence/official-updater.json"
+          jq -e --arg url "$download" '.currentRelease == "7.37095.0" and any(.releases[]; .version == "7.37095.0" and .updateTo.url == $url)' "$evidence/official-updater.json"
+          curl -fsSL --proto '=https' --max-time 160 --max-filesize 430000000 -D "$scratch/updater-headers.txt" "$download" -o "$scratch/Claude.zip"
+          test "$(stat -f %z "$scratch/Claude.zip")" = 407313465
+          tr -d '\r' < "$scratch/updater-headers.txt" | grep -iFx 'etag: "15599a5a72f2b68e9cf05557574ed236"'
+          shasum -a 256 "$scratch/Claude.zip" | tee "$evidence/official-updater-digest.txt"
+          printf '%s  %s\n' 800806556cacece6bdacbb9f3aef1849a9ed8d6fc2ee0eb2ed881a098d094eab "$scratch/Claude.zip" | shasum -a 256 -c
+          ditto -x -k "$scratch/Claude.zip" "$scratch/extracted"
+          app="$HOME/Applications/Claude.app"
+          ditto "$scratch/extracted/Claude.app" "$app"
+          test "$(plutil -extract CFBundleIdentifier raw "$app/Contents/Info.plist")" = com.anthropic.claudefordesktop
+          test "$(plutil -extract CFBundleShortVersionString raw "$app/Contents/Info.plist")" = 7.37095.0
+          codesign --verify --deep --strict "$app"
+          codesign -dv --verbose=4 "$app" 2>&1 | tee "$evidence/installed-identity.txt"
+          grep -Fx 'TeamIdentifier=Q6L2SF6YDW' "$evidence/installed-identity.txt"
+          spctl --assess --type execute --verbose=4 "$app" 2>&1 | tee "$evidence/gatekeeper.txt"
+          grep -Fx 'source=Notarized Developer ID' "$evidence/gatekeeper.txt"
+          /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$app"
+          printf '%s\n' "$app" > "$scratch/app-path.txt"
+      - name: Dispatch documented Cowork links in stock LaunchServices
+        shell: bash
+        run: |
+          set -euo pipefail
+          scratch="$RUNNER_TEMP/claude-cowork"
+          xcrun swiftc .github/qa/claude-cowork-observe.swift -o "$scratch/native-observe"
+          node .github/qa/claude-cowork.mjs "$scratch"
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: claude-7-37095-cowork-native-dispatch
+          path: ${{ runner.temp }}/claude-cowork/evidence
+          if-no-files-found: error
+          retention-days: 30
