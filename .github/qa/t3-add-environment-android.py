@@ -68,7 +68,8 @@ def capture(name, data):
 
 
 def pids():
-    return {int(pid) for pid in shell("pidof", package, "||", "true").split() if pid.isdigit()}
+    result = adb("shell", f"pidof {shlex.quote(package)} || true")
+    return {int(pid) for pid in result.split() if pid.isdigit()}
 
 
 def stop():
@@ -108,6 +109,7 @@ def dispatch(name):
 stop()
 baseline = shell("am", "start", "-W", "-a", "android.intent.action.MAIN",
                  "-c", "android.intent.category.LAUNCHER", "-p", package, timeout=40)
+(evidence / "stock-home-launch.txt").write_text(baseline)
 assert "Status: ok" in baseline and package + "/" in baseline
 home, data, home_nodes = wait_ui(lambda current: bool(current) and "Add environment" in labels(current))
 capture("stock-home", data)
