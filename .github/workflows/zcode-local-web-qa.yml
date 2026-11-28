@@ -23,6 +23,11 @@ jobs:
           ref: a4b4445141eb7d3b3e99eada9292775383bfc44e
           path: zcode-v4
           persist-credentials: false
+      - uses: actions/checkout@v6
+        with:
+          ref: d3051e8cf4d1eaba5686ae13876481d9390f2ff0
+          path: package-under-test
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: 24.14.0
@@ -38,7 +43,7 @@ jobs:
           npm install --global pnpm@10.33.2
           pnpm --version | tee "$qa/evidence/pnpm-version.txt"
           node --version | tee "$qa/evidence/node-version.txt"
-          pnpm install --frozen-lockfile --ignore-scripts --config.node-linker=isolated >"$qa/install.log" 2>&1 || { tail -60 "$qa/install.log" | tee "$qa/evidence/install-error.txt"; exit 1; }
+          pnpm install --frozen-lockfile --ignore-scripts --config.node-linker=isolated --shamefully-hoist >"$qa/install.log" 2>&1 || { tail -60 "$qa/install.log" | tee "$qa/evidence/install-error.txt"; exit 1; }
           pnpm build:zcode --base-url https://example.invalid/zcode/ >"$qa/build.log" 2>&1 || { tail -80 "$qa/build.log" | tee "$qa/evidence/build-error.txt"; exit 1; }
           version="$(jq -er .version dist/zcode/latest.json)"
           package="dist/zcode/releases/$version/zcode-$version.tar.gz"
@@ -51,6 +56,8 @@ jobs:
         run: |
           set -euo pipefail
           qa="$RUNNER_TEMP/zcode-web-qa"
+          npm ci --prefix package-under-test --no-audit --no-fund
+          npm run --prefix package-under-test build:package
           npm install --no-save --prefix "$qa/browser" playwright@1.56.1
           "$qa/browser/node_modules/.bin/playwright" install --with-deps chromium
           bash .github/qa/zcode-local-web.sh "$qa"
