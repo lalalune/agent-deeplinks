@@ -1,0 +1,40 @@
+{
+  "version": "0.1.69",
+  "tagCommit": "bdf8bfbf8df70db02eec9ed4d778dd4019947839",
+  "ci": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086354376",
+  "releaseWorkflow": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086354722",
+  "registryPublication": "https://github.com/lalalune/agent-deeplinks/actions/runs/46086354716",
+  "release": "https://github.com/lalalune/agent-deeplinks/releases/tag/v0.1.69",
+  "zip": "https://github.com/lalalune/agent-deeplinks/releases/download/v0.1.69/agent-deeplinks.zip",
+  "production": "https://deeplinks.fun/",
+  "productionDeployment": "https://ff28ad37.agent-deeplinks.pages.dev/",
+  "playgroundAliasDeployment": "https://c81b3146.agent-deeplinks.pages.dev/",
+  "npmGithubAndZipTarballSha256": "a91cffe24f9c330289b6b17e8175c2afee77d41a167a75f1d53264994f22bc68",
+  "githubReleaseZipSha256": "0bf6d6ce4e84c7e6bf784d9aab291e00b9d85d3bbdd3dc737034bfd23c653295",
+  "productionAndZipHtmlSha256": "1ba88775e8fc0e95d8ac260ef90a25119c169aaba48857f8972b28a4602e2b2d",
+  "productionAndZipJavaScriptSha256": "0ba597675339d48d90bd71ba761677318357e9a7ff203f94dade3095225180ef",
+  "bundle": "/assets/index-B2SBrD5g.js",
+  "packageTestsPassed": 57,
+  "primaryRoutes": 74,
+  "staticActionExamples": 65,
+  "targetedShadcnButtonClicks": 112,
+  "latestZipMatchesRelease": true,
+  "readmeBadgeCountInZip": 21,
+  "freshInstalls": [
+    {
+      "source": "public npm registry by package name and direct tarball",
+      "reactMajor": 19,
+      "svgExports": 21
+    },
+    {
+      "source": "tarball extracted from GitHub release ZIP",
+      "reactMajor": 18,
+      "svgExports": 21
+    }
+  ],
+  "bothReactButtonStyles": true,
+  "signatureAudit": {
+    "invalid": [],
+    "missing": []
+  }
+}

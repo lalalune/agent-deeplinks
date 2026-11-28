@@ -1,0 +1,706 @@
+{
+  "site": "https://deeplinks.fun/",
+  "scope": "Visible shadcn controls and trusted browser click targets. Destination loading and native receipt are separate.",
+  "profiles": [
+    {
+      "name": "desktop-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-B2SBrD5g.js",
+      "exact": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        }
+      ]
+    },
+    {
+      "name": "desktop-firefox",
+      "version": "159.0",
+      "bundle": "/assets/index-B2SBrD5g.js",
+      "exact": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        }
+      ]
+    },
+    {
+      "name": "iphone-webkit",
+      "version": "27.2",
+      "bundle": "/assets/index-B2SBrD5g.js",
+      "exact": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "ios",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        }
+      ]
+    },
+    {
+      "name": "pixel-chromium",
+      "version": "158.0.8127.18",
+      "bundle": "/assets/index-B2SBrD5g.js",
+      "exact": [
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/session_qa-01#no_universal_links"
+        },
+        {
+          "platform": "web",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "https://claude.ai/code/cse_qa-02#no_universal_links"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/tasks/task_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Codex Cloud task",
+          "href": "https://chatgpt.com/codex/cloud/tasks/task_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": false,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/session_qa-01"
+        },
+        {
+          "platform": "android",
+          "iconOnly": true,
+          "label": "Open Claude Code Cloud session",
+          "href": "claude://code/cse_qa-02"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": false,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=%2Ftmp%2FCodex%20QA%20%2B%20caf%C3%A9&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&path=C%3A%5CWork%5CCodex%20QA"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://new?prompt=Codex%20playground%20%2B%20%26%20caf%C3%A9%20%E2%98%83%0AEditable%20second%20line.&originUrl=git%40example.invalid%3Ateam%2Frepo.git"
+        },
+        {
+          "platform": "desktop",
+          "iconOnly": true,
+          "label": "Open Codex workspace draft",
+          "href": "codex://threads/new"
+        }
+      ]
+    }
+  ]
+}
