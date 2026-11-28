@@ -121,6 +121,7 @@ for fixture in A B; do
   endpoint=$(jq -r .address "$qa/$fixture/session-fixture.json")
   server_for "$fixture" pair --url "$endpoint" > "$qa/$fixture/issuer.private" 2>&1
 done
+"$adb" -s "$serial" shell pm get-app-links "$package" > "$evidence/native-app-link-associations.txt"
 python3 "$workspace/.github/qa/opencode-android-pair.py" "$qa" "$adb" "$serial" "$package"
 for fixture in A B; do
   python3 - "$qa/$fixture/data/opencode/opencode.db" "$evidence/db-counts-$fixture.txt" "$fixture" <<'PYCOUNTS'
@@ -131,4 +132,4 @@ pathlib.Path(sys.argv[2]).write_text('\n'.join(f'{table}|{count}' for table, cou
 assert result == {'session_v2': 2 if sys.argv[3] == 'A' else 1, 'session_message': 0, 'account': 0}
 PYCOUNTS
 done
-jq -e '.pairs.A.confirmed and .pairs.B.confirmed and .routes["scoped-A"].cold and .routes["scoped-A"].destinationVisible and .routes["project-draft-A"].destinationVisible and .browserRoute.openCodeAbsentFromResolver' "$qa/proof.json"
+jq -e '.pairs.A.confirmed and .pairs.B.confirmed and .pairs.A.defaultsToOpenCode and (.pairs.B.defaultsToOpenCode | not) and .routes["scoped-A"].cold and .routes["scoped-A"].destinationVisible and .routes["project-draft-A"].destinationVisible and .browserRoute.openCodeAbsentFromResolver' "$qa/proof.json"

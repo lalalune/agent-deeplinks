@@ -24,6 +24,7 @@ for name, fixture in fixtures.items():
     matches = re.findall(r"(?m)^\s*" + re.escape(fixture['address']) + r"/auth/connect/([A-Za-z0-9_-]+)\s*$", issued)
     assert len(matches) == 1, 'Pairing issuer did not return one matching sandbox code'
     codes[name] = matches[0]
+pair_payloads = {}
 assert fixtures['A']['key'] != fixtures['B']['key']
 proof = {
     'certificate': os.environ['DEEPLINKS_QA_CERT'],
@@ -40,19 +41,20 @@ def persist():
     (root / 'proof.json').write_text(json.dumps(proof, indent=2) + '\n')
 
 
-def library_link(options, platform='android'):
+def library_link(options, platform='android', allow_missing=False):
     build = """
       import { pathToFileURL } from 'node:url';
       const { getAgentLink } = await import(pathToFileURL(process.argv[1]));
       const link = getAgentLink('opencode', process.argv[3], JSON.parse(process.argv[2]));
-      if (!link) process.exit(2);
-      process.stdout.write(link);
+      process.stdout.write(JSON.stringify(link));
     """
     try:
-        return subprocess.check_output([
+        result = json.loads(subprocess.check_output([
             os.environ['DEEPLINKS_QA_NODE'], '--input-type=module', '-e', build, os.environ['DEEPLINKS_QA_LIBRARY'],
             json.dumps(options), platform,
-        ], text=True, timeout=16, stderr=subprocess.STDOUT)
+        ], text=True, timeout=16, stderr=subprocess.STDOUT))
+        assert result or allow_missing
+        return result
     except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
         raise RuntimeError('Library did not create the expected sandbox route') from None
 
@@ -68,6 +70,8 @@ def save(name, data):
     value = data.decode(errors='replace')
     for code in codes.values():
         value = value.replace(code, '[redacted]')
+    for payload in pair_payloads.values():
+        value = value.replace(payload, '[redacted]')
     (root / name).write_text(value)
     return value
 
@@ -92,8 +96,10 @@ def tap(node):
     android('shell', 'input', 'tap', str((left + right) // 2), str((top + bottom) // 2))
 
 
-def deliver(name, uri):
+def deliver(name, uri, scope_app=False):
     command = args + shlex.quote(uri)
+    if scope_app:
+        command += ' -p ' + shlex.quote(package)
     resolved = save(f'{name}-resolved.txt', android('shell', f'cmd package resolve-activity --brief {command}'))
     assert activity in resolved, 'Stock resolver did not select OpenCode'
     started = save(f'{name}-dispatch.txt', android('shell', f'am start -W {command}'))
@@ -104,12 +110,31 @@ def deliver(name, uri):
 def pair(name):
     fixture = fixtures[name]
     address, code = fixture['address'], codes[name]
-    uri = library_link({'action': 'server-pair', 'target': f'{address}/auth/connect/{code}'})
-    expected = 'opencode://pair?' + urlencode([('code', code), ('url', address)], quote_via=quote)
-    assert uri == expected
-    deliver(f'pair-{name}', uri)
+    scoped = name == 'B'
+    if scoped:
+        bridge = json.dumps({'code': code, 'urls': [address]}, separators=(',', ':')).encode()
+        payload = base64.urlsafe_b64encode(bridge).decode().rstrip('=')
+        pair_payloads[name] = payload
+        uri = 'https://opencode.ai/pair#' + payload
+        redacted = 'https://opencode.ai/pair#[redacted]'
+    else:
+        uri = 'opencode-ios://pair?' + urlencode([('code', code), ('url', address)], quote_via=quote)
+        redacted = uri.replace(code, '[redacted]')
+    assert library_link({'action': 'server-pair', 'target': uri}, allow_missing=True) is None
+    command = args + shlex.quote(uri)
+    default_resolution = save(f'pair-{name}-default-resolution.txt',
+        android('shell', f'cmd package resolve-activity --brief {command}'))
+    defaults_to_open_code = activity in default_resolution
+    assert defaults_to_open_code != scoped, 'OpenCode did not produce the expected stock Android default resolution'
+    if scoped:
+        possible_activities = save('vendor-pair-page-possible-activities.txt',
+            android('shell', f'cmd package query-activities --brief {command} -p {shlex.quote(package)}'))
+        assert activity in possible_activities
+    deliver(f'pair-{name}', uri, scope_app=scoped)
     endpoint = urlsplit(address).netloc
-    proof['pairs'][name] = {'endpoint': endpoint, 'confirmed': False}
+    proof['pairs'][name] = {'endpoint': endpoint, 'confirmed': False, 'uri': redacted,
+        'defaultsToOpenCode': defaults_to_open_code, 'restrictedPackageForParsingOnly': scoped,
+        'currentSdkAcceptsInput': False}
     persist()
     for _ in range(18):
         time.sleep(1)

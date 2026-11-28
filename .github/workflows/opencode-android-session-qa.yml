@@ -1,8 +1,8 @@
-name: OpenCode Android 0.8.13 cold saved-server and browser routing QA
+name: OpenCode Android 0.8.13 vendor pairing forms QA
 
 on:
   push:
-    branches: [codex/opencode-android-0813-route-triangle]
+    branches: [codex/opencode-android-0813-vendor-pairing]
     paths: [.github/workflows/opencode-android-session-qa.yml, .github/qa/opencode-android-*]
 
 permissions:
@@ -62,6 +62,10 @@ jobs:
           set -euo pipefail
           qa="$RUNNER_TEMP/opencode-android-qa"
           mkdir -p "$qa/evidence" "$qa/cli"
+          curl -sS --proto '=https' --max-time 12 --output /dev/null --write-out 'public pairing page %{http_code}\n' \
+            'https://opencode.ai/pair' > "$qa/evidence/public-web-paths.txt"
+          curl -sS --proto '=https' --max-time 12 --output /dev/null --write-out 'Android assetlinks %{http_code}\n' \
+            'https://opencode.ai/.well-known/assetlinks.json' >> "$qa/evidence/public-web-paths.txt"
           mkdir -p "$qa/library"
           curl -fsS --proto '=https' --max-time 25 --max-filesize 300000 \
             https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.68.tgz -o "$qa/library.tgz"
@@ -92,13 +96,13 @@ jobs:
           curl --fail --silent --show-error --location --proto '=https' --connect-timeout 15 --max-time 75 --max-filesize 35000000 \
             https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar -o "$qa/bundletool.jar"
           printf '%s  %s\n' a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29 "$qa/bundletool.jar" | sha256sum --check | tee "$qa/evidence/bundletool-digest.txt"
-      - name: Verify native cold saved-server routing and the browser resolver boundary
+      - name: Verify vendor forms reach stock Android pairing review and scratch servers
         shell: bash
         run: bash .github/qa/opencode-android-hosted.sh "$RUNNER_TEMP/opencode-android-qa" "$RUNNER_TEMP/opencode-android-0.8.13.aab"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: opencode-android-0.8.13-cold-scoped-evidence
+          name: opencode-android-0.8.13-vendor-pairing-evidence
           path: ${{ runner.temp }}/opencode-android-qa/evidence/
           if-no-files-found: ignore
           retention-days: 30
