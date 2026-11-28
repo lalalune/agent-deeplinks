@@ -245,6 +245,8 @@ In the playground, paste your own Cursor or Grok Build **Cloud Agent** link, Cur
 
 Use **Shared chat** to paste a ChatGPT, Claude, Codex, Grok, Kimi, or ZCode share link. The playground offers each provider on its supported targets and keeps Kimi's public chat example available. In your code, pass the link as `target` with `action: "shared-chat"` to `getAgentLink`. The link retains the author's sharing permissions.
 
+Use **ZCode → Local Web workspace** after starting `zcode --web`. Copy the loopback URL printed in the terminal and pass it to `getAgentLink("zcode", "web", { action: "local-web", target: copiedUrl })` or paste it in the playground. ZCode picks an available port when you omit `--port`. [ZCode CLI distribution](https://github.com/zai-org/ZCode/blob/v4.0.0/README.en.md#zcode-cli-distribution)
+
 Use **Grok Bot → Public Page** to open a shared Page in a desktop or mobile browser. In your code, call `getAgentLink("grok-bot", "web", { action: "bot-page", target: copiedPageUrl })` with the full `https://<name>.pages.grok.bot/` address from Grok Bot’s share menu. [Grok Bot Page sharing](https://docs.x.ai/grok-bot/files-and-results#share-a-page)
 
 Use **T3 Code → Pull request** or pass `{ action: "pull-request", target: "owner/repo#123", prompt: "Review the changes." }` to `getAgentLink("t3-code", platform, options)`. The target can also be a GitHub pull request URL. The prompt is optional. T3 Code can open a linked thread or offer a new draft for the connected project. [T3 Code pull request link parser](https://github.com/pingdotgg/t3code/blob/v0.1.13/packages/shared/src/promptLinks.ts)

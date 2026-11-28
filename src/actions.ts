@@ -5,7 +5,7 @@ export type AgentActionId =
   | "skill" | "skill-install" | "template-install" | "connector" | "mcp-install"
   | "custom-gpt" | "gem" | "project" | "shared-chat" | "team-bot" | "bot-template" | "bot-marketplace" | "bot-page" | "remote-session" | "server-pair"
   | "settings" | "add-ssh-host" | "skills" | "automations" | "command" | "rule" | "pull-request" | "marketplace" | "install" | "ide-open"
-  | "cowork" | "add-environment";
+  | "cowork" | "add-environment" | "local-web";
 
 export type AgentActionField = "target" | "tool" | "appPath" | "marketplace" | "config" | "prompt" | "content" | "folders" | "files";
 
@@ -723,6 +723,24 @@ const claudeAndroidInstall: ActionDefinition = {
 };
 const grokSharedChat = "https://grok.com/share/";
 
+const zcodeLocalWeb: ActionDefinition = {
+  id: "local-web", label: "Open local Web workspace", url: "http://127.0.0.1:3030/",
+  behavior: "launch", evidence: "source",
+  sources: [
+    "https://github.com/zai-org/ZCode/blob/v4.0.0/README.en.md#zcode-cli-distribution",
+    "https://github.com/zai-org/ZCode/blob/v4.0.0/scripts/zcode-distribution/runner.mjs",
+  ],
+  fields: { target: "" }, required: ["target"],
+  inputs: [input("target", "Local ZCode Web URL", "http://127.0.0.1:3030/")],
+  note: "Run zcode --web and use the loopback URL printed in its terminal. The launcher can choose a different port for each launch.",
+  prepare: ({ target }) => {
+    if (!target || unsafeCharacters.test(target)) return null;
+    const value = target.trim();
+    if (!/^http:\/\/(?:127\.0\.0\.1|localhost|\[::1\]):[1-9]\d{0,4}\/?$/i.test(value)) return null;
+    return parseUrl(value)?.href ?? null;
+  },
+};
+
 const zcodeShareCode = /^(?!(?:\.{1,2}|manage|callback)$)[A-Za-z0-9._~-]{1,512}$/u;
 const zcodeShare = "https://zcode.z.ai/share/";
 const zcodeChineseShare = "https://zcode.z.ai/cn/share/";
@@ -1038,7 +1056,7 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
       note: "The verified Claude App Link opened the signed Android app to sign-in. Viewing the shared snapshot in the app still needs a check.",
     })],
   },
-  zcode: { web: [zcodeSharedChat], ios: [zcodeSharedChat], android: [zcodeSharedChat] },
+  zcode: { web: [zcodeSharedChat, zcodeLocalWeb], ios: [zcodeSharedChat], android: [zcodeSharedChat] },
   kimi: { web: [kimiSharedChat], ios: [kimiSharedChat], android: [kimiSharedChat] },
   gemini: { web: [geminiGem] },
   perplexity: { web: [perplexityProject], ios: [perplexityProject] },
