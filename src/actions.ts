@@ -991,7 +991,13 @@ const actionCatalog: Partial<Record<AgentId, Partial<Record<Platform, readonly A
   openclaw: { desktop: [openClawCatalogInstall("plugin"), openClawCatalogInstall("skill"), openClawCatalogInstall("template")] },
   "t3-code": {
     web: [t3PullRequest("web")], desktop: [t3PullRequest("desktop")],
-    ios: [t3PullRequest("ios"), t3AddEnvironment], android: [t3PullRequest("android"), t3AddEnvironment],
+    ios: [t3PullRequest("ios"), t3AddEnvironment],
+    android: [t3PullRequest("android"), {
+      ...t3AddEnvironment,
+      evidence: "verified",
+      sources: [...t3AddEnvironment.sources,
+        "https://github.com/lalalune/agent-deeplinks/blob/main/research/evidence/t3-mobile-add-environment/proof.json"],
+    }],
   },
   opencode: {
     web: [openCodePairing({
