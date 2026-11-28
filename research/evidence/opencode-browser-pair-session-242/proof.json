@@ -1,0 +1,167 @@
+{
+  "version": "opencode v2.4.2",
+  "origin": "http://127.0.0.1:65114",
+  "libraryVersion": "0.1.72",
+  "libraryIntegrity": "sha512-nzw5UHbWGzh5NehruQ0q1ShMtrTN1jxWzK4gn+4KdQxP6qYM0znH8jVGYPCPxQnw+QdOWwI7a3+RnmI9g7oW9A==",
+  "publishedArchiveSha256": "d5a8c9fb4b121ebd531d9369d7ba6ce8af91c9d4d51d6685dbb4e0c7224fa5f3",
+  "signedExecutableSha256": "9b6f58a81c3f151496f7001fd355020e9e92e9b89681fade4c6f100e09bc8e2e",
+  "appleDeveloperIdTeam": "5NZ4Q7NXJ4",
+  "profileIsolation": {
+    "cli": "local disposable HOME/XDG, outbound restricted to loopback",
+    "browser": "fresh persistent profiles, same-origin reads, no WebSockets"
+  },
+  "issuer": {
+    "method": "POST /api/pair",
+    "cliHandler": "https://github.com/anomalyco/opencode/blob/v2.4.2/packages/cli/src/commands/handlers/pair.ts#L24-L43"
+  },
+  "browsers": [
+    {
+      "name": "desktop-chromium",
+      "platform": "web",
+      "blocked": [
+        {
+          "verb": "POST",
+          "sameOrigin": true,
+          "path": "/api/rpc/opencode.goal/get"
+        }
+      ],
+      "before": {
+        "authenticatedInfo": 401,
+        "targetTitleAbsent": true
+      },
+      "redeemed": {
+        "issuerStatus": 200,
+        "expirySeconds": 300,
+        "exactSdkOutput": true,
+        "navigations": [
+          {
+            "status": 302,
+            "path": "/auth/connect/[redacted]"
+          },
+          {
+            "status": 200,
+            "path": "/"
+          }
+        ],
+        "repliedApi": [
+          "/api/info",
+          "/api/event"
+        ],
+        "visibleProjects": true,
+        "cookieHttpOnly": true,
+        "authenticatedInfo": 200
+      },
+      "reopened": {
+        "freshBrowserProcessUsingOnlyItsPairedProfile": true,
+        "navigations": [
+          {
+            "status": 200,
+            "path": "/server/aHR0cDovLzEyNy4wLjAuMTo2NTExNA/session/ses_ddfd16790ffeiEZNwDekJBHayr"
+          }
+        ],
+        "repliedApi": [
+          "/api/event",
+          "/api/info",
+          "/api/session/ses_ddfd16790ffeiEZNwDekJBHayr",
+          "/api/project",
+          "/api/session/active",
+          "/api/session"
+        ],
+        "authenticatedInfo": 200,
+        "exactUrl": "http://127.0.0.1:65114/server/aHR0cDovLzEyNy4wLjAuMTo2NTExNA/session/ses_ddfd16790ffeiEZNwDekJBHayr",
+        "visibleTitle": "OpenCode paired saved session QA 4C2",
+        "emptyEditableComposer": true
+      },
+      "browserVersion": "158.0.8127.18",
+      "replayWithoutCookieStatus": 401
+    },
+    {
+      "name": "iphone-15-webkit",
+      "platform": "ios",
+      "blocked": [
+        {
+          "verb": "POST",
+          "sameOrigin": true,
+          "path": "/api/rpc/opencode.goal/get"
+        }
+      ],
+      "before": {
+        "authenticatedInfo": 401,
+        "targetTitleAbsent": true
+      },
+      "redeemed": {
+        "issuerStatus": 200,
+        "expirySeconds": 300,
+        "exactSdkOutput": true,
+        "navigations": [
+          {
+            "status": 302,
+            "path": "/auth/connect/[redacted]"
+          },
+          {
+            "status": 200,
+            "path": "/"
+          }
+        ],
+        "repliedApi": [
+          "/api/info",
+          "/api/event"
+        ],
+        "visibleProjects": true,
+        "cookieHttpOnly": true,
+        "authenticatedInfo": 200
+      },
+      "reopened": {
+        "freshBrowserProcessUsingOnlyItsPairedProfile": true,
+        "navigations": [
+          {
+            "status": 200,
+            "path": "/server/aHR0cDovLzEyNy4wLjAuMTo2NTExNA/session/ses_ddfd16790ffeiEZNwDekJBHayr"
+          }
+        ],
+        "repliedApi": [
+          "/api/info",
+          "/api/event",
+          "/api/session/ses_ddfd16790ffeiEZNwDekJBHayr",
+          "/api/location",
+          "/api/project",
+          "/api/session/active",
+          "/api/location",
+          "/api/vcs",
+          "/api/project",
+          "/api/session/ses_ddfd16790ffeiEZNwDekJBHayr/message",
+          "/api/session",
+          "/api/session/ses_ddfd16790ffeiEZNwDekJBHayr/inbox",
+          "/api/session/ses_ddfd16790ffeiEZNwDekJBHayr"
+        ],
+        "authenticatedInfo": 200,
+        "exactUrl": "http://127.0.0.1:65114/server/aHR0cDovLzEyNy4wLjAuMTo2NTExNA/session/ses_ddfd16790ffeiEZNwDekJBHayr",
+        "visibleTitle": "OpenCode paired saved session QA 4C2",
+        "emptyEditableComposer": true
+      },
+      "browserVersion": "27.2",
+      "replayWithoutCookieStatus": 401
+    }
+  ],
+  "loopbackListener": true,
+  "fixture": {
+    "id": "ses_ddfd16790ffeiEZNwDekJBHayr",
+    "title": "OpenCode paired saved session QA 4C2",
+    "exactWebAndIosBrowserRoute": "http://127.0.0.1:65114/server/aHR0cDovLzEyNy4wLjAuMTo2NTExNA/session/ses_ddfd16790ffeiEZNwDekJBHayr"
+  },
+  "database": {
+    "savedSessions": 1,
+    "messages": 0,
+    "providerAccounts": 0
+  },
+  "result": "pass",
+  "provenance": {
+    "publisherRelease": "https://github.com/anomalyco/opencode/releases/tag/v2.4.2",
+    "publisherBinaryArchive": "https://github.com/anomalyco/opencode/releases/download/v2.4.2/opencode-darwin-arm64.zip",
+    "publishedPackageTarball": "https://registry.npmjs.org/agent-deeplinks/-/agent-deeplinks-0.1.72.tgz",
+    "screenshotSha256": {
+      "desktop-chromium.png": "867c6ceb4a7ea49ce1a727cd9564ba11fb10dcd508eab7f0a80d7bd66aac491e",
+      "iphone-15-webkit.png": "6e0d40ec62f9a00d23baa332ddc49475661eee4b073910ca55b6627b41f134e8"
+    }
+  }
+}
